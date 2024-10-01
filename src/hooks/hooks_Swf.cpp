@@ -107,7 +107,7 @@ void SetHeartNum(Sp2::Swf::SglPlayerObject* pPlayer) {
 /**
  * @brief SetHeartNum trampoline
  */
-TRAMPOLINE_DEF(0x8063A010, 0x8063A014) {
+TRAMPOLINE_DEF(0x8063A010, 0x8063A014){
     // clang-format off
     TRAMPOLINE_BEGIN
 
@@ -117,6 +117,19 @@ TRAMPOLINE_DEF(0x8063A010, 0x8063A014) {
     TRAMPOLINE_END
     // clang-format on
 }
+
+/**
+ * @brief Tests whether the specified stage is unlocked in Swordplay (Showdown)
+ *
+ * @param id Stage ID
+ */
+Sp2::Cmn::EUnlockState GetSglStageState(UNKWORD, UNKWORD, u32 id) {
+    bool unlock = ItemMgr::GetInstance().IsSwfSglStageUnlock(id);
+
+    return unlock ? Sp2::Cmn::EUnlockState_Unlocked
+                  : Sp2::Cmn::EUnlockState_Locked;
+}
+KM_BRANCH(0x802E4848, GetSglStageState);
 
 } // namespace Swf
 } // namespace AP

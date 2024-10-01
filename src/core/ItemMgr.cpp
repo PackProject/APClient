@@ -12,7 +12,8 @@ ItemMgr::ItemMgr()
     : mSwfVsBlockFlag(false),
       mSwfPrcPauseFlag(false),
       mSwfSglBlockFlag(false),
-      mSwfSglHeartFlag(0) {}
+      mSwfSglHeartFlag(0),
+      mSwfSglStageFlag(0) {}
 
 /**
  * @brief Deserializes binary contents (internal implementation)

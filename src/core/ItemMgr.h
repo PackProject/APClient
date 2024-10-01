@@ -41,6 +41,9 @@ public:
     int GetSwfSglExtHeartNum() const {
         return kiwi::BitUtil::Count(mSwfSglHeartFlag);
     }
+    bool IsSwfSglStageUnlock(u32 id) const {
+        return mSwfSglStageFlag & (1 << id);
+    }
     /**@}*/
 
 private:
@@ -110,6 +113,7 @@ private:
     /**@{*/
     bool mSwfSglBlockFlag; //!< Blocking ability
     u32 mSwfSglHeartFlag;  //!< Extra hearts (bitfield)
+    u32 mSwfSglStageFlag;  //!< Extra stages (bitfield)
     /**@}*/
 
 private:
@@ -122,7 +126,7 @@ private:
         /* 0x00:1  */ u32 swfPrcPauseFlag : 1;  //!< Pausing ability
         /* 0x00:2  */ u32 swfSglBlockFlag : 1;  //!< Blocking ability
         /* 0x00:3  */ u32 swfSglHeartFlag : 2;  //!< Extra hearts
-        /* 0x00:5  */ u32 swfSglStageFlag : 19; //!< Unlocked stages
+        /* 0x00:5  */ u32 swfSglStageFlag : 20; //!< Unlocked stages
 
         /* 0x04:0  */ u8 wkbTimerFlag : 4; //!< Extra time
         /* 0x04:4  */ u8 wkbStageFlag : 3; //!< Unlocked difficulties

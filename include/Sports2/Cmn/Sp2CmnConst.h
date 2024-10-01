@@ -48,6 +48,15 @@ enum ESeq {
     ESeq_Omk = 1 //!< Skydiving
 };
 
+/**
+ * @brief Save data unlockables
+ */
+enum EUnlockState {
+    EUnlockState_Unlocked,    //!< Unlocked
+    EUnlockState_UnlockedNew, //!< Unlocked with "NEW!" text
+    EUnlockState_Locked,      //!< Locked
+};
+
 } // namespace Cmn
 } // namespace Sp2
 
