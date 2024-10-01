@@ -35,12 +35,12 @@ void TryBlock(Sp2::Swf::UserCtrl* pUserCtrl,
     // Check the appropriate AP item to see if blocking is allowed
     switch (sequence) {
     case Sp2::Cmn::ESeq_Swf_Vs: {
-        unlocked = ItemMgr::GetInstance().SwfVsCanBlock();
+        unlocked = ItemMgr::GetInstance().IsSwfVsBlock();
         break;
     }
 
     case Sp2::Cmn::ESeq_Swf_Sgl: {
-        unlocked = ItemMgr::GetInstance().SwfSglCanBlock();
+        unlocked = ItemMgr::GetInstance().IsSwfSglBlock();
         break;
     }
 
@@ -80,13 +80,39 @@ void TryBlock(Sp2::Swf::UserCtrl* pUserCtrl,
 /**
  * @brief TryBlock trampoline
  */
-TRAMPOLINE_DEF_EXIT(0x8060E33C, 0x8060E394) {
+TRAMPOLINE_DEF(0x8060E33C, 0x8060E394) {
     // clang-format off
     TRAMPOLINE_BEGIN
 
     mr r3, r31
     mr r4, r30
     bl TryBlock
+
+    TRAMPOLINE_END
+    // clang-format on
+}
+
+/**
+ * @brief Sets the number of hearts in Swordplay (Showdown)
+ *
+ * @param pPlayer Player object
+ */
+void SetHeartNum(Sp2::Swf::SglPlayerObject* pPlayer) {
+    K_ASSERT(pPlayer != nullptr);
+
+    int extHeartNum = ItemMgr::GetInstance().GetSwfSglExtHeartNum();
+    pPlayer->setHeartNum(1 + extHeartNum);
+}
+
+/**
+ * @brief SetHeartNum trampoline
+ */
+TRAMPOLINE_DEF(0x8063A010, 0x8063A014) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    bl SetHeartNum
+    li r0, 0
 
     TRAMPOLINE_END
     // clang-format on

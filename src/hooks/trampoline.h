@@ -7,15 +7,7 @@
  *
  * @param enter Entry address
  */
-#define TRAMPOLINE_DEF(enter) KM_BRANCH_DEF_ASM(enter, NULL)
-
-/**
- * @brief Defines a trampoline function
- *
- * @param enter Entry address
- * @param exit Exit address
- */
-#define TRAMPOLINE_DEF_EXIT(enter, exit) KM_BRANCH_DEF_ASM(enter, exit)
+#define TRAMPOLINE_DEF(enter, exit) KM_BRANCH_DEF_ASM(enter, exit)
 
 /**
  * @brief Saves registers at the start of a trampoline function

@@ -17,8 +17,8 @@ public:
      * @name Swordplay (Duel)
      */
     /**@{*/
-    bool SwfVsCanBlock() const {
-        return mSwfVsCanBlock;
+    bool IsSwfVsBlock() const {
+        return mSwfVsBlockFlag;
     }
     /**@}*/
 
@@ -26,8 +26,8 @@ public:
      * @name Swordplay (Speed Slice)
      */
     /**@{*/
-    bool SwfPrcCanPause() const {
-        return mSwfPrcCanPause;
+    bool IsSwfPrcPause() const {
+        return mSwfPrcPauseFlag;
     }
     /**@}*/
 
@@ -35,8 +35,11 @@ public:
      * @name Swordplay (Showdown)
      */
     /**@{*/
-    bool SwfSglCanBlock() const {
-        return mSwfSglCanBlock;
+    bool IsSwfSglBlock() const {
+        return mSwfSglBlockFlag;
+    }
+    int GetSwfSglExtHeartNum() const {
+        return kiwi::BitUtil::Count(mSwfSglHeartFlag);
     }
     /**@}*/
 
@@ -91,22 +94,22 @@ private:
      * @name Swordplay (Duel)
      */
     /**@{*/
-    bool mSwfVsCanBlock; //!< Blocking ability
+    bool mSwfVsBlockFlag; //!< Blocking ability
     /**@}*/
 
     /**
      * @name Swordplay (Speed Slice)
      */
     /**@{*/
-    bool mSwfPrcCanPause; //!< Pausing ability
+    bool mSwfPrcPauseFlag; //!< Pausing ability
     /**@}*/
 
     /**
      * @name Swordplay (Showdown)
      */
     /**@{*/
-    bool mSwfSglCanBlock; //!< Blocking ability
-    int mSwfSglHearts;    //!< Number of hearts
+    bool mSwfSglBlockFlag; //!< Blocking ability
+    u32 mSwfSglHeartFlag;  //!< Extra hearts (bitfield)
     /**@}*/
 
 private:
@@ -115,24 +118,24 @@ private:
      */
 #pragma pack(push, 1)
     struct Bin : kiwi::IBinary::Block {
-        /* 0x00:0  */ u32 swfVsCanBlock : 1;  //!< Blocking ability
-        /* 0x00:1  */ u32 swfPrcCanPause : 1; //!< Pausing ability
-        /* 0x00:2  */ u32 swfSglCanBlock : 1; //!< Blocking ability
-        /* 0x00:3  */ u32 swfSglHearts : 2;   //!< Extra hearts
-        /* 0x00:5  */ u32 swfSglStages : 19;  //!< Unlocked stages
+        /* 0x00:0  */ u32 swfVsBlockFlag : 1;   //!< Blocking ability
+        /* 0x00:1  */ u32 swfPrcPauseFlag : 1;  //!< Pausing ability
+        /* 0x00:2  */ u32 swfSglBlockFlag : 1;  //!< Blocking ability
+        /* 0x00:3  */ u32 swfSglHeartFlag : 2;  //!< Extra hearts
+        /* 0x00:5  */ u32 swfSglStageFlag : 19; //!< Unlocked stages
 
-        /* 0x04:0  */ u8 wkbTimer : 4;  //!< Extra time
-        /* 0x04:4  */ u8 wkbStages : 3; //!< Unlocked difficulties
+        /* 0x04:0  */ u8 wkbTimerFlag : 4; //!< Extra time
+        /* 0x04:4  */ u8 wkbStageFlag : 3; //!< Unlocked difficulties
 
-        /* 0x05:0  */ u16 fldThrows : 9;        //!< Extra throws
-        /* 0x05:4  */ u16 fldCanPopBalloon : 1; //!< A+2 balloon pop ability
+        /* 0x05:0  */ u16 fldThrowFlag : 9;      //!< Extra throws
+        /* 0x05:4  */ u16 fldPopBalloonFlag : 1; //!< A+2 balloon pop ability
 
-        /* 0x07:0  */ u16 dglDisc : 3;    //!< Progressive disc
-        /* 0x07:3  */ u16 dglStages : 10; //!< Unlocked courses
+        /* 0x07:0  */ u16 dglDiscFlag : 3;   //!< Progressive disc
+        /* 0x07:3  */ u16 dglStageFlag : 10; //!< Unlocked courses
 
-        /* 0x09:0  */ u16 arcArrows : 2; //!< Extra arrows
-        /* 0x09:2  */ u16 arcFruits : 3; //!< Hidden fruits
-        /* 0x09:5  */ u16 arcStages : 3; //!< Unlocked stages
+        /* 0x09:0  */ u16 arcArrowFlag : 2; //!< Extra arrows
+        /* 0x09:2  */ u16 arcFruitFlag : 3; //!< Hidden fruits
+        /* 0x09:5  */ u16 arcStageFlag : 3; //!< Unlocked stages
 
         // . . .
     };

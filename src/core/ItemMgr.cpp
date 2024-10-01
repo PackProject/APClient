@@ -9,10 +9,10 @@ namespace AP {
  * @brief Constructor
  */
 ItemMgr::ItemMgr()
-    : mSwfVsCanBlock(false),
-      mSwfPrcCanPause(false),
-      mSwfSglCanBlock(false),
-      mSwfSglHearts(0) {}
+    : mSwfVsBlockFlag(false),
+      mSwfPrcPauseFlag(false),
+      mSwfSglBlockFlag(false),
+      mSwfSglHeartFlag(0) {}
 
 /**
  * @brief Deserializes binary contents (internal implementation)
