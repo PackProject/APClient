@@ -15,8 +15,8 @@ namespace Swf {
  * @param pUserCtrl User control interface
  * @param pController Remote controller
  */
-void TryBlockVs(Sp2::Swf::UserCtrl* pUserCtrl,
-                const Sp2::Cmn::Controller* pController) {
+void TryBlock(Sp2::Swf::UserCtrl* pUserCtrl,
+              const Sp2::Cmn::Controller* pController) {
     K_ASSERT(pUserCtrl != nullptr);
     K_ASSERT(pController != nullptr);
 
@@ -29,41 +29,56 @@ void TryBlockVs(Sp2::Swf::UserCtrl* pUserCtrl,
         return;
     }
 
-    Sp2::Swf::SoundObject* pGuardSound =
-        Sp2::Swf::Scene::getInstance().getGuardSound();
+    bool unlocked = false;
+    u32 sequence = RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->getSequence();
 
-    ASSERT(pGuardSound != nullptr);
+    // Check the appropriate AP item to see if blocking is allowed
+    switch (sequence) {
+    case Sp2::Cmn::ESeq_Swf_Vs: {
+        unlocked = ItemMgr::GetInstance().SwfVsCanBlock();
+        break;
+    }
+
+    case Sp2::Cmn::ESeq_Swf_Sgl: {
+        unlocked = ItemMgr::GetInstance().SwfSglCanBlock();
+        break;
+    }
+
+    default: {
+        K_ASSERT_EX(false, "Invalid sequence %d", sequence);
+        break;
+    }
+    }
 
     // Don't play the sound every frame.
     // Also, the sound is disabled during certain phases of the game
-    bool playSound = !pUserCtrl->isBlocking() && pGuardSound->isEnabled();
+    Sp2::Swf::SoundObject* pSound =
+        RP_GET_INSTANCE(Sp2::Swf::Scene)->getGuardSound();
 
-    // The ability may not be unlocked yet
-    bool unlocked = ItemMgr::GetInstance().SwfVsCanBlock();
+    ASSERT(pSound != nullptr);
+    bool playSound = !pUserCtrl->isBlocking() && pSound->isEnabled();
 
-    // Determine which remote speaker to play through
-    Sp2::Swf::PlayerObject* pPlayer = pUserCtrl->getPlayerObject();
-    K_ASSERT(pPlayer != nullptr);
-    int remote = pPlayer->getRemoteNo();
+    if (playSound) {
+        Sp2::Swf::PlayerObject* pPlayer = pUserCtrl->getPlayerObject();
+        K_ASSERT(pPlayer != nullptr);
 
-    if (unlocked) {
-        pUserCtrl->setBlocking(true);
+        // Determine which remote speaker to play through
+        int remote = pPlayer->getRemoteNo();
 
-        if (playSound) {
+        if (unlocked) {
             Sp2::SndUtil::playSound(SE_SWF_SWORD_SWING_GUARD, 1 << remote);
         }
-    } else {
-        pUserCtrl->setBlocking(false);
-
         // Rejection sound effect is only played on the initial B press
-        if (pressed && playSound) {
+        else if (pressed) {
             Sp2::SndUtil::playSound(SE_CMN_NG_01, 1 << remote);
         }
     }
+
+    pUserCtrl->setBlocking(unlocked);
 }
 
 /**
- * @brief TryBlockVs trampoline
+ * @brief TryBlock trampoline
  */
 TRAMPOLINE_DEF_EXIT(0x8060E33C, 0x8060E394) {
     // clang-format off
@@ -71,7 +86,7 @@ TRAMPOLINE_DEF_EXIT(0x8060E33C, 0x8060E394) {
 
     mr r3, r31
     mr r4, r30
-    bl TryBlockVs
+    bl TryBlock
 
     TRAMPOLINE_END
     // clang-format on

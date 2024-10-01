@@ -22,6 +22,24 @@ public:
     }
     /**@}*/
 
+    /**
+     * @name Swordplay (Speed Slice)
+     */
+    /**@{*/
+    bool SwfPrcCanPause() const {
+        return mSwfPrcCanPause;
+    }
+    /**@}*/
+
+    /**
+     * @name Swordplay (Showdown)
+     */
+    /**@{*/
+    bool SwfSglCanBlock() const {
+        return mSwfSglCanBlock;
+    }
+    /**@}*/
+
 private:
     //! Binary file magic
     static const u32 SIGNATURE = 'ITEM';

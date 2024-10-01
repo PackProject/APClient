@@ -10,9 +10,8 @@ class SoundObject;
 
 class Scene /* : public RPSysMplsGameScene */ {
 public:
-    static Scene& getInstance() {
-        EGG_ASSERT(sInstance != nullptr);
-        return *sInstance;
+    static Scene* getInstance() {
+        return sInstance;
     }
 
     SoundObject* getGuardSound() const {
