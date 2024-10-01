@@ -15,19 +15,19 @@ namespace EGG {
 enum eCoreDevType { cDEV_0xFD = -3 };
 
 enum eButtonType {
-    cCORE_FSSTICK_NONE = 0x0000,
-    cCORE_FSSTICK_LEFT = 0x0001,
-    cCORE_FSSTICK_RIGHT = 0x0002,
-    cCORE_FSSTICK_DOWN = 0x0004,
-    cCORE_FSSTICK_UP = 0x0008,
-    cCORE_FSSTICK_PLUS = 0x0010,
-    cCORE_FSSTICK_2 = 0x0100,
-    cCORE_FSSTICK_1 = 0x0200,
-    cCORE_FSSTICK_B = 0x0400,
-    cCORE_FSSTICK_A = 0x0800,
-    cCORE_FSSTICK_MINUS = 0x1000,
-    cCORE_FSSTICK_HOME = 0x8000,
-    cCORE_FSSTICK_BUTTONS = 0xF0000
+    CORE_BTN_NONE = 0x0000,
+    CORE_BTN_LEFT = 0x0001,
+    CORE_BTN_RIGHT = 0x0002,
+    CORE_BTN_DOWN = 0x0004,
+    CORE_BTN_UP = 0x0008,
+    CORE_BTN_PLUS = 0x0010,
+    CORE_BTN_2 = 0x0100,
+    CORE_BTN_1 = 0x0200,
+    CORE_BTN_B = 0x0400,
+    CORE_BTN_A = 0x0800,
+    CORE_BTN_MINUS = 0x1000,
+    CORE_BTN_HOME = 0x8000,
+    CORE_BTN_BUTTONS = 0xF0000
 };
 
 struct CoreStatus {
@@ -132,7 +132,7 @@ public:
     void startPatternRumble(const char*, int, bool);
     void startPowerFrameRumble(f32, int, bool);
     void stopRumbleMgr();
-    CoreStatus* getCoreStatus(int) const;
+    CoreStatus* getCoreStatus(int = 0) const;
 
     void calc_posture_matrix(Matrix34f&, bool);
     void stopMotor();
@@ -142,8 +142,11 @@ public:
     u32 mButtonHold;    // at 0x8
     u32 mButtonTrigger; // at 0xC
     u32 mButtonRelease; // at 0x10
-    CoreStatus mCoreStatus[16];
-    int mKPADReadLength; // at 0x854
+#if defined(PACK_RESORT)
+    char _14[0x4];
+#endif
+    CoreStatus mCoreStatus[16]; // at 0x14
+    int mKPADReadLength;        // at 0x854
     Vector3f VEC3_0x858;
     UNKWORD WORD_0x864;
     u8 BYTE_0x868;
@@ -264,7 +267,7 @@ private:
     TBuffer<CoreController*> mControllers; // at 0x14
     struct UnkInterface {
         virtual UNKTYPE VF08(UNKTYPE*) = 0;
-    } * PTR_0x20;
+    }* PTR_0x20;
     TBuffer<eCoreDevType> mDevTypes; // at 0x24
 
     static CoreControllerMgr* sInstance;

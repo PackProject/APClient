@@ -2,13 +2,32 @@
 #define EGG_PRIM_ASSERT_H
 #include <types.h>
 
+#if defined(PACK_SPORTS) || defined(PACK_PLAY)
+
 #define EGG_ASSERT(EXP)                                                        \
     if (!(EXP))                                                                \
     system_halt(__FILE__, __LINE__, #EXP)
+
 #define EGG_ASSERT_MSG(EXP, ...)                                               \
     if (!(EXP))                                                                \
     system_halt(__FILE__, __LINE__, __VA_ARGS__)
+
 #define EGG_PRINT(...) system_print(true, __FILE__, __VA_ARGS__)
+
+#elif defined(PACK_RESORT)
+// WS2 does not contain the EGG assertion functions
+
+#define EGG_ASSERT(EXP)                                                        \
+    if (!(EXP))                                                                \
+    OSPanic(__FILE__, __LINE__, #EXP)
+
+#define EGG_ASSERT_MSG(EXP, ...)                                               \
+    if (!(EXP))                                                                \
+    OSPanic(__FILE__, __LINE__, __VA_ARGS__)
+
+#define EGG_PRINT(...) OSReport(__VA_ARGS__)
+
+#endif
 
 #ifdef __cplusplus
 extern "C" {

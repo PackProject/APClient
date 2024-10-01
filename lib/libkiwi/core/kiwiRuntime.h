@@ -384,7 +384,7 @@ u32 GetDolDataSize() {
 /**
  * @brief Create a stack frame and save all GPRs
  */
-#define K_SAVE_GPRS                                                            \
+#define K_SAVE_GPRS()                                                          \
     K_ASM_BEGIN {                                                              \
         stwu r1, -0x90(r1);                                                    \
         stmw r3, 0xC(r1);                                                      \
@@ -395,7 +395,7 @@ u32 GetDolDataSize() {
 /**
  * @brief Destroy the stack frame and restore all GPRs
  */
-#define K_REST_GPRS                                                            \
+#define K_REST_GPRS()                                                          \
     K_ASM_BEGIN {                                                              \
         lwz r12, 0x8(r1);                                                      \
         mtlr r12;                                                              \
