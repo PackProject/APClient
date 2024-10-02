@@ -6,6 +6,7 @@ namespace Sp2 {
 
 class SndUtil {
 public:
+    static void playBgm(u32 id);
     static void playSound(u32 id, u32 spkFlag);
 };
 

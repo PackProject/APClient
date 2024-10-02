@@ -6,14 +6,16 @@ K_DYNAMIC_SINGLETON_IMPL(AP::ItemMgr);
 namespace AP {
 
 /**
+ * @brief Binary file path
+ */
+const char* ItemMgr::PATH = "item.bin";
+
+/**
  * @brief Constructor
  */
-ItemMgr::ItemMgr()
-    : mSwfVsBlockFlag(false),
-      mSwfPrcPauseFlag(false),
-      mSwfSglBlockFlag(false),
-      mSwfSglHeartFlag(1),
-      mSwfSglStageFlag(0) {}
+ItemMgr::ItemMgr() {
+    Clear();
+}
 
 /**
  * @brief Deserializes binary contents (internal implementation)
@@ -31,6 +33,17 @@ void ItemMgr::DeserializeImpl(const Header& rHeader) {
  */
 void ItemMgr::SerializeImpl(Header& rHeader) const {
     ;
+}
+
+/**
+ * @brief Clears item state
+ */
+void ItemMgr::Clear() {
+    mSwfVsBlockFlag = false;
+    mSwfPrcPauseFlag = false;
+    mSwfSglBlockFlag = 0;
+    mSwfSglHeartFlag = 0b001;
+    mSwfSglStageFlag = 0;
 }
 
 } // namespace AP

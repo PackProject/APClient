@@ -29,8 +29,7 @@
     lwz  r12, 0x08(r1); \
     mtlr r12          ; \
     lmw  r3,  0x0C(r1); \
-    addi r1, r1, 0x90 ; \
-    blr               ;
+    addi r1, r1, 0x90 ;
 // clang-format on
 
 #endif

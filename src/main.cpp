@@ -1,4 +1,5 @@
 #include <Pack/RPSystem.h>
+#include <core/CosmeticMgr.h>
 #include <core/ItemMgr.h>
 #include <kokeshi.hpp>
 #include <libkiwi.h>
@@ -22,6 +23,7 @@ void KokeshiMain() {
 
     // Archipelago initialization
     AP::ItemMgr::CreateInstance();
+    AP::CosmeticMgr::CreateInstance();
 
 // Enter first scene
 #if defined(PACK_SPORTS) || defined(PACK_PLAY)

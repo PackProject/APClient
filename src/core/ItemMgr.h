@@ -56,9 +56,43 @@ private:
 
 private:
     /**
+     * @brief Binary file structure
+     */
+#pragma pack(push, 1)
+    struct Bin : kiwi::IBinary::Block {
+        /* 0x00:0  */ u32 swfVsBlockFlag : 1;   //!< Blocking ability
+        /* 0x00:1  */ u32 swfPrcPauseFlag : 1;  //!< Pausing ability
+        /* 0x00:2  */ u32 swfSglBlockFlag : 1;  //!< Blocking ability
+        /* 0x00:3  */ u32 swfSglHeartFlag : 3;  //!< Heart items
+        /* 0x00:5  */ u32 swfSglStageFlag : 20; //!< Unlocked stages
+
+        /* 0x04:0  */ u8 wkbTimerFlag : 5; //!< Timer items
+        /* 0x04:4  */ u8 wkbStageFlag : 3; //!< Unlocked difficulties
+
+        /* 0x05:0  */ u16 fldThrowFlag : 10;     //!< Throw items
+        /* 0x05:4  */ u16 fldPopBalloonFlag : 1; //!< A+2 balloon pop ability
+
+        /* 0x07:0  */ u16 dglDiscFlag : 3;   //!< Progressive disc
+        /* 0x07:3  */ u16 dglStageFlag : 10; //!< Unlocked courses
+
+        /* 0x09:0  */ u16 arcArrowFlag : 3; //!< Arrow items
+        /* 0x09:2  */ u16 arcFruitFlag : 3; //!< Hidden fruits
+        /* 0x09:5  */ u16 arcStageFlag : 3; //!< Unlocked stages
+
+        // . . .
+    };
+#pragma pack(pop)
+
+private:
+    /**
      * @brief Constructor
      */
     ItemMgr();
+
+    /**
+     * @brief Clears item state
+     */
+    void Clear();
 
     /**
      * @brief Gets the kind/magic of this object
@@ -115,35 +149,6 @@ private:
     u32 mSwfSglHeartFlag;  //!< Extra hearts (bitfield)
     u32 mSwfSglStageFlag;  //!< Extra stages (bitfield)
     /**@}*/
-
-private:
-    /**
-     * @brief Item manager binary structure
-     */
-#pragma pack(push, 1)
-    struct Bin : kiwi::IBinary::Block {
-        /* 0x00:0  */ u32 swfVsBlockFlag : 1;   //!< Blocking ability
-        /* 0x00:1  */ u32 swfPrcPauseFlag : 1;  //!< Pausing ability
-        /* 0x00:2  */ u32 swfSglBlockFlag : 1;  //!< Blocking ability
-        /* 0x00:3  */ u32 swfSglHeartFlag : 3;  //!< Heart items
-        /* 0x00:5  */ u32 swfSglStageFlag : 20; //!< Unlocked stages
-
-        /* 0x04:0  */ u8 wkbTimerFlag : 5; //!< Timer items
-        /* 0x04:4  */ u8 wkbStageFlag : 3; //!< Unlocked difficulties
-
-        /* 0x05:0  */ u16 fldThrowFlag : 10;     //!< Throw items
-        /* 0x05:4  */ u16 fldPopBalloonFlag : 1; //!< A+2 balloon pop ability
-
-        /* 0x07:0  */ u16 dglDiscFlag : 3;   //!< Progressive disc
-        /* 0x07:3  */ u16 dglStageFlag : 10; //!< Unlocked courses
-
-        /* 0x09:0  */ u16 arcArrowFlag : 3; //!< Arrow items
-        /* 0x09:2  */ u16 arcFruitFlag : 3; //!< Hidden fruits
-        /* 0x09:5  */ u16 arcStageFlag : 3; //!< Unlocked stages
-
-        // . . .
-    };
-#pragma pack(pop)
 };
 
 } // namespace AP

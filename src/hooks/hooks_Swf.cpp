@@ -101,6 +101,7 @@ TRAMPOLINE_DEF(0x8060E33C, 0x8060E394) {
     bl TryBlock
 
     TRAMPOLINE_END
+    blr
     // clang-format on
 }
 
@@ -169,6 +170,7 @@ TRAMPOLINE_DEF(0x8063A010, 0x8063A014){
     li r0, 0
 
     TRAMPOLINE_END
+    blr
     // clang-format on
 }
 
