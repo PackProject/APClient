@@ -1,6 +1,11 @@
 #ifndef RP_KERNEL_SYSTEM_WINDOW_MGR_H
 #define RP_KERNEL_SYSTEM_WINDOW_MGR_H
-#include "types.h"
+#include <Pack/RPTypes.h>
+
+// Thanks Nintendo!
+#if defined(PACK_RESORT)
+#define RPSysSysWinMgr RPSysSystemWinMgr
+#endif
 
 class RPSysSystemWinMgr {
     RP_SINGLETON_DECL(RPSysSystemWinMgr);
@@ -22,6 +27,10 @@ public:
     E_RESULT getResult() {
         return (E_RESULT)mResult;
     }
+
+#if defined(PACK_RESORT)
+    void updatePauseClosed();
+#endif
 
 private:
     char UNK_0x4[0x90 - 0x4];

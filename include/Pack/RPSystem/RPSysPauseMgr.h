@@ -7,6 +7,8 @@ class RPSysPauseMgr {
 
 public:
     void LoadResource();
+
+    void updateClosed();
 };
 
 #endif

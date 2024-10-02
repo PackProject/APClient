@@ -3618,3 +3618,5 @@ mainLoop__11RPSysSystemFv=0x80237b2c
 playSound__Q23Sp27SndUtilFUlUl=0x802b735c
 sInstance__Q33Sp23Swf5Scene=0x806f5ff0
 spInstance__Q33Sp23Cmn9StaticMem=0x806f4e98
+spInstance__17RPSysSystemWinMgr=0x806f4cd0
+updatePauseClosed__17RPSysSystemWinMgrFv=0x80234d58

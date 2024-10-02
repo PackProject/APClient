@@ -1,3 +1,4 @@
+#include <Pack/RPKernel.h>
 #include <Sports2/Sp2Cmn.h>
 #include <Sports2/Sp2Snd.h>
 #include <Sports2/Sp2Swf.h>
@@ -8,6 +9,12 @@
 
 namespace AP {
 namespace Swf {
+
+/******************************************************************************
+ *
+ * Swordplay (Duel)
+ *
+ ******************************************************************************/
 
 /**
  * @brief Attempts to perform a block in Swordplay (Duel)
@@ -44,6 +51,11 @@ void TryBlock(Sp2::Swf::UserCtrl* pUserCtrl,
         break;
     }
 
+    case Sp2::Cmn::ESeq_Swf_Prc: {
+        unlocked = true;
+        break;
+    }
+
     default: {
         K_ASSERT_EX(false, "Invalid sequence %d", sequence);
         break;
@@ -53,7 +65,7 @@ void TryBlock(Sp2::Swf::UserCtrl* pUserCtrl,
     // Don't play the sound every frame.
     // Also, the sound is disabled during certain phases of the game
     Sp2::Swf::SoundObject* pSound =
-        RP_GET_INSTANCE(Sp2::Swf::Scene)->getGuardSound();
+        RP_GET_INSTANCE(Sp2::Swf::Scene)->getGuardSoundObject();
 
     ASSERT(pSound != nullptr);
     bool playSound = !pUserCtrl->isBlocking() && pSound->isEnabled();
@@ -92,12 +104,80 @@ TRAMPOLINE_DEF(0x8060E33C, 0x8060E394) {
     // clang-format on
 }
 
+/******************************************************************************
+ *
+ * Swordplay (Speed Slice)
+ *
+ ******************************************************************************/
+
+/**
+ * @brief Tests whether an object is currently falling in Swordplay (Speed
+ * Slice)
+ */
+bool PrcIsObjFalling() {
+    Sp2::Swf::PrcRuleObject* pRuleObject =
+        RP_GET_INSTANCE(Sp2::Swf::Scene)->getPrcRuleObject();
+    K_ASSERT(pRuleObject != nullptr);
+
+    Sp2::Swf::TrainerObject* pTrainerObject = pRuleObject->getTrainerObject();
+    K_ASSERT(pTrainerObject != nullptr);
+
+    switch (pTrainerObject->getState()) {
+    case Sp2::Swf::TrainerObject::EState_PrepareThrow:
+    case Sp2::Swf::TrainerObject::EState_Throw:
+    case Sp2::Swf::TrainerObject::EState_ThrowJump:
+    case Sp2::Swf::TrainerObject::EState_WaitFall:
+    case Sp2::Swf::TrainerObject::EState_Judge:
+    case Sp2::Swf::TrainerObject::EState_JudgeResult:  {
+        return true;
+    }
+
+    case Sp2::Swf::TrainerObject::EState_None:
+    case Sp2::Swf::TrainerObject::EState_Wait:
+    default:                                   {
+        return false;
+    }
+    }
+}
+
+/**
+ * @brief Disables pausing in Swordplay (Speed Slice) when objects are falling,
+ * if the AP item has not been obtained
+ */
+void PrcTryPause() {
+    // clang-format off
+    if (RP_GET_INSTANCE(RPSysSceneMgr)->getCurrentSceneID() == kiwi::ESceneID_Sp2SwfScene
+        && RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->getSequence() == Sp2::Cmn::ESeq_Swf_Prc
+        && PrcIsObjFalling()) {
+        return;
+    }
+    // clang-format on
+
+    RP_GET_INSTANCE(RPSysSysWinMgr)->updatePauseClosed();
+}
+KM_CALL(0x8023536C, PrcTryPause);
+
+/**
+ * @brief Tests whether the homebutton menu can be opened in Swordplay (Speed
+ * Slice)
+ */
+bool PrcCanHBM() {
+    return !PrcIsObjFalling();
+}
+KM_CALL(0x802431B0, PrcCanHBM);
+
+/******************************************************************************
+ *
+ * Swordplay (Showdown)
+ *
+ ******************************************************************************/
+
 /**
  * @brief Sets the number of hearts in Swordplay (Showdown)
  *
  * @param pPlayer Player object
  */
-void SetHeartNum(Sp2::Swf::SglPlayerObject* pPlayer) {
+void SglSetHeartNum(Sp2::Swf::SglPlayerObject* pPlayer) {
     K_ASSERT(pPlayer != nullptr);
 
     int extHeartNum = ItemMgr::GetInstance().GetSwfSglExtHeartNum();
@@ -105,13 +185,13 @@ void SetHeartNum(Sp2::Swf::SglPlayerObject* pPlayer) {
 }
 
 /**
- * @brief SetHeartNum trampoline
+ * @brief SglSetHeartNum trampoline
  */
 TRAMPOLINE_DEF(0x8063A010, 0x8063A014){
     // clang-format off
     TRAMPOLINE_BEGIN
 
-    bl SetHeartNum
+    bl SglSetHeartNum
     li r0, 0
 
     TRAMPOLINE_END
@@ -123,13 +203,13 @@ TRAMPOLINE_DEF(0x8063A010, 0x8063A014){
  *
  * @param id Stage ID
  */
-Sp2::Cmn::EUnlockState GetSglStageState(UNKWORD, UNKWORD, u32 id) {
+Sp2::Cmn::EUnlockState SglGetStageState(UNKWORD, UNKWORD, u32 id) {
     bool unlock = ItemMgr::GetInstance().IsSwfSglStageUnlock(id);
 
     return unlock ? Sp2::Cmn::EUnlockState_Unlocked
                   : Sp2::Cmn::EUnlockState_Locked;
 }
-KM_BRANCH(0x802E4848, GetSglStageState);
+KM_BRANCH(0x802E4848, SglGetStageState);
 
 } // namespace Swf
 } // namespace AP

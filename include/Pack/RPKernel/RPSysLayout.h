@@ -15,6 +15,7 @@ class RPSysLytPicture;
 class RPSysLytAnmObj;
 class RPSysLytResAccessor;
 class RPSysMessage;
+class RPGrpScreen;
 
 /**
  * @brief NW4R layout wrapper with added features, such as support for

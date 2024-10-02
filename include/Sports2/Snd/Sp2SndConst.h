@@ -2,9 +2,6 @@
 #define SPORTS2_SND_CONST_H
 #include <Sports2/Sp2Types.h>
 
-/**
- * X macro definition
- */
 enum Sp2Snd {
     /* 0x000 */ STM_TITLE_BASE,
     /* 0x001 */ STM_TITLE,
