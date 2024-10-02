@@ -154,8 +154,8 @@ bool PrcIsObjFalling() {
 void SglSetHeartNum(Sp2::Swf::SglPlayerObject* pPlayer) {
     K_ASSERT(pPlayer != nullptr);
 
-    int extHeartNum = ItemMgr::GetInstance().GetSwfSglExtHeartNum();
-    pPlayer->setHeartNum(1 + extHeartNum);
+    int heartNum = ItemMgr::GetInstance().GetSwfSglHeartNum();
+    pPlayer->setHeartNum(heartNum);
 }
 
 /**

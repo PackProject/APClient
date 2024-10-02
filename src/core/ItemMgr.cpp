@@ -12,7 +12,7 @@ ItemMgr::ItemMgr()
     : mSwfVsBlockFlag(false),
       mSwfPrcPauseFlag(false),
       mSwfSglBlockFlag(false),
-      mSwfSglHeartFlag(0),
+      mSwfSglHeartFlag(1),
       mSwfSglStageFlag(0) {}
 
 /**
