@@ -1,8 +1,8 @@
-#include <Pack/RPKernel.h>
 #include <Sports2/Sp2Cmn.h>
 #include <Sports2/Sp2Snd.h>
 #include <Sports2/Sp2Swf.h>
 #include <core/ItemMgr.h>
+#include <hooks/hooks_Swf.h>
 #include <hooks/trampoline.h>
 #include <libkiwi.h>
 #include <types.h>
@@ -139,32 +139,6 @@ bool PrcIsObjFalling() {
     }
     }
 }
-
-/**
- * @brief Disables pausing in Swordplay (Speed Slice) when objects are falling,
- * if the AP item has not been obtained
- */
-void PrcTryPause() {
-    // clang-format off
-    if (RP_GET_INSTANCE(RPSysSceneMgr)->getCurrentSceneID() == kiwi::ESceneID_Sp2SwfScene
-        && RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->getSequence() == Sp2::Cmn::ESeq_Swf_Prc
-        && PrcIsObjFalling()) {
-        return;
-    }
-    // clang-format on
-
-    RP_GET_INSTANCE(RPSysSysWinMgr)->updatePauseClosed();
-}
-KM_CALL(0x8023536C, PrcTryPause);
-
-/**
- * @brief Tests whether the homebutton menu can be opened in Swordplay (Speed
- * Slice)
- */
-bool PrcCanHBM() {
-    return !PrcIsObjFalling();
-}
-KM_CALL(0x802431B0, PrcCanHBM);
 
 /******************************************************************************
  *
