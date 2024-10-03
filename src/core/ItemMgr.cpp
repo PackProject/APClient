@@ -39,6 +39,9 @@ void ItemMgr::SerializeImpl(Header& rHeader) const {
  * @brief Clears item state
  */
 void ItemMgr::Clear() {
+    mSportFlag = 0;
+    mCategoryFlag = 0;
+
     mSwfVsBlockFlag = false;
     mSwfPrcPauseFlag = false;
     mSwfSglBlockFlag = 0;

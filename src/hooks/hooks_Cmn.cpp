@@ -2,6 +2,7 @@
 #include <Pack/RPSystem.h>
 #include <Sports2/Sp2Cmn.h>
 #include <core/CosmeticMgr.h>
+#include <core/ItemMgr.h>
 #include <hooks/hooks_Swf.h>
 #include <hooks/trampoline.h>
 #include <libkiwi.h>
@@ -9,6 +10,12 @@
 
 namespace AP {
 namespace Cmn {
+
+/******************************************************************************
+ *
+ * Pausing
+ *
+ ******************************************************************************/
 
 /**
  * @brief Attempts to pause the game
@@ -46,6 +53,12 @@ bool TryHomeButton() {
 }
 KM_CALL(0x802431B0, TryHomeButton);
 
+/******************************************************************************
+ *
+ * Randomization
+ *
+ ******************************************************************************/
+
 /**
  * @brief Gets the random music ID that should be played instead of the
  * provided ID
@@ -69,7 +82,7 @@ u32 RandomizeBgm(u32 id) {
 /**
  * @brief RandomizeBgm trampoline
  */
-TRAMPOLINE_DEF(0x802B722C, 0x802B7230) {
+TRAMPOLINE_DEF(0x802B722C, 0x802B7230){
     // clang-format off
     TRAMPOLINE_BEGIN
 
@@ -81,6 +94,25 @@ TRAMPOLINE_DEF(0x802B722C, 0x802B7230) {
     blr
     // clang-format on
 }
+
+/******************************************************************************
+ *
+ * Menu
+ *
+ ******************************************************************************/
+
+/**
+ * @brief Tests whether the specified sequence ("category") is unlocked
+ *
+ * @param seq Sequence id
+ */
+Sp2::Cmn::EUnlockState GetSeqUnlockState(UNKWORD, Sp2::Cmn::ESaveSeq seq) {
+    bool unlock = ItemMgr::GetInstance().IsCategoryUnlock(seq);
+
+    return unlock ? Sp2::Cmn::EUnlockState_Unlocked
+                  : Sp2::Cmn::EUnlockState_Locked;
+}
+KM_BRANCH(0x80261F84, GetSeqUnlockState);
 
 } // namespace Cmn
 } // namespace AP

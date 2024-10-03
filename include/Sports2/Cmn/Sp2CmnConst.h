@@ -6,6 +6,26 @@ namespace Sp2 {
 namespace Cmn {
 
 /**
+ * @brief Sport ID
+ */
+enum ESport {
+    ESport_Swf,
+    ESport_Wkb,
+    ESport_Fld,
+    ESport_Arc,
+    ESport_Bsk,
+    ESport_Png,
+    ESport_Glf,
+    ESport_Bwl,
+    ESport_Jsk,
+    ESport_Can,
+    ESport_Bic,
+    ESport_Pln,
+
+    ESport_Max
+};
+
+/**
  * @brief Sequence ("category") ID
  */
 enum ESeq {
@@ -46,6 +66,45 @@ enum ESeq {
     ESeq_Bic = 8,    //!< Cycling (Road Race)
 
     ESeq_Omk = 1 //!< Skydiving
+};
+
+/**
+ * @brief Sequence ID in the save data
+ */
+enum ESaveSeq {
+    ESaveSeq_Swf_Sgl = 0, //!< Swordplay (Showdown)
+    ESaveSeq_Swf_Vs = 1,  //!< Swordplay (Duel)
+    ESaveSeq_Swf_Prc = 2, //!< Swordplay (Speed Slice)
+
+    ESaveSeq_Jsk_Rng = 3, //!< Power Cruising (Slalom Course)
+    ESaveSeq_Jsk_Vs = 4,  //!< Power Cruising (Slalom Course)
+
+    ESaveSeq_Fld = 6, //!< Frisbee Dog
+
+    ESaveSeq_Bsk_3pt = 7, //!< Basketball (3-Point Contest)
+    ESaveSeq_Bsk_Vs = 8,  //!< Basketball (Pickup Game)
+
+    ESaveSeq_Bwl_Std = 9,  //!< Bowling (Standard Game)
+    ESaveSeq_Bwl_100 = 10, //!< Bowling (100-Pin Game)
+    ESaveSeq_Bwl_Wal = 11, //!< Bowling (Spin Control)
+
+    ESaveSeq_Can_Vs = 12, //!< Canoeing (VS)
+    ESaveSeq_Can = 13,    //!< Canoeing (Speed Challenge)
+
+    ESaveSeq_Png_Ret = 14, //!< Table Tennis (Return Challenge)
+    ESaveSeq_Png = 15,     //!< Table Tennis (Match)
+
+    ESaveSeq_Pln = 17,    //!< Airplane (Island Flyover)
+    ESaveSeq_Pln_Vs = 18, //!< Airplane (Dogfight)
+
+    ESaveSeq_Dgl = 20, //!< Frisbee Golf
+
+    ESaveSeq_Bic_Vs = 21, //!< Cycling (VS)
+    ESaveSeq_Bic = 22,    //!< Cycling (Road Race)
+
+    ESaveSeq_Omk = 23, //!< Skydiving
+
+    ESaveSeq_Max
 };
 
 /**
