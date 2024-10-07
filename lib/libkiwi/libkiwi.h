@@ -19,6 +19,9 @@
 #include <libkiwi/core/kiwiSceneCreator.h>
 #include <libkiwi/core/kiwiSceneHookMgr.h>
 #include <libkiwi/core/kiwiThread.h>
+#include <libkiwi/crypt/kiwiBase64.h>
+#include <libkiwi/crypt/kiwiChecksum.h>
+#include <libkiwi/crypt/kiwiSHA1.h>
 #include <libkiwi/debug/kiwiAssert.h>
 #include <libkiwi/debug/kiwiDebugPrint.h>
 #include <libkiwi/debug/kiwiGeckoDebugger.h>
@@ -41,6 +44,7 @@
 #include <libkiwi/net/kiwiRvlRichPresence.h>
 #include <libkiwi/net/kiwiSocketBase.h>
 #include <libkiwi/net/kiwiSyncSocket.h>
+#include <libkiwi/net/kiwiWebSocket.h>
 #include <libkiwi/prim/kiwiArray.h>
 #include <libkiwi/prim/kiwiBitCast.h>
 #include <libkiwi/prim/kiwiHashMap.h>
@@ -57,7 +61,6 @@
 #include <libkiwi/util/kiwiAutoLock.h>
 #include <libkiwi/util/kiwiBitUtil.h>
 #include <libkiwi/util/kiwiBuildTarget.h>
-#include <libkiwi/util/kiwiChecksum.h>
 #include <libkiwi/util/kiwiDynamicSingleton.h>
 #include <libkiwi/util/kiwiExtView.h>
 #include <libkiwi/util/kiwiGlobalInstance.h>

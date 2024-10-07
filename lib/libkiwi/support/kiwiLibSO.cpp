@@ -25,6 +25,7 @@ enum {
     Ioctl_SOCreate = 15,
     Ioctl_SOGetHostID = 16,
     Ioctl_SOINetAtoN = 21,
+    Ioctl_SOGetAddrInfo = 24,
     Ioctl_SOStartup = 31,
 
     // dev/net/ncd/manage
@@ -748,6 +749,95 @@ void LibSO::GetHostID(SockAddr4& addr) {
     sLastError = SO_SUCCESS;
 }
 
+struct SOGetAddrInfoResult {
+    /* 0x000 */ SOAddrInfo info[35];
+    /* 0x460 */ SOSockAddr addr[35];
+};
+/**
+ * @brief Resolves the given hostname and service to an IP address
+ *
+ * @param[out] addr Resulting address
+ * @param name Hostname
+ * @param service Port/service
+ * @param type Requested type
+ * @return Success
+ */
+bool LibSO::ResolveHostName(SockAddrAny& addr, const String& name,
+                            const String& service, SOSockType type) {
+    K_ASSERT_EX(sDevNetIpTop.IsOpen(), "Please call LibSO::Initialize");
+
+    K_ASSERT_EX(type == SO_SOCK_STREAM || type == SO_SOCK_DGRAM,
+                "Invalid socket type (%d)", type);
+
+    TVector<IosVector> input;
+    TVector<IosVector> output;
+
+    IosString<char> iName(name);
+    input.PushBack(iName);
+
+    IosString<char> iService(service);
+    input.PushBack(iService);
+
+    // TODO: Would other hints be useful?
+    IosObject<SOAddrInfo> iHints;
+    std::memset(iHints.Base(), 0, iHints.Length());
+    iHints->type = type;
+    input.PushBack(iHints);
+
+    IosObject<SOGetAddrInfoResult> oResult;
+    output.PushBack(oResult);
+
+    s32 result = sDevNetIpTop.IoctlV(Ioctl_SOGetAddrInfo, input, output);
+    sLastError = static_cast<SOResult>(result);
+
+    if (result != SO_SUCCESS) {
+        std::memset(&addr, 0, sizeof(SockAddrAny));
+        return false;
+    }
+
+    // We just take the first good result
+    const SOSockAddr* pFoundAddr = nullptr;
+
+    for (int i = 0; i < LENGTHOF(oResult->info); i++) {
+        const SOAddrInfo& rInfo = oResult->info[i];
+
+        // No more results
+        if (rInfo.len == 0) {
+            break;
+        }
+
+        // Address family doesn't match
+        if (addr.family != 0 && rInfo.family != addr.family) {
+            continue;
+        }
+
+        // Socket type doesn't match
+        if (rInfo.type != type) {
+            continue;
+        }
+
+        // TODO: Why does Dolphin IOS provide bad length values?
+        // // IP version doesn't match
+        // if (addr.len != 0 && rInfo.len != addr.len) {
+        //     continue;
+        // }
+
+        pFoundAddr = &oResult->addr[i];
+        break;
+    }
+
+    if (pFoundAddr == nullptr) {
+        return false;
+    }
+
+    // Dolphin's IOS seems to give bad length so we fix it after the copy
+    u32 len = addr.len;
+    addr = *pFoundAddr;
+    addr.len = len;
+
+    return true;
+}
+
 /**
  * @brief Get socket option
  *
@@ -821,6 +911,165 @@ void LibSO::WaitForDHCP() {
     }
 
     sLastError = SO_SUCCESS;
+}
+
+/******************************************************************************
+ *
+ * SockAddr4
+ *
+ ******************************************************************************/
+
+/**
+ * @brief Constructor
+ */
+SockAddr4::SockAddr4() {
+    len = sizeof(SOSockAddrIn);
+    family = SO_AF_INET;
+    port = 0;
+    addr.raw = 0;
+}
+
+/**
+ * @brief Constructor
+ *
+ * @param host IPv4 address OR hostname
+ * @param _port Port
+ */
+SockAddr4::SockAddr4(const String& host, u16 _port) {
+    len = sizeof(SOSockAddrIn);
+    family = SO_AF_INET;
+    port = _port;
+
+    // Need to resolve if hostname isn't provided in dotted notation
+    bool success = LibSO::INetAtoN(host, *this) ||
+                   LibSO::ResolveHostName(*this, host, kiwi::ToString(port));
+
+    if (!success) {
+        K_LOG_EX("Could not resolve hostname: %s", host.CStr());
+        std::memset(this, 0, sizeof(SOSockAddrIn));
+    }
+}
+
+/**
+ * @brief Constructor
+ *
+ * @param _addr IPv4 address
+ * @param _port Port
+ */
+SockAddr4::SockAddr4(u32 _addr, u16 _port) {
+    len = sizeof(SOSockAddrIn);
+    family = SO_AF_INET;
+    port = _port;
+    addr.raw = _addr;
+}
+
+/**
+ * @brief Constructor
+ *
+ * @param _port Port
+ */
+SockAddr4::SockAddr4(u16 _port) {
+    len = sizeof(SOSockAddrIn);
+    family = SO_AF_INET;
+    port = _port;
+    addr.raw = 0;
+}
+
+/**
+ * @brief Constructor
+ *
+ * @param addr Socket address
+ */
+SockAddr4::SockAddr4(const SockAddrAny& addr) {
+    K_ASSERT_EX(addr.len == sizeof(SockAddr4), "Not for this class");
+    std::memcpy(this, &addr, addr.len);
+}
+
+/**
+ * @brief Assignment operator
+ *
+ * @param addr Other address
+ */
+SockAddr4& SockAddr4::operator=(const SockAddrAny& addr) {
+    K_ASSERT_EX(addr.len == sizeof(SockAddr4), "Not for this class");
+    std::memcpy(this, &addr, addr.len);
+    return *this;
+}
+
+/******************************************************************************
+ *
+ * SockAddr6
+ *
+ ******************************************************************************/
+
+/**
+ * @brief Constructor
+ */
+SockAddr6::SockAddr6() {
+    len = sizeof(SOSockAddrIn6);
+    family = SO_AF_INET6;
+    port = 0;
+    flowinfo = 0;
+    std::memset(&addr, 0, sizeof(SOInAddr6));
+    scope = 0;
+}
+
+/**
+ * @brief Constructor
+ *
+ * @param _addr IPv6 address (string)
+ * @param _port Port
+ */
+SockAddr6::SockAddr6(const String& _addr, u16 _port) {
+    len = sizeof(SOSockAddrIn6);
+    family = SO_AF_INET6;
+    port = _port;
+    flowinfo = 0;
+    scope = 0;
+
+    // Need to resolve if hostname isn't provided in dotted notation
+    bool success = LibSO::INetPtoN(_addr, *this) ||
+                   LibSO::ResolveHostName(*this, _addr, kiwi::ToString(port));
+
+    if (!success) {
+        K_LOG_EX("Could not resolve hostname: %s", _addr.CStr());
+        std::memset(this, 0, sizeof(SOSockAddrIn6));
+    }
+}
+
+/**
+ * @brief Constructor
+ *
+ * @param _port Port
+ */
+SockAddr6::SockAddr6(u16 _port) {
+    len = sizeof(SOSockAddrIn6);
+    family = SO_AF_INET6;
+    port = _port;
+    flowinfo = 0;
+    std::memset(&addr, 0, sizeof(SOInAddr6));
+    scope = 0;
+}
+
+/**
+ * @brief Constructor
+ *
+ * @param addr Socket address
+ */
+SockAddr6::SockAddr6(const SockAddrAny& addr) {
+    K_ASSERT_EX(addr.len == sizeof(SOSockAddrIn6), "Not for this class");
+    std::memcpy(this, &addr, addr.len);
+}
+
+/**
+ * @brief Assignment operator
+ *
+ * @param addr Other address
+ */
+SockAddr6& SockAddr6::operator=(const SockAddrAny& addr) {
+    K_ASSERT_EX(addr.len == sizeof(SOSockAddrIn6), "Not for this class");
+    std::memcpy(this, &addr, addr.len);
+    return *this;
 }
 
 } // namespace kiwi

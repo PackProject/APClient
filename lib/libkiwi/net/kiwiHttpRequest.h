@@ -16,8 +16,7 @@ class SyncSocket;
  * @brief HTTP error
  */
 enum EHttpErr {
-    EHttpErr_Success, // OK
-
+    EHttpErr_Success,     // OK
     EHttpErr_CantConnect, // Can't connect to the server
     EHttpErr_BadResponse, // Malformed server response
     EHttpErr_TimedOut,    // Connection timed out
@@ -30,6 +29,9 @@ enum EHttpErr {
  */
 enum EHttpStatus {
     // TODO: Determine which additional codes are useful here
+
+    // Informational
+    EHttpStatus_SwtchProto = 101, // Switching Protocols
 
     // Successful
     EHttpStatus_OK = 200, // OK
