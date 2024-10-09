@@ -31,8 +31,6 @@ public:
     /**
      * @brief Gets the random music ID that should be played instead of the
      * provided ID
-     * @note If random music is disabled, this function will return the original
-     * ID
      *
      * @param id Standard music ID
      */
