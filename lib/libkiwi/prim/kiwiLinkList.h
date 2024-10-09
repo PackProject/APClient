@@ -379,33 +379,6 @@ private:
 //! @}
 } // namespace kiwi
 
-/**
- * @brief Applies code to each list element
- * @note The current iterator can be accessed through the variable 'it'.
- *
- * @param rList List reference
- * @param T List element type
- * @param stmt Code to run during each iteration
- */
-#define K_LIST_FOREACH(rList, T, stmt)                                         \
-    for (TList<T>::Iterator it = rList.Begin(); it != rList.End(); ++it) {     \
-        stmt                                                                   \
-    }
-
-/**
- * @brief Applies code to each list element (const-view)
- * @note The current iterator can be accessed through the variable 'it'.
- *
- * @param rList List reference (const-view)
- * @param T List element type
- * @param stmt Code to run during each iteration
- */
-#define K_LIST_FOREACH_CONST(rList, T, stmt)                                   \
-    for (TList<T>::ConstIterator it = rList.Begin(); it != rList.End();        \
-         ++it) {                                                               \
-        stmt                                                                   \
-    }
-
 // Implementation header
 #ifndef LIBKIWI_PRIM_LINKLIST_IMPL_HPP
 #include <libkiwi/prim/kiwiLinkListImpl.hpp>

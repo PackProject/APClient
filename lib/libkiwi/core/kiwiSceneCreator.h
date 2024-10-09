@@ -206,7 +206,7 @@ public:
      * @param pColor Fade color (optional)
      * @return Success
      */
-    bool ChangeSceneAfterFade(s32 id, const nw4r::ut::Color* pColor = NULL);
+    bool ChangeSceneAfterFade(s32 id, const nw4r::ut::Color* pColor = nullptr);
 #endif
 
     /**
