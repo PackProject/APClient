@@ -155,8 +155,9 @@ public:
      * @param rName Field name
      * @param rValue Field value
      */
-    void SetHeaderField(const String& rName, const String& rValue) {
-        mHeader.Insert(rName, rValue);
+    template <typename T>
+    void SetHeaderField(const String& rName, const T& rValue) {
+        mHeader.Insert(rName, kiwi::ToString(rValue));
     }
 
     /**

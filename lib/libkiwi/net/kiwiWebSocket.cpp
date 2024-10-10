@@ -101,7 +101,7 @@ String GenerateKey() {
 String GenerateAccept(const String& rKey) {
     String expected = rKey + WEBSOCKET_KEY_CONST;
     expected = SHA1Hash(expected, expected.Length());
-    expected = B64Encode(expected, serverKeySha1.Length());
+    expected = B64Encode(expected, expected.Length());
     return expected;
 }
 
@@ -138,13 +138,11 @@ WebSocket::~WebSocket() {
  * @param pCallback Connection callback
  * @param pArg Callback user argument
  */
-bool WebSocket::Connect(const String& rHost, Callback pCallback, void* pArg) {
+void WebSocket::Connect(const String& rHost, Callback pCallback, void* pArg) {
     SockAddrAny addr;
-    if (!LibSO::ResolveHostName(addr, rHost, "80")) {
-        return false;
+    if (LibSO::ResolveHostName(addr, rHost, "80")) {
+        Connect(addr, pCallback, pArg);
     }
-
-    Connect(addr, pCallback, pArg);
 }
 
 /**
@@ -154,10 +152,12 @@ bool WebSocket::Connect(const String& rHost, Callback pCallback, void* pArg) {
  * @param pCallback Connection callback
  * @param pArg Callback user argument
  */
-bool WebSocket::Connect(const SockAddrAny& rAddr, Callback pCallback,
+void WebSocket::Connect(const SockAddrAny& rAddr, Callback pCallback,
                         void* pArg) {
-    K_ASSERT(IsOpen());
-    K_ASSERT(addr.IsValid());
+    K_ASSERT(mpSocket != nullptr);
+    K_ASSERT(mpSocket->IsOpen());
+    K_ASSERT(rAddr.IsValid());
+
     K_WARN_EX(rAddr.port != 80,
               "WebSocket connections are expected to use port 80.");
     K_WARN_EX(pCallback == nullptr,
@@ -169,8 +169,8 @@ bool WebSocket::Connect(const SockAddrAny& rAddr, Callback pCallback,
         delete mpSocket;
     }
 
-    SOAddrFamily family =
-        rAddr.len == sizeof(SOSockAddrIn) ? SO_AF_INET : SO_AF_INET6;
+    SOProtoFamily family =
+        rAddr.len == sizeof(SOSockAddrIn) ? SO_PF_INET : SO_PF_INET6;
 
     // WebSocket uses TCP
     mpSocket = new AsyncSocket(family, SO_SOCK_STREAM);
@@ -199,23 +199,25 @@ void WebSocket::SocketCallbackFunc(SOResult result, void* pArg) {
     case EState_Connecting: {
         // Connection to the server failed
         if (result != SO_SUCCESS && result != SO_EISCONN) {
-            if (mpConnectCallback != nullptr) {
-                mpConnectCallback(EResult_CantConnect, mpConnectCallbackArg);
+            if (p->mpConnectCallback != nullptr) {
+                p->mpConnectCallback(EResult_CantConnect,
+                                     p->mpConnectCallbackArg);
             }
 
-            mState = EState_None;
+            p->mState = EState_None;
             return;
         }
 
         // Request connection upgrade to WebSocket
-        mpRequest = new HttpRequest(p->mpSocket);
-        K_ASSERT(mpRequest != nullptr);
+        p->mpRequest = new HttpRequest(p->mpSocket);
+        K_ASSERT(p->mpRequest != nullptr);
 
-        mpRequest->SetHeaderField("Connection", "Upgrade");
-        mpRequest->SetHeaderField("Upgrade", "websocket");
-        mpRequest->SetHeaderField("Sec-WebSocket-Version", VERSION);
-        mpRequest->SetHeaderField("Sec-WebSocket-Key", GenerateKey());
-        mpRequest->SendAsync(RequestCallback, this);
+        p->mpRequest->SetHeaderField("Connection", "Upgrade");
+        p->mpRequest->SetHeaderField("Upgrade", "websocket");
+        p->mpRequest->SetHeaderField("Sec-WebSocket-Version",
+                                     WEBSOCKET_VERSION);
+        p->mpRequest->SetHeaderField("Sec-WebSocket-Key", GenerateKey());
+        p->mpRequest->SendAsync(RequestCallback, p);
         break;
     }
 
@@ -242,8 +244,8 @@ void WebSocket::RequestCallback(const HttpResponse& rResp, void* pArg) {
     // Validate upgrade-related fields
     if (rResp.error != EHttpErr_Success ||
         rResp.status != EHttpStatus_SwitchProto ||
-        rResp.header["Connection"] != "Upgrade" ||
-        rResp.header["Upgrade"] != "websocket") {
+        rResp.header.Get("Connection") != "Upgrade" ||
+        rResp.header.Get("Upgrade") != "websocket") {
 
         if (p->mpConnectCallback != nullptr) {
             p->mpConnectCallback(EResult_CantUpgrade, p->mpConnectCallbackArg);
@@ -254,7 +256,7 @@ void WebSocket::RequestCallback(const HttpResponse& rResp, void* pArg) {
     }
 
     // Validate server secret
-    if (rResp.header["Sec-WebSocket-Accept"] !=
+    if (rResp.header.Get("Sec-WebSocket-Accept") !=
         GenerateAccept(*p->mpRequest->GetHeaderField("Sec-WebSocket-Key"))) {
 
         if (p->mpConnectCallback != nullptr) {
@@ -269,8 +271,8 @@ void WebSocket::RequestCallback(const HttpResponse& rResp, void* pArg) {
         p->mpConnectCallback(EResult_Success, p->mpConnectCallbackArg);
     }
 
-    mState = EState_Receiving;
-    SocketCallbackFunc(SO_SUCCESS, this);
+    p->mState = EState_Receiving;
+    SocketCallbackFunc(SO_SUCCESS, p);
 }
 
 } // namespace kiwi
