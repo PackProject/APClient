@@ -1,12 +1,15 @@
+#include <types.h>
+
+#include "core/CosmeticMgr.h"
+#include "core/ItemMgr.h"
+#include "hooks/hooks_Swf.h"
+#include "hooks/trampoline.h"
+
 #include <Pack/RPKernel.h>
 #include <Pack/RPSystem.h>
 #include <Sports2/Sp2Cmn.h>
-#include <core/CosmeticMgr.h>
-#include <core/ItemMgr.h>
-#include <hooks/hooks_Swf.h>
-#include <hooks/trampoline.h>
+
 #include <libkiwi.h>
-#include <types.h>
 
 namespace AP {
 namespace Cmn {

@@ -1,4 +1,5 @@
-#include <core/ItemMgr.h>
+#include "core/ItemMgr.h"
+
 #include <libkiwi.h>
 
 K_DYNAMIC_SINGLETON_IMPL(AP::ItemMgr);
@@ -47,6 +48,22 @@ void ItemMgr::Clear() {
     mSwfSglBlockFlag = 0;
     mSwfSglHeartFlag = 0b001;
     mSwfSglStageFlag = 0;
+}
+
+/**
+ * @brief Sets debug state
+ */
+void ItemMgr::Debug() {
+    kiwi::Random r;
+
+    mSportFlag = r.NextU32();
+    mCategoryFlag = r.NextU32();
+
+    mSwfVsBlockFlag = r.CoinFlip();
+    mSwfPrcPauseFlag = r.CoinFlip();
+    mSwfSglBlockFlag = r.CoinFlip();
+    mSwfSglHeartFlag = r.NextU32();
+    mSwfSglStageFlag = r.NextU32();
 }
 
 } // namespace AP

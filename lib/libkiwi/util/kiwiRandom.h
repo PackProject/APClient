@@ -1,9 +1,11 @@
 #ifndef LIBKIWI_UTIL_RANDOM_H
 #define LIBKIWI_UTIL_RANDOM_H
-#include <algorithm>
 #include <libkiwi/debug/kiwiAssert.h>
 #include <libkiwi/k_types.h>
+
 #include <revolution/OS.h>
+
+#include <algorithm>
 
 namespace kiwi {
 //! @addtogroup libkiwi_util

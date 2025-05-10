@@ -24,7 +24,7 @@ struct Frame {
     /* 0x00:2 */ u8 rsv2 : 1;   //! Reserved, must be zero
     /* 0x00:3 */ u8 rsv3 : 1;   //! Reserved, must be zero
     /* 0x00:4 */ u8 opcode : 4; //! Frame opcode
-    /* 0x01:0 */ u8 masked : 1; //! Frame is masked (and masking key is present)
+    /* 0x01:0 */ u8 mask : 1;   //! Frame is masked (and masking key is present)
     /* 0x01:1 */ u8 length : 7; //! Payload length
 
     union {
@@ -32,13 +32,13 @@ struct Frame {
         union {
             struct {
                 u16 length;
-                u8 payload[];
+                u8 payload[1];
             } unmasked;
 
             struct {
                 u16 length;
                 u32 masking;
-                u8 payload[];
+                u8 payload[1];
             } masked;
         } len16;
 
@@ -46,24 +46,24 @@ struct Frame {
         union {
             struct {
                 u64 length;
-                u8 payload[];
+                u8 payload[1];
             } unmasked;
 
             struct {
                 u64 length;
                 u32 masking;
-                u8 payload[];
+                u8 payload[1];
             } masked;
         } len64;
 
         union {
             struct {
-                u8 payload[];
+                u8 payload[1];
             } unmasked;
 
             struct {
                 u32 masking;
-                u8 payload[];
+                u8 payload[1];
             } masked;
         };
     };
@@ -139,9 +139,15 @@ WebSocket::~WebSocket() {
  * @param pArg Callback user argument
  */
 void WebSocket::Connect(const String& rHost, Callback pCallback, void* pArg) {
-    SockAddrAny addr;
+    // Assume port 80
+    SockAddr4 addr;
     if (LibSO::ResolveHostName(addr, rHost, "80")) {
         Connect(addr, pCallback, pArg);
+        return;
+    }
+
+    if (pCallback != nullptr) {
+        pCallback(EResult_CantConnect, pArg);
     }
 }
 
@@ -154,12 +160,10 @@ void WebSocket::Connect(const String& rHost, Callback pCallback, void* pArg) {
  */
 void WebSocket::Connect(const SockAddrAny& rAddr, Callback pCallback,
                         void* pArg) {
-    K_ASSERT(mpSocket != nullptr);
-    K_ASSERT(mpSocket->IsOpen());
     K_ASSERT(rAddr.IsValid());
-
     K_WARN_EX(rAddr.port != 80,
               "WebSocket connections are expected to use port 80.");
+
     K_WARN_EX(pCallback == nullptr,
               "You probably want to use a callback function.");
 
@@ -176,6 +180,8 @@ void WebSocket::Connect(const SockAddrAny& rAddr, Callback pCallback,
     mpSocket = new AsyncSocket(family, SO_SOCK_STREAM);
     K_ASSERT(mpSocket != nullptr);
 
+    K_LOG("Connecting...\n");
+
     mState = EState_Connecting;
     mpConnectCallback = pCallback;
     mpConnectCallbackArg = pArg;
@@ -190,6 +196,8 @@ void WebSocket::Connect(const SockAddrAny& rAddr, Callback pCallback,
  */
 void WebSocket::SocketCallbackFunc(SOResult result, void* pArg) {
     K_ASSERT(pArg != nullptr);
+
+    K_LOG("SocketCallbackFunc...\n");
 
     // User argument is this object
     WebSocket* p = static_cast<WebSocket*>(pArg);
@@ -207,6 +215,8 @@ void WebSocket::SocketCallbackFunc(SOResult result, void* pArg) {
             p->mState = EState_None;
             return;
         }
+
+        K_LOG("Connected, upgrading...\n");
 
         // Request connection upgrade to WebSocket
         p->mpRequest = new HttpRequest(p->mpSocket);

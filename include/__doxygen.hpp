@@ -366,10 +366,6 @@
 //! @defgroup libkiwi_util util
 //! @brief Utilities
 
-//! @ingroup libkiwi
-//! @defgroup libkiwi_crypt crypt
-//! @brief Cryptography/encoding
-
 // END libkiwi
 //
 

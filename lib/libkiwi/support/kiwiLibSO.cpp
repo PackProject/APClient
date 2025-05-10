@@ -141,7 +141,7 @@ s32 LibSO::Socket(SOProtoFamily family, SOSockType type) {
 
     args->family = family;
     args->type = type;
-    // IOS must auto-detect protocol
+    // Only IPPROTO_IP is supported by IOS
     args->protocol = SO_IPPROTO_IP;
 
     s32 result = sDevNetIpTop.Ioctl(Ioctl_SOCreate, args, dummy);
@@ -203,14 +203,12 @@ SOResult LibSO::Listen(SOSocket socket, s32 backlog) {
  */
 s32 LibSO::Accept(SOSocket socket, SockAddrAny& addr) {
     K_ASSERT_EX(sDevNetIpTop.IsOpen(), "Please call LibSO::Initialize");
-
-    K_ASSERT_EX(addr.len == sizeof(SockAddr4) || addr.len == sizeof(SockAddr6),
-                "Invalid address length (%d)", addr.len);
+    K_ASSERT(addr.IsValid());
 
     IosObject<s32> fd(socket);
-
-    // Address length is specified by input
     IosObject<SockAddrAny> out;
+
+    // Input hints at address type
     out->len = addr.len;
 
     // Result >= 0 == peer descriptor
@@ -218,7 +216,7 @@ s32 LibSO::Accept(SOSocket socket, SockAddrAny& addr) {
     sLastError = result >= 0 ? SO_SUCCESS : static_cast<SOResult>(result);
 
     if (result >= 0) {
-        std::memcpy(&addr, &*out, out->len);
+        addr = *out;
     }
 
     return result;
@@ -233,16 +231,13 @@ struct SOBindArgs {
  * @brief Binds a name to a socket
  *
  * @param socket Socket descriptor
- * @param addr[in,out] Local address (zero for random port)
+ * @param[in,out] addr Local address (zero for random port)
  * @return IOS error code
  */
 SOResult LibSO::Bind(SOSocket socket, SockAddrAny& addr) {
     K_ASSERT_EX(sDevNetIpTop.IsOpen(), "Please call LibSO::Initialize");
-
-    K_ASSERT_EX(addr.len == sizeof(SockAddr4) || addr.len == sizeof(SockAddr6),
-                "Invalid address length (%d)", addr.len);
-
-    K_ASSERT_EX(addr.port != 0, "Port auto-detect not supported by IOS");
+    K_ASSERT(addr.IsValid());
+    K_ASSERT_EX(addr.port != 0, "IOS cannot assign random ports");
 
     IosObject<SOBindArgs> args;
     IosVector dummy;
@@ -271,9 +266,7 @@ struct SOConnectArgs {
  */
 SOResult LibSO::Connect(SOSocket socket, const SockAddrAny& addr) {
     K_ASSERT_EX(sDevNetIpTop.IsOpen(), "Please call LibSO::Initialize");
-
-    K_ASSERT_EX(addr.len == sizeof(SockAddr4) || addr.len == sizeof(SockAddr6),
-                "Invalid address length (%d)", addr.len);
+    K_ASSERT(addr.IsValid());
 
     IosObject<SOConnectArgs> args;
     IosVector dummy;
@@ -297,20 +290,19 @@ SOResult LibSO::Connect(SOSocket socket, const SockAddrAny& addr) {
  */
 SOResult LibSO::GetSockName(SOSocket socket, SockAddrAny& addr) {
     K_ASSERT_EX(sDevNetIpTop.IsOpen(), "Please call LibSO::Initialize");
-
-    K_ASSERT_EX(addr.len == sizeof(SockAddr4) || addr.len == sizeof(SockAddr6),
-                "Invalid address length (%d)", addr.len);
+    K_ASSERT(addr.IsValid());
 
     IosObject<s32> fd(socket);
-
     IosObject<SockAddrAny> self;
+
+    // Input hints at address type
     self->len = addr.len;
 
     s32 result = sDevNetIpTop.Ioctl(Ioctl_SOGetSocketName, fd, self);
     sLastError = static_cast<SOResult>(result);
 
     if (result >= 0) {
-        std::memcpy(&addr, &*self, self->len);
+        addr = *self;
     }
 
     return sLastError;
@@ -325,20 +317,19 @@ SOResult LibSO::GetSockName(SOSocket socket, SockAddrAny& addr) {
  */
 SOResult LibSO::GetPeerName(SOSocket socket, SockAddrAny& addr) {
     K_ASSERT_EX(sDevNetIpTop.IsOpen(), "Please call LibSO::Initialize");
-
-    K_ASSERT_EX(addr.len == sizeof(SockAddr4) || addr.len == sizeof(SockAddr6),
-                "Invalid address length (%d)", addr.len);
+    K_ASSERT(addr.IsValid());
 
     IosObject<s32> fd(socket);
-
     IosObject<SockAddrAny> peer;
+
+    // Input hints at address type
     peer->len = addr.len;
 
     s32 result = sDevNetIpTop.Ioctl(Ioctl_SOGetPeerName, fd, peer);
     sLastError = static_cast<SOResult>(result);
 
     if (result >= 0) {
-        std::memcpy(&addr, &*peer, peer->len);
+        addr = *peer;
     }
 
     return sLastError;
@@ -389,9 +380,7 @@ s32 LibSO::RecvFrom(SOSocket socket, void* dst, u32 len, u32 flags,
                     SockAddrAny& addr) {
     K_ASSERT_EX(sDevNetIpTop.IsOpen(), "Please call LibSO::Initialize");
     K_ASSERT(dst != nullptr);
-
-    K_ASSERT_EX(addr.len == sizeof(SockAddr4) || addr.len == sizeof(SockAddr6),
-                "Invalid address length (%d)", addr.len);
+    K_ASSERT(addr.IsValid());
 
     return RecvImpl(socket, dst, len, flags, &addr);
 }
@@ -441,9 +430,7 @@ s32 LibSO::SendTo(SOSocket socket, const void* src, u32 len, u32 flags,
                   const SockAddrAny& addr) {
     K_ASSERT_EX(sDevNetIpTop.IsOpen(), "Please call LibSO::Initialize");
     K_ASSERT(src != nullptr);
-
-    K_ASSERT_EX(addr.len == sizeof(SockAddr4) || addr.len == sizeof(SockAddr6),
-                "Invalid address length (%d)", addr.len);
+    K_ASSERT(addr.IsValid());
 
     return SendImpl(socket, src, len, flags, &addr);
 }
@@ -466,10 +453,7 @@ s32 LibSO::RecvImpl(SOSocket socket, void* dst, u32 len, u32 flags,
                     SockAddrAny* addr) {
     K_ASSERT_EX(sDevNetIpTop.IsOpen(), "Please call LibSO::Initialize");
     K_ASSERT(dst != nullptr);
-
-    K_ASSERT_EX(addr == nullptr || addr->len == sizeof(SockAddr4) ||
-                    addr->len == sizeof(SockAddr6),
-                "Invalid address length (%d)", addr->len);
+    K_ASSERT(addr == nullptr || addr->IsValid());
 
     TVector<IosVector> input;
     TVector<IosVector> output;
@@ -521,10 +505,7 @@ s32 LibSO::SendImpl(SOSocket socket, const void* src, u32 len, u32 flags,
                     const SockAddrAny* addr) {
     K_ASSERT_EX(sDevNetIpTop.IsOpen(), "Please call LibSO::Initialize");
     K_ASSERT(src != nullptr);
-
-    K_ASSERT_EX(addr == nullptr || addr->len == sizeof(SockAddr4) ||
-                    addr->len == sizeof(SockAddr6),
-                "Invalid address length (%d)", addr->len);
+    K_ASSERT(addr == nullptr || addr->IsValid());
 
     TVector<IosVector> input;
     TVector<IosVector> output;
@@ -542,8 +523,8 @@ s32 LibSO::SendImpl(SOSocket socket, const void* src, u32 len, u32 flags,
 
     // Copy in destination address
     if (addr != nullptr) {
-        args->hasDest = TRUE;
         args->dest = *addr;
+        args->hasDest = TRUE;
     } else {
         args->hasDest = FALSE;
     }
@@ -769,6 +750,11 @@ bool LibSO::ResolveHostName(SockAddrAny& addr, const String& name,
     K_ASSERT_EX(type == SO_SOCK_STREAM || type == SO_SOCK_DGRAM,
                 "Invalid socket type (%d)", type);
 
+    if (!addr.IsValid()) {
+        K_LOG("Defaulting to IPv4\n");
+        addr = SockAddr4();
+    }
+
     TVector<IosVector> input;
     TVector<IosVector> output;
 
@@ -791,7 +777,7 @@ bool LibSO::ResolveHostName(SockAddrAny& addr, const String& name,
     sLastError = static_cast<SOResult>(result);
 
     if (result != SO_SUCCESS) {
-        std::memset(&addr, 0, sizeof(SockAddrAny));
+        addr = SockAddrAny();
         return false;
     }
 
@@ -816,7 +802,7 @@ bool LibSO::ResolveHostName(SockAddrAny& addr, const String& name,
             continue;
         }
 
-        // TODO: Why does Dolphin IOS provide bad length values?
+        // TODO: Why does Dolphin provide bad length values?
         // // IP version doesn't match
         // if (addr.len != 0 && rInfo.len != addr.len) {
         //     continue;
@@ -830,7 +816,7 @@ bool LibSO::ResolveHostName(SockAddrAny& addr, const String& name,
         return false;
     }
 
-    // Dolphin's IOS seems to give bad length so we fix it after the copy
+    // TODO: Dolphin seems to give bad length, so we fix it after the copy
     u32 len = addr.len;
     addr = *pFoundAddr;
     addr.len = len;
@@ -852,9 +838,11 @@ SOResult LibSO::GetSockOpt(SOSocket socket, SOSockOptLevel level, SOSockOpt opt,
                            void* val, u32 len) {
     K_ASSERT_EX(sDevNetIpTop.IsOpen(), "Please call LibSO::Initialize");
 
-    K_ASSERT_EX(false, "Not implemented");
+    // TODO: Implement
+    K_ASSERT_EX(false, "Not implemented.");
+
     sLastError = SO_SUCCESS;
-    return SO_SUCCESS;
+    return sLastError;
 }
 
 struct SOSetSockOptArgs {
@@ -903,11 +891,9 @@ void LibSO::WaitForDHCP() {
     K_ASSERT_EX(sDevNetIpTop.IsOpen(), "Please call LibSO::Initialize");
 
     SockAddr4 addr;
-    GetHostID(addr);
-
     while (addr.addr.raw == 0) {
-        OSSleepTicks(OS_MSEC_TO_TICKS(10));
         GetHostID(addr);
+        OSSleepTicks(OS_MSEC_TO_TICKS(10));
     }
 
     sLastError = SO_SUCCESS;

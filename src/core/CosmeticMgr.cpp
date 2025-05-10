@@ -1,4 +1,5 @@
-#include <core/CosmeticMgr.h>
+#include "core/CosmeticMgr.h"
+
 #include <libkiwi.h>
 
 K_DYNAMIC_SINGLETON_IMPL(AP::CosmeticMgr);
@@ -41,9 +42,21 @@ void CosmeticMgr::SerializeImpl(Header& rHeader) const {
  */
 void CosmeticMgr::Clear() {
     mRandomBgmFlag = false;
-    for (int i = 0; i < BGM_ID_MAX - BGM_ID_MIN; i++) {
+    for (int i = 0; i < K_LENGTHOF(mRandomBgmMapping); i++) {
         mRandomBgmMapping[i] = i;
     }
+}
+
+/**
+ * @brief Sets debug state
+ */
+void CosmeticMgr::Debug() {
+    for (int i = 0; i < K_LENGTHOF(mRandomBgmMapping); i++) {
+        mRandomBgmMapping[i] = i;
+    }
+
+    kiwi::Shuffle(mRandomBgmMapping, K_LENGTHOF(mRandomBgmMapping));
+    mRandomBgmFlag = true;
 }
 
 } // namespace AP

@@ -22,6 +22,7 @@ enum EHttpErr {
     EHttpErr_TimedOut,    // Connection timed out
     EHttpErr_Closed,      // Connection closed
     EHttpErr_Socket,      // Misc. socket error
+    EHttpErr_Usage,       // Invalid usage
 };
 
 /**
@@ -29,6 +30,7 @@ enum EHttpErr {
  */
 enum EHttpStatus {
     // TODO: Determine which additional codes are useful here
+    EHttpStatus_None = -1,
 
     // Informational
     EHttpStatus_SwitchProto = 101, // Switching Protocols
@@ -60,12 +62,14 @@ struct HttpResponse {
     /**
      * @brief Constructor
      */
-    HttpResponse() : error(EHttpErr_Success), status(EHttpStatus_OK) {}
+    HttpResponse()
+        : error(EHttpErr_Success), exError(0), status(EHttpStatus_None) {}
 
-    EHttpErr error;              // Error code
-    EHttpStatus status;          // Status code
-    TMap<String, String> header; // Response header
-    String body;                 // Response body/payload
+    EHttpErr error;              //!< Error code
+    s32 exError;                 //!< Internal error code
+    EHttpStatus status;          //!< Status code
+    TMap<String, String> header; //!< Response header
+    String body;                 //!< Response body/payload
 };
 
 /**
@@ -97,13 +101,15 @@ public:
      * @brief Constructor
      *
      * @param rHost Server hostname
+     * @param port Connection port
      */
-    explicit HttpRequest(const String& rHost);
+    HttpRequest(const String& rHost, u16 port = DEFAULT_PORT);
 
     /**
      * @brief Constructor
+     * @note The provided socket will outlive the HTTP request
      *
-     * @param pSocket Socket connected to server
+     * @param pSocket Socket connected to the server
      */
     explicit HttpRequest(SocketBase* pSocket);
 
@@ -178,7 +184,7 @@ public:
      */
     template <typename T>
     void SetParameter(const String& rName, const T& rValue) {
-        SetParameter(rName, kiwi::ToString(rValue));
+        mParams.Insert(rName, kiwi::ToString(rValue));
     }
 
     /**
@@ -215,10 +221,10 @@ private:
     bool Receive();
 
 private:
-    //! HTTP connection port
-    static const u16 PORT = 80;
+    //! Default port for HTTP connections
+    static const u16 DEFAULT_PORT = 80;
     //! Default connection timeout, in milliseconds
-    static const u32 DEFAULT_TIMEOUT = 2000;
+    static const u32 DEFAULT_TIMEOUT = 10000;
     //! Size of temporary buffer when receiving a response
     static const int TEMP_BUFFER_SIZE = 512;
 
@@ -228,10 +234,15 @@ private:
     static const String PROTOCOL_VERSION;
 
 private:
-    EMethod mMethod;  //!< Request method
-    String mHostName; //!< Server host name
-    String mResource; //!< Requested resource
-    u32 mTimeOut;     //!< Connection timeout
+    bool mIsSent; //!< Whether this request object has been used
+
+    String mHost; //!< Server host name
+    u16 mPort;    //!< Server port
+
+    EMethod mMethod;        //!< Request method
+    String mResource;       //!< Requested resource
+    HttpResponse mResponse; //!< Server response
+    u32 mTimeOut;           //!< Connection timeout
 
     SocketBase* mpSocket; //!< Connection to server
     bool mIsUserSocket;   //!< Whether the socket is owned by the user
@@ -239,9 +250,8 @@ private:
     TMap<String, String> mParams; //!< URL parameters
     TMap<String, String> mHeader; //!< Header fields
 
-    HttpResponse mResponse; //!< Server response
-    Callback mpCallback;    //!< Response callback
-    void* mpCallbackArg;    //!< Callback user argument
+    Callback mpCallback; //!< Response callback
+    void* mpCallbackArg; //!< Callback user argument
 };
 
 //! @}

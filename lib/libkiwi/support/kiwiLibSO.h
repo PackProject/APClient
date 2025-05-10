@@ -118,8 +118,8 @@ struct SockAddrAny : public SOSockAddr {
      * @brief Tests whether the address is valid
      */
     bool IsValid() const {
-        return len == sizeof(SOSockAddrIn) && family == SO_AF_INET ||
-               len == sizeof(SOSockAddrIn6) && family == SO_AF_INET6;
+        return (len == sizeof(SOSockAddrIn) && family == SO_AF_INET) ||
+               (len == sizeof(SOSockAddrIn6) && family == SO_AF_INET6);
     }
 };
 
@@ -235,6 +235,14 @@ struct SockAddr6 : public SOSockAddrIn6 {
  */
 K_INLINE String ToString(const SockAddrAny& t) {
     return Format("%s:%d", LibSO::INetNtoP(t).CStr(), t.port);
+}
+
+/**
+ * @brief Access data length
+ */
+template <> K_INLINE u32 IosObject<SockAddrAny>::Length() const {
+    // With SockAddrAny we can't rely on sizeof, as the class is a union
+    return Ref().len;
 }
 
 K_STATIC_ASSERT(sizeof(SockAddrAny) == sizeof(SOSockAddr));

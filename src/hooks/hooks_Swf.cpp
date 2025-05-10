@@ -1,11 +1,13 @@
+#include "hooks/hooks_Swf.h"
+
+#include "core/ItemMgr.h"
+#include "hooks/trampoline.h"
+
 #include <Sports2/Sp2Cmn.h>
 #include <Sports2/Sp2Snd.h>
 #include <Sports2/Sp2Swf.h>
-#include <core/ItemMgr.h>
-#include <hooks/hooks_Swf.h>
-#include <hooks/trampoline.h>
+
 #include <libkiwi.h>
-#include <types.h>
 
 namespace AP {
 namespace Swf {
@@ -24,11 +26,11 @@ namespace Swf {
  */
 void TryBlock(Sp2::Swf::UserCtrl* pUserCtrl,
               const Sp2::Cmn::Controller* pController) {
-    K_ASSERT(pUserCtrl != nullptr);
-    K_ASSERT(pController != nullptr);
+    ASSERT(pUserCtrl != nullptr);
+    ASSERT(pController != nullptr);
 
-    bool pressed = pController->getCoreStatus()->trig & EGG::CORE_BTN_B;
-    bool held = pController->getCoreStatus()->hold & EGG::CORE_BTN_B;
+    bool pressed = pController->getCoreStatus()->trig & EGG::cCORE_FSSTICK_B;
+    bool held = pController->getCoreStatus()->hold & EGG::cCORE_FSSTICK_B;
 
     // Blocking is controlled by the B Button
     if (!held) {
@@ -57,7 +59,7 @@ void TryBlock(Sp2::Swf::UserCtrl* pUserCtrl,
     }
 
     default: {
-        K_ASSERT_EX(false, "Invalid sequence %d", sequence);
+        ASSERT_EX(false, "Invalid sequence %d", sequence);
         break;
     }
     }
@@ -72,7 +74,7 @@ void TryBlock(Sp2::Swf::UserCtrl* pUserCtrl,
 
     if (playSound) {
         Sp2::Swf::PlayerObject* pPlayer = pUserCtrl->getPlayerObject();
-        K_ASSERT(pPlayer != nullptr);
+        ASSERT(pPlayer != nullptr);
 
         // Determine which remote speaker to play through
         int remote = pPlayer->getRemoteNo();
@@ -118,10 +120,10 @@ TRAMPOLINE_DEF(0x8060E33C, 0x8060E394) {
 bool PrcIsObjFalling() {
     Sp2::Swf::PrcRuleObject* pRuleObject =
         RP_GET_INSTANCE(Sp2::Swf::Scene)->getPrcRuleObject();
-    K_ASSERT(pRuleObject != nullptr);
+    ASSERT(pRuleObject != nullptr);
 
     Sp2::Swf::TrainerObject* pTrainerObject = pRuleObject->getTrainerObject();
-    K_ASSERT(pTrainerObject != nullptr);
+    ASSERT(pTrainerObject != nullptr);
 
     switch (pTrainerObject->getState()) {
     case Sp2::Swf::TrainerObject::EState_PrepareThrow:
@@ -129,13 +131,13 @@ bool PrcIsObjFalling() {
     case Sp2::Swf::TrainerObject::EState_ThrowJump:
     case Sp2::Swf::TrainerObject::EState_WaitFall:
     case Sp2::Swf::TrainerObject::EState_Judge:
-    case Sp2::Swf::TrainerObject::EState_JudgeResult:  {
+    case Sp2::Swf::TrainerObject::EState_JudgeResult: {
         return true;
     }
 
     case Sp2::Swf::TrainerObject::EState_None:
     case Sp2::Swf::TrainerObject::EState_Wait:
-    default:                                   {
+    default: {
         return false;
     }
     }
@@ -153,7 +155,7 @@ bool PrcIsObjFalling() {
  * @param pPlayer Player object
  */
 void SglSetHeartNum(Sp2::Swf::SglPlayerObject* pPlayer) {
-    K_ASSERT(pPlayer != nullptr);
+    ASSERT(pPlayer != nullptr);
 
     int heartNum = ItemMgr::GetInstance().GetSwfSglHeartNum();
     pPlayer->setHeartNum(heartNum);

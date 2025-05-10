@@ -1,9 +1,12 @@
 #ifndef APCLIENT_CORE_ITEM_MGR_H
 #define APCLIENT_CORE_ITEM_MGR_H
-#include <Sports2/Sp2Cmn.h>
-#include <core/const.h>
-#include <libkiwi.h>
 #include <types.h>
+
+#include "core/const.h"
+
+#include <Sports2/Sp2Cmn.h>
+
+#include <libkiwi.h>
 
 namespace AP {
 
@@ -14,6 +17,11 @@ class ItemMgr : public kiwi::DynamicSingleton<ItemMgr>, public kiwi::IBinary {
     friend class kiwi::DynamicSingleton<ItemMgr>;
 
 public:
+    /**
+     * @brief Sets debug state
+     */
+    void Debug();
+
     /**
      * @name Main Menu
      */
@@ -108,11 +116,6 @@ private:
     ItemMgr();
 
     /**
-     * @brief Clears item state
-     */
-    void Clear();
-
-    /**
      * @brief Gets the kind/magic of this object
      */
     virtual u32 GetBinaryKind() const {
@@ -143,6 +146,11 @@ private:
      * @param rHeader Binary file header
      */
     virtual void SerializeImpl(Header& rHeader) const;
+
+    /**
+     * @brief Clears item state
+     */
+    void Clear();
 
 private:
     /**

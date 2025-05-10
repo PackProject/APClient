@@ -1,9 +1,12 @@
 #ifndef APCLIENT_CORE_COSMETIC_MGR_H
 #define APCLIENT_CORE_COSMETIC_MGR_H
-#include <Sports2/Sp2Snd.h>
-#include <core/const.h>
-#include <libkiwi.h>
 #include <types.h>
+
+#include "core/const.h"
+
+#include <Sports2/Sp2Snd.h>
+
+#include <libkiwi.h>
 
 namespace AP {
 
@@ -12,6 +15,11 @@ class CosmeticMgr : public kiwi::DynamicSingleton<CosmeticMgr>,
     friend class kiwi::DynamicSingleton<CosmeticMgr>;
 
 public:
+    /**
+     * @brief Sets debug state
+     */
+    void Debug();
+
     /**
      * @brief Tests whether the specified sound ID is a BGM ID
      *

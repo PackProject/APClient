@@ -2,7 +2,6 @@
 #define RP_KERNEL_LAYOUT_H
 #include "RPSysLytDynamicAnm.h"
 #include "RPTypes.h"
-
 #include <egg/math/eggVector.h>
 #include <nw4r/ut/ut_Color.h>
 #include <nw4r/ut/ut_list.h>
