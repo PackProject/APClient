@@ -48,6 +48,9 @@ void ItemMgr::Clear() {
     mSwfSglBlockFlag = 0;
     mSwfSglHeartFlag = 0b001;
     mSwfSglStageFlag = 0;
+
+    mWkbTimerFlag = 0;
+    mWkbStageFlag = 0b1;
 }
 
 /**
@@ -56,14 +59,17 @@ void ItemMgr::Clear() {
 void ItemMgr::Debug() {
     kiwi::Random r;
 
-    mSportFlag = r.NextU32();
-    mCategoryFlag = r.NextU32();
+    mSportFlag = 0xFFFFFFFF;
+    mCategoryFlag = 0xFFFFFFFF;
 
     mSwfVsBlockFlag = r.CoinFlip();
     mSwfPrcPauseFlag = r.CoinFlip();
     mSwfSglBlockFlag = r.CoinFlip();
-    mSwfSglHeartFlag = r.NextU32();
-    mSwfSglStageFlag = r.NextU32();
+    mSwfSglHeartFlag = 0b001 | r.NextU32();
+    mSwfSglStageFlag = 0xFFFFFFFF;
+
+    mWkbTimerFlag = r.NextU32();
+    mWkbStageFlag = r.NextU32();
 }
 
 } // namespace AP

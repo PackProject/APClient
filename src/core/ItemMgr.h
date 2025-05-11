@@ -17,6 +17,15 @@ class ItemMgr : public kiwi::DynamicSingleton<ItemMgr>, public kiwi::IBinary {
     friend class kiwi::DynamicSingleton<ItemMgr>;
 
 public:
+    //! Number of Swordplay - Showdown heart upgrades
+    static const u32 WKB_TIMER_NUM = 2;
+
+    //! Wakeboarding timer increment (in seconds)
+    static const u32 WKB_TIMER_ITEM = 24;
+    //! Number of Wakeboarding timer upgrades
+    static const u32 WKB_TIMER_NUM = 4;
+
+public:
     /**
      * @brief Sets debug state
      */
@@ -61,11 +70,25 @@ public:
     bool IsSwfSglBlock() const {
         return mSwfSglBlockFlag;
     }
-    int GetSwfSglHeartNum() const {
-        return kiwi::BitUtil::Count(mSwfSglHeartFlag);
+    u32 GetSwfSglHeartNum() const {
+        int num = kiwi::BitUtil::Count(mSwfSglHeartFlag);
+        return kiwi::Min(num, )
     }
     bool IsSwfSglStageUnlock(u32 id) const {
         return mSwfSglStageFlag & (1 << id);
+    }
+    /**@}*/
+
+    /**
+     * @name Wakeboarding
+     */
+    /**@{*/
+    u32 GetWkbTimerNum() const {
+        int num = kiwi::BitUtil::Count(mWkbTimerFlag);
+        return kiwi::Min(num, WKB_TIMER_NUM);
+    }
+    bool IsWkbStageUnlock(u32 id) const {
+        return mWkbStageFlag & (1 << id);
     }
     /**@}*/
 
@@ -90,7 +113,7 @@ private:
         /* 0x08:1  */ u32 swfPrcPauseFlag : 1;  //!< Pausing ability
         /* 0x08:2  */ u32 swfSglBlockFlag : 1;  //!< Blocking ability
         /* 0x08:3  */ u32 swfSglHeartFlag : 3;  //!< Heart items
-        /* 0x08:5  */ u32 swfSglStageFlag : 20; //!< Unlocked stages
+        /* 0x08:6  */ u32 swfSglStageFlag : 20; //!< Unlocked stages
 
         /* 0x0C:0  */ u8 wkbTimerFlag : 5; //!< Timer items
         /* 0x0C:4  */ u8 wkbStageFlag : 3; //!< Unlocked difficulties
@@ -101,9 +124,10 @@ private:
         /* 0x0F:0  */ u16 dglDiscFlag : 3;   //!< Progressive disc
         /* 0x0F:3  */ u16 dglStageFlag : 10; //!< Unlocked courses
 
-        /* 0x10:0  */ u16 arcArrowFlag : 3; //!< Arrow items
-        /* 0x10:2  */ u16 arcFruitFlag : 3; //!< Hidden fruits
-        /* 0x10:5  */ u16 arcStageFlag : 3; //!< Unlocked stages
+        /* 0x10:0  */ u16 arcAimFlag : 1;   //!< Aiming circle
+        /* 0x10:1  */ u16 arcArrowFlag : 3; //!< Arrow items
+        /* 0x10:3  */ u16 arcFruitFlag : 3; //!< Hidden fruits
+        /* 0x10:6  */ u16 arcStageFlag : 3; //!< Unlocked stages
 
         // . . .
     };
@@ -182,6 +206,14 @@ private:
     bool mSwfSglBlockFlag; //!< Blocking ability
     u32 mSwfSglHeartFlag;  //!< Extra hearts (bitfield)
     u32 mSwfSglStageFlag;  //!< Extra stages (bitfield)
+    /**@}*/
+
+    /**
+     * @name Wakeboarding
+     */
+    /**@{*/
+    u32 mWkbTimerFlag; //!< Extra timers (bitfield)
+    u32 mWkbStageFlag; //!< Extra stages (bitfield)
     /**@}*/
 };
 

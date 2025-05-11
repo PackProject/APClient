@@ -30,7 +30,8 @@ void TryPause() {
                         Sp2::Cmn::ESeq_Swf_Prc;
 
     // Pausing is disabled in Speed Slice while objects are falling
-    if (isSwfPrc && Swf::PrcIsObjFalling()) {
+    if (isSwfPrc && !ItemMgr::GetInstance().IsSwfPrcPause() &&
+        Swf::PrcIsObjFalling()) {
         return;
     }
 
@@ -48,8 +49,9 @@ bool TryHomeButton() {
                         Sp2::Cmn::ESeq_Swf_Prc;
 
     // Home menu is disabled in Speed Slice while objects are falling
-    if (isSwfPrc && Swf::PrcIsObjFalling()) {
-        return false;
+    if (isSwfPrc && !ItemMgr::GetInstance().IsSwfPrcPause() &&
+        Swf::PrcIsObjFalling()) {
+        return;
     }
 
     return true;

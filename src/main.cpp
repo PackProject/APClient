@@ -26,6 +26,11 @@ void KokeshiMain() {
     AP::ItemMgr::CreateInstance();
     AP::CosmeticMgr::CreateInstance();
 
+#ifndef NDEBUG
+    AP::ItemMgr::GetInstance().Debug();
+    AP::CosmeticMgr::GetInstance().Debug();
+#endif
+
     // Enter first scene
     kiwi::SceneCreator::GetInstance().ChangeBootScene();
 
