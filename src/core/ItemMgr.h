@@ -17,13 +17,8 @@ class ItemMgr : public kiwi::DynamicSingleton<ItemMgr>, public kiwi::IBinary {
     friend class kiwi::DynamicSingleton<ItemMgr>;
 
 public:
-    //! Number of Swordplay - Showdown heart upgrades
-    static const u32 WKB_TIMER_NUM = 2;
-
     //! Wakeboarding timer increment (in seconds)
     static const u32 WKB_TIMER_ITEM = 24;
-    //! Number of Wakeboarding timer upgrades
-    static const u32 WKB_TIMER_NUM = 4;
 
 public:
     /**
@@ -71,8 +66,7 @@ public:
         return mSwfSglBlockFlag;
     }
     u32 GetSwfSglHeartNum() const {
-        int num = kiwi::BitUtil::Count(mSwfSglHeartFlag);
-        return kiwi::Min(num, )
+        return kiwi::BitUtil::Count(mSwfSglHeartFlag);
     }
     bool IsSwfSglStageUnlock(u32 id) const {
         return mSwfSglStageFlag & (1 << id);
@@ -84,8 +78,7 @@ public:
      */
     /**@{*/
     u32 GetWkbTimerNum() const {
-        int num = kiwi::BitUtil::Count(mWkbTimerFlag);
-        return kiwi::Min(num, WKB_TIMER_NUM);
+        return kiwi::BitUtil::Count(mWkbTimerFlag);
     }
     bool IsWkbStageUnlock(u32 id) const {
         return mWkbStageFlag & (1 << id);
