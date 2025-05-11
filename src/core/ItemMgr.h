@@ -20,6 +20,8 @@ public:
     //! Wakeboarding timer increment (in seconds)
     static const u32 WKB_TIMER_ITEM = 24;
 
+    static const u32 PLN_TIMER_ITEM = 50;
+
 public:
     /**
      * @brief Sets debug state
@@ -82,6 +84,18 @@ public:
     }
     bool IsWkbStageUnlock(u32 id) const {
         return mWkbStageFlag & (1 << id);
+    }
+    /**@}*/
+
+    /**
+     * @name Islannd Flyover
+     */
+    /**@{*/
+    u32 GetPlnTimerNum() const {
+        return kiwi::BitUtil::Count(mPlnTimerFlag);
+    }
+    bool IsPlnStageUnlock(u32 id) const {
+        return mPlnStageFlag & (1 << id);
     }
     /**@}*/
 
@@ -207,6 +221,14 @@ private:
     /**@{*/
     u32 mWkbTimerFlag; //!< Extra timers (bitfield)
     u32 mWkbStageFlag; //!< Extra stages (bitfield)
+    /**@}*/
+
+    /**
+     * @name Island Flyover
+     */
+    /**@{*/
+    u32 mPlnTimerFlag; //!< Extra timers (bitfield)
+    u32 mPlnStageFlag; //!< Extra stages (bitfield)
     /**@}*/
 };
 

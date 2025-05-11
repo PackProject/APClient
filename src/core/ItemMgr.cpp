@@ -51,6 +51,9 @@ void ItemMgr::Clear() {
 
     mWkbTimerFlag = 0;
     mWkbStageFlag = 0b1;
+
+    mPlnTimerFlag = 0;
+    mPlnStageFlag = 0b1;
 }
 
 /**
@@ -70,6 +73,9 @@ void ItemMgr::Debug() {
 
     mWkbTimerFlag = r.NextU32();
     mWkbStageFlag = r.NextU32();
+
+    mPlnTimerFlag = r.NextU32();
+    mPlnStageFlag = r.NextU32();
 }
 
 } // namespace AP
