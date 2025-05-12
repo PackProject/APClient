@@ -14,22 +14,26 @@
  */
 // clang-format off
 #define TRAMPOLINE_BEGIN \
-    nofralloc         ;  \
-    stwu r1, -0x90(r1);  \
-    stmw r3,  0x0C(r1);  \
-    mflr r12          ;  \
-    stw  r12, 0x08(r1);
+    nofralloc          ; \
+    stwu r1, -0x100(r1); \
+    stmw r3,  0x0C(r1) ; \
+    mflr r12           ; \
+    stw  r12, 0x08(r1) ; \
+    mfcr r12           ; \
+    stw  r12, 0x88(r1) ;
 // clang-format on
 
 /**
  * @brief Restores registers at the end of a trampoline function
  */
 // clang-format off
-#define TRAMPOLINE_END  \
-    lwz  r12, 0x08(r1); \
-    mtlr r12          ; \
-    lmw  r3,  0x0C(r1); \
-    addi r1, r1, 0x90 ;
+#define TRAMPOLINE_END   \
+    lwz  r12, 0x88(r1) ; \
+    mtcr r12           ; \
+    lwz  r12, 0x08(r1) ; \
+    mtlr r12           ; \
+    lmw  r3,  0x0C(r1) ; \
+    addi r1, r1, 0x100 ;
 // clang-format on
 
 #endif

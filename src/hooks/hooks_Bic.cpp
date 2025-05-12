@@ -14,89 +14,103 @@ namespace Bic {
  *
  ******************************************************************************/
 
-// 0 hearts: 0, 0.1
-// 1 hearts: 0.1, 0.333
-// 2 hearts: 0.333, .56
-// 3 hearts: 0.56, 1
 /**
- * @brief Return the max stamina in Cycling
- * 
- * @param staminaItems Number of stamina items
+ * @brief Maximum energy per heart amount
+ * @details hearts = ceil((E - 0.1f) * 3 / 0.7f)
  */
-float BicGetMaxStamina(int staminaItems) {
-    float maxStamina;
-    switch(staminaItems) {
-        case 0:
-            maxStamina = 0.1f;
-            break;
-        case 1:
-            maxStamina = 0.333f;
-            break;
-        case 2:
-            maxStamina = 0.56f;
-            break;
-        case 3:
-            maxStamina = 1.0f;
-            break;
-        default:
-            ASSERT(false);
-            break;
-    }
-    return maxStamina;
+static const f32 scHeartMaxEnergy[ItemMgr::BIC_HEART_COUNT + 1] = {
+    0.100000f, // Zero hearts
+    0.333333f, // One heart
+    0.566666f, // Two hearts
+    1.0f       // Three hearts
+};
+
+/**
+ * @brief Sets the initial number of hearts
+ *
+ * @param pCyclist Cyclist object
+ */
+void BicInitHeartNum(Sp2::Bic::Cyclist* pCyclist) {
+    ASSERT(pCyclist != nullptr);
+
+    pCyclist->setHeartNum(ItemMgr::GetInstance().GetBicHeartNum());
 }
 
 /**
- * @brief Sets the max hearts in Cycling
- * 
- * @param currentStamina Current stamina (internal)
- * 
+ * @brief BicInitHeartNum trampoline
  */
-float BicSetMaxStamina(float currentStamina) {
-    float maxStamina = BicGetMaxStamina(ItemMgr::GetInstance().GetBicHeartNum());
+TRAMPOLINE_DEF(0x803afd74, 0x803afd78){
+    // clang-format off
+    TRAMPOLINE_BEGIN
 
-    if(currentStamina > maxStamina) {
-        currentStamina = maxStamina;
-    }
-    return currentStamina;
+    bl BicInitHeartNum
+
+    TRAMPOLINE_END
+    blr
+    // clang-format on
 }
 
 /**
- * @brief BicSetMaxStamina trampoline
+ * @brief Updates the cyclist's energy level
+ *
+ * @param pCyclist Cyclist object
+ * @param energy Current energy level
+ */
+f32 BicCalcEnergy(Sp2::Bic::Cyclist* pCyclist, f32 energy) {
+    ASSERT(pCyclist != nullptr);
+    energy = kiwi::Clamp(energy, 0.0f, 1.0f);
+
+    // Energy is capped by heart AP items
+    f32 energyLimit = scHeartMaxEnergy[ItemMgr::GetInstance().GetBicHeartNum()];
+    energy = kiwi::Min(energy, energyLimit);
+
+    pCyclist->setEnergy(energy);
+}
+
+/**
+ * @brief BicCalcEnergy trampoline
  */
 TRAMPOLINE_DEF(0x803af720, 0x803af724) {
     // clang-format off
     TRAMPOLINE_BEGIN
 
-    bl BicSetMaxStamina
-    stfs f1, 0x14(r30)
+    mr r3, r30
+    bl BicCalcEnergy
 
     TRAMPOLINE_END
     blr
+    // clang-format on
 }
 
 /**
- * @brief Sets the drinking limit in Cycling
- * 
+ * @brief Adjusts the drinking state for the energy AP items
  */
-float BicSetDrinkingLimit() {
-    float maxStamina = BicGetMaxStamina(ItemMgr::GetInstance().GetBicHeartNum());
-    return maxStamina * 0.8f;
+void BicCalcDrinking(Sp2::Bic::Cyclist* pCyclist) {
+    ASSERT(pCyclist != nullptr);
+    ASSERT(pCyclist->getState() == Sp2::Bic::Cyclist::EState_Drinking);
+
+    // Drinking restores 80% energy
+    f32 drinkLimit = scHeartMaxEnergy[ItemMgr::GetInstance().GetBicHeartNum()];
+    drinkLimit *= 0.80f;
+
+    if (pCyclist->getEnergy() >= drinkLimit) {
+        pCyclist->setState(Sp2::Bic::Cyclist::EState_Idle);
+    }
 }
 
 /**
- * @brief Fixes drinking to end at max stamina
+ * @brief BicCalcDrinking trampoline
  */
-TRAMPOLINE_DEF(0x803afb94, 0x803afb98) {
+TRAMPOLINE_DEF(0x803afb90, 0x803afcb8) {
     // clang-format off
     TRAMPOLINE_BEGIN
 
-    fmr f2, f1
-    bl BicSetDrinkingLimit
-    fmr f0, f1
-    fmr f1, f2
+    mr r3, r30
+    bl BicCalcDrinking
 
     TRAMPOLINE_END
     blr
+    // clang-format on
 }
 
 } // namespace Bic
