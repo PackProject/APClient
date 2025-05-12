@@ -52,6 +52,9 @@ void ItemMgr::Clear() {
     mWkbTimerFlag = 1;
     mWkbStageFlag = 0b1;
 
+    mCanTimerFlag = 1;
+    mCanStageFlag = 0b1;
+
     mBicHeartFlag = 1;
     mBicStageFlag = 0b1;
 
@@ -76,6 +79,12 @@ void ItemMgr::Debug() {
 
     mWkbTimerFlag = r.NextU32();
     mWkbStageFlag = r.NextU32();
+
+    mArcTotalArrowsFlag = r.NextU32();
+    mArcStageFlag = r.NextU32();
+
+    mCanTimerFlag = r.NextU32();
+    mCanStageFlag = r.NextU32();
 
     mBicHeartFlag = 0b001;
     mBicStageFlag = r.NextU32();

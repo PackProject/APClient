@@ -88,6 +88,18 @@ public:
     /**@}*/
 
     /**
+     * @name Canoeing
+     */
+    /**@{*/
+    u32 GetCanTimerNum() const {
+        return kiwi::BitUtil::Count(mCanTimerFlag);
+    }
+    bool IsCanStageUnlock(u32 id) const {
+        return mCanStageFlag & (1 << id);
+    }
+    /**@}*/
+
+    /**
      * @name Cycling
      */
     /**@{*/
@@ -233,6 +245,22 @@ private:
     /**@{*/
     u32 mWkbTimerFlag; //!< Extra timers (bitfield)
     u32 mWkbStageFlag; //!< Extra stages (bitfield)
+    /**@}*/
+
+    /**
+     * @name Archery
+     */
+    /**@{*/
+    u32 mArcTotalArrowsFlag; //!< Total arrows (bitfield)
+    u32 mArcStageFlag;        //!< Extra stages (bitfield)
+    /**@}*/
+
+    /**
+     * @name Canoeing
+     */
+    /**@{*/
+    u32 mCanTimerFlag; //!< Extra timers (bitfield)
+    u32 mCanStageFlag; //!< Extra stages (bitfield)
     /**@}*/
 
     /**

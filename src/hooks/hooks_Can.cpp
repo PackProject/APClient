@@ -20,37 +20,43 @@ namespace Can {
  * @brief Sets the max timer in Canoeing
  * 
  * @param difficulty Difficulty level
- * addresses for difficulty level timer setting: 0x804af188, 0x804af1e4
+ * addresses for difficulty level timer setting: 0x804af180, 0x804af1e4
+ * addresses for function call: 804af1fc, 0x804af200
  * 
  */
 int CanSetTimer(int difficulty) {
-    // switch(difficulty) {
-    //     case 0:
-    //         return 10;
-    //     case 1: 
-    //         return 20;
-    //     case 2:
-    //         return 30;
-    //     case 3:
-    //         return 40;
-    //     case 4:
-    //         return 50;
-    // }
+    int difficultyTimer;
+    switch(difficulty) {
+        case 1: 
+            difficultyTimer = 60;
+        case 2:
+            difficultyTimer = 80;
+        case 3:
+            difficultyTimer = 100;
+        default:
+            difficultyTimer = 60;
+    }
 
-    return 50;
+    float timer = (float)difficultyTimer / (6 - ItemMgr::GetInstance().GetCanTimerNum());
+    return timer;
 }
 
 /**
  * @brief CanSetTimer trampoline
  */
-TRAMPOLINE_DEF(0x804af1fc, 0x804af200) {
-    // clang-format off
+TRAMPOLINE_DEF(0x804af188, 0x804af1e0) {
+
     TRAMPOLINE_BEGIN
 
-    li r3, 50
+    mr r3, r0
+    bl CanSetTimer
+    mr r0, r3
 
     TRAMPOLINE_END
+    mr r3, r0
+
     blr
+
 }
 
 } // namespace Can
