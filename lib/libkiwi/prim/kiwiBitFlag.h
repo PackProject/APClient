@@ -40,7 +40,7 @@ public:
      * @param value New bitfield
      */
     void SetDirect(T bits) {
-        mValue = bits & (1 << N) - 1;
+        mValue = bits & MakeMask();
     }
     /**
      * @brief Gets the bitfield directly
@@ -134,7 +134,7 @@ public:
      * @return Number of bits set
      */
     u32 Count() const {
-        return BitUtil::Count(mValue);
+        return BitUtil::Count(mValue & MakeMask());
     }
 
     /**
@@ -142,12 +142,22 @@ public:
      */
     void Randomize() {
         Random rnd;
-        mValue = 0;
+        u32 value = 0;
 
         for (u32 i = 0; i < N; i++) {
-            mValue |= rnd.CoinFlip();
-            mValue <<= 1;
+            value |= rnd.CoinFlip();
+            value <<= 1;
         }
+
+        SetDirect(value);
+    }
+
+private:
+    /**
+     * @brief Creates a bitmask for the specified bit count
+     */
+    static u32 MakeMask() {
+        return (1 << N) - 1;
     }
 
 private:
