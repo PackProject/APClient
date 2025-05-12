@@ -49,10 +49,13 @@ void ItemMgr::Clear() {
     mSwfSglHeartFlag = 0b001;
     mSwfSglStageFlag = 0;
 
-    mWkbTimerFlag = 0;
+    mWkbTimerFlag = 1;
     mWkbStageFlag = 0b1;
 
-    mPlnTimerFlag = 0;
+    mBicHeartFlag = 1;
+    mBicStageFlag = 0b1;
+
+    mPlnTimerFlag = 1;
     mPlnStageFlag = 0b1;
 }
 
@@ -73,6 +76,9 @@ void ItemMgr::Debug() {
 
     mWkbTimerFlag = r.NextU32();
     mWkbStageFlag = r.NextU32();
+
+    mBicHeartFlag = 0b001;
+    mBicStageFlag = r.NextU32();
 
     mPlnTimerFlag = r.NextU32();
     mPlnStageFlag = r.NextU32();

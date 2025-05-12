@@ -23,7 +23,7 @@ namespace Pln {
 void PlnSetTimer(Sp2::Pln::IslandSeq* pSequence) {
     ASSERT(pSequence != nullptr);
 
-    int timerNum = 1 + ItemMgr::GetInstance().GetPlnTimerNum();
+    int timerNum = ItemMgr::GetInstance().GetPlnTimerNum();
     pSequence->setTimeRemain(timerNum * ItemMgr::PLN_TIMER_ITEM * 60);
 }
 

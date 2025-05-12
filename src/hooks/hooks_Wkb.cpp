@@ -22,7 +22,7 @@ namespace Wkb {
 void WkbSetTimer(Sp2::Jsk::IslandSeq* pSequence) {
     ASSERT(pSequence != nullptr);
 
-    int timerNum = 1 + ItemMgr::GetInstance().GetWkbTimerNum();
+    int timerNum = ItemMgr::GetInstance().GetWkbTimerNum();
     pSequence->setTimeRemain(timerNum * ItemMgr::WKB_TIMER_ITEM);
 }
 

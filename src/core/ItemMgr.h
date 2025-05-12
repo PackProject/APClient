@@ -88,7 +88,19 @@ public:
     /**@}*/
 
     /**
-     * @name Islannd Flyover
+     * @name Cycling
+     */
+    /**@{*/
+    u32 GetBicHeartNum() const {
+        return kiwi::BitUtil::Count(mBicHeartFlag);
+    }
+    bool IsBicStageUnlock(u32 id) const {
+        return mBicStageFlag & (1 << id);
+    }
+    /**@}*/
+
+    /**
+     * @name Island Flyover
      */
     /**@{*/
     u32 GetPlnTimerNum() const {
@@ -222,6 +234,13 @@ private:
     u32 mWkbTimerFlag; //!< Extra timers (bitfield)
     u32 mWkbStageFlag; //!< Extra stages (bitfield)
     /**@}*/
+
+    /**
+     * @name Cycling
+     */
+    /**#{*/
+    u32 mBicHeartFlag; //!< Extra hearts (bitfield)
+    u32 mBicStageFlag; //!< Extra stages (bitfield)
 
     /**
      * @name Island Flyover
