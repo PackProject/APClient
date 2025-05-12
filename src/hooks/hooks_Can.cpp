@@ -37,7 +37,8 @@ int CanSetTimer(int difficulty) {
             difficultyTimer = 60;
     }
 
-    float timer = (float)difficultyTimer / (6 - ItemMgr::GetInstance().GetCanTimerNum());
+    float timer = (float)difficultyTimer /
+        (ItemMgr::CAN_TIMER_COUNT - ItemMgr::GetInstance().GetCanTimerNum());
     return timer;
 }
 

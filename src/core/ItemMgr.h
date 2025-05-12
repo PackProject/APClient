@@ -17,12 +17,6 @@ class ItemMgr : public kiwi::DynamicSingleton<ItemMgr>, public kiwi::IBinary {
     friend class kiwi::DynamicSingleton<ItemMgr>;
 
 public:
-    //! Wakeboarding timer increment (in seconds)
-    static const u32 WKB_TIMER_ITEM = 24;
-
-    static const u32 PLN_TIMER_ITEM = 50;
-
-public:
     /**
      * @brief Sets debug state
      */
@@ -32,13 +26,11 @@ public:
      * @name Main Menu
      */
     /**@{*/
-    bool IsSportUnlock(Sp2::Cmn::ESport sport) {
-        ASSERT(sport < Sp2::Cmn::ESport_Max);
-        return mSportFlag & (1 << sport);
+    bool IsSportUnlock(ESport sport) {
+        return mSportFlag.GetBit(sport);
     }
     bool IsCategoryUnlock(Sp2::Cmn::ESaveSeq seq) const {
-        ASSERT(seq < Sp2::Cmn::ESaveSeq_Max);
-        return mCategoryFlag & (1 << seq);
+        return mCategoryFlag.GetBit(seq);
     }
     /**@}*/
 
@@ -64,14 +56,19 @@ public:
      * @name Swordplay (Showdown)
      */
     /**@{*/
+    //! Number of heart items
+    static const u32 SWF_SGL_HEART_COUNT = 3;
+    //! Number of stage unlock items
+    static const u32 SWF_SGL_STAGE_COUNT = 10 * 2;
+
     bool IsSwfSglBlock() const {
         return mSwfSglBlockFlag;
     }
     u32 GetSwfSglHeartNum() const {
-        return kiwi::BitUtil::Count(mSwfSglHeartFlag);
+        return mSwfSglHeartFlag.Count();
     }
     bool IsSwfSglStageUnlock(u32 id) const {
-        return mSwfSglStageFlag & (1 << id);
+        return mSwfSglStageFlag.GetBit(id);
     }
     /**@}*/
 
@@ -79,23 +76,47 @@ public:
      * @name Wakeboarding
      */
     /**@{*/
+    //! Number of timer items
+    static const u32 WKB_TIMER_COUNT = 3;
+    //! Number of stage unlock items
+    static const u32 WKB_STAGE_COUNT = 3;
+    //! Timer increment (in seconds)
+    static const u32 WKB_TIMER_VALUE = 24;
+
     u32 GetWkbTimerNum() const {
-        return kiwi::BitUtil::Count(mWkbTimerFlag);
+        return mWkbTimerFlag.Count();
     }
     bool IsWkbStageUnlock(u32 id) const {
-        return mWkbStageFlag & (1 << id);
+        return mWkbStageFlag.GetBit(id);
     }
+    /**@}*/
+
+    /**
+     * @name Archery
+     */
+    /**@{*/
+    //! Number of arrow items
+    static const u32 ARC_ARROW_COUNT = 3;
+    //! Number of stage unlock items
+    static const u32 ARC_STAGE_COUNT = 3;
     /**@}*/
 
     /**
      * @name Canoeing
      */
     /**@{*/
+    //! Number of timer items
+    static const u32 CAN_TIMER_COUNT = 6;
+    //! Number of stage unlock items
+    static const u32 CAN_STAGE_COUNT = 3;
+    //! Timer increment (in seconds)
+    static const u32 CAN_TIMER_VALUE = 20;
+
     u32 GetCanTimerNum() const {
-        return kiwi::BitUtil::Count(mCanTimerFlag);
+        return mCanTimerFlag.Count();
     }
     bool IsCanStageUnlock(u32 id) const {
-        return mCanStageFlag & (1 << id);
+        return mCanStageFlag.GetBit(id);
     }
     /**@}*/
 
@@ -103,11 +124,16 @@ public:
      * @name Cycling
      */
     /**@{*/
+    //! Number of heart items
+    static const u32 BIC_HEART_COUNT = 3;
+    //! Number of stage unlock items
+    static const u32 BIC_STAGE_COUNT = 6;
+
     u32 GetBicHeartNum() const {
-        return kiwi::BitUtil::Count(mBicHeartFlag);
+        return mBicHeartFlag.Count();
     }
     bool IsBicStageUnlock(u32 id) const {
-        return mBicStageFlag & (1 << id);
+        return mBicStageFlag.GetBit(id);
     }
     /**@}*/
 
@@ -115,11 +141,18 @@ public:
      * @name Island Flyover
      */
     /**@{*/
+    //! Number of timer items
+    static const u32 PLN_TIMER_COUNT = 6;
+    //! Number of stage unlock items
+    static const u32 PLN_STAGE_COUNT = 10 * 2;
+    //! Timer increment (in seconds)
+    static const u32 PLN_TIMER_VALUE = 50;
+
     u32 GetPlnTimerNum() const {
-        return kiwi::BitUtil::Count(mPlnTimerFlag);
+        return mPlnTimerFlag.Count();
     }
     bool IsPlnStageUnlock(u32 id) const {
-        return mPlnStageFlag & (1 << id);
+        return mPlnStageFlag.GetBit(id);
     }
     /**@}*/
 
@@ -212,70 +245,88 @@ private:
      * @name Main Menu
      */
     /**@{*/
-    u32 mSportFlag;    //!< Unlocked sports
-    u32 mCategoryFlag; //!< Unlocked categories
+    //! Unlocked sports
+    kiwi::TBitFlag<u32, Sp2::Cmn::ESport_Max> mSportFlag;
+    //! Unlocked categories
+    kiwi::TBitFlag<u32, Sp2::Cmn::ESaveSeq_Max> mCategoryFlag;
     /**@}*/
 
     /**
      * @name Swordplay (Duel)
      */
     /**@{*/
-    bool mSwfVsBlockFlag; //!< Blocking ability
+    //! Blocking ability
+    bool mSwfVsBlockFlag;
     /**@}*/
 
     /**
      * @name Swordplay (Speed Slice)
      */
     /**@{*/
-    bool mSwfPrcPauseFlag; //!< Pausing ability
+    //! Pausing ability
+    bool mSwfPrcPauseFlag;
     /**@}*/
 
     /**
      * @name Swordplay (Showdown)
      */
     /**@{*/
-    bool mSwfSglBlockFlag; //!< Blocking ability
-    u32 mSwfSglHeartFlag;  //!< Extra hearts (bitfield)
-    u32 mSwfSglStageFlag;  //!< Extra stages (bitfield)
+    //! Blocking ability
+    bool mSwfSglBlockFlag;
+    //! Heart items
+    kiwi::TBitFlag<u32, SWF_SGL_HEART_COUNT> mSwfSglHeartFlag;
+    //! Stage unlock items
+    kiwi::TBitFlag<u32, SWF_SGL_STAGE_COUNT> mSwfSglStageFlag;
     /**@}*/
 
     /**
      * @name Wakeboarding
      */
     /**@{*/
-    u32 mWkbTimerFlag; //!< Extra timers (bitfield)
-    u32 mWkbStageFlag; //!< Extra stages (bitfield)
+    //! Extra timers (bitfield)
+    kiwi::TBitFlag<u32, WKB_TIMER_COUNT> mWkbTimerFlag;
+    //! Extra stages (bitfield)
+    kiwi::TBitFlag<u32, WKB_STAGE_COUNT> mWkbStageFlag;
     /**@}*/
 
     /**
      * @name Archery
      */
     /**@{*/
-    u32 mArcTotalArrowsFlag; //!< Total arrows (bitfield)
-    u32 mArcStageFlag;        //!< Extra stages (bitfield)
+    //! Total arrows (bitfield)
+    kiwi::TBitFlag<u32, ARC_ARROW_COUNT> mArcTotalArrowsFlag;
+    //! Extra stages (bitfield)
+    kiwi::TBitFlag<u32, ARC_STAGE_COUNT> mArcStageFlag;
     /**@}*/
 
     /**
      * @name Canoeing
      */
     /**@{*/
-    u32 mCanTimerFlag; //!< Extra timers (bitfield)
-    u32 mCanStageFlag; //!< Extra stages (bitfield)
+    //! Extra timers (bitfield)
+    kiwi::TBitFlag<u32, CAN_TIMER_COUNT> mCanTimerFlag;
+    //! Extra stages (bitfield)
+    kiwi::TBitFlag<u32, CAN_STAGE_COUNT> mCanStageFlag;
     /**@}*/
 
     /**
      * @name Cycling
      */
-    /**#{*/
-    u32 mBicHeartFlag; //!< Extra hearts (bitfield)
-    u32 mBicStageFlag; //!< Extra stages (bitfield)
+    /**@{*/
+    //! Extra hearts (bitfield)
+    kiwi::TBitFlag<u32, BIC_HEART_COUNT> mBicHeartFlag;
+    //! Extra stages (bitfield)
+    kiwi::TBitFlag<u32, BIC_STAGE_COUNT> mBicStageFlag;
+    /**@}*/
 
     /**
      * @name Island Flyover
      */
     /**@{*/
-    u32 mPlnTimerFlag; //!< Extra timers (bitfield)
-    u32 mPlnStageFlag; //!< Extra stages (bitfield)
+    //! Extra timers (bitfield)
+    kiwi::TBitFlag<u32, PLN_TIMER_COUNT> mPlnTimerFlag;
+    //! Extra stages (bitfield)
+    kiwi::TBitFlag<u32, PLN_STAGE_COUNT> mPlnStageFlag;
     /**@}*/
 };
 

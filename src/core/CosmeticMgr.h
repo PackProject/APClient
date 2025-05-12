@@ -67,7 +67,7 @@ private:
 #pragma pack(push, 1)
     struct Bin : kiwi::IBinary::Block {
         // clang-format off
-        /* 0x00:0  */ u8 randomBgmFlag : 1;                           //!< Random music enabled
+        /* 0x00:0  */ u8 randomBgmFlag : 1;                         //!< Random music enabled
         /* 0x01:0  */ u8 randomBgmMapping[BGM_ID_MAX - BGM_ID_MIN]; //!< Random music mapping table
         // . . .
         // clang-format on

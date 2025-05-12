@@ -7,7 +7,7 @@ namespace Pln {
 
 class IslandSeq /* public Cmn::IslandSeqBase */ {
 public:
-    u32 setTimeRemain(u32 remain) {
+    void setTimeRemain(u32 remain) {
         mTimeRemain = remain;
     }
 

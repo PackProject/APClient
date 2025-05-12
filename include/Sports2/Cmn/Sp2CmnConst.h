@@ -21,6 +21,7 @@ enum ESport {
     ESport_Can,
     ESport_Bic,
     ESport_Pln,
+    ESport_Omk,
 
     ESport_Max
 };

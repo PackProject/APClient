@@ -48,6 +48,7 @@
 #include <libkiwi/net/kiwiWebSocket.h>
 #include <libkiwi/prim/kiwiArray.h>
 #include <libkiwi/prim/kiwiBitCast.h>
+#include <libkiwi/prim/kiwiBitFlag.h>
 #include <libkiwi/prim/kiwiHashMap.h>
 #include <libkiwi/prim/kiwiLinkList.h>
 #include <libkiwi/prim/kiwiOptional.h>

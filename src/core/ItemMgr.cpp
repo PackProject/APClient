@@ -40,26 +40,26 @@ void ItemMgr::SerializeImpl(Header& rHeader) const {
  * @brief Clears item state
  */
 void ItemMgr::Clear() {
-    mSportFlag = 0;
-    mCategoryFlag = 0;
+    mSportFlag.ResetAll();
+    mCategoryFlag.ResetAll();
 
     mSwfVsBlockFlag = false;
     mSwfPrcPauseFlag = false;
     mSwfSglBlockFlag = 0;
-    mSwfSglHeartFlag = 0b001;
-    mSwfSglStageFlag = 0;
+    mSwfSglHeartFlag.SetDirect(0b1); // Start with one heart
+    mSwfSglStageFlag.SetDirect(0b1); // Start with one stage
 
-    mWkbTimerFlag = 1;
-    mWkbStageFlag = 0b1;
+    mWkbTimerFlag.SetDirect(0b1); // Start with one timer
+    mWkbStageFlag.SetDirect(0b1); // Start with one stage
 
-    mCanTimerFlag = 1;
-    mCanStageFlag = 0b1;
+    mCanTimerFlag.SetDirect(0b1); // Start with one timer
+    mCanStageFlag.SetDirect(0b1); // Start with one stage
 
-    mBicHeartFlag = 1;
-    mBicStageFlag = 0b1;
+    mBicHeartFlag.SetDirect(0b1); // Start with one heart
+    mBicStageFlag.SetDirect(0b1); // Start with one stage
 
-    mPlnTimerFlag = 1;
-    mPlnStageFlag = 0b1;
+    mPlnTimerFlag.SetDirect(0b1); // Start with one timer
+    mPlnStageFlag.SetDirect(0b1); // Start with one stage
 }
 
 /**
@@ -68,29 +68,29 @@ void ItemMgr::Clear() {
 void ItemMgr::Debug() {
     kiwi::Random r;
 
-    mSportFlag = 0xFFFFFFFF;
-    mCategoryFlag = 0xFFFFFFFF;
+    mSportFlag.SetAll();
+    mCategoryFlag.SetAll();
 
     mSwfVsBlockFlag = r.CoinFlip();
     mSwfPrcPauseFlag = r.CoinFlip();
     mSwfSglBlockFlag = r.CoinFlip();
-    mSwfSglHeartFlag = 0b001 | r.NextU32();
-    mSwfSglStageFlag = 0xFFFFFFFF;
+    mSwfSglHeartFlag.Randomize();
+    mSwfSglStageFlag.Randomize();
 
-    mWkbTimerFlag = r.NextU32();
-    mWkbStageFlag = r.NextU32();
+    mWkbTimerFlag.Randomize();
+    mWkbStageFlag.Randomize();
 
-    mArcTotalArrowsFlag = r.NextU32();
-    mArcStageFlag = r.NextU32();
+    mArcTotalArrowsFlag.Randomize();
+    mArcStageFlag.Randomize();
 
-    mCanTimerFlag = r.NextU32();
-    mCanStageFlag = r.NextU32();
+    mCanTimerFlag.Randomize();
+    mCanStageFlag.Randomize();
 
-    mBicHeartFlag = 0b001;
-    mBicStageFlag = r.NextU32();
+    mBicHeartFlag.Randomize();
+    mBicStageFlag.Randomize();
 
-    mPlnTimerFlag = r.NextU32();
-    mPlnStageFlag = r.NextU32();
+    mPlnTimerFlag.Randomize();
+    mPlnStageFlag.Randomize();
 }
 
 } // namespace AP
