@@ -16,15 +16,15 @@ namespace Pln {
 
 /**
  * @brief Sets the timer in Island Flyover
- * 
+ *
  * @param pSequence Game sequence
- * 
+ *
  */
 void PlnSetTimer(Sp2::Pln::IslandSeq* pSequence) {
     ASSERT(pSequence != nullptr);
 
     int timerNum = ItemMgr::GetInstance().GetPlnTimerNum();
-    pSequence->setTimeRemain(timerNum * ItemMgr::PLN_TIMER_ITEM * 60);
+    pSequence->setTimeRemain(timerNum * ItemMgr::PLN_TIMER_VALUE * 60);
 }
 
 /**
