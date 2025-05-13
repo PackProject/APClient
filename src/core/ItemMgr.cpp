@@ -57,6 +57,8 @@ void ItemMgr::Clear() {
 
     mBskTimerFlag.SetDirect(0b1); // Start with one timer
 
+    mBwlMoveFlag = false;
+
     mCanTimerFlag.SetDirect(0b1); // Start with one timer
     mCanStageFlag.SetDirect(0b1); // Start with one stage
 
@@ -89,6 +91,8 @@ void ItemMgr::Debug() {
     mArcStageFlag.Randomize();
     
     mBskTimerFlag.Randomize();
+
+    mBwlMoveFlag = r.CoinFlip();
 
     mCanTimerFlag.Randomize();
     mCanStageFlag.Randomize();

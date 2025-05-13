@@ -51,5 +51,23 @@ TRAMPOLINE_DEF(0x80521d34, 0x80521d38) {
 //     blr
 
 
+/******************************************************************************
+ *
+ * Basketball Pickup Game
+ *
+ ******************************************************************************/
+
+ TRAMPOLINE_DEF(0x80535c28, 0x80535c2c) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    li r4, 1000
+
+    TRAMPOLINE_END
+    blr
+
+}
+
+
 } // namespace Basketball
 } // namespace AP
