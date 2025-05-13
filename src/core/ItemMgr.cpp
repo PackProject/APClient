@@ -52,6 +52,11 @@ void ItemMgr::Clear() {
     mWkbTimerFlag.SetDirect(0b1); // Start with one timer
     mWkbStageFlag.SetDirect(0b1); // Start with one stage
 
+    mArcTotalArrowsFlag.SetDirect(0b1); // Start with one arrow
+    mArcStageFlag.SetDirect(0b1); // Start with one stage
+
+    mBskTimerFlag.SetDirect(0b1); // Start with one timer
+
     mCanTimerFlag.SetDirect(0b1); // Start with one timer
     mCanStageFlag.SetDirect(0b1); // Start with one stage
 
@@ -82,6 +87,8 @@ void ItemMgr::Debug() {
 
     mArcTotalArrowsFlag.Randomize();
     mArcStageFlag.Randomize();
+    
+    mBskTimerFlag.Randomize();
 
     mCanTimerFlag.Randomize();
     mCanStageFlag.Randomize();

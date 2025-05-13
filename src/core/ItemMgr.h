@@ -92,6 +92,20 @@ public:
     /**@}*/
 
     /**
+     * @name Basketball (3-Point Contest)
+     */
+    /**@{*/
+    //! Number of timer items
+    static const u32 BSK_TIMER_COUNT = 5;
+    //! Timer increment (in seconds)
+    static const u32 BSK_TIMER_VALUE = 13;
+    /**@}*/
+
+    u32 GetBskTimerNum() const {
+        return mBskTimerFlag.Count();
+    }
+
+    /**
      * @name Archery
      */
     /**@{*/
@@ -144,7 +158,7 @@ public:
     //! Number of timer items
     static const u32 PLN_TIMER_COUNT = 6;
     //! Number of stage unlock items
-    static const u32 PLN_STAGE_COUNT = 10 * 2;
+    static const u32 PLN_STAGE_COUNT = 3;
     //! Timer increment (in seconds)
     static const u32 PLN_TIMER_VALUE = 50;
 
@@ -297,6 +311,14 @@ private:
     kiwi::TBitFlag<u32, ARC_ARROW_COUNT> mArcTotalArrowsFlag;
     //! Extra stages (bitfield)
     kiwi::TBitFlag<u32, ARC_STAGE_COUNT> mArcStageFlag;
+    /**@}*/
+
+    /**
+     * @name Basketball (3-Point Contest)
+     */
+    /**@{*/
+    //! Extra timers (bitfield)
+    kiwi::TBitFlag<u32, BSK_TIMER_COUNT> mBskTimerFlag;
     /**@}*/
 
     /**
