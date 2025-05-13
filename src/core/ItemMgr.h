@@ -120,9 +120,42 @@ public:
      */
     /**@{*/
     //! Moving ability
-    bool IsBwlMoveUnlocked() const {
-        return mBwlMoveFlag;
+    bool IsBwlStdMoveUnlocked() const {
+        return mBwlStdMoveFlag;
     }
+    //! Turning ability
+    bool IsBwlStdTurnUnlocked() const {
+        return mBwlStdTurnFlag;
+    }
+    /**@}*/
+
+    /**
+     * @name Bowling (Standard Game)
+     */
+    /**@{*/
+    //! Moving ability
+    bool IsBwl100MoveUnlocked() const {
+        return mBwl100MoveFlag;
+    }
+    //! Turning ability
+    bool IsBwl100TurnUnlocked() const {
+        return mBwl100TurnFlag;
+    }
+    /**@}*/
+
+    /**
+     * @name Bowling (Standard Game)
+     */
+    /**@{*/
+    //! Moving ability
+    bool IsBwlWalMoveUnlocked() const {
+        return mBwlWalMoveFlag;
+    }
+    //! Turning ability
+    bool IsBwlWalTurnUnlocked() const {
+        return mBwlWalTurnFlag;
+    }
+    /**@}*/
 
     /**
      * @name Canoeing
@@ -335,7 +368,29 @@ private:
      */
     /**@{*/
     //! Moving ability
-    bool mBwlMoveFlag;
+    bool mBwlStdMoveFlag;
+    //! Turning ability
+    bool mBwlStdTurnFlag;
+    /**@}*/
+
+    /**
+     * @name Bowling (100-Pin Game)
+     */
+    /**@{*/
+    //! Moving ability
+    bool mBwl100MoveFlag;
+    //! Turning ability
+    bool mBwl100TurnFlag;
+    /**@}*/
+
+    /**
+     * @name Bowling (Spin Control)
+     */
+    /**@{*/
+    //! Moving ability
+    bool mBwlWalMoveFlag;
+    //! Turning ability
+    bool mBwlWalTurnFlag;
     /**@}*/
 
     /**

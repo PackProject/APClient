@@ -57,7 +57,12 @@ void ItemMgr::Clear() {
 
     mBskTimerFlag.SetDirect(0b1); // Start with one timer
 
-    mBwlMoveFlag = false;
+    mBwlStdMoveFlag = false;
+    mBwlStdTurnFlag = false;
+    mBwl100MoveFlag = false;
+    mBwl100TurnFlag = false;
+    mBwlWalMoveFlag = false;
+    mBwlWalTurnFlag = false;
 
     mCanTimerFlag.SetDirect(0b1); // Start with one timer
     mCanStageFlag.SetDirect(0b1); // Start with one stage
@@ -75,31 +80,45 @@ void ItemMgr::Clear() {
 void ItemMgr::Debug() {
     kiwi::Random r;
 
+    //Common
     mSportFlag.SetAll();
     mCategoryFlag.SetAll();
 
+    //Swordplay
     mSwfVsBlockFlag = r.CoinFlip();
     mSwfPrcPauseFlag = r.CoinFlip();
     mSwfSglBlockFlag = r.CoinFlip();
     mSwfSglHeartFlag.Randomize();
     mSwfSglStageFlag.Randomize();
 
+    //Wakeboarding
     mWkbTimerFlag.Randomize();
     mWkbStageFlag.Randomize();
 
+    //Archery
     mArcTotalArrowsFlag.Randomize();
     mArcStageFlag.Randomize();
     
+    //Basketball
     mBskTimerFlag.Randomize();
 
-    mBwlMoveFlag = r.CoinFlip();
+    //Bowling
+    mBwlStdMoveFlag = r.CoinFlip();
+    mBwlStdTurnFlag = r.CoinFlip();
+    mBwl100MoveFlag = r.CoinFlip();
+    mBwl100TurnFlag = r.CoinFlip();
+    mBwlWalMoveFlag = r.CoinFlip();
+    mBwlWalTurnFlag = r.CoinFlip();
 
+    //Canoeing
     mCanTimerFlag.Randomize();
     mCanStageFlag.Randomize();
 
+    //Cycling
     mBicHeartFlag.Randomize();
     mBicStageFlag.Randomize();
 
+    //Air Sports
     mPlnTimerFlag.Randomize();
     mPlnStageFlag.Randomize();
 }
