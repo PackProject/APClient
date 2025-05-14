@@ -17,8 +17,8 @@ namespace Basketball {
 /**
  * @brief Sets the max timer in Basketball 3 Point Contest
  */
-int BskSetMaxTimer() {
-    return ItemMgr::BSK_TIMER_VALUE * ItemMgr::GetInstance().GetBskTimerNum();
+int BskSetMaxTimer() { 
+    return ItemMgr::BSK_3PT_TIMER_VALUE * ItemMgr::GetInstance().GetBsk3ptTimerNum();
 }
 
 /**
@@ -57,13 +57,19 @@ TRAMPOLINE_DEF(0x80521d34, 0x80521d38) {
  *
  ******************************************************************************/
 
- TRAMPOLINE_DEF(0x80535c28, 0x80535c2c) {
+ int BskVsSetMaxTimer() {
+    return ItemMgr::BSK_VS_TIMER_VALUE * ItemMgr::GetInstance().GetBskVsTimerNum();
+ }
+
+ TRAMPOLINE_DEF(0x80507c6c, 0x80507c70) {
     // clang-format off
     TRAMPOLINE_BEGIN
 
-    li r4, 1000
+    bl BskVsSetMaxTimer
+    mr r0, r3
 
     TRAMPOLINE_END
+    mr r4, r0
     blr
 
 }

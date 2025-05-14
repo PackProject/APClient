@@ -55,7 +55,8 @@ void ItemMgr::Clear() {
     mArcTotalArrowsFlag.SetDirect(0b1); // Start with one arrow
     mArcStageFlag.SetDirect(0b1); // Start with one stage
 
-    mBskTimerFlag.SetDirect(0b1); // Start with one timer
+    mBsk3ptTimerFlag.SetDirect(0b1); // Start with one timer
+    mBskVsTimerFlag.SetDirect(0b1); // Start with one timer
 
     mBwlStdMoveFlag = false;
     mBwlStdTurnFlag = false;
@@ -100,7 +101,8 @@ void ItemMgr::Debug() {
     mArcStageFlag.Randomize();
     
     //Basketball
-    mBskTimerFlag.Randomize();
+    mBsk3ptTimerFlag.Randomize();
+    mBskVsTimerFlag.Randomize();
 
     //Bowling
     mBwlStdMoveFlag = r.CoinFlip();

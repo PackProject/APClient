@@ -106,12 +106,26 @@ public:
      */
     /**@{*/
     //! Number of timer items
-    static const u32 BSK_TIMER_COUNT = 5;
+    static const u32 BSK_3PT_TIMER_COUNT = 5;
     //! Timer increment (in seconds)
-    static const u32 BSK_TIMER_VALUE = 13;
+    static const u32 BSK_3PT_TIMER_VALUE = 13;
 
-    u32 GetBskTimerNum() const {
-        return mBskTimerFlag.Count();
+    u32 GetBsk3ptTimerNum() const {
+        return mBsk3ptTimerFlag.Count();
+    }
+    /**@}*/
+
+    /**
+     * @name Basketball (Pickup Game)
+     */
+    /**@{*/
+    //! Number of timer items
+    static const u32 BSK_VS_TIMER_COUNT = 5;
+    //! Timer increment (in seconds)
+    static const u32 BSK_VS_TIMER_VALUE = 36;
+
+    u32 GetBskVsTimerNum() const {
+        return mBskVsTimerFlag.Count();
     }
     /**@}*/
 
@@ -360,7 +374,15 @@ private:
      */
     /**@{*/
     //! Extra timers (bitfield)
-    kiwi::TBitFlag<u32, BSK_TIMER_COUNT> mBskTimerFlag;
+    kiwi::TBitFlag<u32, BSK_3PT_TIMER_COUNT> mBsk3ptTimerFlag;
+    /**@}*/
+
+    /**
+     * @name Basketball (3-Point Contest)
+     */
+    /**@{*/
+    //! Extra timers (bitfield)
+    kiwi::TBitFlag<u32, BSK_VS_TIMER_COUNT> mBskVsTimerFlag;
     /**@}*/
 
     /**
