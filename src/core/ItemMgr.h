@@ -127,6 +127,9 @@ public:
     u32 GetBskVsTimerNum() const {
         return mBskVsTimerFlag.Count();
     }
+    bool IsBskVsPassUnlocked() const {
+        return mBskVsPassFlag;
+    }
     /**@}*/
 
     /**
@@ -378,11 +381,13 @@ private:
     /**@}*/
 
     /**
-     * @name Basketball (3-Point Contest)
+     * @name Basketball (Pickup Game)
      */
     /**@{*/
     //! Extra timers (bitfield)
     kiwi::TBitFlag<u32, BSK_VS_TIMER_COUNT> mBskVsTimerFlag;
+    //! Passing ability (bitfield)
+    bool mBskVsPassFlag;
     /**@}*/
 
     /**

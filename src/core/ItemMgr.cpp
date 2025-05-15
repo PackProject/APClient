@@ -57,6 +57,7 @@ void ItemMgr::Clear() {
 
     mBsk3ptTimerFlag.SetDirect(0b1); // Start with one timer
     mBskVsTimerFlag.SetDirect(0b1); // Start with one timer
+    mBskVsPassFlag = false;
 
     mBwlStdMoveFlag = false;
     mBwlStdTurnFlag = false;
@@ -103,6 +104,7 @@ void ItemMgr::Debug() {
     //Basketball
     mBsk3ptTimerFlag.Randomize();
     mBskVsTimerFlag.Randomize();
+    mBskVsPassFlag = r.CoinFlip();
 
     //Bowling
     mBwlStdMoveFlag = r.CoinFlip();

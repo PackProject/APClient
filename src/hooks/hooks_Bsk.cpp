@@ -6,7 +6,7 @@
 #include <libkiwi.h>
 
 namespace AP {
-namespace Basketball {
+namespace Bsk {
 
 /******************************************************************************
  *
@@ -74,6 +74,36 @@ TRAMPOLINE_DEF(0x80521d34, 0x80521d38) {
 
 }
 
+/**
+ * @brief BskVsSetMaxTimerVisual trampoline
+ */
+bool BskHasPassUnlocked() {
+    return ItemMgr::GetInstance().IsBskVsPassUnlocked();
+}
+
+TRAMPOLINE_DEF(0x8052ce98, 0x8052ce9c) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    mr r31, r3
+    mr r30, r4
+    mr r28, r5
+    bl BskHasPassUnlocked
+    cmpwi r3, 0
+    beq end
+
+    mr r3, r31
+    mr r4, r30
+    mr r5, r28
+    lis r12, 0x80513b54@ha
+    addi r12, r12, 0x80513b54@l
+    mtctr r12
+    bctrl
+
+    end:
+    TRAMPOLINE_END
+    blr
+}
 
 } // namespace Basketball
 } // namespace AP
