@@ -3637,3 +3637,5 @@ spInstance__Q33Sp23Cmn9StaticMem=0x806f4e98
 spInstance__17RPSysSystemWinMgr=0x806f4cd0
 updatePauseClosed__17RPSysSystemWinMgrFv=0x80234d58
 sActiveScreen__13RPGrpRenderer=0x807cef2c
+
+setStaticVar__Q33Sp23Cmn9StaticMemFiib=0x80269f08

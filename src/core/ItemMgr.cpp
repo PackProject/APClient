@@ -60,6 +60,8 @@ void ItemMgr::Clear() {
     mBskVsTimerFlag.SetDirect(0b1); // Start with one timer
     mBskVsPassFlag = false;
 
+    mGlfHUDFlag = false;
+
     mBwlStdMoveFlag = false;
     mBwlStdTurnFlag = false;
     mBwl100MoveFlag = false;
@@ -109,6 +111,9 @@ void ItemMgr::Debug() {
     mBsk3ptGoldenBallFlag = r.CoinFlip();
     mBskVsTimerFlag.Randomize();
     mBskVsPassFlag = r.CoinFlip();
+
+    //Golf
+    mGlfHUDFlag = r.CoinFlip();
 
     //Bowling
     mBwlStdMoveFlag = r.CoinFlip();

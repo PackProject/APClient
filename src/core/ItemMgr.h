@@ -136,6 +136,16 @@ public:
     /**@}*/
 
     /**
+     * @name Golf
+     */
+    /**@{*/
+    //! HUD
+    bool IsGlfHUDUnlocked() const {
+        return mGlfHUDFlag;
+    }
+    /**@}*/
+
+    /**
      * @name Bowling (Standard Game)
      */
     /**@{*/
@@ -403,6 +413,14 @@ private:
     kiwi::TBitFlag<u32, BSK_VS_TIMER_COUNT> mBskVsTimerFlag;
     //! Passing ability (bitfield)
     bool mBskVsPassFlag;
+    /**@}*/
+
+    /**
+     * @name Golf
+     */
+    /**@{*/
+    //! HUD
+    bool mGlfHUDFlag;
     /**@}*/
 
     /**
