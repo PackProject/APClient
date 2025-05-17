@@ -15,18 +15,25 @@ namespace Arc {
  ******************************************************************************/
 
 /**
- * @brief Sets the max arrows in Archery
+ * @brief Sets the aim flag in Archery
  */
-float ArcSetMaxArrowCount() {}
+bool ArcSetAimFlag(bool hold2) {
+    if (!ItemMgr::GetInstance().IsArcAim()) return false;
+    else if (!hold2) return false;
+    else return true;
+}
 
 /**
  * @brief ArcSetMaxArrowCount trampoline
  */
-TRAMPOLINE_DEF(0x80549cf0, 0x80549cf4) {
+TRAMPOLINE_DEF(0x80548828, 0x8054882c) {
     // clang-format off
     TRAMPOLINE_BEGIN
 
-    li r0, 2
+    mr r31, r3
+    mr r3, r0
+    bl ArcSetAimFlag
+    stb r3, 0x85(r31)
 
     TRAMPOLINE_END
     blr
