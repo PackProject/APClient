@@ -66,6 +66,8 @@ void ItemMgr::Clear() {
     mBwlWalMoveFlag = false;
     mBwlWalTurnFlag = false;
 
+    mJskBoostFlag = false;
+
     mCanTimerFlag.SetDirect(0b1); // Start with one timer
     mCanStageFlag.SetDirect(0b1); // Start with one stage
 
@@ -113,6 +115,9 @@ void ItemMgr::Debug() {
     mBwl100TurnFlag = r.CoinFlip();
     mBwlWalMoveFlag = r.CoinFlip();
     mBwlWalTurnFlag = r.CoinFlip();
+
+    //Power Cruising
+    mJskBoostFlag = r.CoinFlip();
 
     //Canoeing
     mCanTimerFlag.Randomize();

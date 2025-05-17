@@ -24,7 +24,7 @@ void PlnSetTimer(Sp2::Pln::IslandSeq* pSequence) {
     ASSERT(pSequence != nullptr);
 
     int timerNum = ItemMgr::GetInstance().GetPlnTimerNum();
-    pSequence->setTimeRemain(timerNum * ItemMgr::PLN_TIMER_VALUE * 60);
+    pSequence->setTimeRemain(60 * 250);//(timerNum * ItemMgr::PLN_TIMER_VALUE * 60);
 }
 
 /**

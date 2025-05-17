@@ -175,6 +175,16 @@ public:
     /**@}*/
 
     /**
+     * @name Power Cruising
+     */
+    /**@{*/
+    //! Boosting ability
+    bool IsJskBoostUnlocked() const {
+        return mJskBoostFlag;
+    }
+    /**@}*/
+
+    /**
      * @name Canoeing
      */
     /**@{*/
@@ -418,6 +428,14 @@ private:
     bool mBwlWalMoveFlag;
     //! Turning ability
     bool mBwlWalTurnFlag;
+    /**@}*/
+
+    /**
+     * @name Power Cruising
+     */
+    /**@{*/
+    //! Boosting Ability
+    bool mJskBoostFlag;
     /**@}*/
 
     /**

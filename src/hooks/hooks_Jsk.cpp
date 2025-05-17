@@ -39,5 +39,34 @@ TRAMPOLINE_DEF(0x805ae988, 0x805ae98c) {
 
 }
 
+/**
+ * @brief Unlocks Boosting in Power Cruising
+ */
+bool JskSetBoost() {
+    return ItemMgr::GetInstance().IsJskBoostUnlocked();
+}
+
+/**
+ * @brief JskSetBoost
+ */
+TRAMPOLINE_DEF(0x8059717c, 0x80597180) {
+
+    TRAMPOLINE_BEGIN
+
+    bl JskSetBoost
+    cmpwi r3, 0
+    beq JskCantBoost
+    stfs f1, 0x30(r27)
+    b end
+    
+    JskCantBoost:
+    li r0, 0
+    stw r0, 0x30(r27)
+
+    end:
+    TRAMPOLINE_END
+    blr
+}
+
 } // namespace Jsk
 } // namespace AP
