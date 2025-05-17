@@ -1,6 +1,8 @@
-#include <cstdio>
 #include <libkiwi.h>
+
 #include <revolution/IPC.h>
+
+#include <cstdio>
 
 namespace kiwi {
 
@@ -931,7 +933,7 @@ SockAddr4::SockAddr4(const String& host, u16 _port) {
                    LibSO::ResolveHostName(*this, host, kiwi::ToString(port));
 
     if (!success) {
-        K_LOG_EX("Could not resolve hostname: %s", host.CStr());
+        K_LOG_EX("Could not resolve hostname: %s\n", host.CStr());
         std::memset(this, 0, sizeof(SOSockAddrIn));
     }
 }
@@ -1018,7 +1020,7 @@ SockAddr6::SockAddr6(const String& _addr, u16 _port) {
                    LibSO::ResolveHostName(*this, _addr, kiwi::ToString(port));
 
     if (!success) {
-        K_LOG_EX("Could not resolve hostname: %s", _addr.CStr());
+        K_LOG_EX("Could not resolve hostname: %s\n", _addr.CStr());
         std::memset(this, 0, sizeof(SOSockAddrIn6));
     }
 }
