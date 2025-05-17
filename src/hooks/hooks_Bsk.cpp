@@ -18,7 +18,7 @@ namespace Bsk {
  * @brief Sets the max timer in Basketball 3 Point Contest
  */
 int BskSetMaxTimer() { 
-    return ItemMgr::BSK_3PT_TIMER_VALUE * ItemMgr::GetInstance().GetBsk3ptTimerNum();
+    return 100; //ItemMgr::BSK_3PT_TIMER_VALUE * ItemMgr::GetInstance().GetBsk3ptTimerNum();
 }
 
 /**
@@ -35,6 +35,37 @@ TRAMPOLINE_DEF(0x80521d34, 0x80521d38) {
     mr r5, r0
     blr
 }
+
+/**
+ * @brief Sets the max timer in Basketball 3 Point Contest (visual)
+ */
+bool BskGoldenBallAbility() {
+    return ItemMgr::GetInstance().IsBskGoldenBallAbilityUnlocked();
+}
+
+/**
+ * @brief BskGoldenBallAbility trampoline
+ */
+TRAMPOLINE_DEF(0x80522870, 0x80522874) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    bl BskGoldenBallAbility
+    cmpwi r3, 0
+    beq NoGoldenBall
+    rlwinm r5, r0, 0x0, 0x18, 0x1f
+    mr r0, r5
+    b end
+
+    NoGoldenBall:
+    li r0, 1
+
+    end:
+    TRAMPOLINE_END
+    mr r5, r0
+    blr
+}
+
 
 /**
  * @brief BskSetMaxTimerVisual trampoline
@@ -58,7 +89,7 @@ TRAMPOLINE_DEF(0x80521d34, 0x80521d38) {
  ******************************************************************************/
 
  int BskVsSetMaxTimer() {
-    return ItemMgr::BSK_VS_TIMER_VALUE * ItemMgr::GetInstance().GetBskVsTimerNum();
+    return 100; //ItemMgr::BSK_VS_TIMER_VALUE * ItemMgr::GetInstance().GetBskVsTimerNum();
  }
 
  TRAMPOLINE_DEF(0x80507c6c, 0x80507c70) {

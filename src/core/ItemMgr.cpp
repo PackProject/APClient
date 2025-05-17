@@ -56,6 +56,7 @@ void ItemMgr::Clear() {
     mArcStageFlag.SetDirect(0b1); // Start with one stage
 
     mBsk3ptTimerFlag.SetDirect(0b1); // Start with one timer
+    mBsk3ptGoldenBallFlag = false;
     mBskVsTimerFlag.SetDirect(0b1); // Start with one timer
     mBskVsPassFlag = false;
 
@@ -105,6 +106,7 @@ void ItemMgr::Debug() {
     
     //Basketball
     mBsk3ptTimerFlag.Randomize();
+    mBsk3ptGoldenBallFlag = r.CoinFlip();
     mBskVsTimerFlag.Randomize();
     mBskVsPassFlag = r.CoinFlip();
 

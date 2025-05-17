@@ -113,6 +113,9 @@ public:
     u32 GetBsk3ptTimerNum() const {
         return mBsk3ptTimerFlag.Count();
     }
+    bool IsBskGoldenBallAbilityUnlocked() const {
+        return mBsk3ptGoldenBallFlag;
+    }
     /**@}*/
 
     /**
@@ -388,6 +391,8 @@ private:
     /**@{*/
     //! Extra timers (bitfield)
     kiwi::TBitFlag<u32, BSK_3PT_TIMER_COUNT> mBsk3ptTimerFlag;
+    //! Golden ball ability
+    bool mBsk3ptGoldenBallFlag;
     /**@}*/
 
     /**
