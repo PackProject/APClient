@@ -3,6 +3,7 @@
 #include <libkiwi/k_types.h>
 #include <libkiwi/net/kiwiSocketBase.h>
 #include <libkiwi/prim/kiwiLinkList.h>
+
 #include <revolution/OS.h>
 
 namespace kiwi {
@@ -13,6 +14,10 @@ namespace kiwi {
  * @brief Asynchronous (non-blocking) socket
  */
 class AsyncSocket : public SocketBase {
+public:
+    using SocketBase::AcceptCallback;
+    using SocketBase::Callback;
+
 public:
     /**
      * @brief Constructor

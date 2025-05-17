@@ -1,6 +1,7 @@
 #ifndef LIBKIWI_NET_HTTP_REQUEST_H
 #define LIBKIWI_NET_HTTP_REQUEST_H
 #include <libkiwi/k_types.h>
+#include <libkiwi/net/kiwiSyncSocket.h>
 #include <libkiwi/prim/kiwiHashMap.h>
 #include <libkiwi/prim/kiwiOptional.h>
 #include <libkiwi/prim/kiwiString.h>
@@ -10,7 +11,7 @@ namespace kiwi {
 //! @{
 
 // Forward declarations
-class SyncSocket;
+class WebSocket;
 
 /**
  * @brief HTTP error
@@ -76,12 +77,14 @@ struct HttpResponse {
  * @brief HTTP (1.1) request wrapper
  */
 class HttpRequest {
+    // TODO: How to fix this... bad relationship
+    friend class WebSocket;
+
 public:
     /**
      * @brief Request method
      */
     enum EMethod {
-        // TODO: Should we support more?
         EMethod_GET,
         EMethod_POST,
 
@@ -99,20 +102,12 @@ public:
 public:
     /**
      * @brief Constructor
+     * @details If not specified, the port is determined by the protocol.
      *
      * @param rHost Server hostname
      * @param port Connection port
      */
-    HttpRequest(const String& rHost, u16 port = DEFAULT_PORT);
-
-    /**
-     * @brief Constructor
-     * @note The provided socket will outlive the HTTP request
-     *
-     * @param pSocket Socket connected to the server
-     */
-    explicit HttpRequest(SocketBase* pSocket);
-
+    HttpRequest(const String& rHost, u16 port = 0);
     /**
      * @brief Destructor
      */
@@ -222,9 +217,12 @@ private:
 
 private:
     //! Default port for HTTP connections
-    static const u16 DEFAULT_PORT = 80;
+    static const u16 DEFAULT_PORT_HTTP = 80;
+    //! Default port for HTTPS connections
+    static const u16 DEFAULT_PORT_HTTPS = 443;
+
     //! Default connection timeout, in milliseconds
-    static const u32 DEFAULT_TIMEOUT = 10000;
+    static const u32 DEFAULT_TIMEOUT = 5000;
     //! Size of temporary buffer when receiving a response
     static const int TEMP_BUFFER_SIZE = 512;
 
@@ -234,18 +232,14 @@ private:
     static const String PROTOCOL_VERSION;
 
 private:
-    bool mIsSent; //!< Whether this request object has been used
-
-    String mHost; //!< Server host name
-    u16 mPort;    //!< Server port
+    String mHost;       //!< Server host name
+    u16 mPort;          //!< Server port
+    SyncSocket mSocket; //!< Connection to server
 
     EMethod mMethod;        //!< Request method
     String mResource;       //!< Requested resource
     HttpResponse mResponse; //!< Server response
     u32 mTimeOut;           //!< Connection timeout
-
-    SocketBase* mpSocket; //!< Connection to server
-    bool mIsUserSocket;   //!< Whether the socket is owned by the user
 
     TMap<String, String> mParams; //!< URL parameters
     TMap<String, String> mHeader; //!< Header fields

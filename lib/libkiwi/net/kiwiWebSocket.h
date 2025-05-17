@@ -1,12 +1,14 @@
 #ifndef LIBKIWI_NET_WEB_SOCKET_H
 #define LIBKIWI_NET_WEB_SOCKET_H
 #include <libkiwi/k_types.h>
-#include <libkiwi/net/kiwiAsyncSocket.h>
 #include <libkiwi/prim/kiwiString.h>
 
 namespace kiwi {
 //! @addtogroup libkiwi_net
 //! @{
+
+// Forward declarations
+class HttpRequest;
 
 /**
  * @brief WebSocket message
@@ -14,7 +16,7 @@ namespace kiwi {
 struct WebSockMessage {};
 
 /**
- * @brief Web socket (asynchronous)
+ * @brief Asynchronous web socket
  */
 class WebSocket {
 public:
@@ -114,7 +116,6 @@ private:
 
 private:
     EState mState;          //!< Asynchronous state
-    AsyncSocket* mpSocket;  //!< TCP socket
     HttpRequest* mpRequest; //!< HTTP request
 
     Callback mpConnectCallback; //!< Connect callback
