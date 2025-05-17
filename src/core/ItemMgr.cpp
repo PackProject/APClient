@@ -40,45 +40,84 @@ void ItemMgr::SerializeImpl(Header& rHeader) const {
  * @brief Clears item state
  */
 void ItemMgr::Clear() {
+    // Common
     mSportFlag.ResetAll();
     mCategoryFlag.ResetAll();
 
+    // Swordplay
     mSwfVsBlockFlag = false;
     mSwfPrcPauseFlag = false;
     mSwfSglBlockFlag = 0;
     mSwfSglHeartFlag.SetDirect(0b1); // Start with one heart
     mSwfSglStageFlag.SetDirect(0b1); // Start with one stage
 
+    // Wakeboarding
     mWkbTimerFlag.SetDirect(0b1); // Start with one timer
     mWkbStageFlag.SetDirect(0b1); // Start with one stage
 
-    mDglHUDFlag = false;
+    // Frisbee Dog
+    mFldThrowFlag.SetDirect(0b1); // Start with one throw
+    mFldSecretPopFlag = false;
 
-    mArcTotalArrowsFlag.SetDirect(0b1); // Start with one arrow
-    mArcStageFlag.SetDirect(0b1); // Start with one stage
+    // Frisbee Golf
+    mDglDiscFlag.SetDirect(0b1);  // Start with one disc
+    mDglStageFlag.SetDirect(0b1); // Start with one stage
 
+    // Archery
+    mArcAimFlag = false;
+    mArcArrowFlag.SetDirect(0b1); // Start with one arrow
+    mArcFruitFlag.ResetAll();
+    mArcStageFlag.SetDirect(0b1); // Start with one difficulty
+
+    // Basketball
     mBsk3ptTimerFlag.SetDirect(0b1); // Start with one timer
-    mBsk3ptGoldenBallFlag = false;
+    mBsk3ptBonusFlag = false;
     mBskVsTimerFlag.SetDirect(0b1); // Start with one timer
     mBskVsPassFlag = false;
+    mBskVs3ptFlag = false;
+    mBskVsDunkFlag = false;
 
+    // Table Tennis
+    mPngSpinFlag = false;
+    mPngSmashFlag = false;
+    mPngCansFlag = false;
+
+    // Golf
     mGlfHUDFlag = false;
+    mGlfClubFlag.SetDirect(0b1); // Start with one club
+    mGlfTurnFlag = false;
+    mGlfSpinFlag = false;
+    mGlfStageFlag.SetDirect(0b1); // Start with one difficulty
+    mGlfViewLowFlag = false;
+    mGlfViewSlopeFlag = false;
 
+    // Bowling
     mBwlStdMoveFlag = false;
     mBwlStdTurnFlag = false;
+    mBwlStdSpinFlag = false;
     mBwl100MoveFlag = false;
     mBwl100TurnFlag = false;
+    mBwl100SpinFlag = false;
+    mBwl100SecretBtnFlag = false;
     mBwlWalMoveFlag = false;
     mBwlWalTurnFlag = false;
+    mBwlWalSpinFlag = false;
 
+    // Power Cruising
     mJskBoostFlag = false;
+    mJskRingTimerFlag.ResetAll();
+    mJsk2xRingFlag = false;
+    mJskFreeTimerFlag.SetDirect(0b1); // Start with one timer
 
+    // Canoeing
     mCanTimerFlag.SetDirect(0b1); // Start with one timer
     mCanStageFlag.SetDirect(0b1); // Start with one stage
 
+    // Cycling
     mBicHeartFlag.SetDirect(0b1); // Start with one heart
     mBicStageFlag.SetDirect(0b1); // Start with one stage
 
+    // Air Sports
     mPlnTimerFlag.SetDirect(0b1); // Start with one timer
     mPlnStageFlag.SetDirect(0b1); // Start with one stage
 }
@@ -89,57 +128,84 @@ void ItemMgr::Clear() {
 void ItemMgr::Debug() {
     kiwi::Random r;
 
-    //Common
+    // Common
     mSportFlag.SetAll();
     mCategoryFlag.SetAll();
 
-    //Swordplay
+    // Swordplay
     mSwfVsBlockFlag = r.CoinFlip();
     mSwfPrcPauseFlag = r.CoinFlip();
     mSwfSglBlockFlag = r.CoinFlip();
     mSwfSglHeartFlag.Randomize();
     mSwfSglStageFlag.Randomize();
 
-    //Wakeboarding
+    // Wakeboarding
     mWkbTimerFlag.Randomize();
     mWkbStageFlag.Randomize();
 
-    //Frisbee Golf
-    mDglHUDFlag = r.CoinFlip();
+    // Frisbee Dog
+    mFldThrowFlag.Randomize();
+    mFldSecretPopFlag = r.CoinFlip();
 
-    //Archery
-    mArcTotalArrowsFlag.Randomize();
+    // Frisbee Golf
+    mDglDiscFlag.Randomize();
+    mDglStageFlag.Randomize();
+
+    // Archery
+    mArcAimFlag = r.CoinFlip();
+    mArcArrowFlag.Randomize();
+    mArcFruitFlag.Randomize();
     mArcStageFlag.Randomize();
-    
-    //Basketball
+
+    // Basketball
     mBsk3ptTimerFlag.Randomize();
-    mBsk3ptGoldenBallFlag = r.CoinFlip();
+    mBsk3ptBonusFlag = r.CoinFlip();
     mBskVsTimerFlag.Randomize();
     mBskVsPassFlag = r.CoinFlip();
+    mBskVs3ptFlag = r.CoinFlip();
+    mBskVsDunkFlag = r.CoinFlip();
 
-    //Golf
+    // Table Tennis
+    mPngSpinFlag = r.CoinFlip();
+    mPngSmashFlag = r.CoinFlip();
+    mPngCansFlag = r.CoinFlip();
+
+    // Golf
     mGlfHUDFlag = r.CoinFlip();
+    mGlfClubFlag.Randomize();
+    mGlfTurnFlag = r.CoinFlip();
+    mGlfSpinFlag = r.CoinFlip();
+    mGlfStageFlag.Randomize();
+    mGlfViewLowFlag = r.CoinFlip();
+    mGlfViewSlopeFlag = r.CoinFlip();
 
-    //Bowling
+    // Bowling
     mBwlStdMoveFlag = r.CoinFlip();
     mBwlStdTurnFlag = r.CoinFlip();
+    mBwlStdSpinFlag = r.CoinFlip();
     mBwl100MoveFlag = r.CoinFlip();
     mBwl100TurnFlag = r.CoinFlip();
+    mBwl100SpinFlag = r.CoinFlip();
+    mBwl100SecretBtnFlag = r.CoinFlip();
     mBwlWalMoveFlag = r.CoinFlip();
     mBwlWalTurnFlag = r.CoinFlip();
+    mBwlWalSpinFlag = r.CoinFlip();
 
-    //Power Cruising
+    // Power Cruising
     mJskBoostFlag = r.CoinFlip();
+    mJskRingTimerFlag.Randomize();
+    mJsk2xRingFlag = r.CoinFlip();
+    mJskFreeTimerFlag.Randomize();
 
-    //Canoeing
+    // Canoeing
     mCanTimerFlag.Randomize();
     mCanStageFlag.Randomize();
 
-    //Cycling
+    // Cycling
     mBicHeartFlag.Randomize();
     mBicStageFlag.Randomize();
 
-    //Air Sports
+    // Air Sports
     mPlnTimerFlag.Randomize();
     mPlnStageFlag.Randomize();
 }

@@ -24,7 +24,8 @@ void PlnSetTimer(Sp2::Pln::IslandSeq* pSequence) {
     ASSERT(pSequence != nullptr);
 
     int timerNum = ItemMgr::GetInstance().GetPlnTimerNum();
-    pSequence->setTimeRemain(60 * 250);//(timerNum * ItemMgr::PLN_TIMER_VALUE * 60);
+    pSequence->setTimeRemain(60 *
+                             250); //(timerNum * ItemMgr::PLN_TIMER_VALUE * 60);
 }
 
 /**
@@ -39,6 +40,7 @@ TRAMPOLINE_DEF(0x80428898, 0x8042889C) {
 
     TRAMPOLINE_END
     blr
+    // clang-format on
 }
 
 } // namespace Pln

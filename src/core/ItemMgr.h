@@ -92,12 +92,37 @@ public:
     /**@}*/
 
     /**
+     * @name Frisbee Dog
+     */
+    /**@{*/
+    //! Number of throw items
+    static const u32 FLD_THROW_COUNT = 10;
+
+    u32 GetFldThrowNum() const {
+        return mFldThrowFlag.Count();
+    }
+    bool IsFldSecretPop() const {
+        return mFldSecretPopFlag;
+    }
+    /**@}*/
+
+    /**
      * @name Frisbee Golf
      */
     /**@{*/
-    //! HUD
-    bool IsDglHUDUnlocked() const {
+    //! Number of frisbee items
+    static const u32 DGL_DISC_COUNT = 3;
+    //! Number of stage items
+    static const u32 DGL_STAGE_COUNT = 10;
+
+    bool IsDglHUD() const {
         return mDglHUDFlag;
+    }
+    u32 GetDglDiscNum() const {
+        return mDglDiscFlag.Count();
+    }
+    bool IsDglStageUnlock(u32 id) const {
+        return mDglStageFlag.GetBit(id);
     }
     /**@}*/
 
@@ -107,8 +132,23 @@ public:
     /**@{*/
     //! Number of arrow items
     static const u32 ARC_ARROW_COUNT = 3;
-    //! Number of stage unlock items
+    //! Number of fruit items (1 per stage)
+    static const u32 ARC_FRUIT_COUNT = 3;
+    //! Number of stage items
     static const u32 ARC_STAGE_COUNT = 3;
+
+    bool IsArcAim() const {
+        return mArcAimFlag;
+    }
+    u32 GetArcArrowNum() const {
+        return mArcArrowFlag.Count();
+    }
+    bool IsArcFruitUnlock(u32 id) const {
+        return mArcFruitFlag.GetBit(id);
+    }
+    bool IsArcStageUnlock(u32 id) const {
+        return mArcStageFlag.GetBit(id);
+    }
     /**@}*/
 
     /**
@@ -123,8 +163,8 @@ public:
     u32 GetBsk3ptTimerNum() const {
         return mBsk3ptTimerFlag.Count();
     }
-    bool IsBskGoldenBallAbilityUnlocked() const {
-        return mBsk3ptGoldenBallFlag;
+    bool IsBsk3ptBonus() const {
+        return mBsk3ptBonusFlag;
     }
     /**@}*/
 
@@ -140,8 +180,29 @@ public:
     u32 GetBskVsTimerNum() const {
         return mBskVsTimerFlag.Count();
     }
-    bool IsBskVsPassUnlocked() const {
+    bool IsBskVsPass() const {
         return mBskVsPassFlag;
+    }
+    bool IsBskVs3pt() const {
+        return mBskVs3ptFlag;
+    }
+    bool IsBskVsDunk() const {
+        return mBskVsDunkFlag;
+    }
+    /**@}*/
+
+    /**
+     * @name Table Tennis
+     */
+    /**@{*/
+    bool IsPngSpin() const {
+        return mPngSpinFlag;
+    }
+    bool IsPngSmash() const {
+        return mPngSmashFlag;
+    }
+    bool IsPngCans() const {
+        return mPngCansFlag;
     }
     /**@}*/
 
@@ -149,51 +210,79 @@ public:
      * @name Golf
      */
     /**@{*/
-    //! HUD
-    bool IsGlfHUDUnlocked() const {
+    //! Number of club items
+    static const u32 GLF_CLUB_COUNT = 8;
+    //! Number of stage items
+    static const u32 GLF_STAGE_COUNT = 10;
+
+    bool IsGlfHUD() const {
         return mGlfHUDFlag;
     }
+    bool IsGlfClubUnlock(u32 id) const {
+        return mGlfClubFlag.GetBit(id);
+    }
+    bool IsGlfTurn() const {
+        return mGlfTurnFlag;
+    }
+    bool IsGlfSpin() const {
+        return mGlfSpinFlag;
+    }
+    bool IsGlfStageUnlock(u32 id) const {
+        return mGlfStageFlag.GetBit(id);
+    }
+    bool IsGlfViewLow() const {
+        return mGlfViewLowFlag;
+    }
+    bool IsGlfViewSlope() const {
+        return mGlfViewSlopeFlag;
+    }
     /**@}*/
 
     /**
      * @name Bowling (Standard Game)
      */
     /**@{*/
-    //! Moving ability
-    bool IsBwlStdMoveUnlocked() const {
+    bool IsBwlStdMove() const {
         return mBwlStdMoveFlag;
     }
-    //! Turning ability
-    bool IsBwlStdTurnUnlocked() const {
+    bool IsBwlStdTurn() const {
         return mBwlStdTurnFlag;
     }
+    bool IsBwlStdSpin() const {
+        return mBwlStdSpinFlag;
+    }
     /**@}*/
 
     /**
-     * @name Bowling (Standard Game)
+     * @name Bowling (100-Pin Game)
      */
     /**@{*/
-    //! Moving ability
-    bool IsBwl100MoveUnlocked() const {
+    bool IsBwl100Move() const {
         return mBwl100MoveFlag;
     }
-    //! Turning ability
-    bool IsBwl100TurnUnlocked() const {
+    bool IsBwl100Turn() const {
         return mBwl100TurnFlag;
+    }
+    bool IsBwl100Spin() const {
+        return mBwl100SpinFlag;
+    }
+    bool IsBwl100SecretBtn() const {
+        return mBwl100SecretBtnFlag;
     }
     /**@}*/
 
     /**
-     * @name Bowling (Standard Game)
+     * @name Bowling (Spin Control)
      */
     /**@{*/
-    //! Moving ability
-    bool IsBwlWalMoveUnlocked() const {
+    bool IsBwlWalMove() const {
         return mBwlWalMoveFlag;
     }
-    //! Turning ability
-    bool IsBwlWalTurnUnlocked() const {
+    bool IsBwlWalTurn() const {
         return mBwlWalTurnFlag;
+    }
+    bool IsBwlWalSpin() const {
+        return mBwlWalSpinFlag;
     }
     /**@}*/
 
@@ -201,9 +290,27 @@ public:
      * @name Power Cruising
      */
     /**@{*/
-    //! Boosting ability
-    bool IsJskBoostUnlocked() const {
+    //! Number of timer items
+    static const u32 JSK_RING_TIMER_COUNT = 2;
+    //! Timer increment (in seconds)
+    static const u32 JSK_RING_TIMER_VALUE = 4;
+
+    //! Number of timer items
+    static const u32 JSK_FREE_TIMER_COUNT = 6;
+    //! Timer increment (in seconds)
+    static const u32 JSK_FREE_TIMER_VALUE = 60;
+
+    bool IsJskBoost() const {
         return mJskBoostFlag;
+    }
+    u32 GetJskRingTimerNum() const {
+        return mJskRingTimerFlag.Count();
+    }
+    bool IsJsk2xRing() const {
+        return mJsk2xRingFlag;
+    }
+    u32 GetJskFreeTimerNum() const {
+        return mJskFreeTimerFlag.Count();
     }
     /**@}*/
 
@@ -361,7 +468,7 @@ private:
      * @name Swordplay (Duel)
      */
     /**@{*/
-    //! Blocking ability
+    //! Blocking
     bool mSwfVsBlockFlag;
     /**@}*/
 
@@ -369,7 +476,7 @@ private:
      * @name Swordplay (Speed Slice)
      */
     /**@{*/
-    //! Pausing ability
+    //! Pausing
     bool mSwfPrcPauseFlag;
     /**@}*/
 
@@ -377,7 +484,7 @@ private:
      * @name Swordplay (Showdown)
      */
     /**@{*/
-    //! Blocking ability
+    //! Blocking
     bool mSwfSglBlockFlag;
     //! Heart items
     kiwi::TBitFlag<u32, SWF_SGL_HEART_COUNT> mSwfSglHeartFlag;
@@ -389,27 +496,45 @@ private:
      * @name Wakeboarding
      */
     /**@{*/
-    //! Extra timers (bitfield)
+    //! Timer items
     kiwi::TBitFlag<u32, WKB_TIMER_COUNT> mWkbTimerFlag;
-    //! Extra stages (bitfield)
+    //! Stage unlock items
     kiwi::TBitFlag<u32, WKB_STAGE_COUNT> mWkbStageFlag;
+    /**@}*/
+
+    /**
+     * @name Frisbee Dog
+     */
+    /**@{*/
+    //! Throw items
+    kiwi::TBitFlag<u32, FLD_THROW_COUNT> mFldThrowFlag;
+    //! A+2 button combo to pop balloons
+    bool mFldSecretPopFlag;
     /**@}*/
 
     /**
      * @name Frisbee Golf
      */
     /**@{*/
-    //! HUD
+    //! Heads-up display
     bool mDglHUDFlag;
+    //! Disc items (progressive)
+    kiwi::TBitFlag<u32, DGL_DISC_COUNT> mDglDiscFlag;
+    //! Stage unlock items
+    kiwi::TBitFlag<u32, DGL_STAGE_COUNT> mDglStageFlag;
     /**@}*/
 
     /**
      * @name Archery
      */
     /**@{*/
-    //! Total arrows (bitfield)
-    kiwi::TBitFlag<u32, ARC_ARROW_COUNT> mArcTotalArrowsFlag;
-    //! Extra stages (bitfield)
+    //! Aiming circle
+    bool mArcAimFlag;
+    //! Arrow items
+    kiwi::TBitFlag<u32, ARC_ARROW_COUNT> mArcArrowFlag;
+    //! Fruit unlock items
+    kiwi::TBitFlag<u32, ARC_FRUIT_COUNT> mArcFruitFlag;
+    //! Stage unlock items
     kiwi::TBitFlag<u32, ARC_STAGE_COUNT> mArcStageFlag;
     /**@}*/
 
@@ -417,75 +542,116 @@ private:
      * @name Basketball (3-Point Contest)
      */
     /**@{*/
-    //! Extra timers (bitfield)
+    //! Timer items
     kiwi::TBitFlag<u32, BSK_3PT_TIMER_COUNT> mBsk3ptTimerFlag;
-    //! Golden ball ability
-    bool mBsk3ptGoldenBallFlag;
-    /**@}*/
+    //! Bonus ball
+    bool mBsk3ptBonusFlag;
 
     /**
      * @name Basketball (Pickup Game)
      */
     /**@{*/
-    //! Extra timers (bitfield)
+    //! Timer items
     kiwi::TBitFlag<u32, BSK_VS_TIMER_COUNT> mBskVsTimerFlag;
-    //! Passing ability (bitfield)
+    //! Passing
     bool mBskVsPassFlag;
+    //! 3-point shots
+    bool mBskVs3ptFlag;
+    //! Dunking
+    bool mBskVsDunkFlag;
+    /**@}*/
+
+    /**
+     * @name Table Tennis
+     */
+    /**@{*/
+    //! Spin
+    bool mPngSpinFlag;
+    //! Smash hit
+    bool mPngSmashFlag;
+    //! Return Challenge cans
+    bool mPngCansFlag;
     /**@}*/
 
     /**
      * @name Golf
      */
     /**@{*/
-    //! HUD
+    //! Heads-up display
     bool mGlfHUDFlag;
+    //! Club items (progressive)
+    kiwi::TBitFlag<u32, GLF_CLUB_COUNT> mGlfClubFlag;
+    //! Turning
+    bool mGlfTurnFlag;
+    //! Backspin
+    bool mGlfSpinFlag;
+    //! Stage unlock items
+    kiwi::TBitFlag<u32, GLF_STAGE_COUNT> mGlfStageFlag;
+    //! Low-view when putting
+    bool mGlfViewLowFlag;
+    //! Slope view when putting
+    bool mGlfViewSlopeFlag;
     /**@}*/
 
     /**
      * @name Bowling (Standard Game)
      */
     /**@{*/
-    //! Moving ability
+    //! Moving
     bool mBwlStdMoveFlag;
-    //! Turning ability
+    //! Turning
     bool mBwlStdTurnFlag;
+    //! Spin
+    bool mBwlStdSpinFlag;
     /**@}*/
 
     /**
      * @name Bowling (100-Pin Game)
      */
     /**@{*/
-    //! Moving ability
+    //! Moving
     bool mBwl100MoveFlag;
-    //! Turning ability
+    //! Turning
     bool mBwl100TurnFlag;
+    //! Spin
+    bool mBwl100SpinFlag;
+    //! Secret strike button
+    bool mBwl100SecretBtnFlag;
     /**@}*/
 
     /**
      * @name Bowling (Spin Control)
      */
     /**@{*/
-    //! Moving ability
+    //! Moving
     bool mBwlWalMoveFlag;
-    //! Turning ability
+    //! Turning
     bool mBwlWalTurnFlag;
+    //! Spin
+    bool mBwlWalSpinFlag;
     /**@}*/
 
     /**
      * @name Power Cruising
      */
     /**@{*/
-    //! Boosting Ability
+    //! Boosting
     bool mJskBoostFlag;
+    //! Ring timer items
+    kiwi::TBitFlag<u32, JSK_RING_TIMER_COUNT> mJskRingTimerFlag;
+    //! x2 ring multiplier
+    bool mJsk2xRingFlag;
+    //! Free cruising timer items
+    kiwi::TBitFlag<u32, JSK_FREE_TIMER_COUNT> mJskFreeTimerFlag;
     /**@}*/
 
     /**
      * @name Canoeing
      */
     /**@{*/
-    //! Extra timers (bitfield)
+    //! Timer items
     kiwi::TBitFlag<u32, CAN_TIMER_COUNT> mCanTimerFlag;
-    //! Extra stages (bitfield)
+    //! Stage items
     kiwi::TBitFlag<u32, CAN_STAGE_COUNT> mCanStageFlag;
     /**@}*/
 
@@ -493,9 +659,9 @@ private:
      * @name Cycling
      */
     /**@{*/
-    //! Extra hearts (bitfield)
+    //! Heart items
     kiwi::TBitFlag<u32, BIC_HEART_COUNT> mBicHeartFlag;
-    //! Extra stages (bitfield)
+    //! Stage items
     kiwi::TBitFlag<u32, BIC_STAGE_COUNT> mBicStageFlag;
     /**@}*/
 
@@ -503,9 +669,9 @@ private:
      * @name Island Flyover
      */
     /**@{*/
-    //! Extra timers (bitfield)
+    //! Timer items
     kiwi::TBitFlag<u32, PLN_TIMER_COUNT> mPlnTimerFlag;
-    //! Extra stages (bitfield)
+    //! Stage items
     kiwi::TBitFlag<u32, PLN_STAGE_COUNT> mPlnStageFlag;
     /**@}*/
 };

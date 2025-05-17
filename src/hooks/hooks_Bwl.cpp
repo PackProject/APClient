@@ -6,7 +6,7 @@
 #include <libkiwi.h>
 
 namespace AP {
-namespace Bowling {
+namespace Bwl {
 
 /******************************************************************************
  *
@@ -22,25 +22,25 @@ bool BwlCheckMoveState() {
     u32 sequence = RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->getSequence();
 
     switch (sequence) {
-        case Sp2::Cmn::ESeq_Bwl_Std: {
-            unlocked = ItemMgr::GetInstance().IsBwlStdMoveUnlocked();
-            break;
-        }
+    case Sp2::Cmn::ESeq_Bwl_Std: {
+        unlocked = ItemMgr::GetInstance().IsBwlStdMove();
+        break;
+    }
 
-        case Sp2::Cmn::ESeq_Bwl_100: {
-            unlocked = ItemMgr::GetInstance().IsBwl100MoveUnlocked();
-            break;
-        }
+    case Sp2::Cmn::ESeq_Bwl_100: {
+        unlocked = ItemMgr::GetInstance().IsBwl100Move();
+        break;
+    }
 
-        case Sp2::Cmn::ESeq_Bwl_Wal: {
-            unlocked = ItemMgr::GetInstance().IsBwlWalMoveUnlocked();
-            break;
-        }
+    case Sp2::Cmn::ESeq_Bwl_Wal: {
+        unlocked = ItemMgr::GetInstance().IsBwlWalMove();
+        break;
+    }
 
-        default: {
+    default: {
         ASSERT_EX(false, "Invalid sequence %d", sequence);
         break;
-        }
+    }
     }
 
     return unlocked;
@@ -49,7 +49,7 @@ bool BwlCheckMoveState() {
 /**
  * @brief BwlCheckMoveState trampoline (move left)
  */
-TRAMPOLINE_DEF(0x804ea5ac, 0x804ea5b0) {
+TRAMPOLINE_DEF(0x804ea5ac, 0x804ea5b0){
     // clang-format off
     TRAMPOLINE_BEGIN
 
@@ -63,6 +63,7 @@ TRAMPOLINE_DEF(0x804ea5ac, 0x804ea5b0) {
 
     TRAMPOLINE_END
     blr
+    // clang-format on
 }
 
 /**
@@ -82,6 +83,7 @@ TRAMPOLINE_DEF(0x804ea5dc, 0x804ea5e0) {
 
     TRAMPOLINE_END
     blr
+    // clang-format on
 }
 
 /**
@@ -92,25 +94,25 @@ bool BwlCheckTurnState() {
     u32 sequence = RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->getSequence();
 
     switch (sequence) {
-        case Sp2::Cmn::ESeq_Bwl_Std: {
-            unlocked = ItemMgr::GetInstance().IsBwlStdTurnUnlocked();
-            break;
-        }
+    case Sp2::Cmn::ESeq_Bwl_Std: {
+        unlocked = ItemMgr::GetInstance().IsBwlStdTurn();
+        break;
+    }
 
-        case Sp2::Cmn::ESeq_Bwl_100: {
-            unlocked = ItemMgr::GetInstance().IsBwl100TurnUnlocked();
-            break;
-        }
+    case Sp2::Cmn::ESeq_Bwl_100: {
+        unlocked = ItemMgr::GetInstance().IsBwl100Turn();
+        break;
+    }
 
-        case Sp2::Cmn::ESeq_Bwl_Wal: {
-            unlocked = ItemMgr::GetInstance().IsBwlWalTurnUnlocked();
-            break;
-        }
+    case Sp2::Cmn::ESeq_Bwl_Wal: {
+        unlocked = ItemMgr::GetInstance().IsBwlWalTurn();
+        break;
+    }
 
-        default: {
+    default: {
         ASSERT_EX(false, "Invalid sequence %d", sequence);
         break;
-        }
+    }
     }
 
     return unlocked;
@@ -119,7 +121,7 @@ bool BwlCheckTurnState() {
 /**
  * @brief BwlCheckTurnState trampoline (turn left)
  */
-TRAMPOLINE_DEF(0x804ea628, 0x804ea62c) {
+TRAMPOLINE_DEF(0x804ea628, 0x804ea62c){
     // clang-format off
     TRAMPOLINE_BEGIN
 
@@ -133,6 +135,7 @@ TRAMPOLINE_DEF(0x804ea628, 0x804ea62c) {
 
     TRAMPOLINE_END
     blr
+    // clang-format on
 }
 
 /**
@@ -152,7 +155,8 @@ TRAMPOLINE_DEF(0x804ea658, 0x804ea65C) {
 
     TRAMPOLINE_END
     blr
+    // clang-format on
 }
 
-} // namespace Bowling
+} // namespace Bwl
 } // namespace AP

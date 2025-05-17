@@ -6,7 +6,7 @@
 #include <libkiwi.h>
 
 namespace AP {
-namespace Archery {
+namespace Arc {
 
 /******************************************************************************
  *
@@ -17,9 +17,7 @@ namespace Archery {
 /**
  * @brief Sets the max arrows in Archery
  */
-float ArcSetMaxArrowCount() {
-    
-}
+float ArcSetMaxArrowCount() {}
 
 /**
  * @brief ArcSetMaxArrowCount trampoline
@@ -32,8 +30,8 @@ TRAMPOLINE_DEF(0x80549cf0, 0x80549cf4) {
 
     TRAMPOLINE_END
     blr
+    // clang-format on
 }
 
-
-} // namespace Archery
+} // namespace Arc
 } // namespace AP

@@ -17,8 +17,9 @@ namespace Bsk {
 /**
  * @brief Sets the max timer in Basketball 3 Point Contest
  */
-int BskSetMaxTimer() { 
-    return 100; //ItemMgr::BSK_3PT_TIMER_VALUE * ItemMgr::GetInstance().GetBsk3ptTimerNum();
+int BskSetMaxTimer() {
+    return 100; // ItemMgr::BSK_3PT_TIMER_VALUE *
+                // ItemMgr::GetInstance().GetBsk3ptTimerNum();
 }
 
 /**
@@ -34,13 +35,14 @@ TRAMPOLINE_DEF(0x80521d34, 0x80521d38) {
     TRAMPOLINE_END
     mr r5, r0
     blr
+    // clang-format on
 }
 
 /**
  * @brief Sets the max timer in Basketball 3 Point Contest (visual)
  */
 bool BskGoldenBallAbility() {
-    return ItemMgr::GetInstance().IsBskGoldenBallAbilityUnlocked();
+    return ItemMgr::GetInstance().IsBsk3ptBonus();
 }
 
 /**
@@ -64,8 +66,8 @@ TRAMPOLINE_DEF(0x80522870, 0x80522874) {
     TRAMPOLINE_END
     mr r5, r0
     blr
+    // clang-format on
 }
-
 
 /**
  * @brief BskSetMaxTimerVisual trampoline
@@ -81,18 +83,18 @@ TRAMPOLINE_DEF(0x80522870, 0x80522874) {
 //     mr r5, r0
 //     blr
 
-
 /******************************************************************************
  *
  * Basketball Pickup Game
  *
  ******************************************************************************/
 
- int BskVsSetMaxTimer() {
-    return 100; //ItemMgr::BSK_VS_TIMER_VALUE * ItemMgr::GetInstance().GetBskVsTimerNum();
- }
+int BskVsSetMaxTimer() {
+    return 100; // ItemMgr::BSK_VS_TIMER_VALUE *
+                // ItemMgr::GetInstance().GetBskVsTimerNum();
+}
 
- TRAMPOLINE_DEF(0x80507c6c, 0x80507c70) {
+TRAMPOLINE_DEF(0x80507c6c, 0x80507c70) {
     // clang-format off
     TRAMPOLINE_BEGIN
 
@@ -102,14 +104,14 @@ TRAMPOLINE_DEF(0x80522870, 0x80522874) {
     TRAMPOLINE_END
     mr r4, r0
     blr
-
+    // clang-format on
 }
 
 /**
  * @brief BskVsSetMaxTimerVisual trampoline
  */
 bool BskHasPassUnlocked() {
-    return ItemMgr::GetInstance().IsBskVsPassUnlocked();
+    return ItemMgr::GetInstance().IsBskVsPass();
 }
 
 TRAMPOLINE_DEF(0x8052ce98, 0x8052ce9c) {
@@ -134,7 +136,8 @@ TRAMPOLINE_DEF(0x8052ce98, 0x8052ce9c) {
     end:
     TRAMPOLINE_END
     blr
+    // clang-format on
 }
 
-} // namespace Basketball
+} // namespace Bsk
 } // namespace AP
