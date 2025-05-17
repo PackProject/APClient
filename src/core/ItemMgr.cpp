@@ -52,6 +52,8 @@ void ItemMgr::Clear() {
     mWkbTimerFlag.SetDirect(0b1); // Start with one timer
     mWkbStageFlag.SetDirect(0b1); // Start with one stage
 
+    mDglHUDFlag = false;
+
     mArcTotalArrowsFlag.SetDirect(0b1); // Start with one arrow
     mArcStageFlag.SetDirect(0b1); // Start with one stage
 
@@ -101,6 +103,9 @@ void ItemMgr::Debug() {
     //Wakeboarding
     mWkbTimerFlag.Randomize();
     mWkbStageFlag.Randomize();
+
+    //Frisbee Golf
+    mDglHUDFlag = r.CoinFlip();
 
     //Archery
     mArcTotalArrowsFlag.Randomize();

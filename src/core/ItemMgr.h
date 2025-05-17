@@ -92,6 +92,16 @@ public:
     /**@}*/
 
     /**
+     * @name Frisbee Golf
+     */
+    /**@{*/
+    //! HUD
+    bool IsDglHUDUnlocked() const {
+        return mDglHUDFlag;
+    }
+    /**@}*/
+
+    /**
      * @name Archery
      */
     /**@{*/
@@ -383,6 +393,14 @@ private:
     kiwi::TBitFlag<u32, WKB_TIMER_COUNT> mWkbTimerFlag;
     //! Extra stages (bitfield)
     kiwi::TBitFlag<u32, WKB_STAGE_COUNT> mWkbStageFlag;
+    /**@}*/
+
+    /**
+     * @name Frisbee Golf
+     */
+    /**@{*/
+    //! HUD
+    bool mDglHUDFlag;
     /**@}*/
 
     /**
