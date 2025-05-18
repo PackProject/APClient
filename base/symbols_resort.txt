@@ -3639,3 +3639,6 @@ updatePauseClosed__17RPSysSystemWinMgrFv=0x80234d58
 sActiveScreen__13RPGrpRenderer=0x807cef2c
 
 setStaticVar__Q33Sp23Cmn9StaticMemFiib=0x80269f08
+
+setTimer__Q43Sp23Bsk3Lyt4MainFUlUl=0x80533a78
+setType__Q33Sp23Bsk4BallFQ43Sp23Bsk4Ball5EType=0x804ffa44

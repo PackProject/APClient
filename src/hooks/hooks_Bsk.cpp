@@ -8,109 +8,126 @@
 namespace AP {
 namespace Bsk {
 
-/******************************************************************************
- *
- * Basketball 3 Point Contest
- *
- ******************************************************************************/
-
-/**
- * @brief Sets the max timer in Basketball 3 Point Contest
- */
-int BskSetMaxTimer() {
-    return 100; // ItemMgr::BSK_3PT_TIMER_VALUE *
-                // ItemMgr::GetInstance().GetBsk3ptTimerNum();
-}
-
-/**
- * @brief BskSetMaxTimer trampoline
- */
-TRAMPOLINE_DEF(0x80521d34, 0x80521d38) {
-    // clang-format off
-    TRAMPOLINE_BEGIN
-
-    bl BskSetMaxTimer
-    mr r0, r3
-
-    TRAMPOLINE_END
-    mr r5, r0
-    blr
-    // clang-format on
-}
-
-/**
- * @brief Sets the max timer in Basketball 3 Point Contest (visual)
- */
-bool BskGoldenBallAbility() {
-    return ItemMgr::GetInstance().IsBsk3ptBonus();
-}
-
-/**
- * @brief BskGoldenBallAbility trampoline
- */
-TRAMPOLINE_DEF(0x80522870, 0x80522874) {
-    // clang-format off
-    TRAMPOLINE_BEGIN
-
-    bl BskGoldenBallAbility
-    cmpwi r3, 0
-    beq NoGoldenBall
-    rlwinm r5, r0, 0x0, 0x18, 0x1f
-    mr r0, r5
-    b end
-
-    NoGoldenBall:
-    li r0, 1
-
-    end:
-    TRAMPOLINE_END
-    mr r5, r0
-    blr
-    // clang-format on
-}
-
-/**
- * @brief BskSetMaxTimerVisual trampoline
- */
-// TRAMPOLINE_DEF(0x80521d34, 0x80521d38) {
-//     // clang-format off
-//     TRAMPOLINE_BEGIN
-
-//     li r5, 7
-//     mr r0, r5
-
-//     TRAMPOLINE_END
-//     mr r5, r0
-//     blr
+//! Timer frame-rate (frames/timer sec)
+static const u32 TIMER_RATE = 60;
 
 /******************************************************************************
  *
- * Basketball Pickup Game
+ * Basketball (3-Point Contest)
  *
  ******************************************************************************/
+namespace Pt3 {
 
-int BskVsSetMaxTimer() {
-    return 100; // ItemMgr::BSK_VS_TIMER_VALUE *
-                // ItemMgr::GetInstance().GetBskVsTimerNum();
+//! Number of basketballs in each rack
+static const u32 RACK_BALL_NUM = 5;
+
+/**
+ * @brief Sets the initial timer
+ *
+ * @param pSequence 3-Point Contest sequence
+ */
+void InitTimer(Sp2::Bsk::Sequence3pt* pSequence) {
+    ASSERT(pSequence != nullptr);
+
+    u32 timerNum = ItemMgr::GetInstance().GetBsk3ptTimerNum();
+    u32 timerSec = timerNum * ItemMgr::BSK_3PT_TIMER_VALUE;
+
+    pSequence->getMainLyt()->setTimer(timerSec, TIMER_RATE);
 }
 
-TRAMPOLINE_DEF(0x80507c6c, 0x80507c70) {
+/**
+ * @brief InitTimer trampoline
+ */
+TRAMPOLINE_DEF(0x80521D38, 0x80521D3C) {
     // clang-format off
     TRAMPOLINE_BEGIN
 
-    bl BskVsSetMaxTimer
-    mr r0, r3
+    mr r3, r31
+    bl InitTimer
 
     TRAMPOLINE_END
-    mr r4, r0
     blr
     // clang-format on
 }
 
 /**
- * @brief BskVsSetMaxTimerVisual trampoline
+ * @brief Initializes the ball type
+ *
+ * @param pBall Basketball object
+ * @param id Basketball ID
  */
-bool BskHasPassUnlocked() {
+void InitBallType(Sp2::Bsk::Ball* pBall, s32 id) {
+    ASSERT(pBall != nullptr);
+    ASSERT(id == -1 || (id >= 0 && id < RACK_BALL_NUM));
+
+    // Last ball in the rack is a bonus ball
+    Sp2::Bsk::Ball::EType type = id == RACK_BALL_NUM - 1
+                                     ? Sp2::Bsk::Ball::EType_Bonus
+                                     : Sp2::Bsk::Ball::EType_Regular;
+
+    // Bonus balls locked behind the item
+    if (!ItemMgr::GetInstance().IsBsk3ptBonus()) {
+        type = Sp2::Bsk::Ball::EType_Regular;
+    }
+
+    pBall->setType(type);
+}
+
+/**
+ * @brief InitBallType trampoline
+ */
+TRAMPOLINE_DEF(0x80522CFC, 0x80522D10) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    mr r3, r15
+    mr r4, r19
+    bl InitBallType
+
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
+} // namespace Pt3
+
+/******************************************************************************
+ *
+ * Basketball (Pickup Game)
+ *
+ ******************************************************************************/
+namespace Vs {
+
+/**
+ * @brief Sets the initial timer
+ *
+ * @param pSequence Pickup Game sequence
+ */
+void InitTimer(Sp2::Bsk::SequenceVs* pSequence) {
+    ASSERT(pSequence != nullptr);
+
+    u32 timerNum = ItemMgr::GetInstance().GetBskVsTimerNum();
+    u32 timerSec = timerNum * ItemMgr::BSK_VS_TIMER_VALUE;
+
+    pSequence->getMainLyt()->setTimer(timerSec, TIMER_RATE);
+}
+
+/**
+ * @brief InitTimer trampoline
+ */
+TRAMPOLINE_DEF(0x80507C74, 0x80507C78) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    mr r3, r27
+    bl InitTimer
+
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
+bool HasPassUnlocked() {
     return ItemMgr::GetInstance().IsBskVsPass();
 }
 
@@ -121,7 +138,7 @@ TRAMPOLINE_DEF(0x8052ce98, 0x8052ce9c) {
     mr r31, r3
     mr r30, r4
     mr r28, r5
-    bl BskHasPassUnlocked
+    bl HasPassUnlocked
     cmpwi r3, 0
     beq end
 
@@ -138,6 +155,8 @@ TRAMPOLINE_DEF(0x8052ce98, 0x8052ce9c) {
     blr
     // clang-format on
 }
+
+} // namespace Vs
 
 } // namespace Bsk
 } // namespace AP
