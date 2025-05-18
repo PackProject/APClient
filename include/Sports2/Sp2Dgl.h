@@ -1,4 +1,4 @@
-#ifndef SPORTS2_GLF_H
-#define SPORTS2_GLF_H
+#ifndef SPORTS2_DGL_H
+#define SPORTS2_DGL_H
 
 #endif
