@@ -221,6 +221,9 @@ public:
     bool IsGlfClubUnlock(u32 id) const {
         return mGlfClubFlag.GetBit(id);
     }
+    int GetGlfMaxClubID() const {
+        return mGlfClubFlag.Count();
+    }
     bool IsGlfTurn() const {
         return mGlfTurnFlag;
     }

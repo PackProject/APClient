@@ -83,8 +83,8 @@ void ItemMgr::Clear() {
     mPngCansFlag = false;
 
     // Golf
-    mGlfHUDFlag = false;
-    mGlfClubFlag.SetDirect(0b1); // Start with one club
+    mGlfHUDFlag = true;
+    mGlfClubFlag.SetDirect(0b10000000); // Start with one club
     mGlfTurnFlag = false;
     mGlfSpinFlag = false;
     mGlfStageFlag.SetDirect(0b1); // Start with one difficulty
@@ -171,7 +171,7 @@ void ItemMgr::Debug() {
     mPngCansFlag = r.CoinFlip();
 
     // Golf
-    mGlfHUDFlag = r.CoinFlip();
+    //mGlfHUDFlag = r.CoinFlip();
     mGlfClubFlag.Randomize();
     mGlfTurnFlag = r.CoinFlip();
     mGlfSpinFlag = r.CoinFlip();

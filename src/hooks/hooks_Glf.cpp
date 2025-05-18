@@ -14,6 +14,212 @@ namespace Glf {
  * Golf
  *
  ******************************************************************************/
+int GlfClubUp(int currentClubIdx) {
+    for (int i = currentClubIdx - 1; i>= 0; i--) {
+        if (ItemMgr::GetInstance().IsGlfClubUnlock(i)) {
+            return i;
+        }
+    }
+
+    return currentClubIdx;
+}
+
+/**
+ * @brief GlfClubUp trampoline
+ */
+TRAMPOLINE_DEF(0x8040945c, 0x80409460) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    mr r3, r4
+    bl GlfClubUp
+    mr r0, r3
+
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
+
+int GlfClubDown(int currentClubIdx) {
+    for (int i = currentClubIdx + 1; i <= 7; i++) {
+        if (ItemMgr::GetInstance().IsGlfClubUnlock(i)) {
+            return i;
+        }
+    }
+
+    return currentClubIdx;
+}
+
+/**
+ * @brief GlfClubDown trampoline
+ */
+TRAMPOLINE_DEF(0x804093a0, 0x804093a4) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    mr r3, r4
+    bl GlfClubDown
+    mr r0, r3
+
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
+
+int GetMaxClubID() {
+    int maxClubID = 0;
+
+    for (int i = 0; i < ItemMgr::GetInstance().GLF_CLUB_COUNT - 1; i++) {
+        if (ItemMgr::GetInstance().IsGlfClubUnlock(i)) {
+            maxClubID = i;
+        }
+    }
+
+    return maxClubID;
+}
+
+int GetMinClubID() {
+    int minClubID = 7;
+
+    for (int i = ItemMgr::GetInstance().GLF_CLUB_COUNT - 1; i >= 0; i--) {
+        if (ItemMgr::GetInstance().IsGlfClubUnlock(i)) {
+            minClubID = i;
+        }
+    }
+
+    return minClubID;
+}
+
+int GetNextClubUp(int currentClubIdx) {
+    int nextClubIdx = currentClubIdx;
+
+    for (int i = currentClubIdx - 1; i >= 0; i--) {
+        if (ItemMgr::GetInstance().IsGlfClubUnlock(i)) {
+            nextClubIdx = i;
+            break;
+        }
+    }
+
+    //if no club up, go down
+    if (nextClubIdx == currentClubIdx) {
+        for (int i = currentClubIdx; i < 7; i++) {
+            if (ItemMgr::GetInstance().IsGlfClubUnlock(i)) {
+                nextClubIdx = i;
+                break;
+            }
+        }
+    }
+
+    return nextClubIdx;
+}
+
+int GetNextClubDown(int currentClubIdx) {
+    int nextClubIdx = currentClubIdx;
+
+    for (int i = currentClubIdx + 1; i <= 7; i++) {
+        if (ItemMgr::GetInstance().IsGlfClubUnlock(i)) {
+            nextClubIdx = i;
+            break;
+        }
+    }
+
+    //if no club down, go up
+    if (nextClubIdx == currentClubIdx) {
+        for (int i = currentClubIdx; i >= 0; i--) {
+            if (ItemMgr::GetInstance().IsGlfClubUnlock(i)) {
+                nextClubIdx = i;
+                break;
+            }
+        }
+    }
+
+    return nextClubIdx;
+}
+
+/**
+ * @brief Putter Set trampoline
+ */
+TRAMPOLINE_DEF(0x80409148, 0x8040914c) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    bl GetMinClubID
+    mr r0, r3
+
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
+/**
+ * @brief 3 Iron Set trampoline
+ */
+TRAMPOLINE_DEF(0x8040917c, 0x80409180) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    li r3, 2
+    bl GetNextClubUp
+    mr r0, r3
+
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
+/**
+ * @brief Driver Set trampoline
+ */
+TRAMPOLINE_DEF(0x804091b0, 0x804091b4) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    bl GetMaxClubID
+    mr r0, r3
+
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
+/**
+ * @brief R26 Club Set trampoline
+ *
+ */
+TRAMPOLINE_DEF(0x80409264, 0x80409268) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    mr r3, r26
+    bl GetNextClubUp
+    stw r3, 0x2C(r29)
+
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
+/**
+ * @brief R26 Club Set trampoline
+ *
+ */
+TRAMPOLINE_DEF(0x8040924c, 0x80409250) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    mr r3, r26
+    bl GetNextClubDown
+    stw r3, 0x2C(r29)
+
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
+
+
 void GlfSetBlindFlag(bool hold2) {
     if (hold2 || !ItemMgr::GetInstance().IsGlfHUD()) {
         RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->setStaticVar(3, 1, false);
@@ -22,16 +228,6 @@ void GlfSetBlindFlag(bool hold2) {
     else {
         RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->setStaticVar(3, 0, false);
     }
-}
-
-u32 GlfDisableZoom(u32 input) {
-    if (!ItemMgr::GetInstance().IsGlfViewLow()) return 0;
-    else return input;
-}
-
-u32 GlfDisableTopo(u32 input) {
-    if (!ItemMgr::GetInstance().IsGlfViewSlope()) return 0;
-    else return input;
 }
 
 /**
@@ -46,6 +242,12 @@ TRAMPOLINE_DEF(0x80406a1c, 0x80406a30) {
     TRAMPOLINE_END
     blr
     // clang-format on
+}
+
+
+u32 GlfDisableZoom(u32 input) {
+    if (!ItemMgr::GetInstance().IsGlfViewLow()) return 0;
+    else return input;
 }
 
 /**
@@ -63,6 +265,12 @@ TRAMPOLINE_DEF(0x803facdc, 0x803face0) {
     TRAMPOLINE_END
     blr
     // clang-format on
+}
+
+
+u32 GlfDisableTopo(u32 input) {
+    if (!ItemMgr::GetInstance().IsGlfViewSlope()) return 0;
+    else return input;
 }
 
 /**
