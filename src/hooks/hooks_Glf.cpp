@@ -24,6 +24,16 @@ void GlfSetBlindFlag(bool hold2) {
     }
 }
 
+u32 GlfDisableZoom(u32 input) {
+    if (!ItemMgr::GetInstance().IsGlfViewLow()) return 0;
+    else return input;
+}
+
+u32 GlfDisableTopo(u32 input) {
+    if (!ItemMgr::GetInstance().IsGlfViewSlope()) return 0;
+    else return input;
+}
+
 /**
  * @brief GlfSetBlindFlag trampoline
  */
@@ -32,6 +42,40 @@ TRAMPOLINE_DEF(0x80406a1c, 0x80406a30) {
     TRAMPOLINE_BEGIN
 
     bl GlfSetBlindFlag
+
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
+/**
+ * @brief GlfDisableZoom trampoline
+ */
+TRAMPOLINE_DEF(0x803facdc, 0x803face0) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    lwz r0, 0x1c(r31)
+    mr r3, r0
+    bl GlfDisableZoom
+    mr r0, r3
+
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
+/**
+ * @brief GlfDisableTopo trampoline
+ */
+TRAMPOLINE_DEF(0x803fac64, 0x803fac68) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    lwz r0, 0x1c(r31)
+    mr r3, r0
+    bl GlfDisableTopo
+    mr r0, r3
 
     TRAMPOLINE_END
     blr
