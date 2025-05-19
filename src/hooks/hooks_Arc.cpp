@@ -40,5 +40,28 @@ TRAMPOLINE_DEF(0x80548828, 0x8054882c) {
     // clang-format on
 }
 
+/**
+ * @brief Sets the max arrow count in Archery
+ */
+u32 ArcSetMaxArrowCount() {
+    return ItemMgr::GetInstance().GetArcArrowNum();
+}
+
+/**
+ * @brief ArcSetMaxArrowCount trampoline
+ */
+TRAMPOLINE_DEF(0x8056aaac, 0x8056aab0) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    bl ArcSetMaxArrowCount
+    mr r0, r3
+
+    TRAMPOLINE_END
+    mr r3, r0
+    blr
+    // clang-format on
+}
+
 } // namespace Arc
 } // namespace AP
