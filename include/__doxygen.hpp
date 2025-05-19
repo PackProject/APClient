@@ -339,6 +339,10 @@
 //! @brief Core system
 
 //! @ingroup libkiwi
+//! @defgroup libkiwi_crypt crypt
+//! @brief Cryptography
+
+//! @ingroup libkiwi
 //! @defgroup libkiwi_debug debug
 //! @brief Debugging
 
