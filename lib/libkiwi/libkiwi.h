@@ -23,6 +23,8 @@
 #include <libkiwi/crypt/kiwiChecksum.h>
 #include <libkiwi/crypt/kiwiSHA1.h>
 #include <libkiwi/debug/kiwiAssert.h>
+#include <libkiwi/debug/kiwiDebugMenu.h>
+#include <libkiwi/debug/kiwiDebugOption.h>
 #include <libkiwi/debug/kiwiGeckoDebugger.h>
 #include <libkiwi/debug/kiwiIDebugger.h>
 #include <libkiwi/debug/kiwiMapFile.h>
