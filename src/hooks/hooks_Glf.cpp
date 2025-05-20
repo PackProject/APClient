@@ -290,5 +290,39 @@ TRAMPOLINE_DEF(0x803fac64, 0x803fac68) {
     // clang-format on
 }
 
+bool GlfDisableTurn() {
+    return ItemMgr::GetInstance().IsGlfTurn();
+}
+
+/**
+ * @brief GlfDisableTurn trampoline
+ */
+TRAMPOLINE_DEF(0x803fac54, 0x803fac58) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    mr r31, r6
+    mr r30, r5
+    mr r29, r4
+    mr r28, r3
+    bl GlfDisableTurn
+    cmpwi r3, 0
+    beq end
+
+    mr r6, r31
+    mr r5, r30
+    mr r4, r29
+    mr r3, r28
+    lis r12, 0x803fcf28@ha
+    addi r12, r12, 0x803fcf28@l
+    mtctr r12
+    bctrl
+
+    end:
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
 } // namespace Glf
 } // namespace AP

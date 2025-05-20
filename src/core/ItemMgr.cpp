@@ -171,7 +171,7 @@ void ItemMgr::Debug() {
     mPngCansFlag = r.CoinFlip();
 
     // Golf
-    //mGlfHUDFlag = r.CoinFlip();
+    mGlfHUDFlag = r.CoinFlip();
     mGlfClubFlag.Randomize();
     mGlfTurnFlag = r.CoinFlip();
     mGlfSpinFlag = r.CoinFlip();
