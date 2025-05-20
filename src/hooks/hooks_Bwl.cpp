@@ -156,7 +156,45 @@ TRAMPOLINE_DEF(0x804ea658, 0x804ea65C) {
     TRAMPOLINE_END
     blr
     // clang-format on
+} // namespace Std
+
+/******************************************************************************
+ *
+ * Bowling 100-Pin Game
+ *
+ ******************************************************************************/
+
+ /**
+ * @brief Determines if the player can press the secret strike button
+ */
+bool BwlSecretStrike() {
+    return ItemMgr::GetInstance().IsBwl100SecretBtn();
 }
+
+ /**
+ * @brief BwlSecretStrike trampoline
+ */
+TRAMPOLINE_DEF(0x804f0058, 0x804f0068) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    bl BwlSecretStrike
+    cmpwi r3, 0
+    beq end
+
+    li r0, 0x1
+    stw r0, 0x104(r17)
+    li r3, 0x472
+    lis r12, 0x802b73bc@ha
+    addi r12, r12, 0x802b73bc@l
+    mtctr r12
+    bctrl
+
+    end:
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+} // namespace 100
 
 } // namespace Bwl
 } // namespace AP
