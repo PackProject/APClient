@@ -83,7 +83,7 @@ void ItemMgr::Clear() {
     mPngCansFlag = false;
 
     // Golf
-    mGlfHUDFlag = true;
+    mGlfHUDFlag = false;
     mGlfClubFlag.SetDirect(0b10000000); // Start with one club
     mGlfTurnFlag = false;
     mGlfSpinFlag = false;
