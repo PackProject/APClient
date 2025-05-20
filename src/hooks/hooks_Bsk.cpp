@@ -156,6 +156,34 @@ TRAMPOLINE_DEF(0x8052ce98, 0x8052ce9c) {
     // clang-format on
 }
 
+bool Has3ptUnlocked() {
+    return ItemMgr::GetInstance().IsBskVs3pt();
+}
+
+TRAMPOLINE_DEF(0x8050685C, 0x80506860) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+    lwz r0, 0x11C(r27)
+    cmpwi r0, 3
+    bne End // not 3pt
+
+    bl Has3ptUnlocked
+    cmpwi r3, 0
+    beq NotUnlocked
+    li r0, 3 // 3pt allowed
+    b End
+
+NotUnlocked:
+    li r0, 2 // limit to 2pt
+
+End:
+    stw r0, 0x11C(r27) // update for future
+
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
 } // namespace Vs
 
 } // namespace Bsk
