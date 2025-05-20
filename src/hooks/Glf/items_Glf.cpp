@@ -71,7 +71,7 @@ TRAMPOLINE_DEF(0x804093a0, 0x804093a4) {
 int GetMaxClubID() {
     int maxClubID = 0;
 
-    for (int i = 0; i < ItemMgr::GetInstance().GLF_CLUB_COUNT - 1; i++) {
+    for (int i = 0; i < ItemMgr::GLF_CLUB_COUNT - 1; i++) {
         if (ItemMgr::GetInstance().IsGlfClubUnlock(i)) {
             maxClubID = i;
         }
@@ -83,7 +83,7 @@ int GetMaxClubID() {
 int GetMinClubID() {
     int minClubID = 7;
 
-    for (int i = ItemMgr::GetInstance().GLF_CLUB_COUNT - 1; i >= 0; i--) {
+    for (int i = 0; i <= ItemMgr::GLF_CLUB_COUNT - 1; i++) {
         if (ItemMgr::GetInstance().IsGlfClubUnlock(i)) {
             minClubID = i;
         }

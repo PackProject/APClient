@@ -2,7 +2,7 @@
 
 #include "core/CosmeticMgr.h"
 #include "core/ItemMgr.h"
-#include "hooks/hooks_Swf.h"
+#include "hooks/Swf/items_Swf.h"
 #include "hooks/trampoline.h"
 
 #include <Pack/RPKernel.h>
@@ -118,6 +118,8 @@ Sp2::Cmn::EUnlockState GetSeqUnlockState(UNKWORD, Sp2::Cmn::ESaveSeq seq) {
                   : Sp2::Cmn::EUnlockState_Locked;
 }
 KM_BRANCH(0x80261F84, GetSeqUnlockState);
+
+
 
 } // namespace Cmn
 } // namespace AP

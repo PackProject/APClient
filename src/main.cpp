@@ -1,5 +1,6 @@
 #include "core/CosmeticMgr.h"
 #include "core/ItemMgr.h"
+#include "core/CheckMgr.h"
 
 #include <Pack/RPSystem.h>
 
@@ -25,10 +26,12 @@ void KokeshiMain() {
     // Archipelago initialization
     AP::ItemMgr::CreateInstance();
     AP::CosmeticMgr::CreateInstance();
+    AP::CheckMgr::CreateInstance();
 
 #ifndef NDEBUG
     AP::ItemMgr::GetInstance().Debug();
     AP::CosmeticMgr::GetInstance().Debug();
+    AP::CheckMgr::GetInstance().Debug();
 #endif
 
     // Enter first scene

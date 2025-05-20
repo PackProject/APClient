@@ -1,5 +1,3 @@
-#include "hooks/hooks_Swf.h"
-
 #include "core/ItemMgr.h"
 #include "hooks/trampoline.h"
 
