@@ -9,22 +9,22 @@ namespace kiwi {
  ******************************************************************************/
 
 /**
- * @brief Constructor
+ * @brief Opens a new menu page
  *
- * @param pRootPage Menu root page
+ * @param rPage Menu page
  */
-DebugMenu::DebugMenu(DebugPage* pRootPage) {
-    K_ASSERT(pRootPage != nullptr);
-    mPageStack.Push(pRootPage);
+void DebugMenu::OpenPage(DebugPage& rPage) {
+    rPage.SetParent(*this);
+    mPageStack.Push(&rPage);
 }
 
 /**
  * @brief Updates the menu state
  * @return Result of actions
  */
-DebugMenu::EResult DebugMenu::Calculate() {
+EDebugMenuResult DebugMenu::Calculate() {
     if (mPageStack.Empty()) {
-        return EResult_None;
+        return EDebugMenuResult_None;
     }
 
     return mPageStack.Top().Calculate();
@@ -50,18 +50,16 @@ void DebugMenu::UserDraw() {
 /**
  * @brief Appends a new option to the page
  *
- * @param pOption Debug option
+ * @param rOption Debug option
  * @return Success
  */
-bool DebugPage::AddOption(DebugOptionBase* pOption) {
-    K_ASSERT(pOption != nullptr);
-
+bool DebugPage::AddOption(DebugOptionBase& rOption) {
     if (mOptions.Size() >= mMaxOptions) {
-        K_LOG_EX("Can't add option: %s\n", pOption->GetName().CStr());
+        K_LOG_EX("Can't add option: %s\n", rOption.GetName().CStr());
         return false;
     }
 
-    mOptions.PushBack(pOption);
+    mOptions.PushBack(&rOption);
     return true;
 }
 
@@ -69,7 +67,7 @@ bool DebugPage::AddOption(DebugOptionBase* pOption) {
  * @brief Updates the menu state
  * @return Result of actions
  */
-DebugMenu::EResult DebugPage::Calculate() {
+EDebugMenuResult DebugPage::Calculate() {
     for (int i = 0; i < EPlayer_Max; i++) {
         const WiiCtrl& rCtrl =
             CtrlMgr::GetInstance().GetWiiCtrl(static_cast<EPlayer>(i));
@@ -81,10 +79,11 @@ DebugMenu::EResult DebugPage::Calculate() {
         // Highlight option with Up/Down
         if (rCtrl.IsTrig(EButton_Up)) {
             mCursor = mCursor == 0 ? mOptions.Size() - 1 : mCursor - 1;
-            return DebugMenu::EResult_Change;
+            return EDebugMenuResult_Cursor;
+
         } else if (rCtrl.IsTrig(EButton_Down)) {
             mCursor = mCursor == mOptions.Size() - 1 ? 0 : mCursor + 1;
-            return DebugMenu::EResult_Change;
+            return EDebugMenuResult_Cursor;
         }
 
         K_ASSERT(0 <= mCursor && mCursor < mOptions.Size());
@@ -95,52 +94,53 @@ DebugMenu::EResult DebugPage::Calculate() {
         // Change option with Left/Right
         if (rCtrl.IsTrig(EButton_Right)) {
             pOption->Increment();
-            return DebugMenu::EResult_Change;
+            return EDebugMenuResult_Change;
+
         } else if (rCtrl.IsTrig(EButton_Left)) {
             pOption->Decrement();
-            return DebugMenu::EResult_Change;
+            return EDebugMenuResult_Change;
         }
 
         // Select option with A
         if (rCtrl.IsTrig(EButton_A)) {
             pOption->Select();
-            return DebugMenu::EResult_Change;
+            return EDebugMenuResult_Select;
         }
 
         // Close page with B
         if (rCtrl.IsTrig(EButton_B)) {
-            return DebugMenu::EResult_Close;
+            return EDebugMenuResult_Close;
         }
     }
 
-    return DebugMenu::EResult_None;
+    return EDebugMenuResult_None;
 }
 
 /**
  * @brief User-level render pass
  */
 void DebugPage::UserDraw() {
-    f32 x = 0.25f;
+    f32 x = 0.15f;
     f32 y = 0.20f;
+
+    static const f32 cursor = 0.015f;
+    static const f32 option = 0.25f;
     static const f32 row = 0.05f;
 
     for (u32 i = 0; i < mOptions.Size(); i++) {
         Text(mOptions[i]->GetName())
             .SetStrokeType(ETextStroke_Outline)
-            .SetPosition(x + 0.00, y + 0.00)
-            .SetScale(0.8);
+            .SetPosition(x, y);
 
         Text(mOptions[i]->GetValueText())
             .SetStrokeType(ETextStroke_Outline)
-            .SetPosition(x + 0.15, y + 0.00)
-            .SetScale(0.8);
+            .SetPosition(x + option, y);
 
         // Show cursor at selected option
         if (i == mCursor) {
             Text("*")
                 .SetStrokeType(ETextStroke_Outline)
-                .SetPosition(x - 0.015, y)
-                .SetScale(0.8);
+                .SetPosition(x - cursor, y);
         }
 
         y += row;

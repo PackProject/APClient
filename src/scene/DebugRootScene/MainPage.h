@@ -25,7 +25,7 @@ public:
     /**
      * @brief Returns to the main menu scene
      */
-    static kiwi::DebugMenu::EResult ReturnToMenuProc(void* pArg);
+    static kiwi::EDebugMenuResult ReturnToMenuProc(void* pArg);
 
 private:
     kiwi::DebugIntOption mDummyIntOption;

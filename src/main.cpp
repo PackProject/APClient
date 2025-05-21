@@ -29,7 +29,8 @@ void KokeshiMain() {
 
     // Register debug menu
     kiwi::SceneCreator::GetInstance().RegistDebugRoot(
-        AP::EAPScene_DebugRootScene, 0);
+        AP::EAPScene_DebugRootScene);
+
     // Enter first scene
     kiwi::SceneCreator::GetInstance().ChangeBootScene();
 

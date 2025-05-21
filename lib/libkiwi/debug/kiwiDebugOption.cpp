@@ -46,28 +46,28 @@ DebugIntOption::DebugIntOption(const String& rName, int min, int max,
  * @brief Increments the option value
  * @return Action result
  */
-DebugMenu::EResult DebugIntOption::Increment() {
+EDebugMenuResult DebugIntOption::Increment() {
     if (!IsEnabled()) {
-        return DebugMenu::EResult_Invalid;
+        return EDebugMenuResult_Invalid;
     }
 
     // Value wraps around
     SetValue(mValue == mMax ? mMin : mValue + 1);
-    return DebugMenu::EResult_Change;
+    return EDebugMenuResult_Change;
 }
 
 /**
  * @brief Decrements the option value
  * @return Action result
  */
-DebugMenu::EResult DebugIntOption::Decrement() {
+EDebugMenuResult DebugIntOption::Decrement() {
     if (!IsEnabled()) {
-        return DebugMenu::EResult_Invalid;
+        return EDebugMenuResult_Invalid;
     }
 
     // Value wraps around
     SetValue(mValue == mMin ? mMax : mValue - 1);
-    return DebugMenu::EResult_Change;
+    return EDebugMenuResult_Change;
 }
 
 /**
@@ -139,7 +139,7 @@ void DebugIntOption::UpdateString() {
  * @param value New value
  */
 void DebugIntOption::SetValue(int value) {
-    mValue = Clamp(mValue, mMin, mMax);
+    mValue = Clamp(value, mMin, mMax);
     UpdateString();
 }
 
@@ -201,16 +201,36 @@ void DebugEnumOption::UpdateString() {
  * @brief Performs the option selection logic
  * @return Action result
  */
-DebugMenu::EResult DebugProcOption::Select() {
+EDebugMenuResult DebugProcOption::Select() {
     if (!IsEnabled()) {
-        return DebugMenu::EResult_Invalid;
+        return EDebugMenuResult_Invalid;
     }
 
     if (mpCallback != nullptr) {
         return mpCallback(mpCallbackArg);
     }
 
-    return DebugMenu::EResult_None;
+    return EDebugMenuResult_None;
+}
+
+/******************************************************************************
+ *
+ * DebugOpenPageOption
+ *
+ ******************************************************************************/
+
+/**
+ * @brief Opens the specified sub-page
+ *
+ * @param pArg Callback user argument
+ */
+EDebugMenuResult DebugOpenPageOption::OpenPageProc(void* pArg) {
+    K_ASSERT(pArg != nullptr);
+
+    DebugPage* pPage = static_cast<DebugPage*>(pArg);
+    pPage->GetParent().OpenPage(*pPage);
+
+    return EDebugMenuResult_Select;
 }
 
 } // namespace kiwi

@@ -13,19 +13,19 @@ MainPage::MainPage()
       mDummyBoolOption("DummyBool"),
       mDummyProcOption("DummyProc", ReturnToMenuProc) {
 
-    mOptions.PushBack(&mDummyIntOption);
-    mOptions.PushBack(&mDummyBoolOption);
-    mOptions.PushBack(&mDummyProcOption);
+    AddOption(mDummyIntOption);
+    AddOption(mDummyBoolOption);
+    AddOption(mDummyProcOption);
 }
 
 /**
  * @brief Returns to the main menu scene
  */
-kiwi::DebugMenu::EResult MainPage::ReturnToMenuProc(void* pArg) {
+kiwi::EDebugMenuResult MainPage::ReturnToMenuProc(void* pArg) {
     kiwi::SceneCreator::GetInstance().ChangeSceneAfterFade(
         kiwi::SceneCreator::GetMenuScene());
 
-    return kiwi::DebugMenu::EResult_Close;
+    return kiwi::EDebugMenuResult_Close;
 }
 
 } // namespace DebugRoot

@@ -14,27 +14,30 @@ class DebugOptionBase;
 class DebugPage;
 
 /**
+ * @brief Debug menu action result
+ */
+enum EDebugMenuResult {
+    EDebugMenuResult_None,    //!< Nothing happened
+    EDebugMenuResult_Invalid, //!< State failed to change
+    EDebugMenuResult_Cursor,  //!< Cursor changed
+    EDebugMenuResult_Change,  //!< State changed
+    EDebugMenuResult_Select,  //!< Button selected
+    EDebugMenuResult_Close,   //!< Request to close page/menu
+};
+
+/**
  * @brief Debug menu
  */
 class DebugMenu : public IRPGrpDrawObject {
 public:
     /**
-     * @brief Option action result
-     */
-    enum EResult {
-        EResult_None,    //!< Nothing happened
-        EResult_Invalid, //!< State failed to change
-        EResult_Change,  //!< State changed
-        EResult_Close,   //!< Request to close menu
-    };
-
-public:
-    /**
      * @brief Constructor
      *
-     * @param pRootPage Menu root page
+     * @param rRootPage Menu root page
      */
-    DebugMenu(DebugPage* pRootPage);
+    DebugMenu(DebugPage& rRootPage) {
+        OpenPage(rRootPage);
+    }
 
     /**
      * @brief Destructor
@@ -42,10 +45,17 @@ public:
     virtual ~DebugMenu() {}
 
     /**
+     * @brief Opens a new menu page
+     *
+     * @param rPage Menu page
+     */
+    void OpenPage(DebugPage& rPage);
+
+    /**
      * @brief Updates the menu state
      * @return Result of actions
      */
-    virtual EResult Calculate();
+    virtual EDebugMenuResult Calculate();
 
     /**
      * @brief User-level render pass
@@ -75,18 +85,34 @@ public:
         : mCursor(0), mMaxOptions(maxOptions) {}
 
     /**
+     * @brief Gets the page's parent menu
+     */
+    DebugMenu& GetParent() const {
+        K_ASSERT(mpParent != nullptr);
+        return *mpParent;
+    }
+    /**
+     * @brief Sets the page's parent menu
+     *
+     * @param rMenu Parent menu
+     */
+    void SetParent(DebugMenu& rMenu) {
+        mpParent = &rMenu;
+    }
+
+    /**
      * @brief Appends a new option to the page
      *
-     * @param pOption Debug option
+     * @param rOption Debug option
      * @return Success
      */
-    bool AddOption(DebugOptionBase* pOption);
+    bool AddOption(DebugOptionBase& rOption);
 
     /**
      * @brief Updates the menu state
      * @return Result of actions
      */
-    virtual DebugMenu::EResult Calculate();
+    virtual EDebugMenuResult Calculate();
 
     /**
      * @brief User-level render pass
@@ -94,6 +120,9 @@ public:
     virtual void UserDraw();
 
 protected:
+    //! Parent menu
+    DebugMenu* mpParent;
+
     //! Cursor position
     u32 mCursor;
     //! Maximum number of options

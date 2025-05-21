@@ -43,6 +43,10 @@ public:
      * @brief Runs one step of scene logic
      */
     virtual void OnCalculate();
+    /**
+     * @brief User-level draw
+     */
+    virtual void OnUserDraw();
 
 private:
     //! Debug menu
