@@ -1,5 +1,6 @@
 #include "core/CosmeticMgr.h"
 #include "core/ItemMgr.h"
+#include "core/const.h"
 
 #include <Pack/RPSystem.h>
 
@@ -26,11 +27,9 @@ void KokeshiMain() {
     AP::ItemMgr::CreateInstance();
     AP::CosmeticMgr::CreateInstance();
 
-#ifndef NDEBUG
-    AP::ItemMgr::GetInstance().Debug();
-    AP::CosmeticMgr::GetInstance().Debug();
-#endif
-
+    // Register debug menu
+    kiwi::SceneCreator::GetInstance().RegistDebugRoot(
+        AP::EAPScene_DebugRootScene, 0);
     // Enter first scene
     kiwi::SceneCreator::GetInstance().ChangeBootScene();
 

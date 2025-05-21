@@ -12,11 +12,25 @@ namespace DebugRoot {
  */
 class MainPage : public kiwi::DebugPage {
 public:
-    MainPage() : mDummyIntOption("test0", 0, 1), mDummyBoolOption("test1") {}
+    /**
+     * @brief Constructor
+     */
+    MainPage();
+
+    /**
+     * @brief Destructor
+     */
+    virtual ~MainPage() {}
+
+    /**
+     * @brief Returns to the main menu scene
+     */
+    static kiwi::DebugMenu::EResult ReturnToMenuProc(void* pArg);
 
 private:
     kiwi::DebugIntOption mDummyIntOption;
     kiwi::DebugBoolOption mDummyBoolOption;
+    kiwi::DebugProcOption mDummyProcOption;
 };
 
 } // namespace DebugRoot

@@ -72,7 +72,10 @@ public:
     virtual int GetCharWidth(u16 ch) const = 0;             // at 0x48
     virtual CharWidths GetCharWidths(u16 ch) const = 0;     // at 0x4C
     virtual void GetGlyph(Glyph* pGlyph, u16 ch) const = 0; // at 0x50
-    virtual FontEncoding GetEncoding() const = 0;           // at 0x54
+#if defined(PACK_RESORT)
+    virtual bool HasGlyph(u16 ch) const = 0; // at 0x54
+#endif
+    virtual FontEncoding GetEncoding() const = 0; // at 0x54
 
     void InitReaderFunc(FontEncoding encode);
 

@@ -39,7 +39,7 @@ public:
      * @param pCallbackArg Select callback user argument (optional)
      */
     explicit DebugOptionBase(const String& rName,
-                             SelectCallback* pCallback = nullptr,
+                             SelectCallback pCallback = nullptr,
                              void* pCallbackArg = nullptr)
         : mIsEnabled(true), mName(rName) {}
 
@@ -367,7 +367,7 @@ public:
      * @param pCallback Select callback function
      * @param pCallbackArg Select callback user argument
      */
-    DebugProcOption(const String& rName, SelectCallback* pCallback,
+    DebugProcOption(const String& rName, SelectCallback pCallback,
                     void* pCallbackArg = nullptr)
         : DebugOptionBase(rName, pCallback, pCallbackArg) {}
 

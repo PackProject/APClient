@@ -142,7 +142,13 @@ public:
     u32 mButtonHold;    // at 0x8
     u32 mButtonTrigger; // at 0xC
     u32 mButtonRelease; // at 0x10
+#if defined(PACK_RESORT)
+    char _14[0x4];
+#endif
     CoreStatus mCoreStatus[16];
+#if defined(PACK_RESORT)
+    char _858[0xF18 - 0x858];
+#endif
     int mKPADReadLength; // at 0x854
     Vector3f VEC3_0x858;
     UNKWORD WORD_0x864;

@@ -36,7 +36,11 @@ public:
     }
 
     /**
-     * @brief Calculate state user callback
+     * @brief Performs initial scene setup
+     */
+    virtual void OnConfigure();
+    /**
+     * @brief Runs one step of scene logic
      */
     virtual void OnCalculate();
 

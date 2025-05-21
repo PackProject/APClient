@@ -1,7 +1,5 @@
 #include <libkiwi.h>
 
-#include <RPGraphics.h>
-
 namespace kiwi {
 
 /******************************************************************************
@@ -18,8 +16,6 @@ namespace kiwi {
 DebugMenu::DebugMenu(DebugPage* pRootPage) {
     K_ASSERT(pRootPage != nullptr);
     mPageStack.Push(pRootPage);
-
-    RPGrpRenderer::GetCurrent()->AppendDrawObject(this);
 }
 
 /**
@@ -129,23 +125,22 @@ void DebugPage::UserDraw() {
     static const f32 row = 0.05f;
 
     for (u32 i = 0; i < mOptions.Size(); i++) {
-        // clang-format off
         Text(mOptions[i]->GetName())
+            .SetStrokeType(ETextStroke_Outline)
             .SetPosition(x + 0.00, y + 0.00)
             .SetScale(0.8);
 
         Text(mOptions[i]->GetValueText())
+            .SetStrokeType(ETextStroke_Outline)
             .SetPosition(x + 0.15, y + 0.00)
             .SetScale(0.8);
-        // clang-format on
 
         // Show cursor at selected option
         if (i == mCursor) {
-            // clang-format off
             Text("*")
+                .SetStrokeType(ETextStroke_Outline)
                 .SetPosition(x - 0.015, y)
                 .SetScale(0.8);
-            // clang-format on
         }
 
         y += row;

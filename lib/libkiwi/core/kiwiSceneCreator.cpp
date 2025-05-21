@@ -194,12 +194,13 @@ bool SceneCreator::ChangeSceneAfterFade(s32 id, bool reload) {
     }
 
     // Visit debug root instead of menu if buttons are held
-    if (id == GetMenuScene()) {
+    if (id == GetMenuScene() && mLastSceneID != sDebugRootID) {
         for (int i = 0; i < EPlayer_Max; i++) {
             const WiiCtrl& rCtrl =
                 CtrlMgr::GetInstance().GetWiiCtrl(static_cast<EPlayer>(i));
 
-            if (rCtrl.IsConnected() && rCtrl.IsHold(sDebugRootButtons)) {
+            if (sDebugRootButtons == 0 ||
+                rCtrl.IsConnected() && rCtrl.IsHold(sDebugRootButtons)) {
                 id = sDebugRootID;
                 break;
             }
@@ -244,12 +245,13 @@ bool SceneCreator::ChangeSceneAfterFade(s32 id, const nw4r::ut::Color* pColor) {
     }
 
     // Visit debug root instead of menu if buttons are held
-    if (id == GetMenuScene()) {
+    if (id == GetMenuScene() && mLastSceneID != sDebugRootID) {
         for (int i = 0; i < EPlayer_Max; i++) {
             const WiiCtrl& rCtrl =
                 CtrlMgr::GetInstance().GetWiiCtrl(static_cast<EPlayer>(i));
 
-            if (rCtrl.IsConnected() && rCtrl.IsHold(sDebugRootButtons)) {
+            if (sDebugRootButtons == 0 ||
+                rCtrl.IsConnected() && rCtrl.IsHold(sDebugRootButtons)) {
                 id = sDebugRootID;
                 break;
             }

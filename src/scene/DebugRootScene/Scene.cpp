@@ -13,6 +13,13 @@ K_SCENE_DECL(Scene);
 Scene::Scene() : mDebugMenu(&mMainPage) {}
 
 /**
+ * @brief Performs initial scene setup
+ */
+void Scene::OnConfigure() {
+    RPGrpRenderer::GetCurrent()->AppendDrawObject(&mDebugMenu);
+}
+
+/**
  * @brief Calculate state user callback
  */
 void Scene::OnCalculate() {

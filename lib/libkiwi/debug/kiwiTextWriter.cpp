@@ -60,7 +60,8 @@ bool TextWriter::SetResFont(const String& rName) {
  */
 bool TextWriter::SetFont(const nw4r::ut::Font& rFont) {
     K_ASSERT_EX(rFont.GetEncoding() == nw4r::ut::FONT_ENCODING_UTF16,
-                "Only UTF-16 fonts are supported");
+                "Only UTF-16 fonts are supported (enc=%d)",
+                rFont.GetEncoding());
 
     // Font is already loaded
     if (&rFont == GetFont()) {
