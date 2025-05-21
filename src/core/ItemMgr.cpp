@@ -366,8 +366,10 @@ void ItemMgr::Debug() {
     mJskFreeTimerFlag.Randomize();
 
     // Canoeing
-    mCanTimerFlag.Randomize();
+    //mCanTimerFlag.Randomize();
     mCanStageFlag.Randomize();
+
+    mCanTimerFlag.SetAll();
 
     // Cycling
     mBicHeartFlag.Randomize();

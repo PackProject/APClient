@@ -160,10 +160,7 @@ void CheckMgr::Clear() {
  * @brief Sets debug state
  */
 void CheckMgr::Debug() {
-    for(u16 i = 0x0000; i < CheckMgr::COUNT; i++)
-    {
-        kiwi::cout << "Check " << GetCheckName(CheckID(i)) << " is " << CheckMgr::GetCheckState(CheckID(i)) << kiwi::endl;
-    }
+    
 }
 
 bool CheckMgr::GetCheckState(CheckID id) const {
