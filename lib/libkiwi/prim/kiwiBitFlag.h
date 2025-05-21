@@ -54,9 +54,21 @@ public:
     /**
      * @brief Adds the next possible bit
      */
-    void AddBit() {
+    void AddMinBit() {
         for (u32 i = 0; i < N; i++) {
             if ((mValue & (T(1) << i)) == 0) {
+                SetBit(i);
+                return;
+            }
+        }
+    }
+
+    /**
+     * @brief Adds the last possible bit
+     */
+    void AddMaxBit() {
+        for(u32 i = N - 1; i >= 0; i++) {
+            if((mValue & (T(1) << i)) == 0) {
                 SetBit(i);
                 return;
             }
