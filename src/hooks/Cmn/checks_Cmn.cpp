@@ -16,10 +16,7 @@ namespace Cmn {
 
 void SetStampCheckIfNew(int playerDataPtr,int sportID,int stampIdx)
 {
-    int stampID = sportID * 5 + stampIdx;
-    kiwi::cout << "Sport ID: " << sportID << kiwi::endl;
-    kiwi::cout << "Stamp Index: " << stampIdx << kiwi::endl;
-    kiwi::cout << "Stamp ID: " << stampIdx << kiwi::endl << kiwi::endl;
+    int stampID = (sportID * 5) + stampIdx;
     bool hasCheck = CheckMgr::GetInstance().GetCheckState(CheckMgr::CheckID(stampID));
     if(!hasCheck) {
         CheckMgr::GetInstance().GiveItemFromCheck(CheckMgr::CheckID(stampID));
