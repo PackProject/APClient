@@ -52,6 +52,18 @@ public:
     }
 
     /**
+     * @brief Adds the next possible bit
+     */
+    void AddBit() {
+        for (u32 i = 0; i < N; i++) {
+            if ((mValue & (T(1) << i)) == 0) {
+                SetBit(i);
+                return;
+            }
+        }
+    }
+
+    /**
      * @brief Sets all bits
      */
     void SetAll() {
