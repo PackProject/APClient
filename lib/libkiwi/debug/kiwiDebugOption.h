@@ -46,6 +46,22 @@ public:
     virtual ~DebugOptionBase() {}
 
     /**
+     * @brief Gets the options's parent menu page
+     */
+    DebugPage& GetParent() const {
+        K_ASSERT(mpParent != nullptr);
+        return *mpParent;
+    }
+    /**
+     * @brief Sets the options's parent menu page
+     *
+     * @param rPage Parent menu page
+     */
+    void SetParent(DebugPage& rPage) {
+        mpParent = &rPage;
+    }
+
+    /**
      * @brief Gets the type of the option
      */
     virtual EKind GetKind() const = 0;
@@ -122,6 +138,9 @@ protected:
     virtual void UpdateString() {}
 
 protected:
+    //! Parent menu page
+    DebugPage* mpParent;
+
     //! Enable option
     bool mIsEnabled;
 
@@ -409,7 +428,7 @@ public:
      * @param rPage Sub-page to open
      */
     DebugOpenPageOption(const String& rName, DebugPage& rPage)
-        : DebugProcOption(rName, OpenPageProc, mpPage) {
+        : DebugProcOption(rName, OpenPageProc, this) {
 
         mpPage = &rPage;
     }

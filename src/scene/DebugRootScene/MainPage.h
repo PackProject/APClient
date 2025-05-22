@@ -1,6 +1,7 @@
 #ifndef APCLIENT_SCENE_DEBUGROOTSCENE_MAIN_PAGE_H
 #define APCLIENT_SCENE_DEBUGROOTSCENE_MAIN_PAGE_H
 #include "core/const.h"
+#include "scene/DebugRootScene/SubPage.h"
 
 #include <libkiwi.h>
 
@@ -25,12 +26,20 @@ public:
     /**
      * @brief Returns to the main menu scene
      */
-    static kiwi::EDebugMenuResult ReturnToMenuProc(void* pArg);
+    static kiwi::EDebugMenuResult GotoMenuProc(void* pArg);
 
 private:
+    //! Example integer option
     kiwi::DebugIntOption mDummyIntOption;
+    //! Example boolean option
     kiwi::DebugBoolOption mDummyBoolOption;
-    kiwi::DebugProcOption mDummyProcOption;
+
+    //! Example sub-page, and the option to open it
+    SubPage mSubPage;
+    kiwi::DebugOpenPageOption mDummyOpenPageOption;
+
+    //! Example procedure option (goto menu scene)
+    kiwi::DebugProcOption mGotoMenuOption;
 };
 
 } // namespace DebugRoot

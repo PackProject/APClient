@@ -11,21 +11,23 @@ namespace DebugRoot {
 MainPage::MainPage()
     : mDummyIntOption("DummyInt", 0, 5),
       mDummyBoolOption("DummyBool"),
-      mDummyProcOption("DummyProc", ReturnToMenuProc) {
+      mDummyOpenPageOption("DummyOpenPage", mSubPage),
+      mGotoMenuOption("Goto Menu", GotoMenuProc) {
 
     AddOption(mDummyIntOption);
     AddOption(mDummyBoolOption);
-    AddOption(mDummyProcOption);
+    AddOption(mDummyOpenPageOption);
+    AddOption(mGotoMenuOption);
 }
 
 /**
  * @brief Returns to the main menu scene
  */
-kiwi::EDebugMenuResult MainPage::ReturnToMenuProc(void* pArg) {
+kiwi::EDebugMenuResult MainPage::GotoMenuProc(void* pArg) {
     kiwi::SceneCreator::GetInstance().ChangeSceneAfterFade(
         kiwi::SceneCreator::GetMenuScene());
 
-    return kiwi::EDebugMenuResult_Close;
+    return kiwi::EDebugMenuResult_Select;
 }
 
 } // namespace DebugRoot

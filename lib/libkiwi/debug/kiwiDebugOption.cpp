@@ -227,8 +227,8 @@ EDebugMenuResult DebugProcOption::Select() {
 EDebugMenuResult DebugOpenPageOption::OpenPageProc(void* pArg) {
     K_ASSERT(pArg != nullptr);
 
-    DebugPage* pPage = static_cast<DebugPage*>(pArg);
-    pPage->GetParent().OpenPage(*pPage);
+    DebugOpenPageOption* p = static_cast<DebugOpenPageOption*>(pArg);
+    p->GetParent().GetParent().OpenPage(*p->mpPage);
 
     return EDebugMenuResult_Select;
 }

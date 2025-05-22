@@ -1,5 +1,7 @@
 #include "scene/DebugRootScene/Scene.h"
 
+#include <Sports2/Sp2Snd.h>
+
 #include <libkiwi.h>
 
 namespace AP {
@@ -23,7 +25,39 @@ void Scene::OnConfigure() {
  * @brief Calculate state user callback
  */
 void Scene::OnCalculate() {
-    mDebugMenu.Calculate();
+    kiwi::EDebugMenuResult result = mDebugMenu.Calculate();
+
+    switch (result) {
+    case kiwi::EDebugMenuResult_Invalid: {
+        Sp2::Snd::startSe(SE_CMN_NG_01);
+        break;
+    }
+
+    case kiwi::EDebugMenuResult_Cursor: {
+        Sp2::Snd::startSe(SE_CMN_CURSOR_01);
+        break;
+    }
+
+    case kiwi::EDebugMenuResult_Change: {
+        Sp2::Snd::startSe(SE_CMN_CURSOR_01);
+        break;
+    }
+
+    case kiwi::EDebugMenuResult_Select: {
+        Sp2::Snd::startSe(SE_CMN_DECIDE_01);
+        break;
+    }
+
+    case kiwi::EDebugMenuResult_Close: {
+        Sp2::Snd::startSe(SE_CMN_CANCEL_01);
+        break;
+    }
+
+    case kiwi::EDebugMenuResult_None:
+    default: {
+        break;
+    }
+    }
 }
 
 /**

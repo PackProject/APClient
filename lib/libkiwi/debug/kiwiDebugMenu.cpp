@@ -27,7 +27,18 @@ EDebugMenuResult DebugMenu::Calculate() {
         return EDebugMenuResult_None;
     }
 
-    return mPageStack.Top().Calculate();
+    EDebugMenuResult result = mPageStack.Top().Calculate();
+
+    if (result == EDebugMenuResult_Close) {
+        // Can't close the root page
+        if (mPageStack.Size() > 1) {
+            mPageStack.Pop();
+        } else {
+            result = EDebugMenuResult_Invalid;
+        }
+    }
+
+    return result;
 }
 
 /**
@@ -59,7 +70,9 @@ bool DebugPage::AddOption(DebugOptionBase& rOption) {
         return false;
     }
 
+    rOption.SetParent(*this);
     mOptions.PushBack(&rOption);
+
     return true;
 }
 
@@ -93,18 +106,14 @@ EDebugMenuResult DebugPage::Calculate() {
 
         // Change option with Left/Right
         if (rCtrl.IsTrig(EButton_Right)) {
-            pOption->Increment();
-            return EDebugMenuResult_Change;
-
+            return pOption->Increment();
         } else if (rCtrl.IsTrig(EButton_Left)) {
-            pOption->Decrement();
-            return EDebugMenuResult_Change;
+            return pOption->Decrement();
         }
 
         // Select option with A
         if (rCtrl.IsTrig(EButton_A)) {
-            pOption->Select();
-            return EDebugMenuResult_Select;
+            return pOption->Select();
         }
 
         // Close page with B
