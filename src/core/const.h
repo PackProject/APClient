@@ -2,6 +2,8 @@
 #define APCLIENT_CONST_H
 #include <types.h>
 
+#include <libkiwi.h>
+
 namespace AP {
 
 /**
@@ -71,6 +73,14 @@ enum EChamp {
     EChamp_Png,     //!< Table Tennis (Match)
 
     EChamp_Max
+};
+
+/**
+ * @brief Archipelago scene ID
+ */
+enum EAPScene {
+    EAPScene_DebugRootScene = kiwi::ESceneID_Max,
+    // . . .
 };
 
 } // namespace AP

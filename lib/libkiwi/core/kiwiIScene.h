@@ -88,6 +88,20 @@ public:
 
 #if defined(PACK_RESORT)
     /**
+     * @brief Gets the scene's group ID
+     */
+    virtual EGroupID GetGroup() const {
+        return EGroupID_Cmn;
+    }
+
+    /**
+     * @brief Tests whether to show the warning screen while loading
+     */
+    virtual bool GetWarnAsLoading() const {
+        return false;
+    }
+
+    /**
      * @brief Gets the scene's type
      */
     virtual RPSysScene::EKind getKind() {
@@ -244,6 +258,10 @@ public:
             static_cast<T*>(nullptr)->T::GetName(),
             static_cast<T*>(nullptr)->T::GetDirectory(),
             static_cast<T*>(nullptr)->T::GetID(),
+#if defined(PACK_RESORT)
+            static_cast<T*>(nullptr)->T::GetWarnAsLoading(),
+            static_cast<T*>(nullptr)->T::GetGroup(),
+#endif
             static_cast<T*>(nullptr)->T::GetPack(),
             static_cast<T*>(nullptr)->T::GetCreateType(),
             static_cast<T*>(nullptr)->T::GetExitType(),

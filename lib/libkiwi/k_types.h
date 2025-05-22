@@ -71,12 +71,12 @@ typedef void (*funcptr_t)(void);
 
 /**
  * @brief Generates for loop over a container
- * @note The current iterator can be accessed through the variable 'it'.
  *
+ * @param name Iterator name
  * @param rContainer Container reference
  */
-#define K_FOREACH(rContainer)                                                  \
-    for (K_DECLTYPE(rContainer.Begin()) it = rContainer.Begin();               \
-         it != rContainer.End(); ++it)
+#define K_FOREACH(name, rContainer)                                            \
+    for (K_DECLTYPE(rContainer.Begin()) name = rContainer.Begin();             \
+         name != rContainer.End(); ++name)
 
 #endif // LIBKIWI_TYPES_H

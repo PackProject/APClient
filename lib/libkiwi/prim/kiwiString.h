@@ -18,7 +18,7 @@ public:
      * @brief Constructor
      */
     StringImpl() : mpBuffer(nullptr), mCapacity(0), mLength(0) {
-        Clear();
+        Assign(scEmptyCStr);
     }
 
     /**

@@ -57,6 +57,7 @@
 #include <libkiwi/prim/kiwiPair.h>
 #include <libkiwi/prim/kiwiSTL.h>
 #include <libkiwi/prim/kiwiSmartPtr.h>
+#include <libkiwi/prim/kiwiStack.h>
 #include <libkiwi/prim/kiwiString.h>
 #include <libkiwi/prim/kiwiVector.h>
 #include <libkiwi/support/kiwiLibGX.h>

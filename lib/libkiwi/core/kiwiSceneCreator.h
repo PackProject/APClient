@@ -192,15 +192,16 @@ public:
     /**
      * @brief Registers root debug menu information
      * @details The debug root scene is entered when transitioning to the main
-     * menu while the specified button mask is held.
+     * menu while the specified button mask is held, or always on first boot
+     * if the bootUp flag is set.
      *
      * @param id Debug root scene ID (-1 to disable)
-     * @param buttons Buttons that must be held to visit the debug menu
-     * (defaults to B+MINUS+2)
+     * @param bootUp Whether to boot into the debug root scene
+     * @param buttons Buttons that must be held to visit the debug root scene
+     * (defaults to B+MINUS)
      */
-    static void RegistDebugRoot(s32 id,
-                                u16 buttons = (EButton_B | EButton_Minus |
-                                               EButton_2));
+    static void RegistDebugRoot(s32 id, bool bootUp = true,
+                                u16 buttons = EButton_B | EButton_Minus);
 
     /**
      * @brief Gets the scene ID of the main menu scene
@@ -347,6 +348,8 @@ private:
 
     //! Root debug menu scene ID
     static s32 sDebugRootID;
+    //! Whether to boot into the root debug menu
+    static bool sDebugRootBootUp;
     //! Root debug menu button combination (held)
     static u16 sDebugRootButtons;
 };

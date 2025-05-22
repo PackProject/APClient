@@ -117,6 +117,28 @@ public:
     SKYDIVING_STAMP_4 = 0x0076,
     SKYDIVING_STAMP_5 = 0x0077,
 
+
+    //Swordplay Duel
+    SWORDPLAY_DUEL_FIRST_WIN = 0x0200,
+
+    //Bowling Standard Game
+    BOWLING_STANDARD_FIRST_STRIKE = 0x0E00,
+
+    //Island Flyover
+    ISLAND_FLYOVER_IPOINT_GROUP_1 = 0x1B00,
+    ISLAND_FLYOVER_IPOINT_GROUP_2 = 0x1B01,
+    ISLAND_FLYOVER_IPOINT_GROUP_3 = 0x1B02,
+    ISLAND_FLYOVER_IPOINT_GROUP_4 = 0x1B03,
+    ISLAND_FLYOVER_IPOINT_GROUP_5 = 0x1B04,
+    ISLAND_FLYOVER_IPOINT_GROUP_6 = 0x1B05,
+    ISLAND_FLYOVER_IPOINT_GROUP_7 = 0x1B06,
+    ISLAND_FLYOVER_IPOINT_GROUP_8 = 0x1B07,
+    ISLAND_FLYOVER_IPOINT_GROUP_9 = 0x1B08,
+    ISLAND_FLYOVER_IPOINT_GROUP_10 = 0x1B09,
+    ISLAND_FLYOVER_IPOINT_GROUP_11 = 0x1B0A,
+    ISLAND_FLYOVER_IPOINT_GROUP_12 = 0x1B0B,
+
+
     COUNT
 }; // CheckID;
 
@@ -177,6 +199,11 @@ public:
      */
     const char* GetCheckName(CheckID id) const;
 
+    /**
+     * @brief populates check id array
+     */
+    void GenerateCheckIDArray();
+
 
 private:
     //! Binary file magic
@@ -233,6 +260,18 @@ private:
      * @param rHeader Binary file header
      */
     virtual void SerializeImpl(Header& rHeader) const;
+
+public:
+    /**
+     * @brief returns number of groups of i point checks obtained
+     */
+    int GetNumGroupIPointObtained(int numIPoints) {
+        if(numIPoints >= 5) return numIPoints / 5;
+        else return 99;
+    }
+
+public:
+    kiwi::TArray<CheckID, 114> checkIDArr;
 
 private:
     kiwi::TMap<CheckID, bool> mCheckState; //!< Check state

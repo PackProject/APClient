@@ -18,16 +18,17 @@ public:
      * @param pArg Callback user argument
      * @return Action result
      */
-    typedef DebugMenu::EResult (*SelectCallback)(void* pArg);
+    typedef EDebugMenuResult (*SelectCallback)(void* pArg);
 
     /**
      * @brief Option type
      */
     enum EKind {
-        EKind_Int,  //!< DebugIntOption
-        EKind_Bool, //!< DebugBoolOption
-        EKind_Enum, //!< DebugEnumOption
-        EKind_Proc, //!< DebugProcOption
+        EKind_Int,      //!< DebugIntOption
+        EKind_Bool,     //!< DebugBoolOption
+        EKind_Enum,     //!< DebugEnumOption
+        EKind_Proc,     //!< DebugProcOption
+        EKind_OpenPage, //!< DebugOpenPageOption
     };
 
 public:
@@ -35,18 +36,30 @@ public:
      * @brief Constructor
      *
      * @param rName Option name
-     * @param pCallback Select callback (optional)
-     * @param pCallbackArg Select callback user argument (optional)
      */
-    explicit DebugOptionBase(const String& rName,
-                             SelectCallback* pCallback = nullptr,
-                             void* pCallbackArg = nullptr)
+    explicit DebugOptionBase(const String& rName)
         : mIsEnabled(true), mName(rName) {}
 
     /**
      * @brief Destructor
      */
     virtual ~DebugOptionBase() {}
+
+    /**
+     * @brief Gets the options's parent menu page
+     */
+    DebugPage& GetParent() const {
+        K_ASSERT(mpParent != nullptr);
+        return *mpParent;
+    }
+    /**
+     * @brief Sets the options's parent menu page
+     *
+     * @param rPage Parent menu page
+     */
+    void SetParent(DebugPage& rPage) {
+        mpParent = &rPage;
+    }
 
     /**
      * @brief Gets the type of the option
@@ -68,23 +81,23 @@ public:
      * @brief Increments the option value
      * @return Action result
      */
-    virtual DebugMenu::EResult Increment() {
-        return DebugMenu::EResult_None;
+    virtual EDebugMenuResult Increment() {
+        return EDebugMenuResult_None;
     }
     /**
      * @brief Decrements the option value
      * @return Action result
      */
-    virtual DebugMenu::EResult Decrement() {
-        return DebugMenu::EResult_None;
+    virtual EDebugMenuResult Decrement() {
+        return EDebugMenuResult_None;
     }
 
     /**
      * @brief Performs the option selection logic
      * @return Action result
      */
-    virtual DebugMenu::EResult Select() {
-        return DebugMenu::EResult_None;
+    virtual EDebugMenuResult Select() {
+        return EDebugMenuResult_None;
     }
 
     /**
@@ -125,6 +138,9 @@ protected:
     virtual void UpdateString() {}
 
 protected:
+    //! Parent menu page
+    DebugPage* mpParent;
+
     //! Enable option
     bool mIsEnabled;
 
@@ -168,12 +184,12 @@ public:
      * @brief Increments the option value
      * @return Action result
      */
-    virtual DebugMenu::EResult Increment();
+    virtual EDebugMenuResult Increment();
     /**
      * @brief Decrements the option value
      * @return Action result
      */
-    virtual DebugMenu::EResult Decrement();
+    virtual EDebugMenuResult Decrement();
 
     /**
      * @brief Gets the integer option value
@@ -367,9 +383,11 @@ public:
      * @param pCallback Select callback function
      * @param pCallbackArg Select callback user argument
      */
-    DebugProcOption(const String& rName, SelectCallback* pCallback,
+    DebugProcOption(const String& rName, SelectCallback pCallback,
                     void* pCallbackArg = nullptr)
-        : DebugOptionBase(rName, pCallback, pCallbackArg) {}
+        : DebugOptionBase(rName),
+          mpCallback(pCallback),
+          mpCallbackArg(pCallbackArg) {}
 
     /**
      * @brief Gets the type of the option
@@ -382,13 +400,57 @@ public:
      * @brief Performs the option selection logic
      * @return Action result
      */
-    virtual DebugMenu::EResult Select();
+    virtual EDebugMenuResult Select();
 
 private:
     //! Select procedure
     SelectCallback mpCallback;
     //! Select procedure user argument
     void* mpCallbackArg;
+};
+
+/**
+ * @brief Debug option which opens a new page
+ */
+class DebugOpenPageOption : public DebugProcOption {
+public:
+    /**
+     * @brief Gets the type of the option (static)
+     */
+    static EKind GetKindStatic() {
+        return EKind_OpenPage;
+    }
+
+    /**
+     * @brief Constructor
+     *
+     * @param rName Option name
+     * @param rPage Sub-page to open
+     */
+    DebugOpenPageOption(const String& rName, DebugPage& rPage)
+        : DebugProcOption(rName, OpenPageProc, this) {
+
+        mpPage = &rPage;
+    }
+
+    /**
+     * @brief Gets the type of the option
+     */
+    virtual EKind GetKind() const {
+        return GetKindStatic();
+    }
+
+private:
+    /**
+     * @brief Opens the specified sub-page
+     *
+     * @param pArg Callback user argument
+     */
+    static EDebugMenuResult OpenPageProc(void* pArg);
+
+private:
+    //! Sub-page to open
+    DebugPage* mpPage;
 };
 
 //! @}
