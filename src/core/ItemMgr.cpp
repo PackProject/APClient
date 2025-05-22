@@ -362,7 +362,7 @@ void ItemMgr::Debug() {
     // Power Cruising
     mJskBoostFlag = r.CoinFlip();
     mJskRingTimerFlag.Randomize();
-    mJsk2xRingFlag = r.CoinFlip();
+    //mJsk2xRingFlag = r.CoinFlip();
     mJskFreeTimerFlag.Randomize();
 
     // Canoeing
