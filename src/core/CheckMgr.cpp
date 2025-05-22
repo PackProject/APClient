@@ -142,6 +142,19 @@ const char* CheckMgr::GetCheckName(CheckMgr::CheckID id) const {
 
         case SWORDPLAY_DUEL_FIRST_WIN: return "Swordplay Duel - First Win!";
 
+        case ISLAND_FLYOVER_IPOINT_GROUP_1: return "Progressive Island Flyover I Point Group 1";
+        case ISLAND_FLYOVER_IPOINT_GROUP_2: return "Progressive Island Flyover I Point Group 2";
+        case ISLAND_FLYOVER_IPOINT_GROUP_3: return "Progressive Island Flyover I Point Group 3";
+        case ISLAND_FLYOVER_IPOINT_GROUP_4: return "Progressive Island Flyover I Point Group 4";
+        case ISLAND_FLYOVER_IPOINT_GROUP_5: return "Progressive Island Flyover I Point Group 5";
+        case ISLAND_FLYOVER_IPOINT_GROUP_6: return "Progressive Island Flyover I Point Group 6";
+        case ISLAND_FLYOVER_IPOINT_GROUP_7: return "Progressive Island Flyover I Point Group 7";
+        case ISLAND_FLYOVER_IPOINT_GROUP_8: return "Progressive Island Flyover I Point Group 8";
+        case ISLAND_FLYOVER_IPOINT_GROUP_9: return "Progressive Island Flyover I Point Group 9";
+        case ISLAND_FLYOVER_IPOINT_GROUP_10: return "Progressive Island Flyover I Point Group 10";
+        case ISLAND_FLYOVER_IPOINT_GROUP_11: return "Progressive Island Flyover I Point Group 11";
+        case ISLAND_FLYOVER_IPOINT_GROUP_12: return "Progressive Island Flyover I Point Group 12";
+
         default: 
             kiwi::cout << "Bad ID: " << id << kiwi::endl;
             return "Unknown Check ID";
@@ -152,23 +165,12 @@ const char* CheckMgr::GetCheckName(CheckMgr::CheckID id) const {
  * @brief Clears check state
  */
 void CheckMgr::Clear() {
-    for(u16 i = 0x0000; i < CheckMgr::COUNT; i++)
-    {
-        SetCheckState(CheckID(i), false);
-    }
+    GenerateCheckIDArray();
 
-    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_1, false);
-    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_2, false);
-    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_3, false);
-    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_4, false);
-    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_5, false);
-    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_6, false);
-    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_7, false);
-    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_8, false);
-    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_9, false);
-    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_10, false);
-    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_11, false);
-    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_12, false);
+    for(int i = 0; i < checkIDArr.Length(); i++) {
+        CheckID currCheckID = checkIDArr[i];
+        SetCheckState(currCheckID, false);
+    }
 }
 
 /**
@@ -183,6 +185,7 @@ bool CheckMgr::GetCheckState(CheckID id) const {
 }
 
 void CheckMgr::SetCheckState(CheckID id, bool state) {
+    kiwi::cout << "Check: " << GetCheckName(id) << " has been set to " << state << kiwi::endl;
     mCheckState.Insert(id, state);
 }
 
@@ -201,6 +204,122 @@ void CheckMgr::GiveItemFromCheck(CheckID id) {
     //ItemMgr::GetInstance().GiveItemToPlayer(ItemMgr::ItemID(itemID)); // this should be what's actually ran
     ItemMgr::GetInstance().GiveItemToPlayer(ItemMgr::BASKETBALL_3PT_TIMER);
     SetCheckState(id, true);
+}
+
+void CheckMgr::GenerateCheckIDArray() {
+    checkIDArr[0] = SWORDPLAY_SHOWDOWN_STAMP_1;
+    checkIDArr[1] = SWORDPLAY_SHOWDOWN_STAMP_2;
+    checkIDArr[2] = SWORDPLAY_SHOWDOWN_STAMP_3;
+    checkIDArr[3] = SWORDPLAY_SHOWDOWN_STAMP_4;
+    checkIDArr[4] = SWORDPLAY_SHOWDOWN_STAMP_5;
+    checkIDArr[5] = SWORDPLAY_DUEL_STAMP_1;
+    checkIDArr[6] = SWORDPLAY_DUEL_STAMP_2;
+    checkIDArr[7] = SWORDPLAY_DUEL_STAMP_3;
+    checkIDArr[8] = SWORDPLAY_DUEL_STAMP_4;
+    checkIDArr[9] = SWORDPLAY_DUEL_STAMP_5;
+    checkIDArr[10] = SWORDPLAY_SPEED_SLICE_STAMP_1;
+    checkIDArr[11] = SWORDPLAY_SPEED_SLICE_STAMP_2;
+    checkIDArr[12] = SWORDPLAY_SPEED_SLICE_STAMP_3;
+    checkIDArr[13] = SWORDPLAY_SPEED_SLICE_STAMP_4;
+    checkIDArr[14] = SWORDPLAY_SPEED_SLICE_STAMP_5;
+    checkIDArr[15] = POWER_CRUISING_STAMP_1;
+    checkIDArr[16] = POWER_CRUISING_STAMP_2;
+    checkIDArr[17] = POWER_CRUISING_STAMP_3;
+    checkIDArr[18] = POWER_CRUISING_STAMP_4;
+    checkIDArr[19] = POWER_CRUISING_STAMP_5;
+    checkIDArr[20] = ARCHERY_STAMP_1;
+    checkIDArr[21] = ARCHERY_STAMP_2;
+    checkIDArr[22] = ARCHERY_STAMP_3;
+    checkIDArr[23] = ARCHERY_STAMP_4;
+    checkIDArr[24] = ARCHERY_STAMP_5;
+    checkIDArr[25] = FRISBEE_DOG_STAMP_1;
+    checkIDArr[26] = FRISBEE_DOG_STAMP_2;
+    checkIDArr[27] = FRISBEE_DOG_STAMP_3;
+    checkIDArr[28] = FRISBEE_DOG_STAMP_4;
+    checkIDArr[29] = FRISBEE_DOG_STAMP_5;
+    checkIDArr[30] = BASKETBALL_3PT_CONTEST_STAMP_1;
+    checkIDArr[31] = BASKETBALL_3PT_CONTEST_STAMP_2;
+    checkIDArr[32] = BASKETBALL_3PT_CONTEST_STAMP_3;
+    checkIDArr[33] = BASKETBALL_3PT_CONTEST_STAMP_4;
+    checkIDArr[34] = BASKETBALL_3PT_CONTEST_STAMP_5;
+    checkIDArr[35] = BASKETBALL_PICKUP_GAME_1;
+    checkIDArr[36] = BASKETBALL_PICKUP_GAME_2;
+    checkIDArr[37] = BASKETBALL_PICKUP_GAME_3;
+    checkIDArr[38] = BASKETBALL_PICKUP_GAME_4;
+    checkIDArr[39] = BASKETBALL_PICKUP_GAME_5;
+    checkIDArr[40] = BOWLING_STANDARD_GAME_STAMP_1;
+    checkIDArr[41] = BOWLING_STANDARD_GAME_STAMP_2;
+    checkIDArr[42] = BOWLING_STANDARD_GAME_STAMP_3;
+    checkIDArr[43] = BOWLING_STANDARD_GAME_STAMP_4;
+    checkIDArr[44] = BOWLING_STANDARD_GAME_STAMP_5;
+    checkIDArr[45] = BOWLING_100_PIN_STAMP_1;
+    checkIDArr[46] = BOWLING_100_PIN_STAMP_2;
+    checkIDArr[47] = BOWLING_100_PIN_STAMP_3;
+    checkIDArr[48] = BOWLING_100_PIN_STAMP_4;
+    checkIDArr[49] = BOWLING_100_PIN_STAMP_5;
+    checkIDArr[50] = BOWLING_SPIN_CONTROL_STAMP_1;
+    checkIDArr[51] = BOWLING_SPIN_CONTROL_STAMP_2;
+    checkIDArr[52] = BOWLING_SPIN_CONTROL_STAMP_3;
+    checkIDArr[53] = BOWLING_SPIN_CONTROL_STAMP_4;
+    checkIDArr[54] = BOWLING_SPIN_CONTROL_STAMP_5;
+    checkIDArr[55] = CANOEING_STAMP_1;
+    checkIDArr[56] = CANOEING_STAMP_2;
+    checkIDArr[57] = CANOEING_STAMP_3;
+    checkIDArr[58] = CANOEING_STAMP_4;
+    checkIDArr[59] = CANOEING_STAMP_5;
+    checkIDArr[60] = TABLE_TENNIS_RETURN_CHALLENGE_STAMP_1;
+    checkIDArr[61] = TABLE_TENNIS_RETURN_CHALLENGE_STAMP_2;
+    checkIDArr[62] = TABLE_TENNIS_RETURN_CHALLENGE_STAMP_3;
+    checkIDArr[63] = TABLE_TENNIS_RETURN_CHALLENGE_STAMP_4;
+    checkIDArr[64] = TABLE_TENNIS_RETURN_CHALLENGE_STAMP_5;
+    checkIDArr[65] = TABLE_TENNIS_MATCH_STAMP_1;
+    checkIDArr[66] = TABLE_TENNIS_MATCH_STAMP_2;
+    checkIDArr[67] = TABLE_TENNIS_MATCH_STAMP_3;
+    checkIDArr[68] = TABLE_TENNIS_MATCH_STAMP_4;
+    checkIDArr[69] = TABLE_TENNIS_MATCH_STAMP_5;
+    checkIDArr[70] = WAKEBOARDING_STAMP_1;
+    checkIDArr[71] = WAKEBOARDING_STAMP_2;
+    checkIDArr[72] = WAKEBOARDING_STAMP_3;
+    checkIDArr[73] = WAKEBOARDING_STAMP_4;
+    checkIDArr[74] = WAKEBOARDING_STAMP_5;
+    checkIDArr[75] = ISLAND_FLYOVER_STAMP_1;
+    checkIDArr[76] = ISLAND_FLYOVER_STAMP_2;
+    checkIDArr[77] = ISLAND_FLYOVER_STAMP_3;
+    checkIDArr[78] = ISLAND_FLYOVER_STAMP_4;
+    checkIDArr[79] = ISLAND_FLYOVER_STAMP_5;
+    checkIDArr[80] = GOLF_STAMP_1;
+    checkIDArr[81] = GOLF_STAMP_2;
+    checkIDArr[82] = GOLF_STAMP_3;
+    checkIDArr[83] = GOLF_STAMP_4;
+    checkIDArr[84] = GOLF_STAMP_5;
+    checkIDArr[85] = FRISBEE_GOLF_STAMP_1;
+    checkIDArr[86] = FRISBEE_GOLF_STAMP_2;
+    checkIDArr[87] = FRISBEE_GOLF_STAMP_3;
+    checkIDArr[88] = FRISBEE_GOLF_STAMP_4;
+    checkIDArr[89] = FRISBEE_GOLF_STAMP_5;
+    checkIDArr[90] = CYCLING_STAMP_1;
+    checkIDArr[91] = CYCLING_STAMP_2;
+    checkIDArr[92] = CYCLING_STAMP_3;
+    checkIDArr[93] = CYCLING_STAMP_4;
+    checkIDArr[94] = CYCLING_STAMP_5;
+    checkIDArr[95] = SKYDIVING_STAMP_1;
+    checkIDArr[96] = SKYDIVING_STAMP_2;
+    checkIDArr[97] = SKYDIVING_STAMP_3;
+    checkIDArr[98] = SKYDIVING_STAMP_4;
+    checkIDArr[99] = SKYDIVING_STAMP_5;
+    checkIDArr[100] = SWORDPLAY_DUEL_FIRST_WIN;
+    checkIDArr[101] = ISLAND_FLYOVER_IPOINT_GROUP_1;
+    checkIDArr[102] = ISLAND_FLYOVER_IPOINT_GROUP_2;
+    checkIDArr[103] = ISLAND_FLYOVER_IPOINT_GROUP_3;
+    checkIDArr[104] = ISLAND_FLYOVER_IPOINT_GROUP_4;
+    checkIDArr[105] = ISLAND_FLYOVER_IPOINT_GROUP_5;
+    checkIDArr[106] = ISLAND_FLYOVER_IPOINT_GROUP_6;
+    checkIDArr[107] = ISLAND_FLYOVER_IPOINT_GROUP_7;
+    checkIDArr[108] = ISLAND_FLYOVER_IPOINT_GROUP_8;
+    checkIDArr[109] = ISLAND_FLYOVER_IPOINT_GROUP_9;
+    checkIDArr[110] = ISLAND_FLYOVER_IPOINT_GROUP_10;
+    checkIDArr[111] = ISLAND_FLYOVER_IPOINT_GROUP_11;
+    checkIDArr[112] = ISLAND_FLYOVER_IPOINT_GROUP_12;
 }
 
 

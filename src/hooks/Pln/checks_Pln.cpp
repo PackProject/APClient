@@ -20,11 +20,10 @@ void SetIPointGrabbed(int totalIPoints) {
     int iGroup = CheckMgr::GetInstance().GetNumGroupIPointObtained(totalIPoints);
     if(iGroup == 99) return;
 
-    bool hasCheck = CheckMgr::GetInstance().GetCheckState(CheckMgr::CheckID(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_1 + iGroup));
+    bool hasCheck = CheckMgr::GetInstance().GetCheckState(CheckMgr::CheckID(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_1 + iGroup - 1));
     if(hasCheck) return;
 
-    kiwi::cout << "Stamp Group: " << iGroup << " has been collected!" << kiwi::endl;
-    CheckMgr::GetInstance().GiveItemFromCheck(CheckMgr::CheckID(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_1 + iGroup));
+    CheckMgr::GetInstance().GiveItemFromCheck(CheckMgr::CheckID(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_1 + iGroup - 1));
 }
 
 
