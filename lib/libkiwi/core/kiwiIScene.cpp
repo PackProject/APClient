@@ -14,6 +14,7 @@ void IScene::Configure() {
     RP_GET_INSTANCE(RPGrpModelResManager)->CreateResourceList(0x400);
     RP_GET_INSTANCE(RPGrpModelManager)
         ->CreateModelScene(0, 0, 1, nullptr, nullptr);
+#endif
 
     // Setup renderer view
     RPGrpScreen* pScreen = new RPGrpScreen();
@@ -22,7 +23,6 @@ void IScene::Configure() {
 
     RPGrpRenderer::GetCurrent()->CreateView2D(1, pScreen);
     RPGrpRenderer::GetCurrent()->CorrectView();
-#endif
 
     // User state function
     OnConfigure();

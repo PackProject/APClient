@@ -79,6 +79,8 @@ TMap<s32, SceneCreator::Info> SceneCreator::sUserScenes;
 
 //! Root debug menu scene ID
 s32 SceneCreator::sDebugRootID = -1;
+//! Whether to boot into the root debug menu
+bool SceneCreator::sDebugRootBootUp = false;
 //! Root debug menu button combination (held)
 u16 SceneCreator::sDebugRootButtons = 0xFFFF;
 
@@ -132,16 +134,19 @@ void SceneCreator::RegistScene(const Info& rInfo) {
 /**
  * @brief Registers root debug menu information
  * @details The debug root scene is entered when transitioning to the main
- * menu while the specified button mask is held.
+ * menu while the specified button mask is held, or always on first boot
+ * if the bootUp flag is set.
  *
  * @param id Debug root scene ID (-1 to disable)
- * @param buttons Buttons that must be held to visit the debug menu
- * (defaults to B+Minus+1+2)
+ * @param bootUp Whether to boot into the debug root scene
+ * @param buttons Buttons that must be held to visit the debug root scene
+ * (defaults to B+MINUS)
  */
-void SceneCreator::RegistDebugRoot(s32 id, u16 buttons) {
+void SceneCreator::RegistDebugRoot(s32 id, bool bootUp, u16 buttons) {
     K_ASSERT_EX(id >= 0 || id == -1, "Invalid scene ID");
 
     sDebugRootID = id;
+    sDebugRootBootUp = bootUp;
     sDebugRootButtons = buttons;
 }
 
@@ -194,12 +199,18 @@ bool SceneCreator::ChangeSceneAfterFade(s32 id, bool reload) {
     }
 
     // Visit debug root instead of menu if buttons are held
-    if (id == GetMenuScene()) {
+    if (id == GetMenuScene() && current != sDebugRootID) {
         for (int i = 0; i < EPlayer_Max; i++) {
             const WiiCtrl& rCtrl =
                 CtrlMgr::GetInstance().GetWiiCtrl(static_cast<EPlayer>(i));
 
-            if (rCtrl.IsConnected() && rCtrl.IsHold(sDebugRootButtons)) {
+            bool visit = sDebugRootBootUp;   // Visit on boot
+            visit |= sDebugRootButtons == 0; // Always visit
+            visit |= rCtrl.IsConnected() &&
+                     rCtrl.IsHold(sDebugRootButtons); // Button combo held
+
+            if (visit) {
+                sDebugRootBootUp = false;
                 id = sDebugRootID;
                 break;
             }
@@ -243,13 +254,19 @@ bool SceneCreator::ChangeSceneAfterFade(s32 id, const nw4r::ut::Color* pColor) {
         id = current;
     }
 
-    // Visit debug root instead of menu if buttons are held
-    if (id == GetMenuScene()) {
+    // Visit debug root instead of menu if on boot, or if buttons are held
+    if (id == GetMenuScene() && current != sDebugRootID) {
         for (int i = 0; i < EPlayer_Max; i++) {
             const WiiCtrl& rCtrl =
                 CtrlMgr::GetInstance().GetWiiCtrl(static_cast<EPlayer>(i));
 
-            if (rCtrl.IsConnected() && rCtrl.IsHold(sDebugRootButtons)) {
+            bool visit = sDebugRootBootUp;   // Visit on boot
+            visit |= sDebugRootButtons == 0; // Always visit
+            visit |= rCtrl.IsConnected() &&
+                     rCtrl.IsHold(sDebugRootButtons); // Button combo held
+
+            if (visit) {
+                sDebugRootBootUp = false;
                 id = sDebugRootID;
                 break;
             }

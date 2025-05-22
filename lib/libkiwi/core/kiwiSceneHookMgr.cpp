@@ -71,13 +71,13 @@ void SceneHookMgr::DoEnter() {
     GetCurrentScene()->Configure();
 
     // Global hooks
-    K_FOREACH (GetInstance().mGlobalHooks) {
+    K_FOREACH (it, GetInstance().mGlobalHooks) {
         it->Configure(GetCurrentScene());
     }
 
     // Hooks for game scene
     if (IsPackScene()) {
-        K_FOREACH (GetInstance().GetActiveHooks()) {
+        K_FOREACH (it, GetInstance().GetActiveHooks()) {
             it->Configure(GetCurrentScene());
         }
     }
@@ -93,13 +93,13 @@ KOKESHI_BY_PACK(KM_CALL(0x8018532c, SceneHookMgr::DoEnter),  // Wii Sports
  */
 void SceneHookMgr::DoReset() {
     // Global hooks
-    K_FOREACH (GetInstance().mGlobalHooks) {
+    K_FOREACH (it, GetInstance().mGlobalHooks) {
         it->BeforeReset(GetCurrentScene());
     }
 
     // Hooks for game scene
     if (IsPackScene()) {
-        K_FOREACH (GetInstance().GetActiveHooks()) {
+        K_FOREACH (it, GetInstance().GetActiveHooks()) {
             it->BeforeReset(GetCurrentScene());
         }
     }
@@ -107,13 +107,13 @@ void SceneHookMgr::DoReset() {
     GetCurrentScene()->Reset();
 
     // Global hooks
-    K_FOREACH (GetInstance().mGlobalHooks) {
+    K_FOREACH (it, GetInstance().mGlobalHooks) {
         it->AfterReset(GetCurrentScene());
     }
 
     // Hooks for game scene
     if (IsPackScene()) {
-        K_FOREACH (GetInstance().GetActiveHooks()) {
+        K_FOREACH (it, GetInstance().GetActiveHooks()) {
             it->AfterReset(GetCurrentScene());
         }
     }
@@ -132,13 +132,13 @@ KOKESHI_BY_PACK(KM_CALL(0x801853d4, SceneHookMgr::DoReset),  // Wii Sports
  */
 void SceneHookMgr::DoLoadResource() {
     // Global hooks
-    K_FOREACH (GetInstance().mGlobalHooks) {
+    K_FOREACH (it, GetInstance().mGlobalHooks) {
         it->LoadResource(GetCurrentScene());
     }
 
     // Hooks for game scene
     if (IsPackScene()) {
-        K_FOREACH (GetInstance().GetActiveHooks()) {
+        K_FOREACH (it, GetInstance().GetActiveHooks()) {
             it->LoadResource(GetCurrentScene());
         }
     }
@@ -154,13 +154,13 @@ KOKESHI_BY_PACK(KM_BRANCH(0x8018695c, SceneHookMgr::DoLoadResource),  // Wii Spo
  */
 void SceneHookMgr::DoCalculate() {
     // Global hooks
-    K_FOREACH (GetInstance().mGlobalHooks) {
+    K_FOREACH (it, GetInstance().mGlobalHooks) {
         it->BeforeCalculate(GetCurrentScene());
     }
 
     // Hooks for game scene
     if (IsPackScene()) {
-        K_FOREACH (GetInstance().GetActiveHooks()) {
+        K_FOREACH (it, GetInstance().GetActiveHooks()) {
             it->BeforeCalculate(GetCurrentScene());
         }
     }
@@ -170,13 +170,13 @@ void SceneHookMgr::DoCalculate() {
     RP_GET_INSTANCE(RPSysSceneMgr)->SceneManager::calcCurrentScene();
 
     // Global hooks
-    K_FOREACH (GetInstance().mGlobalHooks) {
+    K_FOREACH (it, GetInstance().mGlobalHooks) {
         it->AfterCalculate(GetCurrentScene());
     }
 
     // Hooks for game scene
     if (IsPackScene()) {
-        K_FOREACH (GetInstance().GetActiveHooks()) {
+        K_FOREACH (it, GetInstance().GetActiveHooks()) {
             it->AfterCalculate(GetCurrentScene());
         }
     }
@@ -192,13 +192,13 @@ KOKESHI_BY_PACK(KM_BRANCH(0x80185868, SceneHookMgr::DoCalculate),  // Wii Sports
  */
 void SceneHookMgr::DoExit() {
     // Global hooks
-    K_FOREACH (GetInstance().mGlobalHooks) {
+    K_FOREACH (it, GetInstance().mGlobalHooks) {
         it->Exit(GetCurrentScene());
     }
 
     // Hooks for game scene
     if (IsPackScene()) {
-        K_FOREACH (GetInstance().GetActiveHooks()) {
+        K_FOREACH (it, GetInstance().GetActiveHooks()) {
             it->Exit(GetCurrentScene());
         }
     }
@@ -214,13 +214,13 @@ KOKESHI_BY_PACK(KM_BRANCH(0x80185000, SceneHookMgr::DoExit),  // Wii Sports
  */
 void SceneHookMgr::DoPause() {
     // Global hooks
-    K_FOREACH (GetInstance().mGlobalHooks) {
+    K_FOREACH (it, GetInstance().mGlobalHooks) {
         it->Pause(GetCurrentScene(), true);
     }
 
     // Hooks for game scene
     if (IsPackScene()) {
-        K_FOREACH (GetInstance().GetActiveHooks()) {
+        K_FOREACH (it, GetInstance().GetActiveHooks()) {
             it->Pause(GetCurrentScene(), true);
         }
     }
@@ -236,13 +236,13 @@ KOKESHI_BY_PACK(KM_BRANCH(0x801b68ec, SceneHookMgr::DoPause), // Wii Sports
  */
 void SceneHookMgr::DoUnPause() {
     // Global hooks
-    K_FOREACH (GetInstance().mGlobalHooks) {
+    K_FOREACH (it, GetInstance().mGlobalHooks) {
         it->Pause(GetCurrentScene(), false);
     }
 
     // Hooks for game scene
     if (IsPackScene()) {
-        K_FOREACH (GetInstance().GetActiveHooks()) {
+        K_FOREACH (it, GetInstance().GetActiveHooks()) {
             it->Pause(GetCurrentScene(), false);
         }
     }

@@ -2,6 +2,7 @@
 #define LIBKIWI_DEBUG_DEBUG_MENU_H
 #include <Pack/RPGraphics.h>
 #include <libkiwi/k_types.h>
+#include <libkiwi/prim/kiwiStack.h>
 #include <libkiwi/prim/kiwiVector.h>
 
 namespace kiwi {
@@ -10,6 +11,19 @@ namespace kiwi {
 
 // Forward declarations
 class DebugOptionBase;
+class DebugPage;
+
+/**
+ * @brief Debug menu action result
+ */
+enum EDebugMenuResult {
+    EDebugMenuResult_None,    //!< Nothing happened
+    EDebugMenuResult_Invalid, //!< State failed to change
+    EDebugMenuResult_Cursor,  //!< Cursor changed
+    EDebugMenuResult_Change,  //!< State changed
+    EDebugMenuResult_Select,  //!< Button selected
+    EDebugMenuResult_Close,   //!< Request to close page/menu
+};
 
 /**
  * @brief Debug menu
@@ -17,49 +31,102 @@ class DebugOptionBase;
 class DebugMenu : public IRPGrpDrawObject {
 public:
     /**
-     * @brief Option action result
-     */
-    enum EResult {
-        EResult_None,    //!< Nothing happened
-        EResult_Invalid, //!< State failed to change
-        EResult_Change,  //!< State changed
-        EResult_Close,   //!< Request to close menu
-    };
-
-public:
-    /**
      * @brief Constructor
+     *
+     * @param rRootPage Menu root page
      */
-    DebugMenu() : mCursor(0) {}
-    /**
-     * @brief Destructor
-     */
-    virtual ~DebugMenu() {
-        mOptions.Clear();
+    DebugMenu(DebugPage& rRootPage) {
+        OpenPage(rRootPage);
     }
 
     /**
-     * @brief Updates the menu state
+     * @brief Destructor
      */
-    virtual void Calculate();
+    virtual ~DebugMenu() {}
+
+    /**
+     * @brief Opens a new menu page
+     *
+     * @param rPage Menu page
+     */
+    void OpenPage(DebugPage& rPage);
+
+    /**
+     * @brief Updates the menu state
+     * @return Result of actions
+     */
+    virtual EDebugMenuResult Calculate();
+
     /**
      * @brief User-level render pass
      */
     virtual void UserDraw();
 
+protected:
+    //! Menu page hierarchy
+    TStack<DebugPage> mPageStack;
+};
+
+/**
+ * @brief Debug menu page
+ */
+class DebugPage {
+public:
+    //! Default options limit
+    static const u32 DEFAULT_MAX_OPTIONS = 16;
+
+public:
     /**
-     * @brief Updates the menu state (for sub-classes)
+     * @brief Constructor
+     *
+     * @param maxOptions Maximum number of options on the page
      */
-    virtual void OnCalculate() {}
+    DebugPage(u32 maxOptions = DEFAULT_MAX_OPTIONS)
+        : mCursor(0), mMaxOptions(maxOptions) {}
+
     /**
-     * @brief Render pass (for sub-classes)
+     * @brief Gets the page's parent menu
      */
-    virtual void OnUserDraw() {}
+    DebugMenu& GetParent() const {
+        K_ASSERT(mpParent != nullptr);
+        return *mpParent;
+    }
+    /**
+     * @brief Sets the page's parent menu
+     *
+     * @param rMenu Parent menu
+     */
+    void SetParent(DebugMenu& rMenu) {
+        mpParent = &rMenu;
+    }
+
+    /**
+     * @brief Appends a new option to the page
+     *
+     * @param rOption Debug option
+     * @return Success
+     */
+    bool AddOption(DebugOptionBase& rOption);
+
+    /**
+     * @brief Updates the menu state
+     * @return Result of actions
+     */
+    virtual EDebugMenuResult Calculate();
+
+    /**
+     * @brief User-level render pass
+     */
+    virtual void UserDraw();
 
 protected:
+    //! Parent menu
+    DebugMenu* mpParent;
+
     //! Cursor position
     u32 mCursor;
-
+    //! Maximum number of options
+    u32 mMaxOptions;
     //! Option list
     TVector<DebugOptionBase*> mOptions;
 };
