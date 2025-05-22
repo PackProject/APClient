@@ -121,6 +121,9 @@ public:
     //Swordplay Duel
     SWORDPLAY_DUEL_FIRST_WIN = 0x0200,
 
+    //Bowling Standard Game
+    BOWLING_STANDARD_FIRST_STRIKE = 0x0E00,
+
     //Island Flyover
     ISLAND_FLYOVER_IPOINT_GROUP_1 = 0x1B00,
     ISLAND_FLYOVER_IPOINT_GROUP_2 = 0x1B01,
@@ -268,7 +271,7 @@ public:
     }
 
 public:
-    kiwi::TArray<CheckID, 113> checkIDArr;
+    kiwi::TArray<CheckID, 114> checkIDArr;
 
 private:
     kiwi::TMap<CheckID, bool> mCheckState; //!< Check state

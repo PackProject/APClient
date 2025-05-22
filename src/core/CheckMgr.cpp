@@ -142,6 +142,8 @@ const char* CheckMgr::GetCheckName(CheckMgr::CheckID id) const {
 
         case SWORDPLAY_DUEL_FIRST_WIN: return "Swordplay Duel - First Win!";
 
+        case BOWLING_STANDARD_FIRST_STRIKE: return "Bowling Standard Game - First Strike!";
+
         case ISLAND_FLYOVER_IPOINT_GROUP_1: return "Progressive Island Flyover I Point Group 1";
         case ISLAND_FLYOVER_IPOINT_GROUP_2: return "Progressive Island Flyover I Point Group 2";
         case ISLAND_FLYOVER_IPOINT_GROUP_3: return "Progressive Island Flyover I Point Group 3";
@@ -308,18 +310,19 @@ void CheckMgr::GenerateCheckIDArray() {
     checkIDArr[98] = SKYDIVING_STAMP_4;
     checkIDArr[99] = SKYDIVING_STAMP_5;
     checkIDArr[100] = SWORDPLAY_DUEL_FIRST_WIN;
-    checkIDArr[101] = ISLAND_FLYOVER_IPOINT_GROUP_1;
-    checkIDArr[102] = ISLAND_FLYOVER_IPOINT_GROUP_2;
-    checkIDArr[103] = ISLAND_FLYOVER_IPOINT_GROUP_3;
-    checkIDArr[104] = ISLAND_FLYOVER_IPOINT_GROUP_4;
-    checkIDArr[105] = ISLAND_FLYOVER_IPOINT_GROUP_5;
-    checkIDArr[106] = ISLAND_FLYOVER_IPOINT_GROUP_6;
-    checkIDArr[107] = ISLAND_FLYOVER_IPOINT_GROUP_7;
-    checkIDArr[108] = ISLAND_FLYOVER_IPOINT_GROUP_8;
-    checkIDArr[109] = ISLAND_FLYOVER_IPOINT_GROUP_9;
-    checkIDArr[110] = ISLAND_FLYOVER_IPOINT_GROUP_10;
-    checkIDArr[111] = ISLAND_FLYOVER_IPOINT_GROUP_11;
-    checkIDArr[112] = ISLAND_FLYOVER_IPOINT_GROUP_12;
+    checkIDArr[101] = BOWLING_STANDARD_FIRST_STRIKE;
+    checkIDArr[102] = ISLAND_FLYOVER_IPOINT_GROUP_1;
+    checkIDArr[103] = ISLAND_FLYOVER_IPOINT_GROUP_2;
+    checkIDArr[104] = ISLAND_FLYOVER_IPOINT_GROUP_3;
+    checkIDArr[105] = ISLAND_FLYOVER_IPOINT_GROUP_4;
+    checkIDArr[106] = ISLAND_FLYOVER_IPOINT_GROUP_5;
+    checkIDArr[107] = ISLAND_FLYOVER_IPOINT_GROUP_6;
+    checkIDArr[108] = ISLAND_FLYOVER_IPOINT_GROUP_7;
+    checkIDArr[109] = ISLAND_FLYOVER_IPOINT_GROUP_8;
+    checkIDArr[110] = ISLAND_FLYOVER_IPOINT_GROUP_9;
+    checkIDArr[111] = ISLAND_FLYOVER_IPOINT_GROUP_10;
+    checkIDArr[112] = ISLAND_FLYOVER_IPOINT_GROUP_11;
+    checkIDArr[113] = ISLAND_FLYOVER_IPOINT_GROUP_12;
 }
 
 
