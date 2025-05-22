@@ -7,6 +7,7 @@
 
 namespace AP {
 namespace Pln {
+namespace {
 
 /******************************************************************************
  *
@@ -14,6 +15,31 @@ namespace Pln {
  *
  ******************************************************************************/
 
+void SetIPointGrabbed(int totalIPoints) {
+    kiwi::cout << "I Points Grabbed: " << totalIPoints << kiwi::endl;
+    int iGroup = CheckMgr::GetInstance().GetNumGroupIPointObtained(totalIPoints);
+    if(iGroup == 99) return;
 
+    bool hasCheck = CheckMgr::GetInstance().GetCheckState(CheckMgr::CheckID(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_1 + iGroup));
+    if(hasCheck) return;
+
+    kiwi::cout << "Stamp Group: " << iGroup << " has been collected!" << kiwi::endl;
+    CheckMgr::GetInstance().GiveItemFromCheck(CheckMgr::CheckID(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_1 + iGroup));
+}
+
+
+TRAMPOLINE_DEF(0x802619c8, 0x802619cc) {
+    TRAMPOLINE_BEGIN
+
+    stb r4, 0xc2b(r3)
+    mr r3, r4
+    bl SetIPointGrabbed
+
+    TRAMPOLINE_END
+    blr
+}
+
+
+}
 } // namespace Pln
 } // namespace AP

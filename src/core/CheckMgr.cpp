@@ -156,6 +156,19 @@ void CheckMgr::Clear() {
     {
         SetCheckState(CheckID(i), false);
     }
+
+    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_1, false);
+    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_2, false);
+    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_3, false);
+    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_4, false);
+    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_5, false);
+    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_6, false);
+    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_7, false);
+    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_8, false);
+    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_9, false);
+    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_10, false);
+    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_11, false);
+    SetCheckState(CheckMgr::ISLAND_FLYOVER_IPOINT_GROUP_12, false);
 }
 
 /**
