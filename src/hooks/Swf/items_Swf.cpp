@@ -78,11 +78,11 @@ void TryBlock(Sp2::Swf::UserCtrl* pUserCtrl,
         int remote = pPlayer->getRemoteNo();
 
         if (unlocked) {
-            Sp2::SndUtil::playSound(SE_SWF_SWORD_SWING_GUARD, 1 << remote);
+            Sp2::Snd::startSeWithRemote(SE_SWF_SWORD_SWING_GUARD, 1 << remote);
         }
         // Rejection sound effect is only played on the initial B press
         else if (pressed) {
-            Sp2::SndUtil::playSound(SE_CMN_NG_01, 1 << remote);
+            Sp2::Snd::startSeWithRemote(SE_CMN_NG_01, 1 << remote);
         }
     }
 
