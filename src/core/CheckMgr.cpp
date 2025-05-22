@@ -140,6 +140,8 @@ const char* CheckMgr::GetCheckName(CheckMgr::CheckID id) const {
         case ISLAND_FLYOVER_STAMP_4: return "Island Flyover (Stamp) - Wuhu Tour Guide";
         case ISLAND_FLYOVER_STAMP_5: return "Island Flyover (Stamp) - Balloonatic";
 
+        case SWORDPLAY_DUEL_FIRST_WIN: return "Swordplay Duel - First Win!";
+
         default: 
             kiwi::cout << "Bad ID: " << id << kiwi::endl;
             return "Unknown Check ID";
@@ -160,7 +162,7 @@ void CheckMgr::Clear() {
  * @brief Sets debug state
  */
 void CheckMgr::Debug() {
-    
+
 }
 
 bool CheckMgr::GetCheckState(CheckID id) const {

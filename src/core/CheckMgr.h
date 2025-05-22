@@ -117,6 +117,11 @@ public:
     SKYDIVING_STAMP_4 = 0x0076,
     SKYDIVING_STAMP_5 = 0x0077,
 
+
+    //Swordplay Duel
+    SWORDPLAY_DUEL_FIRST_WIN = 0x0200,
+
+
     COUNT
 }; // CheckID;
 

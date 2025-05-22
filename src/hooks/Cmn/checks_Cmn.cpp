@@ -14,14 +14,13 @@ namespace Cmn {
  *
  ******************************************************************************/
 
-void SetStampCheckIfNew(int playerDataPtr,int sportID,int stampIdx)
-{
+void SetStampCheckIfNew(int playerDataPtr,int sportID,int stampIdx) {
     int stampID = (sportID * 5) + stampIdx;
     bool hasCheck = CheckMgr::GetInstance().GetCheckState(CheckMgr::CheckID(stampID));
     if(!hasCheck) {
         CheckMgr::GetInstance().GiveItemFromCheck(CheckMgr::CheckID(stampID));
         hasCheck = CheckMgr::GetInstance().GetCheckState(CheckMgr::CheckID(stampID));
-        kiwi::cout << "Stamp Check " << CheckMgr::GetInstance().GetCheckName(CheckMgr::CheckID(stampID)) << " has been set to " << hasCheck << kiwi::endl;
+        kiwi::cout << "Stamp Check: " << CheckMgr::GetInstance().GetCheckName(CheckMgr::CheckID(stampID)) << " has been set to " << hasCheck << kiwi::endl;
     }
     else
         kiwi::cout << "Already has check..." << kiwi::endl;
