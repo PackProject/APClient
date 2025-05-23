@@ -331,7 +331,7 @@ void ItemMgr::Debug() {
     mBskVsTimerFlag.Randomize();
     mBskVsPassFlag = r.CoinFlip();
     mBskVs3ptFlag = r.CoinFlip();
-    mBskVsDunkFlag = r.CoinFlip();
+    //mBskVsDunkFlag = r.CoinFlip();
 
     // Table Tennis
     mPngSpinFlag = r.CoinFlip();

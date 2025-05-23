@@ -184,6 +184,59 @@ End:
     // clang-format on
 }
 
+/**
+ * @brief Unlocks Pickup Game dunking
+ */
+bool HasDunkUnlocked() {
+    return ItemMgr::GetInstance().IsBskVsDunk();
+}
+
+/**
+ * @brief HasDunkUnlocked trampolines
+ * 
+ * To disable dunks, function must always return -1. Two return statements exist that
+ * normally return 1 and 0, so both are patched individually here.
+ */
+TRAMPOLINE_DEF(0x80501f2c, 0x80501f30) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    bl HasDunkUnlocked
+    cmpwi r3, 0
+    beq Locked
+    li r0, 1
+    b End
+
+Locked:
+    li r0, -1
+
+End:
+    TRAMPOLINE_END
+    mr r3, r0
+    blr
+    // clang-format on
+}
+
+TRAMPOLINE_DEF(0x80501f5c, 0x80501f60) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    bl HasDunkUnlocked
+    cmpwi r3, 0
+    beq Locked
+    li r0, 0
+    b End
+
+Locked:
+    li r0, -1
+
+End:
+    TRAMPOLINE_END
+    mr r3, r0
+    blr
+    // clang-format on
+}
+
 } // namespace Vs
 
 } // namespace Bsk
