@@ -114,5 +114,29 @@ TRAMPOLINE_DEF(0x8059164c, 0x80591650) {
     // clang-format on
 }
 
+/**
+ * @brief Sets ring timer in Power Cruising
+ */
+f32 JskSetRingTimer() {
+    int timerCount = ItemMgr::GetInstance().GetJskRingTimerNum();
+    f32 timerNums[] = {(f32)3.0, (f32)7.0, (f32)11.0};
+    return timerNums[timerCount];
+}
+
+/**
+ * @brief JskSetRingTimer trampoline
+ */
+TRAMPOLINE_DEF(0x805914a8, 0x805914ac) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    bl JskSetRingTimer
+    stfs f1, 0xdc(r26)
+
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
 } // namespace Jsk
 } // namespace AP
