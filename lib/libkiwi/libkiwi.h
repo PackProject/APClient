@@ -1,5 +1,5 @@
-#ifndef LIBKIWI_H
-#define LIBKIWI_H
+#ifndef LIBKIWI_LIBRARY_H
+#define LIBKIWI_LIBRARY_H
 
 #include <libkiwi/core/kiwiColor.h>
 #include <libkiwi/core/kiwiConsoleOut.h>
@@ -8,6 +8,7 @@
 #include <libkiwi/core/kiwiFileRipper.h>
 #include <libkiwi/core/kiwiIBinary.h>
 #include <libkiwi/core/kiwiIScene.h>
+#include <libkiwi/core/kiwiIStream.h>
 #include <libkiwi/core/kiwiJSON.h>
 #include <libkiwi/core/kiwiMemStream.h>
 #include <libkiwi/core/kiwiMemoryMgr.h>
@@ -16,7 +17,6 @@
 #include <libkiwi/core/kiwiSPR.h>
 #include <libkiwi/core/kiwiSceneCreator.h>
 #include <libkiwi/core/kiwiSceneHookMgr.h>
-#include <libkiwi/core/kiwiStreamBase.h>
 #include <libkiwi/core/kiwiThread.h>
 #include <libkiwi/crypt/kiwiBase64.h>
 #include <libkiwi/crypt/kiwiChecksum.h>

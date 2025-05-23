@@ -55,7 +55,7 @@ public:
  * @brief Discord rich presence manager
  */
 class RichPresenceMgr : public StaticSingleton<RichPresenceMgr>,
-                        public SceneHookBase {
+                        public ISceneHook {
     friend class StaticSingleton<RichPresenceMgr>;
 
 public:
@@ -68,7 +68,7 @@ public:
 
 private:
     //! Alarm period, in seconds
-    static const int ALARM_PERIOD_SEC = 20;
+    static const u32 scAlarmPeriod = 20;
 
 private:
     /**

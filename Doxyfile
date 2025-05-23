@@ -113,7 +113,7 @@ EXTRACT_PRIVATE        = YES
 # methods of a class will be included in the documentation.
 # The default value is: NO.
 
-# KOKESHI: Many interfaces like StreamBase have private virtual functions that are
+# KOKESHI: Many interfaces like IStream have private virtual functions that are
 #          intended to be overriden by the user, so their documentation should be visible.
 EXTRACT_PRIV_VIRTUAL   = YES
 

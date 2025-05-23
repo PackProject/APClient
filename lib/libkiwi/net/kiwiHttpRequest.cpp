@@ -91,7 +91,7 @@ const HttpResponse& HttpRequest::Send(EMethod method) {
  * @param method Request method
  */
 void HttpRequest::SendAsync(Callback pCallback, void* pArg, EMethod method) {
-    K_ASSERT_EX(pCallback != nullptr, "You will lose the reponse!");
+    K_ASSERT_PTR(pCallback);
     K_ASSERT(method < EMethod_Max);
     K_ASSERT(mSocket.IsOpen());
 
@@ -100,7 +100,7 @@ void HttpRequest::SendAsync(Callback pCallback, void* pArg, EMethod method) {
     mpCallbackArg = pArg;
 
     // TODO: Need state machine for request/receive (can reuse for synchronous)
-    K_ASSERT_EX(false, "Not implemented.");
+    K_NOT_IMPLEMENTED();
     // Thread t(SendImpl, *this);
 }
 

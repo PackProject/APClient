@@ -42,7 +42,7 @@ SyncSocket* SyncSocket::Accept(AcceptCallback pCallback, void* pArg) {
     // Result code is the peer descriptor
     if (fd > 0) {
         pPeer = new SyncSocket(fd, mFamily, mType);
-        K_ASSERT(pPeer != nullptr);
+        K_ASSERT_PTR(pPeer);
     }
 
     if (pCallback != nullptr) {
@@ -67,7 +67,7 @@ SOResult SyncSocket::RecvImpl(void* pDst, u32 len, u32& rRecv,
                               SockAddrAny* pAddr, Callback pCallback,
                               void* pArg) {
     K_ASSERT(IsOpen());
-    K_ASSERT(pDst != nullptr);
+    K_ASSERT_PTR(pDst);
     K_ASSERT(OSIsMEM2Region(pDst));
     K_ASSERT(len > 0);
 
@@ -106,7 +106,7 @@ SOResult SyncSocket::SendImpl(const void* pSrc, u32 len, u32& rSend,
                               const SockAddrAny* pAddr, Callback pCallback,
                               void* pArg) {
     K_ASSERT(IsOpen());
-    K_ASSERT(pSrc != nullptr);
+    K_ASSERT_PTR(pSrc);
     K_ASSERT(OSIsMEM2Region(pSrc));
     K_ASSERT(len > 0);
 

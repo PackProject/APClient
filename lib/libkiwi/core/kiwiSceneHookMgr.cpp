@@ -36,7 +36,7 @@ bool IsCurrentPackScene() {
 /**
  * @brief Gets the list of active hooks for the current scene
  */
-TList<SceneHookBase>& SceneHookMgr::GetSceneHooks() {
+TList<ISceneHook>& SceneHookMgr::GetSceneHooks() {
     K_ASSERT_EX(IsCurrentPackScene(), "Only game scenes have hooks");
     s32 id = RP_GET_INSTANCE(RPSysSceneMgr)->getCurrentSceneID();
     return mSceneHookLists[id];
@@ -47,7 +47,7 @@ TList<SceneHookBase>& SceneHookMgr::GetSceneHooks() {
  *
  * @param rHook Scene hook
  */
-void SceneHookMgr::AddHook(SceneHookBase& rHook) {
+void SceneHookMgr::AddHook(ISceneHook& rHook) {
     if (rHook.mSceneID == -1) {
         mGlobalHooks.PushBack(&rHook);
     } else {
@@ -60,7 +60,7 @@ void SceneHookMgr::AddHook(SceneHookBase& rHook) {
  *
  * @param rHook Scene hook
  */
-void SceneHookMgr::RemoveHook(const SceneHookBase& rHook) {
+void SceneHookMgr::RemoveHook(const ISceneHook& rHook) {
     if (rHook.mSceneID == -1) {
         mGlobalHooks.Remove(&rHook);
     } else {

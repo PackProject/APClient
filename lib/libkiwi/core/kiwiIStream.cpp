@@ -8,7 +8,7 @@ namespace kiwi {
  * @param dir Seek direction
  * @param offset Seek offset
  */
-void StreamBase::Seek(ESeekDir dir, s32 offset) {
+void IStream::Seek(ESeekDir dir, s32 offset) {
     K_ASSERT_EX(IsOpen(), "Stream is not available");
     K_ASSERT_EX(CanSeek(), "Stream does not support seeking");
 
@@ -25,7 +25,7 @@ void StreamBase::Seek(ESeekDir dir, s32 offset) {
  * @param size Number of bytes to read
  * @return Number of bytes read, or DVD error code
  */
-s32 StreamBase::Read(void* pDst, u32 size) {
+s32 IStream::Read(void* pDst, u32 size) {
     K_ASSERT_PTR(pDst);
 
     K_ASSERT_EX(IsOpen(), "Stream is not available");
@@ -52,7 +52,7 @@ s32 StreamBase::Read(void* pDst, u32 size) {
  * @param size Number of bytes to write
  * @return Number of bytes written, or DVD error code
  */
-s32 StreamBase::Write(const void* pSrc, u32 size) {
+s32 IStream::Write(const void* pSrc, u32 size) {
     K_ASSERT_PTR(pSrc);
 
     K_ASSERT_EX(IsOpen(), "Stream is not available");
@@ -80,7 +80,7 @@ s32 StreamBase::Write(const void* pSrc, u32 size) {
  * @param size Number of bytes to read
  * @return Number of bytes read, or DVD error code
  */
-s32 StreamBase::Peek(void* pDst, u32 size) {
+s32 IStream::Peek(void* pDst, u32 size) {
     K_ASSERT_PTR(pDst);
 
     K_ASSERT_EX(IsOpen(), "Stream is not available");

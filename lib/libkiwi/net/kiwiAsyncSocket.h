@@ -60,9 +60,9 @@ private:
      */
     enum EState { EState_Thinking, EState_Connecting, EState_Accepting };
 
-    // Async receive operation
+    //! Async receive operation
     class RecvJob;
-    // Async send operation
+    //! Async send operation
     class SendJob;
 
 private:
@@ -131,24 +131,30 @@ private:
                               void* pArg);
 
 private:
+    //! Socket manager thread stack size
     static const u32 scThreadStackSize = 0x4000;
 
-    volatile EState mState; // Current async task
-    SockAddrAny mPeer;      // Peer address
+    volatile EState mState; //!< Current async task
+    SockAddrAny mPeer;      //!< Peer address
 
-    TList<RecvJob> mRecvJobs; // Active receive jobs
-    TList<SendJob> mSendJobs; // Active send jobs
+    TList<RecvJob> mRecvJobs; //!< Active receive jobs
+    TList<SendJob> mSendJobs; //!< Active send jobs
 
-    Callback mpConnectCallback; // Connect callback
-    void* mpConnectCallbackArg; // Connect callback user argument
+    Callback mpConnectCallback; //!< Connect callback
+    void* mpConnectCallbackArg; //!< Connect callback user argument
 
-    AcceptCallback mpAcceptCallback; // Accept callback
-    void* mpAcceptCallbackArg;       // Accept callback user argument
+    AcceptCallback mpAcceptCallback; //!< Accept callback
+    void* mpAcceptCallbackArg;       //!< Accept callback user argument
 
-    static OSThread sSocketThread;                   // Socket manager thread
-    static bool sSocketThreadCreated;                // Thread guard
-    static u8 sSocketThreadStack[scThreadStackSize]; // Thread stack
-    static TList<AsyncSocket> sSocketList;           // Open async sockets
+    //! Socket manager thread
+    static OSThread sSocketThread;
+    //! Thread guard
+    static bool sSocketThreadCreated;
+    //! Thread stack
+    static u8 sSocketThreadStack[scThreadStackSize];
+
+    //! Open async sockets
+    static TList<AsyncSocket> sSocketList;
 };
 
 //! @}

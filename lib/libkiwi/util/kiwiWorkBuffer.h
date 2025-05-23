@@ -3,6 +3,7 @@
 #include <libkiwi/core/kiwiMemoryMgr.h>
 #include <libkiwi/debug/kiwiAssert.h>
 #include <libkiwi/k_types.h>
+#include <libkiwi/math/kiwiAlgorithm.h>
 
 namespace kiwi {
 //! @addtogroup libkiwi_util

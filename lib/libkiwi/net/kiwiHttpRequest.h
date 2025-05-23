@@ -17,13 +17,13 @@ class WebSocket;
  * @brief HTTP error
  */
 enum EHttpErr {
-    EHttpErr_Success,     // OK
-    EHttpErr_CantConnect, // Can't connect to the server
-    EHttpErr_BadResponse, // Malformed server response
-    EHttpErr_TimedOut,    // Connection timed out
-    EHttpErr_Closed,      // Connection closed
-    EHttpErr_Socket,      // Misc. socket error
-    EHttpErr_Usage,       // Invalid usage
+    EHttpErr_Success,     //!< OK
+    EHttpErr_CantConnect, //!< Can't connect to the server
+    EHttpErr_BadResponse, //!< Malformed server response
+    EHttpErr_TimedOut,    //!< Connection timed out
+    EHttpErr_Closed,      //!< Connection closed
+    EHttpErr_Socket,      //!< Misc. socket error
+    EHttpErr_Usage,       //!< Invalid usage
 };
 
 /**
@@ -34,26 +34,26 @@ enum EHttpStatus {
     EHttpStatus_None = -1,
 
     // Informational
-    EHttpStatus_SwitchProto = 101, // Switching Protocols
+    EHttpStatus_SwitchProto = 101, //!< Switching Protocols
 
     // Successful
-    EHttpStatus_OK = 200, // OK
-    EHttpStatus_Created,  // Created
-    EHttpStatus_Accepted, // Accepted
+    EHttpStatus_OK = 200, //!< OK
+    EHttpStatus_Created,  //!< Created
+    EHttpStatus_Accepted, //!< Accepted
 
     // Client error
-    EHttpStatus_BadReq = 400, // Bad Request
-    EHttpStatus_NotAuth,      // Unauthorized
-    EHttpStatus_Payment,      // Payment Required
-    EHttpStatus_Forbidden,    // Forbidden
-    EHttpStatus_NotFound,     // Not Found
-    EHttpStatus_Method,       // Method Not Allowed
+    EHttpStatus_BadReq = 400, //!< Bad Request
+    EHttpStatus_NotAuth,      //!< Unauthorized
+    EHttpStatus_Payment,      //!< Payment Required
+    EHttpStatus_Forbidden,    //!< Forbidden
+    EHttpStatus_NotFound,     //!< Not Found
+    EHttpStatus_Method,       //!< Method Not Allowed
 
     // Server error
-    EHttpStatus_ServErr = 500, // Internal Server Error
-    EHttpStatus_NotImpl,       // Not Implemented
-    EHttpStatus_BadGateway,    // Bad Gateway
-    EHttpStatus_ServDown,      // Service Unavailable
+    EHttpStatus_ServErr = 500, //!< Internal Server Error
+    EHttpStatus_NotImpl,       //!< Not Implemented
+    EHttpStatus_BadGateway,    //!< Bad Gateway
+    EHttpStatus_ServDown,      //!< Service Unavailable
 };
 
 /**

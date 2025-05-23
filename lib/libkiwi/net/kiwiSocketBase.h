@@ -361,9 +361,9 @@ private:
                               void* pArg) = 0;
 
 protected:
-    SOSocket mHandle;      // File descriptor
-    SOProtoFamily mFamily; // Protocol family
-    SOSockType mType;      // Socket type
+    SOSocket mHandle;      //!< File descriptor
+    SOProtoFamily mFamily; //!< Protocol family
+    SOSockType mType;      //!< Socket type
 };
 
 //! @}

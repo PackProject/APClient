@@ -12,7 +12,7 @@ namespace kiwi {
 //! @{
 
 // Forward declarations
-class SceneHookBase;
+class ISceneHook;
 
 /**
  * @brief Scene hook manager
@@ -26,13 +26,13 @@ public:
      *
      * @param rHook Scene hook
      */
-    void AddHook(SceneHookBase& rHook);
+    void AddHook(ISceneHook& rHook);
     /**
      * @brief Unregisters an existing hook
      *
      * @param rHook Scene hook
      */
-    void RemoveHook(const SceneHookBase& rHook);
+    void RemoveHook(const ISceneHook& rHook);
 
 private:
     LIBKIWI_KAMEK_PUBLIC
@@ -71,19 +71,19 @@ private:
     /**
      * @brief Gets the list of active hooks for the current scene
      */
-    TList<SceneHookBase>& GetSceneHooks();
+    TList<ISceneHook>& GetSceneHooks();
 
 private:
     //! Lists of scene hooks
-    TArray<TList<SceneHookBase>, ESceneID_Max> mSceneHookLists;
+    TArray<TList<ISceneHook>, ESceneID_Max> mSceneHookLists;
     //! Global hooks (always active)
-    TList<SceneHookBase> mGlobalHooks;
+    TList<ISceneHook> mGlobalHooks;
 };
 
 /**
- * @brief Base class for scene hooks
+ * @brief Scene hook interface
  */
-class SceneHookBase {
+class ISceneHook {
     friend class SceneHookMgr;
 
 public:
@@ -93,7 +93,7 @@ public:
      *
      * @param id Scene ID (-1 for all scenes)
      */
-    explicit SceneHookBase(s32 id = -1) : mSceneID(id) {
+    explicit ISceneHook(s32 id = -1) : mSceneID(id) {
         K_ASSERT_EX(id == -1 || id < ESceneID_Max,
                     "Only RP scene IDs and -1 (all scenes) are supported");
 
@@ -102,7 +102,7 @@ public:
     /**
      * @brief Destructor
      */
-    virtual ~SceneHookBase() {
+    virtual ~ISceneHook() {
         SceneHookMgr::GetInstance().RemoveHook(*this);
     }
 

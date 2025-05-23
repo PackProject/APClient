@@ -470,12 +470,12 @@ The brief description for constructors should be "Constructor", and the brief de
 /**
  * @brief Constructor
  */
-StreamBase();
+IStream();
 
 /**
  * @brief Destructor
  */
-virtual ~StreamBase();
+virtual ~IStream();
 ```
 
 If there are many constructor overloads for purposes such as moving/copying, feel free to specify the constructor "type" in the Doxygen detailed description:

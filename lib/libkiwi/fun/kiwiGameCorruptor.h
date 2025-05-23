@@ -19,10 +19,10 @@ enum ECorruptDomain {
     ECorruptDomain_DolCode = (1 << 0), //!< Corrupt DOL code sections
     ECorruptDomain_DolData = (1 << 1), //!< Corrupt DOL data sections
 
-    ECorruptDomain_Mem1 = (1 << 2), // Corrupt MEM1 region of RAM
-    ECorruptDomain_Mem2 = (1 << 3), // Corrupt MEM2 region of RAM
+    ECorruptDomain_Mem1 = (1 << 2), //!< Corrupt MEM1 region of RAM
+    ECorruptDomain_Mem2 = (1 << 3), //!< Corrupt MEM2 region of RAM
 
-    ECorruptDomain_Scene = (1 << 4), // Corrupt the current scene's memory
+    ECorruptDomain_Scene = (1 << 4), //!< Corrupt the current scene's memory
 };
 
 /**

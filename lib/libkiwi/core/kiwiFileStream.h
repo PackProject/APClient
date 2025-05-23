@@ -1,6 +1,6 @@
 #ifndef LIBKIWI_CORE_FILE_STREAM_H
 #define LIBKIWI_CORE_FILE_STREAM_H
-#include <libkiwi/core/kiwiStreamBase.h>
+#include <libkiwi/core/kiwiIStream.h>
 #include <libkiwi/k_types.h>
 
 namespace kiwi {
@@ -19,7 +19,7 @@ enum EOpenMode {
 /**
  * @brief Stream to a physical file
  */
-class FileStream : public StreamBase {
+class FileStream : public IStream {
 public:
     /**
      * @brief Constructor

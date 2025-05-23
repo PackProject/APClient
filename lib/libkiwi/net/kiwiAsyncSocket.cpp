@@ -43,8 +43,9 @@ public:
           mpPeer(pPeer),
           mpCallback(pCallback),
           mpArg(pArg) {
-        K_ASSERT(mpPacket != nullptr);
-        K_ASSERT(mpDst != nullptr);
+
+        K_ASSERT_PTR(mpPacket);
+        K_ASSERT_PTR(mpDst);
         K_ASSERT(OSIsMEM2Region(mpDst));
     }
 
@@ -59,7 +60,7 @@ public:
      * @brief Tests whether the receive operation is complete
      */
     bool IsComplete() const {
-        K_ASSERT(mpPacket != nullptr);
+        K_ASSERT_PTR(mpPacket);
         return mpPacket->IsWriteComplete();
     }
 
@@ -70,7 +71,7 @@ public:
      * @return Whether the job is complete
      */
     bool Calc(SOSocket socket) {
-        K_ASSERT(mpPacket != nullptr);
+        K_ASSERT_PTR(mpPacket);
         K_ASSERT(socket >= 0);
 
         // Nothing left to do
@@ -84,7 +85,7 @@ public:
 
         // Write out data
         if (done) {
-            K_ASSERT(mpDst != nullptr);
+            K_ASSERT_PTR(mpDst);
             K_ASSERT(OSIsMEM2Region(mpDst));
 
             std::memcpy(mpDst, mpPacket->GetContent(),
@@ -127,7 +128,8 @@ public:
      */
     SendJob(Packet* pPacket, Callback pCallback = nullptr, void* pArg = nullptr)
         : mpPacket(pPacket), mpCallback(pCallback), mpArg(pArg) {
-        K_ASSERT(mpPacket != nullptr);
+
+        K_ASSERT_PTR(mpPacket);
     }
 
     /**
@@ -141,7 +143,7 @@ public:
      * @brief Tests whether the send operation is complete
      */
     bool IsComplete() const {
-        K_ASSERT(mpPacket != nullptr);
+        K_ASSERT_PTR(mpPacket);
         return mpPacket->IsReadComplete();
     }
 
@@ -152,7 +154,7 @@ public:
      * @return Whether the job is complete
      */
     bool Calc(SOSocket socket) {
-        K_ASSERT(mpPacket != nullptr);
+        K_ASSERT_PTR(mpPacket);
         K_ASSERT(socket >= 0);
 
         // Nothing left to do
@@ -336,7 +338,7 @@ void AsyncSocket::Calc() {
             // Result code is the peer descriptor
             if (result >= 0) {
                 pSocket = new AsyncSocket(result, mFamily, mType);
-                K_ASSERT(pSocket != nullptr);
+                K_ASSERT_PTR(pSocket);
             }
 
             mState = EState_Thinking;
@@ -408,16 +410,16 @@ SOResult AsyncSocket::RecvImpl(void* pDst, u32 len, u32& rRecv,
                                SockAddrAny* pAddr, Callback pCallback,
                                void* pArg) {
     K_ASSERT(IsOpen());
-    K_ASSERT(pDst != nullptr);
+    K_ASSERT_PTR(pDst);
     K_ASSERT(OSIsMEM2Region(pDst));
 
     // Packet to hold incoming data
     Packet* pPacket = new Packet(len);
-    K_ASSERT(pPacket != nullptr);
+    K_ASSERT_PTR(pPacket);
 
     // Asynchronous job
     RecvJob* pJob = new RecvJob(pPacket, pDst, pAddr, pCallback, pArg);
-    K_ASSERT(pJob != nullptr);
+    K_ASSERT_PTR(pJob);
     mRecvJobs.PushBack(pJob);
 
     // Receive doesn't actually happen on this thread
@@ -440,19 +442,19 @@ SOResult AsyncSocket::SendImpl(const void* pSrc, u32 len, u32& rSend,
                                const SockAddrAny* pAddr, Callback pCallback,
                                void* pArg) {
     K_ASSERT(IsOpen());
-    K_ASSERT(pSrc != nullptr);
+    K_ASSERT_PTR(pSrc);
     K_ASSERT(OSIsMEM2Region(pSrc));
 
     // Packet to hold incoming data
     Packet* pPacket = new Packet(len, pAddr);
-    K_ASSERT(pPacket != nullptr);
+    K_ASSERT_PTR(pPacket);
 
     // Store data inside packet
     pPacket->Write(pSrc, len);
 
     // Asynchronous job
     SendJob* pJob = new SendJob(pPacket, pCallback, pArg);
-    K_ASSERT(pJob != nullptr);
+    K_ASSERT_PTR(pJob);
     mSendJobs.PushBack(pJob);
 
     // Send doesn't actually happen on this thread

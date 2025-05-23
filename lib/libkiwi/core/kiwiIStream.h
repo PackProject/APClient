@@ -1,5 +1,5 @@
-#ifndef LIBKIWI_CORE_STREAM_BASE_H
-#define LIBKIWI_CORE_STREAM_BASE_H
+#ifndef LIBKIWI_CORE_I_STREAM_H
+#define LIBKIWI_CORE_I_STREAM_H
 #include <libkiwi/k_types.h>
 #include <libkiwi/prim/kiwiString.h>
 #include <libkiwi/util/kiwiPtrUtil.h>
@@ -18,19 +18,19 @@ enum ESeekDir {
 };
 
 /**
- * @brief Base class for stream types
+ * @brief Stream type interface
  */
-class StreamBase {
+class IStream {
 public:
     /**
      * @brief Constructor
      */
-    StreamBase() : mIsOpen(false), mPosition(0) {}
+    IStream() : mIsOpen(false), mPosition(0) {}
 
     /**
      * @brief Destructor
      */
-    virtual ~StreamBase() {
+    virtual ~IStream() {
         K_ASSERT_EX(!IsOpen(), "Your class forgot to close the stream!");
     }
 
