@@ -44,7 +44,7 @@ public:
     virtual void UpdateActivity() const;
 
 private:
-    IosDevice mDevDolphin; // Handle to Dolphin device
+    IosDevice mDevDolphin; //!< Handle to Dolphin device
 };
 
 //! @}

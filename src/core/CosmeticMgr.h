@@ -11,7 +11,7 @@
 namespace AP {
 
 class CosmeticMgr : public kiwi::DynamicSingleton<CosmeticMgr>,
-                    public kiwi::IBinary {
+                    public kiwi::IBinary<CosmeticMgr> {
     friend class kiwi::DynamicSingleton<CosmeticMgr>;
 
 public:
@@ -51,7 +51,7 @@ private:
     //! Binary file magic
     static const u32 SIGNATURE = 'COSM';
     //! Binary file version
-    static const int VERSION = K_VERSION(1, 0);
+    static const int VERSION = K_BIN_VERSION(1, 0);
     //! Binary file path
     static const char* PATH;
 
@@ -65,7 +65,7 @@ private:
      * @brief Binary file structure
      */
 #pragma pack(push, 1)
-    struct Bin : kiwi::IBinary::Block {
+    struct BinData {
         // clang-format off
         /* 0x00:0  */ u8 randomBgmFlag : 1;                         //!< Random music enabled
         /* 0x01:0  */ u8 randomBgmMapping[BGM_ID_MAX - BGM_ID_MIN]; //!< Random music mapping table
@@ -87,12 +87,6 @@ private:
         return SIGNATURE;
     }
     /**
-     * @brief Gets the serialized size of this object
-     */
-    virtual u32 GetBinarySize() const {
-        return sizeof(Bin);
-    }
-    /**
      * @brief Gets the expected version of this object
      */
     virtual u16 GetVersion() const {
@@ -102,15 +96,15 @@ private:
     /**
      * @brief Deserializes binary contents (internal implementation)
      *
-     * @param rHeader Binary file header
+     * @param rBin Binary file contents
      */
-    virtual void DeserializeImpl(const Header& rHeader);
+    virtual void DeserializeImpl(const Bin& rBin);
     /**
      * @brief Serializes binary contents (internal implementation)
      *
-     * @param rHeader Binary file header
+     * @param rBin Binary file contents
      */
-    virtual void SerializeImpl(Header& rHeader) const;
+    virtual void SerializeImpl(Bin& rBin) const;
 
     /**
      * @brief Clears cosmetic state

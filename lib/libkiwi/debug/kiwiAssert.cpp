@@ -1,7 +1,9 @@
+#include <libkiwi.h>
+
+#include <revolution/OS.h>
+
 #include <cstdio>
 #include <cstring>
-#include <libkiwi.h>
-#include <revolution/OS.h>
 
 /**
  * @brief Logs a message to the console
@@ -38,14 +40,11 @@ void kiwi_fail_assert(const char* pFile, int line, const char* pMsg, ...) {
 
     kiwi::Nw4rException::GetInstance().FailAssert(pFile, line, msgbuf);
 }
-// clang-format off
 // Catch EGG_ASSERT
 KOKESHI_BY_PACK(KM_BRANCH(0x800a1f08, kiwi_fail_assert), // Wii Sports
                 KM_BRANCH(0x800a17d8, kiwi_fail_assert), // Wii Play
-                );                                       // Wii Sports Resort
-                
+                /* not applicable */); // Wii Sports Resort
 // Catch OSPanic
 KOKESHI_BY_PACK(KM_BRANCH(0x800eefa8, kiwi_fail_assert),  // Wii Sports
                 KM_BRANCH(0x800eec30, kiwi_fail_assert),  // Wii Play
                 KM_BRANCH(0x80047150, kiwi_fail_assert)); // Wii Sports Resort
-// clang-format on

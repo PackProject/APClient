@@ -9,20 +9,18 @@ namespace kiwi {
  * @return Success
  */
 bool DvdStream::Open(const String& rPath) {
-    // Close existing file
     if (IsOpen()) {
         Close();
     }
 
-    // Try to locate file on disc
-    s32 entrynum = DVDConvertPathToEntrynum(rPath);
-    if (entrynum < 0) {
+    // Need to get the file entry number from the FST
+    s32 entryNum = DVDConvertPathToEntrynum(rPath);
+    if (entryNum < 0) {
         K_LOG_EX("Can't find DVD file: %s\n", rPath.CStr());
         return false;
     }
 
-    // Get handle to file
-    if (!DVDFastOpen(entrynum, &mFileInfo)) {
+    if (!DVDFastOpen(entryNum, &mFileInfo)) {
         K_LOG_EX("Can't open DVD file: %s\n", rPath.CStr());
         return false;
     }
@@ -32,7 +30,7 @@ bool DvdStream::Open(const String& rPath) {
 }
 
 /**
- * @brief Closes this stream
+ * @brief Closes the stream
  */
 void DvdStream::Close() {
     if (!IsOpen()) {
@@ -58,13 +56,28 @@ u32 DvdStream::GetSize() const {
  */
 void DvdStream::SeekImpl(ESeekDir dir, s32 offset) {
     switch (dir) {
-    case ESeekDir_Begin:   mPosition = offset; break;
-    case ESeekDir_Current: mPosition += offset; break;
-    case ESeekDir_End:
-        K_ASSERT_EX(offset < 0, "Can't seek forward from end of file");
-        K_ASSERT_EX(offset > -GetSize(), "Too far backwards");
+    case ESeekDir_Begin: {
+        K_ASSERT_EX(offset >= 0, "Can't seek backwards from the beginning");
+        mPosition = offset;
+        break;
+    }
+
+    case ESeekDir_Current: {
+        mPosition += offset;
+        break;
+    }
+
+    case ESeekDir_End: {
+        K_ASSERT_EX(offset < 0, "Can't seek forward from the end");
+        K_ASSERT_EX(offset > -GetSize(), "Seeking too far backwards");
         mPosition = GetSize() + offset;
         break;
+    }
+
+    default: {
+        K_UNREACHABLE();
+        return;
+    }
     }
 
     K_ASSERT_EX(mPosition < GetSize(), "Can't seek past end of file");
@@ -78,7 +91,7 @@ void DvdStream::SeekImpl(ESeekDir dir, s32 offset) {
  * @return Number of bytes read, or DVD error code
  */
 s32 DvdStream::ReadImpl(void* pDst, u32 size) {
-    K_ASSERT(pDst != nullptr);
+    K_ASSERT_PTR(pDst);
     return DVDReadPrio(&mFileInfo, pDst, size, mPosition, DVD_PRIO_MEDIUM);
 }
 
@@ -90,8 +103,8 @@ s32 DvdStream::ReadImpl(void* pDst, u32 size) {
  * @return Number of bytes written, or DVD error code
  */
 s32 DvdStream::WriteImpl(const void* pSrc, u32 size) {
-    K_ASSERT(pSrc != nullptr);
-    K_ASSERT_EX(false, "Can't write to the DVD");
+    K_ASSERT_PTR(pSrc);
+    K_ASSERT_EX(false, "DVD is immutable");
     return DVD_RESULT_FATAL;
 }
 
@@ -104,7 +117,7 @@ s32 DvdStream::WriteImpl(const void* pSrc, u32 size) {
  * @return Number of bytes read, or DVD error code
  */
 s32 DvdStream::PeekImpl(void* pDst, u32 size) {
-    K_ASSERT(pDst != nullptr);
+    K_ASSERT_PTR(pDst);
     return ReadImpl(pDst, size);
 }
 

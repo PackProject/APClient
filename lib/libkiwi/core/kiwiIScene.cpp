@@ -9,18 +9,12 @@ namespace kiwi {
  * @brief Setup scene
  */
 void IScene::Configure() {
-#if defined(PACK_SPORTS) || defined(PACK_PLAY)
-    // Setup model scene
-    RP_GET_INSTANCE(RPGrpModelResManager)->CreateResourceList(0x400);
-    RP_GET_INSTANCE(RPGrpModelManager)
-        ->CreateModelScene(0, 0, 1, nullptr, nullptr);
-#endif
-
     // Setup renderer view
     RPGrpScreen* pScreen = new RPGrpScreen();
-    K_ASSERT(pScreen != nullptr);
+    K_ASSERT_PTR(pScreen);
     pScreen->SetCanvasMode(RPGrpScreen::CANVASMODE_CC);
 
+    // Create 2D view for layout draw
     RPGrpRenderer::GetCurrent()->CreateView2D(1, pScreen);
     RPGrpRenderer::GetCurrent()->CorrectView();
 

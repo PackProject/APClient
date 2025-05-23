@@ -22,18 +22,18 @@ CosmeticMgr::CosmeticMgr() {
 /**
  * @brief Deserializes binary contents (internal implementation)
  *
- * @param rHeader Binary file header
+ * @param rBin Binary file contents
  */
-void CosmeticMgr::DeserializeImpl(const Header& rHeader) {
+void CosmeticMgr::DeserializeImpl(const Bin& rBin) {
     ;
 }
 
 /**
  * @brief Serializes binary contents (internal implementation)
  *
- * @param rHeader Binary file header
+ * @param rBin Binary file contents
  */
-void CosmeticMgr::SerializeImpl(Header& rHeader) const {
+void CosmeticMgr::SerializeImpl(Bin& rBin) const {
     ;
 }
 

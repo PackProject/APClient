@@ -29,12 +29,13 @@ public:
      */
     MemStream(void* pBuffer, u32 size, bool owns = false)
         : FileStream(EOpenMode_RW) {
+
         Open(pBuffer, size, owns);
     }
 
     /**
      * @brief Constructor
-     * @details For const pointer
+     * @details For opening a stream to read-only memory (const-view).
      *
      * @param pBuffer Read-only buffer
      * @param size Buffer size
@@ -42,12 +43,13 @@ public:
      */
     MemStream(const void* pBuffer, u32 size, bool owns = false)
         : FileStream(EOpenMode_Read) {
+
         Open(const_cast<void*>(pBuffer), size, owns);
     }
 
     /**
      * @brief Constructor
-     * @details For work buffer
+     * @details For opening a stream to work buffer memory.
      *
      * @param rBuffer Work buffer
      */
@@ -72,7 +74,7 @@ public:
      */
     void Open(void* pBuffer, u32 size, bool owns = false);
     /**
-     * @brief Closes this stream
+     * @brief Closes the stream
      */
     virtual void Close();
 
@@ -163,7 +165,6 @@ public:
     /**
      * @brief Reads a C-style string from this stream without advancing the
      * stream's position
-     * @note String size limited to 0x400 (1024) bytes
      */
     String Peek_string();
 

@@ -17,22 +17,22 @@ struct KUDPHeader {
      * @brief Constructor
      */
     KUDPHeader()
-        : magic(KUDP_MAGIC), size(0), sequence(0), fragment(0), flags(0) {}
+        : magic(SIGNATURE), size(0), sequence(0), fragment(0), flags(0) {}
 
-    /* 0x00 */ u32 magic;    // Identification
-    /* 0x04 */ u16 size;     // Message size
-    /* 0x06 */ u16 sequence; // Sequence ID
-    /* 0x08 */ u16 fragment; // Fragment ID
-    /* 0x0A */ u16 flags;    // Status/info
+    /* 0x00 */ u32 magic;    //!< Identification
+    /* 0x04 */ u16 size;     //!< Message size
+    /* 0x06 */ u16 sequence; //!< Sequence ID
+    /* 0x08 */ u16 fragment; //!< Fragment ID
+    /* 0x0A */ u16 flags;    //!< Status/info
 
-    // Identifier string
-    static const u32 KUDP_MAGIC = 'KUv0';
+    //! Identifier string
+    static const u32 SIGNATURE = 'KUv0';
 
     /**
      * @brief Packet flags
      */
     enum EFlags {
-        // This packet is only a message fragment, and there will be more
+        //! This packet is only a message fragment, and there will be more
         EFlags_MoreFragments = (1 << 0),
     };
 };
@@ -42,13 +42,9 @@ struct KUDPHeader {
  */
 class ReliablePacket : public Packet {
 public:
-    /**
-     * @brief Message buffer limit to stay under MTU
-     */
+    //! Message buffer limit to stay under MTU
     static const u16 MAX_BUFFER_SIZE = 1000;
-    /**
-     * @brief Message content limit
-     */
+    //! Message content limit
     static const u16 MAX_CONTENT_SIZE = MAX_BUFFER_SIZE - sizeof(KUDPHeader);
 
 public:
@@ -65,14 +61,14 @@ public:
      * @brief Accesses KUDP protocol header
      */
     KUDPHeader& GetHeader() {
-        K_ASSERT(mpBuffer != nullptr);
+        K_ASSERT_PTR(mpBuffer);
         return *reinterpret_cast<KUDPHeader*>(mpBuffer);
     }
     /**
      * @brief Accesses KUDP protocol header (read-only)
      */
     const KUDPHeader& GetHeader() const {
-        K_ASSERT(mpBuffer != nullptr);
+        K_ASSERT_PTR(mpBuffer);
         return *reinterpret_cast<KUDPHeader*>(mpBuffer);
     }
 

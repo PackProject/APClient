@@ -1,11 +1,13 @@
 #ifndef LIBKIWI_NET_PACKET_H
 #define LIBKIWI_NET_PACKET_H
-#include <climits>
 #include <libkiwi/k_types.h>
 #include <libkiwi/math/kiwiAlgorithm.h>
 #include <libkiwi/prim/kiwiOptional.h>
 #include <libkiwi/support/kiwiLibSO.h>
+
 #include <revolution/OS.h>
+
+#include <climits>
 
 namespace kiwi {
 //! @addtogroup libkiwi_net
@@ -132,20 +134,20 @@ public:
      * @brief Reads data from message buffer
      *
      * @param pDst Data destination
-     * @param n Data size
+     * @param size Data size
      *
      * @return Number of bytes read
      */
-    u32 Read(void* pDst, u32 n);
+    u32 Read(void* pDst, u32 size);
     /**
      * @brief Writes data to message buffer
      *
      * @param pSrc Data source
-     * @param n Data size
+     * @param size Data size
      *
      * @return Number of bytes written
      */
-    u32 Write(const void* pSrc, u32 n);
+    u32 Write(const void* pSrc, u32 size);
 
     /**
      * @brief Receives message data from socket
@@ -176,14 +178,14 @@ protected:
     void Clear();
 
 protected:
-    u8* mpBuffer;         // Message buffer
-    u32 mBufferSize;      // Message buffer size
-    OSMutex mBufferMutex; // Buffer access mutex
+    u8* mpBuffer;         //!< Message buffer
+    u32 mBufferSize;      //!< Message buffer size
+    OSMutex mBufferMutex; //!< Buffer access mutex
 
-    s32 mReadOffset;  // Buffer read index
-    s32 mWriteOffset; // Buffer write index
+    s32 mReadOffset;  //!< Buffer read index
+    s32 mWriteOffset; //!< Buffer write index
 
-    SockAddrAny mAddress; // Sender (recv) or recipient (send)
+    SockAddrAny mAddress; //!< Sender (recv) or recipient (send)
 };
 
 //! @}

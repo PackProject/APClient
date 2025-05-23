@@ -85,6 +85,8 @@ private:
  * @param size Size of data
  */
 K_INLINE String SHA1Hash(const void* pData, u32 size) {
+    K_ASSERT_PTR(pData);
+
     SHA1 sha;
     sha.Process(pData, size);
     return sha.Finalize();

@@ -4,6 +4,7 @@
 #include <libkiwi/k_types.h>
 #include <libkiwi/util/kiwiDynamicSingleton.h>
 #include <libkiwi/util/kiwiGlobalInstance.h>
+
 #include <revolution/EXI.h>
 #include <revolution/OS.h>
 

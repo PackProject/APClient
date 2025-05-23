@@ -66,7 +66,7 @@ void MemStream::Open(void* pBuffer, u32 size, bool owns) {
 }
 
 /**
- * @brief Closes this stream
+ * @brief Closes the stream
  */
 void MemStream::Close() {
     if (!IsOpen()) {
@@ -75,9 +75,9 @@ void MemStream::Close() {
 
     if (mOwnsBuffer) {
         delete mpBuffer;
-        mpBuffer = nullptr;
     }
 
+    mpBuffer = nullptr;
     mIsOpen = false;
 }
 
@@ -89,13 +89,28 @@ void MemStream::Close() {
  */
 void MemStream::SeekImpl(ESeekDir dir, s32 offset) {
     switch (dir) {
-    case ESeekDir_Begin:   mPosition = offset; break;
-    case ESeekDir_Current: mPosition += offset; break;
-    case ESeekDir_End:
-        K_ASSERT_EX(offset < 0, "Can't seek forward from end of file");
-        K_ASSERT_EX(offset > -GetSize(), "Too far backwards");
+    case ESeekDir_Begin: {
+        K_ASSERT_EX(offset >= 0, "Can't seek backwards from the beginning");
+        mPosition = offset;
+        break;
+    }
+
+    case ESeekDir_Current: {
+        mPosition += offset;
+        break;
+    }
+
+    case ESeekDir_End: {
+        K_ASSERT_EX(offset < 0, "Can't seek forward from the end");
+        K_ASSERT_EX(offset > -GetSize(), "Seeking too far backwards");
         mPosition = GetSize() + offset;
         break;
+    }
+
+    default: {
+        K_UNREACHABLE();
+        return;
+    }
     }
 
     K_ASSERT_EX(mPosition < GetSize(), "Can't seek past end of file");
@@ -109,8 +124,7 @@ void MemStream::SeekImpl(ESeekDir dir, s32 offset) {
  * @return Number of bytes read, or error code
  */
 s32 MemStream::ReadImpl(void* pDst, u32 size) {
-    K_ASSERT(pDst != nullptr);
-
+    K_ASSERT_PTR(pDst);
     std::memcpy(pDst, mpBuffer + mPosition, size);
     return size;
 }
@@ -123,8 +137,7 @@ s32 MemStream::ReadImpl(void* pDst, u32 size) {
  * @return Number of bytes written, or error code
  */
 s32 MemStream::WriteImpl(const void* pSrc, u32 size) {
-    K_ASSERT(pSrc != nullptr);
-
+    K_ASSERT_PTR(pSrc);
     std::memcpy(mpBuffer + mPosition, pSrc, size);
     return size;
 }
@@ -138,18 +151,20 @@ s32 MemStream::WriteImpl(const void* pSrc, u32 size) {
  * @return Number of bytes read, or error code
  */
 s32 MemStream::PeekImpl(void* pDst, u32 size) {
+    K_ASSERT_PTR(pDst);
     return ReadImpl(pDst, size);
 }
 
 /**
  * @brief Reads a C-style string from this stream
+ * @note String size limited to 0x400 (1024) bytes
  */
 String MemStream::Read_string() {
     static int sTextBufferPos = 0;
     static char sTextBuffer[0x400];
 
     // Form string in work buffer
-    while (sTextBufferPos < LENGTHOF(sTextBuffer)) {
+    while (sTextBufferPos < K_LENGTHOF(sTextBuffer)) {
         char ch = Read_s8();
         sTextBuffer[sTextBufferPos++] = ch;
 

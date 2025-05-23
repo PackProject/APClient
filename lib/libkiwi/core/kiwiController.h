@@ -1,8 +1,9 @@
 #ifndef LIBKIWI_CORE_CONTROLLER_H
 #define LIBKIWI_CORE_CONTROLLER_H
-#include <egg/core.h>
 #include <libkiwi/k_types.h>
 #include <libkiwi/util/kiwiExtension.h>
+
+#include <egg/core.h>
 
 namespace kiwi {
 //! @addtogroup libkiwi_core
@@ -82,7 +83,7 @@ private:
      * @brief Gets KPAD data (read-only)
      */
     const KPADStatus& GetStatus() const {
-        return *reinterpret_cast<KPADStatus*>(getCoreStatus(0));
+        return *reinterpret_cast<KPADStatus*>(getCoreStatus());
     }
 };
 
@@ -97,7 +98,7 @@ public:
      *
      * @param i Player index
      */
-    const WiiCtrl& GetWiiCtrl(EPlayer i);
+    const WiiCtrl& GetWiiCtrl(int i);
 };
 
 //! @}

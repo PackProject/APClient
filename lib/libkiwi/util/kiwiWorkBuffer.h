@@ -3,6 +3,7 @@
 #include <libkiwi/core/kiwiMemoryMgr.h>
 #include <libkiwi/debug/kiwiAssert.h>
 #include <libkiwi/k_types.h>
+#include <libkiwi/math/kiwiAlgorithm.h>
 
 namespace kiwi {
 //! @addtogroup libkiwi_util
@@ -42,7 +43,7 @@ public:
           mSizeAlign(arg.sizeAlign),
           mMemAlign(arg.memAlign) {
 
-        mBufferAlignSize = ROUND_UP(mBufferSize, mSizeAlign);
+        mBufferAlignSize = RoundUp(mBufferSize, mSizeAlign);
         mpBuffer = new (mMemAlign, mMemRegion) u8[mBufferAlignSize];
         K_ASSERT(mpBuffer != nullptr);
     }

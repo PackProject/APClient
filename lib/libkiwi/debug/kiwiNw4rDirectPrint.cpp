@@ -1,7 +1,9 @@
+#include <libkiwi.h>
+
+#include <revolution/VI.h>
+
 #include <cstdio>
 #include <cstring>
-#include <libkiwi.h>
-#include <revolution/VI.h>
 
 namespace kiwi {
 
@@ -29,7 +31,7 @@ void WaitVIRetrace() {
  */
 void* CreateFB(const GXRenderModeObj* pRmo) {
     // Calculate framebuffer size in bytes
-    u32 size = ROUND_UP(pRmo->fbWidth, 16) * pRmo->xfbHeight * sizeof(u16);
+    u32 size = RoundUp(pRmo->fbWidth, 16) * pRmo->xfbHeight * sizeof(u16);
 
     // Try using heap, but be careful to not throw a nested exception
     void* pXfb = nullptr;
@@ -113,7 +115,7 @@ void Nw4rDirectPrint::ChangeXfb(void* pXfb, u16 w, u16 h) {
     mBufferWidth = w;
     mBufferHeight = h;
 
-    mBufferRows = ROUND_UP(w, 16);
+    mBufferRows = RoundUp(w, 16);
     mBufferSize = mBufferRows * h * sizeof(u16);
 }
 
@@ -237,9 +239,9 @@ void Nw4rDirectPrint::DrawStringImpl(s32 x, s32 y, const char* pMsg) const {
 
     while (*pMsg != '\0') {
         // Attempt to draw line (whatever is allowed by framebuffer width)
-        s32 width = (fbWidth - x) / scFontCharWidth;
+        s32 width = (fbWidth - x) / FONT_CHAR_WIDTH;
         pMsg = DrawStringLine(x, y, pMsg, width);
-        y += scFontLeading;
+        y += FONT_LEADING;
 
         // Entire line was drawn
         if (*pMsg == '\n') {
@@ -291,12 +293,12 @@ const char* Nw4rDirectPrint::DrawStringLine(s32 x, s32 y, const char* pMsg,
         }
 
         // Convert to font code
-        s32 code = scAscii2Font[c & (LENGTHOF(scAscii2Font) - 1)];
+        s32 code = scAscii2Font[c & (K_LENGTHOF(scAscii2Font) - 1)];
 
         // Tab character
         if (code == 0xFD) {
-            s32 tabSize = scTabSize - (count & (scTabSize - 1));
-            x += tabSize * scFontCharWidth;
+            s32 tabSize = TAB_SIZE - (count & (TAB_SIZE - 1));
+            x += tabSize * FONT_CHAR_WIDTH;
             count += tabSize;
         } else {
             // Non-tab character
@@ -305,7 +307,7 @@ const char* Nw4rDirectPrint::DrawStringLine(s32 x, s32 y, const char* pMsg,
             }
 
             // 0xFF is treated as whitespace
-            x += scFontCharWidth;
+            x += FONT_CHAR_WIDTH;
             count++;
         }
 
@@ -344,8 +346,8 @@ void Nw4rDirectPrint::DrawStringChar(s32 x, s32 y, s32 code) const {
     // Convert to font-relative code
     s32 ncode = code >= 100 ? code - 100 : code;
 
-    s32 fontW = ncode % 5 * scFontCharWidth;
-    s32 fontH = ncode / 5 * scFontCharHeight;
+    s32 fontW = ncode % 5 * FONT_CHAR_WIDTH;
+    s32 fontH = ncode / 5 * FONT_CHAR_HEIGHT;
     const u32* pFontLine =
         code < 100 ? &scFontData[fontH] : &scFontData2[fontH];
 
@@ -357,12 +359,12 @@ void Nw4rDirectPrint::DrawStringChar(s32 x, s32 y, s32 code) const {
     pPixel += x * dotW;
     pPixel += y * mBufferRows * dotH;
 
-    if (x < 0 || y < 0 || mBufferWidth <= dotW * (x + scFontCharWidth) ||
-        mBufferHeight <= dotH * (y + scFontCharHeight)) {
+    if (x < 0 || y < 0 || mBufferWidth <= dotW * (x + FONT_CHAR_WIDTH) ||
+        mBufferHeight <= dotH * (y + FONT_CHAR_HEIGHT)) {
         return;
     }
 
-    for (int countY = 0; countY < scFontCharHeight; countY++) {
+    for (int countY = 0; countY < FONT_CHAR_HEIGHT; countY++) {
         u32 fontBits = *pFontLine++ << fontW;
 
         // I couldn't tell you what this does...
@@ -375,7 +377,7 @@ void Nw4rDirectPrint::DrawStringChar(s32 x, s32 y, s32 code) const {
                        << 19;
         }
 
-        for (int countX = 0; countX < dotW * scFontCharWidth;
+        for (int countX = 0; countX < dotW * FONT_CHAR_WIDTH;
              countX += 2, fontBits <<= 2) {
             u16 color;
 
@@ -402,7 +404,7 @@ void Nw4rDirectPrint::DrawStringChar(s32 x, s32 y, s32 code) const {
             pPixel++;
         }
 
-        pPixel += (mBufferRows * dotH) - (dotW * scFontCharWidth);
+        pPixel += (mBufferRows * dotH) - (dotW * FONT_CHAR_WIDTH);
     }
 }
 

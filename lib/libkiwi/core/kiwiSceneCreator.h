@@ -12,6 +12,11 @@ namespace kiwi {
 //! @addtogroup libkiwi_core
 //! @{
 
+// Forward declarations
+namespace detail {
+template <typename T> class SceneDecl;
+}
+
 /**
  * @brief Game scene ID
  */
@@ -162,33 +167,10 @@ enum EExitType {
  * @brief Scene factory
  */
 class SceneCreator : public ExtSingletonPtr<RPSysSceneCreator, SceneCreator> {
-public:
-    /**
-     * @brief Scene information
-     */
-    struct Info {
-        RPSysScene* (*pCt)(); //!< Scene create function (for user scenes)
-        String name;          //!< Scene name
-        String dir;           //!< Resource directory
-        s32 id;               //!< Scene ID (for RP scenes)
-#if defined(PACK_RESORT)
-        bool warnAsSceneLoading; //!< Show warning screen while scene loads
-        kiwi::EGroupID group;    //!< Scene group
-#endif
-        kiwi::EPackID pack;       //!< Pack ID
-        kiwi::ECreateType create; //!< How to create the scene
-        kiwi::EExitType exit;     //!< How to exit the scene
-        bool common;              //!< Use the RP common sound archive
-    };
+    //! Needs to access 'RegistScene' method
+    template <typename> friend class detail::SceneDecl;
 
 public:
-    /**
-     * @brief Registers user scene class
-     *
-     * @param rInfo Scene info
-     */
-    static void RegistScene(const Info& rInfo);
-
     /**
      * @brief Registers root debug menu information
      * @details The debug root scene is entered when transitioning to the main
@@ -207,7 +189,6 @@ public:
      * @brief Gets the scene ID of the main menu scene
      */
     static s32 GetMenuScene();
-
     /**
      * @brief Gets the scene ID of the bootup scene
      */
@@ -234,6 +215,14 @@ public:
 #endif
 
     /**
+     * @brief Changes to the menu scene
+     *
+     * @return Success
+     */
+    bool ChangeMenuScene() {
+        return ChangeSceneAfterFade(GetMenuScene());
+    }
+    /**
      * @brief Changes to the bootup scene
      *
      * @return Success
@@ -244,6 +233,7 @@ public:
 
     /**
      * @brief Gets the specified scene's name
+     * @details The ID defaults to the current scene (-1).
      *
      * @param id Scene ID
      */
@@ -251,6 +241,7 @@ public:
 
     /**
      * @brief Gets the specified scene's resource directory name
+     * @details The ID defaults to the current scene (-1).
      *
      * @param id Scene ID
      */
@@ -260,6 +251,7 @@ public:
     /**
      * @brief Tests whether the specified scene should display the warning
      * screen while loading
+     * @details The ID defaults to the current scene (-1).
      *
      * @param id Scene ID
      */
@@ -267,6 +259,7 @@ public:
 
     /**
      * @brief Gets the specified scene's group
+     * @details The ID defaults to the current scene (-1).
      *
      * @param id Scene ID
      */
@@ -275,6 +268,7 @@ public:
 
     /**
      * @brief Gets the specified scene's target pack
+     * @details The ID defaults to the current scene (-1).
      *
      * @param id Scene ID
      */
@@ -282,6 +276,7 @@ public:
 
     /**
      * @brief Gets the specified scene's create type
+     * @details The ID defaults to the current scene (-1).
      *
      * @param id Scene ID
      */
@@ -289,6 +284,7 @@ public:
 
     /**
      * @brief Gets the specified scene's exit type
+     * @details The ID defaults to the current scene (-1).
      *
      * @param id Scene ID
      */
@@ -297,13 +293,40 @@ public:
     /**
      * @brief Tests whether the specified scene requires the RP common sound
      * archive
+     * @details The ID defaults to the current scene (-1).
      *
      * @param id Scene ID
      */
     bool IsSceneCommonSound(s32 id = -1) const;
 
 private:
+    /**
+     * @brief Scene information
+     */
+    struct Info {
+        RPSysScene* (*pCt)(); //!< Scene create function (for user scenes)
+        String name;          //!< Scene name
+        String dir;           //!< Resource directory
+        s32 id;               //!< Scene ID (for RP scenes)
+#if defined(PACK_RESORT)
+        bool warnAsSceneLoading; //!< Show warning screen while scene loads
+        kiwi::EGroupID group;    //!< Scene group
+#endif
+        kiwi::EPackID pack;       //!< Pack ID
+        kiwi::ECreateType create; //!< How to create the scene
+        kiwi::EExitType exit;     //!< How to exit the scene
+        bool common;              //!< Use the RP common sound archive
+    };
+
+private:
     LIBKIWI_KAMEK_PUBLIC
+
+    /**
+     * @brief Registers user scene class
+     *
+     * @param rInfo Scene info
+     */
+    static void RegistScene(const Info& rInfo);
 
     /**
      * @brief Creates a new scene by ID
@@ -350,7 +373,7 @@ private:
     static s32 sDebugRootID;
     //! Whether to boot into the root debug menu
     static bool sDebugRootBootUp;
-    //! Root debug menu button combination (held)
+    //! Button combination required to be held to access the root debug menu
     static u16 sDebugRootButtons;
 };
 

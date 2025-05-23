@@ -12,16 +12,21 @@ namespace kiwi {
  */
 void* FileRipper::Rip(const String& rPath, EStorage where,
                       const FileRipperArg& rArg) {
+
     switch (where) {
     case EStorage_DVD: {
         DvdStream strm(rPath);
         return Rip(strm, rArg);
     }
+
     case EStorage_NAND: {
         NandStream strm(rPath, EOpenMode_Read);
         return Rip(strm, rArg);
     }
-    default: K_ASSERT_EX(false, "Invalid storage type"); return nullptr;
+
+    default:
+        K_UNREACHABLE();
+        return nullptr;
     }
 }
 
@@ -33,33 +38,34 @@ void* FileRipper::Rip(const String& rPath, EStorage where,
  * @return File data (owned by you!)
  */
 void* FileRipper::Rip(FileStream& rStrm, const FileRipperArg& rArg) {
-    // Bad stream
     if (!rStrm.IsOpen()) {
         return nullptr;
     }
 
     // Storage device may require byte-aligned size
     u32 fileSize = rStrm.GetSize();
-    u32 bufferSize = ROUND_UP(fileSize, rStrm.GetSizeAlign());
+    u32 bufferSize = RoundUp(fileSize, rStrm.GetSizeAlign());
 
-    // User may have specified a destination buffer
+    // User may have specified a destination buffer...
     u8* pBuffer = static_cast<u8*>(rArg.pDst);
 
-    // Ripper is responsible for allocating read buffer
+    // ...or ripper may be responsible for allocating one
     if (pBuffer == nullptr) {
         pBuffer = new (rStrm.GetBufferAlign(), rArg.region) u8[bufferSize];
     }
 
-    K_ASSERT(pBuffer != nullptr);
+    K_ASSERT_PTR(pBuffer);
+
     K_ASSERT_EX(rStrm.IsBufferAlign(pBuffer),
                 "Stream requires buffer aligned to %d bytes",
                 rStrm.GetBufferAlign());
 
-    // Try to read the entire file
-    s32 n = rStrm.Read(pBuffer, bufferSize);
-    K_ASSERT(n == fileSize || n == bufferSize);
+    // Need to read the entire file at once
+    s32 result = rStrm.Read(pBuffer, bufferSize);
+    K_ASSERT_EX(result > 0, "Read failed (%d)", result);
 
-    // Report file size
+    K_ASSERT(result == bufferSize);
+
     if (rArg.pSize != nullptr) {
         *rArg.pSize = fileSize;
     }
@@ -72,24 +78,25 @@ void* FileRipper::Rip(FileStream& rStrm, const FileRipperArg& rArg) {
  *
  * @param rPath Path to the file
  * @param where Storage device on which the file is located
- * @return File stream
+ * @return File stream (owns buffer)
  */
 MemStream FileRipper::Open(const String& rPath, EStorage where) {
+    // Memory stream needs to know the file size
     FileRipperArg arg;
-
-    u32 size;
+    u32 size = 0;
     arg.pSize = &size;
 
-    // Try to read the entire file
     void* pFile = Rip(rPath, where, arg);
-
-    // Couldn't find file
     if (pFile == nullptr) {
         return MemStream();
     }
 
-    // Stream takes ownership of the buffer
-    return MemStream(pFile, size, true);
+    // Force read-only for files from the DVD
+    if (where == EStorage_DVD) {
+        return MemStream(static_cast<const void*>(pFile), size, true);
+    } else {
+        return MemStream(pFile, size, true);
+    }
 }
 
 } // namespace kiwi

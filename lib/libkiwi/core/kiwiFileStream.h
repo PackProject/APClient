@@ -11,13 +11,13 @@ namespace kiwi {
  * @brief File access type
  */
 enum EOpenMode {
-    EOpenMode_Read,
-    EOpenMode_Write,
-    EOpenMode_RW //!< Read + write
+    EOpenMode_Read,  //!< Read-only
+    EOpenMode_Write, //!< Write-only
+    EOpenMode_RW     //!< Read + write
 };
 
 /**
- * @brief Stream to a file
+ * @brief Stream to a physical file
  */
 class FileStream : public IStream {
 public:

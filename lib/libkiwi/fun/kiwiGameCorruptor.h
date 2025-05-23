@@ -1,9 +1,11 @@
 #ifndef LIBKIWI_FUN_GAME_CORRUPTOR_H
 #define LIBKIWI_FUN_GAME_CORRUPTOR_H
 #include <Pack/RPSystem.h>
-#include <egg/core.h>
 #include <libkiwi/k_types.h>
 #include <libkiwi/util/kiwiDynamicSingleton.h>
+
+#include <egg/core.h>
+
 #include <revolution/OS.h>
 
 namespace kiwi {
@@ -14,13 +16,13 @@ namespace kiwi {
  * @brief Corruption domain
  */
 enum ECorruptDomain {
-    ECorruptDomain_DolCode = (1 << 0), // Corrupt DOL code sections
-    ECorruptDomain_DolData = (1 << 1), // Corrupt DOL data sections
+    ECorruptDomain_DolCode = (1 << 0), //!< Corrupt DOL code sections
+    ECorruptDomain_DolData = (1 << 1), //!< Corrupt DOL data sections
 
-    ECorruptDomain_Mem1 = (1 << 2), // Corrupt MEM1 region of RAM
-    ECorruptDomain_Mem2 = (1 << 3), // Corrupt MEM2 region of RAM
+    ECorruptDomain_Mem1 = (1 << 2), //!< Corrupt MEM1 region of RAM
+    ECorruptDomain_Mem2 = (1 << 3), //!< Corrupt MEM2 region of RAM
 
-    ECorruptDomain_Scene = (1 << 4), // Corrupt the current scene's memory
+    ECorruptDomain_Scene = (1 << 4), //!< Corrupt the current scene's memory
 };
 
 /**
@@ -37,7 +39,7 @@ public:
      */
     void SetInterval(u32 seconds) {
         K_ASSERT(seconds > 0);
-        mInterval = OS_SEC_TO_TICKS(seconds);
+        mInterval = seconds;
     }
 
     /**
@@ -56,27 +58,15 @@ public:
      * @param num Number of points to corrupt
      */
     void SetCorruptNum(u32 num) {
-        mNumCorrupt = num;
+        mCorruptNum = num;
     }
 
     /**
      * @brief Begins the corruption process
      */
-    void Begin() {
-        // Disable saving to avoid corruption
-        RP_GET_INSTANCE(RPSysSaveDataMgr)->setSaveDisable(true);
-        OSSetPeriodicAlarm(&mAlarm, OSGetTick(), mInterval, AlarmHandler);
-    }
+    void Begin();
 
 private:
-    /**
-     * @brief Corruption alarm handler
-     *
-     * @param pAlarm OS alarm
-     * @param pCtx Alarm context
-     */
-    static void AlarmHandler(OSAlarm* pAlarm, OSContext* pCtx);
-
     /**
      * @brief Constructor
      */
@@ -114,16 +104,24 @@ private:
      */
     void CorruptData(EGG::Heap* pHeap) const;
 
-private:
-    // Default corruption interval, in seconds
-    static const u32 scDefaultInterval = 15;
-    // Default number of points to corrupt
-    static const u32 scDefaultNum = 300;
+    /**
+     * @brief Corruption alarm handler
+     *
+     * @param pAlarm OS alarm
+     * @param pCtx Alarm context
+     */
+    static void AlarmHandler(OSAlarm* pAlarm, OSContext* pCtx);
 
-    u32 mDomainFlag; // Allowed corruption domain
-    u32 mNumCorrupt; // Number of instructions/data to corrupt
-    u64 mInterval;   // Corruption interval, in ticks
-    OSAlarm mAlarm;  // Alarm to trigger corruption
+private:
+    u32 mDomainFlag; //!< Allowed corruption domain
+    u32 mCorruptNum; //!< Number of instructions/data to corrupt
+    u32 mInterval;   //!< Corruption interval, in seconds
+    OSAlarm mAlarm;  //!< Alarm to trigger corruption
+
+    //! Default corruption interval, in seconds
+    static const u32 scDefaultInterval = 15;
+    //! Default number of points to corrupt
+    static const u32 scDefaultNum = 300;
 };
 
 //! @}

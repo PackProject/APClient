@@ -2,6 +2,7 @@
 #define LIBKIWI_DEBUG_NW4R_EXCEPTION_H
 #include <libkiwi/k_types.h>
 #include <libkiwi/util/kiwiDynamicSingleton.h>
+
 #include <revolution/OS.h>
 
 namespace kiwi {
@@ -19,49 +20,49 @@ public:
      * @brief Error type
      */
     enum EError {
-        EError_SystemReset, // Hard/Soft reset pins were asserted
+        EError_SystemReset, //!< Hard/Soft reset pins were asserted
 
-        EError_MachineCheck, // Machine attempted to access an address which
-                             // doesn't exist, or a data error was detected
+        EError_MachineCheck, //!< Machine attempted to access an address which
+                             //!< doesn't exist, or a data error was detected
 
-        EError_DSI, // Failed to execute a load/store memory instruction
+        EError_DSI, //!< Failed to execute a load/store memory instruction
 
-        EError_ISI, // Failed to fetch the next instruction from the PC
+        EError_ISI, //!< Failed to fetch the next instruction from the PC
 
-        EError_ExtInterrupt, // An external interrupt was triggered
+        EError_ExtInterrupt, //!< An external interrupt was triggered
 
-        EError_Alignment, // Failed to execute a memory-related instruction due
-                          // to alignment/cache restrictions
+        EError_Alignment, //!< Failed to execute a memory-related instruction
+                          //!< due to alignment/cache restrictions
 
-        EError_Program, // Attempted to decode an illegal instruction
+        EError_Program, //!< Attempted to decode an illegal instruction
 
-        EError_FPUnavailable, // Attempted to execute a floating-point
-                              // instruction while floating-point features are
-                              // disabled in the MSR
+        EError_FPUnavailable, //!< Attempted to execute a floating-point
+                              //!< instruction while floating-point features are
+                              //!< disabled in the MSR
 
-        EError_Decrementer, // The decrementer register has completed
-                            // decrementing (== 0)
+        EError_Decrementer, //!< The decrementer register has completed
+                            //!< decrementing (== 0)
 
-        EError_SystemCall, // Executed a system call ('sc') instruction
+        EError_SystemCall, //!< Executed a system call ('sc') instruction
 
-        EError_Trace, // A branch instruction is executed while
-                      // single-step/branch trace is enabled in the MSR
+        EError_Trace, //!< A branch instruction is executed while
+                      //!< single-step/branch trace is enabled in the MSR
 
-        EError_PerfMonitor, // A performance monitor interrupt was triggered
+        EError_PerfMonitor, //!< A performance monitor interrupt was triggered
 
-        EError_IABR, // The next instruction matches the Instruction Address
-                     // Breakpoint Register
+        EError_IABR, //!< The next instruction matches the Instruction Address
+                     //!< Breakpoint Register
 
-        EError_SMI, // A System Management Interrupt was triggered
+        EError_SMI, //!< A System Management Interrupt was triggered
 
-        EError_Thermal, // The junction temperature crosses the threshold in
-                        // THRM1/THRM2
+        EError_Thermal, //!< The junction temperature crosses the threshold in
+                        //!< THRM1/THRM2
 
-        EError_Protection, // Failed to access OS-protected memory
+        EError_Protection, //!< Failed to access OS-protected memory
 
         EError_FPException, //
 
-        EError_AssertFail, // An assertion failed
+        EError_AssertFail, //!< An assertion failed
 
         EError_None,
         EError_Max
@@ -71,10 +72,10 @@ public:
      * @brief Assertion info
      */
     struct Assert {
-        const char* pFile; // Name of source file where assertion occurred
-        int line;          // Line in source file where assertion occurred
-        const char* pMsg;  // Assertion message/expression
-        const void* pSP;   // Stack pointer value when assertion occurred
+        const char* pFile; //!< Name of source file where assertion occurred
+        int line;          //!< Line in source file where assertion occurred
+        const char* pMsg;  //!< Assertion message/expression
+        const void* pSP;   //!< Stack pointer value when assertion occurred
 
         /**
          * @brief Constructor
@@ -87,12 +88,12 @@ public:
      * @see EError, Assert
      */
     struct Info {
-        EError error;    // Exception type
-        OSContext* pCtx; // Last context before error
-        u32 dsisr;       // Last DSISR value before error
-        u32 dar;         // Last DAR value before error
-        u32 msr;         // Last MSR value before error
-        Assert assert;   // Assertion info (if assertion failed)
+        EError error;    //!< Exception type
+        OSContext* pCtx; //!< Last context before error
+        u32 dsisr;       //!< Last DSISR value before error
+        u32 dar;         //!< Last DAR value before error
+        u32 msr;         //!< Last MSR value before error
+        Assert assert;   //!< Assertion info (if assertion failed)
 
         /**
          * @brief Constructor
@@ -210,23 +211,29 @@ private:
     void PrintSymbol(const void* pAddr);
 
 private:
-    Info mErrorInfo; // Exception/assertion info
+    //! Exception thread stack size
+    static const u32 scStackSize = 0x4000;
 
-    UserCallback mpUserCallback; // User callback
-    void* mpUserCallbackArg;     // User callback argument
+    Info mErrorInfo; //!< Exception/assertion info
 
-    OSThread mThread;        // Exception thread
-    u8 mThreadStack[0x4000]; // Thread stack
+    UserCallback mpUserCallback; //!< User callback
+    void* mpUserCallbackArg;     //!< User callback argument
 
-    OSMessageQueue mMessageQueue; // Thread message queue
-    OSMessage mMessageBuffer;     // Thread message buffer
+    OSThread mThread;             //!< Exception thread
+    u8 mThreadStack[scStackSize]; //!< Thread stack
 
-    const GXRenderModeObj* mpRenderMode; // Current GX render mode
+    OSMessageQueue mMessageQueue; //!< Thread message queue
+    OSMessage mMessageBuffer;     //!< Thread message buffer
 
-    static const char* scExceptionNames[OS_ERR_MAX]; // OS exception names
+    const GXRenderModeObj* mpRenderMode; //!< Current GX render mode
 
-    static const s32 scExceptionTraceDepth = 10; // Exception stack trace depth
-    static const s32 scAssertTraceDepth = 20;    // Assertion stack trace depth
+    //! OS exception names
+    static const char* scExceptionNames[OS_ERR_MAX];
+
+    //! Exception stack trace depth
+    static const s32 scExceptionTraceDepth = 10;
+    //! Assertion stack trace depth
+    static const s32 scAssertTraceDepth = 20;
 };
 
 //! @}

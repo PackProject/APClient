@@ -20,7 +20,7 @@ void Packet::Alloc(u32 size) {
     mBufferSize = size + GetOverhead();
 
     mpBuffer = new (32, EMemory_MEM2) u8[mBufferSize];
-    K_ASSERT(mpBuffer != nullptr);
+    K_ASSERT_PTR(mpBuffer);
     K_ASSERT(OSIsMEM2Region(mpBuffer));
 
     Clear();
@@ -52,48 +52,48 @@ void Packet::Clear() {
  * @brief Reads data from message buffer
  *
  * @param pDst Data destination
- * @param n Data size
+ * @param size Data size
  *
  * @return Number of bytes read
  */
-u32 Packet::Read(void* pDst, u32 n) {
-    K_ASSERT(mpBuffer != nullptr);
-    K_ASSERT(n <= GetMaxContent());
+u32 Packet::Read(void* pDst, u32 size) {
+    K_ASSERT_PTR(mpBuffer);
+    K_ASSERT(size <= GetMaxContent());
 
     AutoMutexLock lock(mBufferMutex);
 
     // Clamp size to avoid overflow
-    n = Min(n, ReadRemain());
+    size = Min(size, ReadRemain());
 
     // Copy data from buffer
-    std::memcpy(pDst, mpBuffer + mReadOffset, n);
-    mReadOffset += n;
+    std::memcpy(pDst, mpBuffer + mReadOffset, size);
+    mReadOffset += size;
 
-    return n;
+    return size;
 }
 
 /**
  * @brief Writes data to message buffer
  *
  * @param pSrc Data source
- * @param n Data size
+ * @param size Data size
  *
  * @return Number of bytes written
  */
-u32 Packet::Write(const void* pSrc, u32 n) {
-    K_ASSERT(mpBuffer != nullptr);
-    K_ASSERT(n <= GetMaxContent());
+u32 Packet::Write(const void* pSrc, u32 size) {
+    K_ASSERT_PTR(mpBuffer);
+    K_ASSERT(size <= GetMaxContent());
 
     AutoMutexLock lock(mBufferMutex);
 
     // Clamp size to avoid overflow
-    n = Min(n, WriteRemain());
+    size = Min(size, WriteRemain());
 
     // Copy data to buffer
-    std::memcpy(mpBuffer + mWriteOffset, pSrc, n);
-    mWriteOffset += n;
+    std::memcpy(mpBuffer + mWriteOffset, pSrc, size);
+    mWriteOffset += size;
 
-    return n;
+    return size;
 }
 
 /**
@@ -105,7 +105,7 @@ u32 Packet::Write(const void* pSrc, u32 n) {
  */
 Optional<u32> Packet::Recv(SOSocket socket) {
     K_ASSERT(socket >= 0);
-    K_ASSERT(mpBuffer != nullptr);
+    K_ASSERT_PTR(mpBuffer);
 
     AutoMutexLock lock(mBufferMutex);
 
@@ -136,7 +136,7 @@ Optional<u32> Packet::Recv(SOSocket socket) {
  */
 Optional<u32> Packet::Send(SOSocket socket) {
     K_ASSERT(socket >= 0);
-    K_ASSERT(mpBuffer != nullptr);
+    K_ASSERT_PTR(mpBuffer);
 
     AutoMutexLock lock(mBufferMutex);
 

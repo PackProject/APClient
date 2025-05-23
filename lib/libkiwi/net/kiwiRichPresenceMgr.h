@@ -68,7 +68,7 @@ public:
 
 private:
     //! Alarm period, in seconds
-    static const int ALARM_PERIOD_SEC = 20;
+    static const u32 scAlarmPeriod = 20;
 
 private:
     /**
@@ -85,7 +85,7 @@ private:
      *
      * @param pScene Current scene
      */
-    virtual void Reset(RPSysScene* pScene);
+    virtual void AfterReset(RPSysScene* pScene);
 
     /**
      * @brief Handles periodic alarm event

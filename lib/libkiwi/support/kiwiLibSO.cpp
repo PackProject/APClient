@@ -665,7 +665,7 @@ bool LibSO::INetPtoN(const String& str, SockAddrAny& addr) {
         success = std::sscanf(str, "%d.%d.%d.%d", &addr.in.addr.octets[0],
                               &addr.in.addr.octets[1], &addr.in.addr.octets[2],
                               &addr.in.addr.octets[3]) ==
-                  LENGTHOF(addr.in.addr.octets);
+                  K_LENGTHOF(addr.in.addr.octets);
         break;
 
     case sizeof(SockAddr6):
@@ -675,7 +675,7 @@ bool LibSO::INetPtoN(const String& str, SockAddrAny& addr) {
                         &addr.in6.addr.groups[2], &addr.in6.addr.groups[3],
                         &addr.in6.addr.groups[4], &addr.in6.addr.groups[5],
                         &addr.in6.addr.groups[6], &addr.in6.addr.groups[7]) ==
-            LENGTHOF(addr.in6.addr.groups);
+            K_LENGTHOF(addr.in6.addr.groups);
         break;
 
     default:
@@ -786,7 +786,7 @@ bool LibSO::ResolveHostName(SockAddrAny& addr, const String& name,
     // We just take the first good result
     const SOSockAddr* pFoundAddr = nullptr;
 
-    for (int i = 0; i < LENGTHOF(oResult->info); i++) {
+    for (int i = 0; i < K_LENGTHOF(oResult->info); i++) {
         const SOAddrInfo& rInfo = oResult->info[i];
 
         // No more results

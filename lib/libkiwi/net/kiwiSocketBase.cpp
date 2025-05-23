@@ -10,6 +10,7 @@ namespace kiwi {
  */
 SocketBase::SocketBase(SOProtoFamily family, SOSockType type)
     : mHandle(-1), mFamily(family), mType(type) {
+
     // Create IOS socket
     mHandle = LibSO::Socket(mFamily, mType);
     K_ASSERT_EX(IsOpen(), "Failed to create socket (%d)",
@@ -29,6 +30,7 @@ SocketBase::SocketBase(SOProtoFamily family, SOSockType type)
  */
 SocketBase::SocketBase(SOSocket socket, SOProtoFamily family, SOSockType type)
     : mHandle(socket), mFamily(family), mType(type) {
+
     K_ASSERT_EX(IsOpen(), "Invalid socket descriptor provided");
 }
 
@@ -222,7 +224,7 @@ bool SocketBase::CanRecv() const {
     fd[0].revents = 0;
 
     // If peer has closed connection (POLLHUP), reads are still possible
-    bool success = LibSO::Poll(fd, LENGTHOF(fd), 0) >= 0;
+    bool success = LibSO::Poll(fd, K_LENGTHOF(fd), 0) >= 0;
     return success && (fd[0].revents & (SO_POLLRDNORM | SO_POLLHUP));
 }
 
@@ -237,7 +239,7 @@ bool SocketBase::CanSend() const {
     fd[0].events = SO_POLLWRNORM;
     fd[0].revents = 0;
 
-    bool success = LibSO::Poll(fd, LENGTHOF(fd), 0) >= 0;
+    bool success = LibSO::Poll(fd, K_LENGTHOF(fd), 0) >= 0;
     return success && (fd[0].revents & SO_POLLWRNORM);
 }
 
@@ -253,7 +255,7 @@ bool SocketBase::CanSend() const {
 Optional<u32> SocketBase::RecvBytes(void* pDst, u32 len, Callback pCallback,
                                     void* pArg) {
     K_ASSERT(IsOpen());
-    K_ASSERT(pDst != nullptr);
+    K_ASSERT_PTR(pDst);
     K_ASSERT(OSIsMEM2Region(pDst));
     K_ASSERT(len > 0);
 
@@ -281,7 +283,7 @@ Optional<u32> SocketBase::RecvBytes(void* pDst, u32 len, Callback pCallback,
 Optional<u32> SocketBase::RecvBytesFrom(void* pDst, u32 len, SockAddrAny& rAddr,
                                         Callback pCallback, void* pArg) {
     K_ASSERT(IsOpen());
-    K_ASSERT(pDst != nullptr);
+    K_ASSERT_PTR(pDst);
     K_ASSERT(OSIsMEM2Region(pDst));
     K_ASSERT(len > 0);
 
@@ -308,7 +310,7 @@ Optional<u32> SocketBase::RecvBytesFrom(void* pDst, u32 len, SockAddrAny& rAddr,
 Optional<u32> SocketBase::SendBytes(const void* pSrc, u32 len,
                                     Callback pCallback, void* pArg) {
     K_ASSERT(IsOpen());
-    K_ASSERT(pSrc != nullptr);
+    K_ASSERT_PTR(pSrc);
     K_ASSERT(OSIsMEM2Region(pSrc));
     K_ASSERT(len > 0);
 
@@ -337,7 +339,7 @@ Optional<u32> SocketBase::SendBytesTo(const void* pSrc, u32 len,
                                       const SockAddrAny& rAddr,
                                       Callback pCallback, void* pArg) {
     K_ASSERT(IsOpen());
-    K_ASSERT(pSrc != nullptr);
+    K_ASSERT_PTR(pSrc);
     K_ASSERT(OSIsMEM2Region(pSrc));
     K_ASSERT(len > 0);
 

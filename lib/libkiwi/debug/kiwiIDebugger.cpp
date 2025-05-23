@@ -1,5 +1,6 @@
-#include <cstring>
 #include <libkiwi.h>
+
+#include <cstring>
 
 namespace kiwi {
 
@@ -135,11 +136,11 @@ void GeckoContext::Save(OSContext& rCtx) const {
  */
 void IDebugger::BreakCallback(u8 error, OSContext* pCtx, u32 _dsisr, u32 _dar,
                               ...) {
-    K_ASSERT(pCtx != nullptr);
+    K_ASSERT_PTR(pCtx);
     K_ASSERT(error == OS_ERR_IABR ||
              (error == OS_ERR_DSI && (_dsisr & DSISR_DABR)));
 
-    K_ASSERT_EX(false, "Not yet implemented");
+    K_NOT_IMPLEMENTED();
 }
 
 /**
@@ -152,10 +153,10 @@ void IDebugger::BreakCallback(u8 error, OSContext* pCtx, u32 _dsisr, u32 _dar,
  */
 void IDebugger::StepCallback(u8 error, OSContext* pCtx, u32 _dsisr, u32 _dar,
                              ...) {
-    K_ASSERT(pCtx != nullptr);
+    K_ASSERT_PTR(pCtx);
     K_ASSERT(error == OS_ERR_TRACE);
 
-    K_ASSERT_EX(false, "Not yet implemented");
+    K_NOT_IMPLEMENTED();
 }
 
 /**
@@ -164,7 +165,9 @@ void IDebugger::StepCallback(u8 error, OSContext* pCtx, u32 _dsisr, u32 _dar,
  */
 void IDebugger::Calculate() {
 #define HANDLE_CMD(x)                                                          \
-    case ECommand_##x: OnEvent_##x(); break;
+    case ECommand_##x:                                                         \
+        OnEvent_##x();                                                         \
+        break;
 
     u8 cmd = 0;
     if (!ReadObj(cmd) || cmd == 0) {
@@ -188,7 +191,9 @@ void IDebugger::Calculate() {
         HANDLE_CMD(BreakPointExact);
         HANDLE_CMD(GetVersion);
 
-    default: K_ASSERT_EX(false, "Gecko command %d not supported", cmd); break;
+    default:
+        K_ASSERT_EX(false, "Gecko command %d not supported", cmd);
+        break;
     }
 
 #undef HANDLE_CMD
@@ -205,7 +210,7 @@ void IDebugger::OnEvent_Write8() {
         return;
     }
 
-    K_ASSERT(pDst != nullptr);
+    K_ASSERT_PTR(pDst);
     *pDst = static_cast<u8>(value);
 }
 
@@ -220,7 +225,7 @@ void IDebugger::OnEvent_Write16() {
         return;
     }
 
-    K_ASSERT(pDst != nullptr);
+    K_ASSERT_PTR(pDst);
     *pDst = static_cast<u16>(value);
 }
 
@@ -235,7 +240,7 @@ void IDebugger::OnEvent_Write32() {
         return;
     }
 
-    K_ASSERT(pDst != nullptr);
+    K_ASSERT_PTR(pDst);
     *pDst = value;
 }
 
@@ -328,7 +333,7 @@ void IDebugger::OnEvent_CancelBreakPoint() {
  * @brief Writes file contents to memory
  */
 void IDebugger::OnEvent_WriteFile() {
-    K_ASSERT_EX(false, "Not yet implemented");
+    K_NOT_IMPLEMENTED();
 }
 
 /**

@@ -9,28 +9,42 @@ namespace kiwi {
  * @return Success
  */
 bool NandStream::Open(const String& rPath) {
-    NANDAccessType type;
-    s32 result;
-
-    // Close existing file
-    if (mIsOpen) {
+    if (IsOpen()) {
         Close();
     }
 
+    NANDAccessType type;
+
     // Convert open mode for NAND
     switch (mOpenMode) {
-    case EOpenMode_Read:  type = NAND_ACCESS_READ; break;
-    case EOpenMode_Write: type = NAND_ACCESS_WRITE; break;
-    case EOpenMode_RW:    type = NAND_ACCESS_RW; break;
-    default:              K_ASSERT(false); break;
+    case EOpenMode_Read: {
+        type = NAND_ACCESS_READ;
+        break;
+    }
+
+    case EOpenMode_Write: {
+        type = NAND_ACCESS_WRITE;
+        break;
+    }
+
+    case EOpenMode_RW: {
+        type = NAND_ACCESS_RW;
+        break;
+    }
+
+    default: {
+        K_UNREACHABLE();
+        return false;
+    }
     }
 
     // Attempt to open
-    result = NANDOpen(rPath, &mFileInfo, type);
+    s32 result = NANDOpen(rPath, &mFileInfo, type);
 
     // Doesn't exist, but we should create it
     if (result == NAND_RESULT_NOEXISTS &&
         (mOpenMode == EOpenMode_Write || mOpenMode == EOpenMode_RW)) {
+
         // Release descriptor
         Close();
 
@@ -61,7 +75,7 @@ bool NandStream::Open(const String& rPath) {
 }
 
 /**
- * @brief Closes this stream
+ * @brief Closes the stream
  */
 void NandStream::Close() {
     if (!IsOpen()) {
@@ -93,18 +107,32 @@ u32 NandStream::GetSize() const {
  */
 void NandStream::SeekImpl(ESeekDir dir, s32 offset) {
     NANDSeekMode mode;
-    s32 result;
 
-    // Convert seekdir for NAND
+    // Convert seek mode for NAND
     switch (dir) {
-    case ESeekDir_Begin:   mode = NAND_SEEK_BEG; break;
-    case ESeekDir_Current: mode = NAND_SEEK_CUR; break;
-    case ESeekDir_End:     mode = NAND_SEEK_END; break;
-    default:               K_ASSERT(false); break;
+    case ESeekDir_Begin: {
+        mode = NAND_SEEK_BEG;
+        break;
     }
 
-    result = NANDSeek(&mFileInfo, offset, mode);
-    K_WARN_EX(result != NAND_RESULT_OK, "NANDSeek failed (%d)\n", result);
+    case ESeekDir_Current: {
+        mode = NAND_SEEK_CUR;
+        break;
+    }
+
+    case ESeekDir_End: {
+        mode = NAND_SEEK_END;
+        break;
+    }
+
+    default: {
+        K_UNREACHABLE();
+        return;
+    }
+    }
+
+    s32 result = NANDSeek(&mFileInfo, offset, mode);
+    K_ASSERT_EX(result == NAND_RESULT_OK, "NANDSeek failed (%d)", result);
 }
 
 /**
@@ -115,7 +143,7 @@ void NandStream::SeekImpl(ESeekDir dir, s32 offset) {
  * @return Number of bytes read, or NAND error code
  */
 s32 NandStream::ReadImpl(void* pDst, u32 size) {
-    K_ASSERT(pDst != nullptr);
+    K_ASSERT_PTR(pDst);
     return NANDRead(&mFileInfo, pDst, size);
 }
 
@@ -127,7 +155,7 @@ s32 NandStream::ReadImpl(void* pDst, u32 size) {
  * @return Number of bytes written, or NAND error code
  */
 s32 NandStream::WriteImpl(const void* pSrc, u32 size) {
-    K_ASSERT(pSrc != nullptr);
+    K_ASSERT_PTR(pSrc);
     return NANDWrite(&mFileInfo, pSrc, size);
 }
 
@@ -140,15 +168,15 @@ s32 NandStream::WriteImpl(const void* pSrc, u32 size) {
  * @return Number of bytes read, or NAND error code
  */
 s32 NandStream::PeekImpl(void* pDst, u32 size) {
-    K_ASSERT(pDst != nullptr);
+    K_ASSERT_PTR(pDst);
 
-    s32 n = ReadImpl(pDst, size);
-    if (n > 0) {
-        s32 result = NANDSeek(&mFileInfo, -n, NAND_SEEK_CUR);
-        K_WARN_EX(result < 0, "Seek back failed (%d)\n", result);
+    s32 bytesRead = ReadImpl(pDst, size);
+    if (bytesRead > 0) {
+        s32 result = NANDSeek(&mFileInfo, -bytesRead, NAND_SEEK_CUR);
+        K_ASSERT_EX(result == NAND_RESULT_OK, "Seek back failed (%d)", result);
     }
 
-    return n;
+    return bytesRead;
 }
 
 } // namespace kiwi

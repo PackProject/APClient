@@ -7,7 +7,7 @@ namespace kiwi {
 /**
  * @brief Resource font name table
  */
-const char* FontMgr::scFontNames[EResFont_Max] = {
+const char* FontMgr::FONT_NAMES[EResFont_Max] = {
 #if defined(PACK_SPORTS) || defined(PACK_PLAY)
     "pac_nRodDb_32_I4.brfnt",  "pac_nRodDb_32_IA4.brfnt",
     "pac_nRodDb_62_IA4.brfnt", "pac_nRodDb_200_IA4.brfnt",
@@ -20,13 +20,13 @@ const char* FontMgr::scFontNames[EResFont_Max] = {
 /**
  * @brief Constructor
  */
-FontMgr::FontMgr() : mpRomFont(nullptr), mpResFonts() {
+FontMgr::FontMgr() : mpRomFont(nullptr) {
     mpRomFont = RP_GET_INSTANCE(RPSysFontManager)->GetRomFont();
-    K_ASSERT(mpRomFont != nullptr);
+    K_ASSERT_PTR(mpRomFont);
 
     for (int i = 0; i < EResFont_Max; i++) {
         mpResFonts[i] = RP_GET_INSTANCE(RPSysFontManager)->GetResFont(i);
-        K_ASSERT(mpResFonts[i] != nullptr);
+        K_ASSERT_PTR(mpResFonts[i]);
     }
 }
 
@@ -37,13 +37,13 @@ FontMgr::FontMgr() : mpRomFont(nullptr), mpResFonts() {
  */
 const nw4r::ut::ResFont* FontMgr::GetResFont(const String& rName) {
     for (int i = 0; i < EResFont_Max; i++) {
-        if (rName == scFontNames[i]) {
+        if (rName == FONT_NAMES[i]) {
             return GetResFont(static_cast<EResFont>(i));
         }
     }
 
-    K_ASSERT_EX(false, "Unknown resource font: %s", rName.CStr());
-    return NULL;
+    K_LOG_EX("Unknown resource font: %s", rName.CStr());
+    return nullptr;
 }
 
 } // namespace kiwi

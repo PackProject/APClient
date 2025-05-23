@@ -64,8 +64,8 @@ Element::Element(const Element& rOther) {
     }
 
     default: {
-        K_ASSERT(false);
-        break;
+        K_UNREACHABLE();
+        return;
     }
     }
 }
@@ -76,23 +76,22 @@ Element::Element(const Element& rOther) {
 void Element::Clear() {
     switch (mType) {
     case EType_String: {
-        mpString = nullptr;
+        delete mpString;
         break;
     }
 
     case EType_Array: {
-        mpArray = nullptr;
+        delete mpArray;
         break;
     }
 
     case EType_Object: {
-        mpObject = nullptr;
+        delete mpObject;
         break;
     }
     }
 
-    // TODO: Better way to memset the union?
-    std::memset(&mNumber, 0, sizeof(mNumber));
+    std::memset(this, 0, sizeof(Element));
     mType = EType_Undefined;
 }
 
@@ -116,7 +115,8 @@ void Reader::Decode(const String& rStr) {
  * @param size Data size
  */
 void Reader::Decode(const void* pData, u32 size) {
-    K_ASSERT(pData != nullptr);
+    K_ASSERT_PTR(pData);
+    K_ASSERT(size > 0);
 
     mpFileBuffer = static_cast<const char*>(pData);
     mFileSize = size;
@@ -129,14 +129,11 @@ void Reader::Decode(const void* pData, u32 size) {
  * @brief Decodes JSON data into element form
  */
 void Reader::DecodeImpl() {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
+    K_ASSERT(mFileSize > 0);
 
     // Remove previous data
     mRootElement.Clear();
-
-    if (mpFileBuffer == nullptr || mFileSize == 0) {
-        return;
-    }
 
     // Begin from the start
     u32 pos = 0;
@@ -148,7 +145,7 @@ void Reader::DecodeImpl() {
 
     // TODO: Implement UTF-16 parsing
     K_ASSERT_EX(mEncoding == EEncoding_UTF8,
-                "UTF-16 encoding is not yet supported.\n");
+                "UTF-16 encoding is not yet supported");
 
     // JSON must begin with an element
     if (!ParseElement(pos, mRootElement)) {
@@ -170,7 +167,7 @@ void Reader::DecodeImpl() {
  * @return Success
  */
 bool Reader::ParseEncoding(u32& rPos) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     u32 pos = rPos;
@@ -203,7 +200,7 @@ bool Reader::ParseEncoding(u32& rPos) {
  * @return Success
  */
 bool Reader::ParseLiteral(char literal, u32& rPos) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     u32 pos = rPos;
@@ -248,7 +245,7 @@ bool Reader::ParseLiteral(char literal, u32& rPos, char& rToken) {
  * @return Success
  */
 bool Reader::ParseLiteral(const String& rLiteral, u32& rPos) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     u32 pos = rPos;
@@ -296,7 +293,7 @@ bool Reader::ParseLiteral(const String& rLiteral, u32& rPos, String& rToken) {
  * @return Success
  */
 bool Reader::ParseElement(u32& rPos, Element& rElement) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
     K_ASSERT(rElement.IsUndefined());
 
@@ -325,11 +322,11 @@ bool Reader::ParseElement(u32& rPos, Element& rElement) {
  * @return Success
  */
 bool Reader::ParseElements(u32& rPos, Element& rElement) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     K_ASSERT_EX(rElement.GetType() == Element::EType_Array,
-                "Only arrays can contain elements\n");
+                "Only arrays can contain elements");
 
     u32 pos = rPos;
 
@@ -363,7 +360,7 @@ bool Reader::ParseElements(u32& rPos, Element& rElement) {
  * @return Success
  */
 bool Reader::ParseValue(u32& rPos, Element& rElement) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
     K_ASSERT(rElement.IsUndefined());
 
@@ -418,7 +415,7 @@ bool Reader::ParseValue(u32& rPos, Element& rElement) {
  * @return Success
  */
 bool Reader::ParseObject(u32& rPos, Element& rElement) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
     K_ASSERT(rElement.IsUndefined());
 
@@ -460,7 +457,7 @@ bool Reader::ParseObject(u32& rPos, Element& rElement) {
  * @return Success
  */
 bool Reader::ParseArray(u32& rPos, Element& rElement) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
     K_ASSERT(rElement.IsUndefined());
 
@@ -502,7 +499,7 @@ bool Reader::ParseArray(u32& rPos, Element& rElement) {
  * @return Success
  */
 bool Reader::ParseString(u32& rPos, String& rString) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     u32 pos = rPos;
@@ -533,7 +530,7 @@ bool Reader::ParseString(u32& rPos, String& rString) {
  * @return Success
  */
 bool Reader::ParseNumber(u32& rPos, f64& rNumber) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     u32 pos = rPos;
@@ -571,7 +568,7 @@ bool Reader::ParseNumber(u32& rPos, f64& rNumber) {
  * @return Success
  */
 bool Reader::ParseMember(u32& rPos, String& rKey, Element& rValue) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
     K_ASSERT(rValue.IsUndefined());
 
@@ -611,7 +608,7 @@ bool Reader::ParseMember(u32& rPos, String& rKey, Element& rValue) {
  * @return Success
  */
 bool Reader::ParseMembers(u32& rPos, Element& rElement) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     K_ASSERT_EX(rElement.GetType() == Element::EType_Object,
@@ -654,7 +651,7 @@ bool Reader::ParseMembers(u32& rPos, Element& rElement) {
  * @return Success
  */
 bool Reader::ParseCharacters(u32& rPos, String& rToken) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     u32 pos = rPos;
@@ -687,7 +684,7 @@ bool Reader::ParseCharacters(u32& rPos, String& rToken) {
  * @return Success
  */
 bool Reader::ParseCharacter(u32& rPos, String& rToken) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     u32 pos = rPos;
@@ -718,7 +715,7 @@ bool Reader::ParseCharacter(u32& rPos, String& rToken) {
  * @return Success
  */
 bool Reader::ParseUnEscaped(u32& rPos, char& rToken) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     u32 pos = rPos;
@@ -758,7 +755,7 @@ bool Reader::ParseUnEscaped(u32& rPos, char& rToken) {
  * @return Success
  */
 bool Reader::ParseEscaped(u32& rPos, String& rToken) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     u32 pos = rPos;
@@ -817,7 +814,7 @@ bool Reader::ParseEscaped(u32& rPos, String& rToken) {
  * @return Success
  */
 bool Reader::ParseHex(u32& rPos, char& rToken) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     u32 pos = rPos;
@@ -855,7 +852,7 @@ bool Reader::ParseHex(u32& rPos, char& rToken) {
  * @return Success
  */
 bool Reader::ParseInteger(u32& rPos, String& rToken) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     u32 pos = rPos;
@@ -894,7 +891,7 @@ bool Reader::ParseInteger(u32& rPos, String& rToken) {
  * @return Success
  */
 bool Reader::ParseDigits(u32& rPos, String& rToken) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     u32 pos = rPos;
@@ -927,7 +924,7 @@ bool Reader::ParseDigits(u32& rPos, String& rToken) {
  * @return Success
  */
 bool Reader::ParseDigit(u32& rPos, char& rToken) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     u32 pos = rPos;
@@ -959,7 +956,7 @@ bool Reader::ParseDigit(u32& rPos, char& rToken) {
  * @return Success
  */
 bool Reader::ParseOneNine(u32& rPos, char& rToken) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     u32 pos = rPos;
@@ -991,7 +988,7 @@ bool Reader::ParseOneNine(u32& rPos, char& rToken) {
  * @return Success
  */
 bool Reader::ParseFraction(u32& rPos, String& rToken) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     u32 pos = rPos;
@@ -1024,7 +1021,7 @@ bool Reader::ParseFraction(u32& rPos, String& rToken) {
  * @return Success
  */
 bool Reader::ParseExponent(u32& rPos, String& rToken) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     u32 pos = rPos;
@@ -1062,7 +1059,7 @@ bool Reader::ParseExponent(u32& rPos, String& rToken) {
  * @return Success
  */
 bool Reader::ParseWhiteSpace(u32& rPos) {
-    K_ASSERT(mpFileBuffer != nullptr);
+    K_ASSERT_PTR(mpFileBuffer);
     K_ASSERT(rPos >= 0 && rPos <= mFileSize);
 
     u32 pos = rPos;
@@ -1096,6 +1093,10 @@ public:
      * @param pretty Whether to pretty-print
      */
     PrintVisitor(String& rBuffer, bool pretty = false);
+    /**
+     * @brief Destructor
+     */
+    virtual ~PrintVisitor() {}
 
     /**
      * @brief Processes the current element
@@ -1253,8 +1254,8 @@ void PrintVisitor::Visit(const Element& rElement) {
     }
 
     default: {
-        K_ASSERT_EX(false, "Should never happen!\n");
-        break;
+        K_UNREACHABLE();
+        return;
     }
     }
 }

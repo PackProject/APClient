@@ -22,61 +22,60 @@ class SceneHookMgr : public StaticSingleton<SceneHookMgr> {
 
 public:
     /**
-     * @brief Registers new hook
+     * @brief Registers a new hook
      *
      * @param rHook Scene hook
-     * @param id Scene ID (-1 for all scenes)
      */
-    void AddHook(ISceneHook& rHook, s32 id);
-
+    void AddHook(ISceneHook& rHook);
     /**
-     * @brief Unregisters existing hook
+     * @brief Unregisters an existing hook
      *
      * @param rHook Scene hook
-     * @param id Scene ID (-1 for all scenes)
      */
-    void RemoveHook(const ISceneHook& rHook, s32 id);
+    void RemoveHook(const ISceneHook& rHook);
 
 private:
     LIBKIWI_KAMEK_PUBLIC
 
     /**
-     * @brief Enter state
+     * @brief Runs active hooks and scene function(s) for the Configure state
      */
-    static void DoEnter();
+    static void DoConfigure();
     /**
-     * @brief Reset state
+     * @brief Runs active hooks and scene function(s) for the Reset state
      */
     static void DoReset();
     /**
-     * @brief LoadResource state
+     * @brief Runs active hooks and scene function(s) for the LoadResource state
      */
     static void DoLoadResource();
     /**
-     * @brief Calculate state
+     * @brief Runs active hooks and scene function(s) for the Calculate state
      */
     static void DoCalculate();
     /**
-     * @brief Exit state
+     * @brief Runs active hooks and scene function(s) for the Exit state
      */
     static void DoExit();
+
     /**
-     * @brief Pause state
+     * @brief Runs active hooks and scene function(s) for entering the pause
+     * menu
      */
     static void DoPause();
     /**
-     * @brief Un-pause state
+     * @brief Runs active hooks and scene function(s) for exiting the pause menu
      */
     static void DoUnPause();
 
     /**
-     * @brief Gets list of hooks for the current scene
+     * @brief Gets the list of active hooks for the current scene
      */
-    TList<ISceneHook>& GetActiveHooks();
+    TList<ISceneHook>& GetSceneHooks();
 
 private:
     //! Lists of scene hooks
-    TArray<TList<ISceneHook>, ESceneID_Max> mHookLists;
+    TArray<TList<ISceneHook>, ESceneID_Max> mSceneHookLists;
     //! Global hooks (always active)
     TList<ISceneHook> mGlobalHooks;
 };
@@ -85,24 +84,26 @@ private:
  * @brief Scene hook interface
  */
 class ISceneHook {
+    friend class SceneHookMgr;
+
 public:
     /**
      * @brief Constructor
+     * @details The scene ID defaults to all scenes (-1).
      *
      * @param id Scene ID (-1 for all scenes)
      */
-    explicit ISceneHook(s32 id) : mSceneID(id) {
+    explicit ISceneHook(s32 id = -1) : mSceneID(id) {
         K_ASSERT_EX(id == -1 || id < ESceneID_Max,
-                    "Only RP scenes and -1 (all) are supported");
+                    "Only RP scene IDs and -1 (all scenes) are supported");
 
-        SceneHookMgr::GetInstance().AddHook(*this, mSceneID);
+        SceneHookMgr::GetInstance().AddHook(*this);
     }
-
     /**
      * @brief Destructor
      */
     virtual ~ISceneHook() {
-        SceneHookMgr::GetInstance().RemoveHook(*this, mSceneID);
+        SceneHookMgr::GetInstance().RemoveHook(*this);
     }
 
     /**
@@ -169,7 +170,8 @@ public:
     virtual void Pause(RPSysScene* pScene, bool enter) {}
 
 private:
-    s32 mSceneID; //!< Scene to which this hook belongs
+    //! Scene to which this hook belongs
+    s32 mSceneID;
 };
 
 //! @}

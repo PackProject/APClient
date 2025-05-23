@@ -18,9 +18,9 @@ namespace json {
 // Forward declarations
 class Element;
 
-//! JSON array contains zero or more elements
+//! JSON 'array' contains zero or more elements
 typedef TVector<Element> Array;
-//! JSON object contains zero or more key/value pairs
+//! JSON 'object' contains zero or more key/value pairs
 typedef TMap<String, Element> Object;
 
 struct Null_t {};
@@ -46,18 +46,49 @@ public:
 };
 
 /**
+ * @brief Interface for JSON serializable/deserializable objects
+ */
+class ISerializable {
+public:
+    /**
+     * @brief Destructor
+     */
+    virtual ~ISerializable() {}
+
+    /**
+     * @brief Encodes this object into JSON element form
+     *
+     * @param rElem JSON Element to which data will be written
+     */
+    virtual void Serialize(Element& /* rElem */) const {}
+
+    /**
+     * @brief Decodes a JSON element into this object
+     *
+     * @param rElem JSON element from which data will be read
+     * @return Success
+     */
+    virtual bool Deserialize(const Element& /* rElem */) {
+        return true;
+    }
+};
+
+/**
  * @brief Generic JSON element
  */
 class Element {
 public:
+    /**
+     * @brief Element type
+     */
     enum EType {
-        EType_Number,   // Double-precision float
-        EType_String,   // Character sequence
-        EType_Boolean,  // Boolean value
-        EType_Array,    // Ordered list of elements
-        EType_Object,   // Unordered name/value pairs
-        EType_Null,     // Javascript 'null' keyword
-        EType_Undefined // No contents
+        EType_Number,   //!< Double-precision float
+        EType_String,   //!< Character sequence
+        EType_Boolean,  //!< Boolean value
+        EType_Array,    //!< Ordered list of elements
+        EType_Object,   //!< Unordered name/value pairs
+        EType_Null,     //!< Javascript 'null' keyword
+        EType_Undefined //!< No contents
     };
 
 public:
@@ -123,7 +154,12 @@ public:
         K_ASSERT(mType == EType_Object);
         const Element* pElement = Get<Object>().Find(rKey);
 
-        K_ASSERT(pElement != nullptr);
+        // TODO: Better way to return a dummy element?
+        if (pElement == nullptr) {
+            static const Element undefined;
+            return undefined;
+        }
+
         return *pElement;
     }
     /**@}*/
@@ -136,36 +172,11 @@ public:
     }
 
     /**
-     * @brief Accesses this element's value, by type
-     */
-    template <typename T> T& Get();
-    /**
-     * @brief Accesses this element's value, by type
-     */
-    template <typename T> const T& Get() const;
-
-    /**
-     * @brief Deserialises this element's value, by type
-     * @note The object type must derive from ISerializable
-     *
-     * @tparam T Object type
-     */
-    template <typename T> T GetObj() const;
-
-    /**
-     * @brief Overwrites this element's value
-     *
-     * @param rValue New value (copied)
-     */
-    template <typename T> void Set(const T& rValue);
-
-    /**
      * @brief Tests whether the element is null
      */
     bool IsNull() const {
         return mType == EType_Null;
     }
-
     /**
      * @brief Tests whether the element contains valid data
      */
@@ -180,12 +191,36 @@ public:
     }
 
     /**
+     * @brief Accesses this element's value, by type
+     */
+    template <typename T> T& Get();
+    /**
+     * @brief Accesses this element's value, by type
+     */
+    template <typename T> const T& Get() const;
+
+    /**
+     * @brief Deserializes this element's value, by type
+     * @note The object type must derive from ISerializable
+     *
+     * @tparam T Object type
+     */
+    template <typename T> T GetObj() const;
+
+    /**
+     * @brief Overwrites this element's value
+     *
+     * @param rValue New value (copied)
+     */
+    template <typename T> void Set(const T& rValue);
+
+    /**
      * @brief Clears this element's data
      */
     void Clear();
 
     /**
-     * @brief Recursively process this element and all its children
+     * @brief Recursively processes this element and all its children
      *
      * @param rVisitor Element visitor
      */
@@ -194,43 +229,16 @@ public:
     }
 
 private:
-    EType mType; // Element type
+    //! Element type
+    EType mType;
 
     union {
-        f64 mNumber;      // Double-precision float
-        String* mpString; // Character sequence
-        bool mBoolean;    // Boolean value
-        Array* mpArray;   // Ordered list of elements
-        Object* mpObject; // Unordered name/value pairs
+        f64 mNumber;      //!< Double-precision float
+        String* mpString; //!< Character sequence
+        bool mBoolean;    //!< Boolean value
+        Array* mpArray;   //!< Ordered list of elements
+        Object* mpObject; //!< Unordered name/value pairs
     };
-};
-
-/**
- * @brief Interface for JSON serializable/deserializable objects
- */
-class ISerializable {
-public:
-    /**
-     * @brief Destructor
-     */
-    virtual ~ISerializable() {}
-
-    /**
-     * @brief Encodes this object into JSON element form
-     *
-     * @param rElem JSON Element to which data will be written
-     */
-    virtual void Serialize(Element& /* rElem */) const {}
-
-    /**
-     * @brief Decodes a JSON element into this object
-     *
-     * @param rElem JSON element from which data will be read
-     * @return Success
-     */
-    virtual bool Deserialize(const Element& /* rElem */) {
-        return true;
-    }
 };
 
 /**
@@ -333,7 +341,6 @@ private:
 
     //! JSON text encoding
     EEncoding mEncoding;
-
     //! JSON tree root
     Element mRootElement;
 };

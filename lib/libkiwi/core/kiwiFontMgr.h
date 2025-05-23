@@ -81,7 +81,7 @@ private:
     nw4r::ut::ResFont* mpResFonts[EResFont_Max]; //!< Resource fonts
 
     //! Resource font name table
-    static const char* scFontNames[EResFont_Max];
+    static const char* FONT_NAMES[EResFont_Max];
 };
 
 //! @}

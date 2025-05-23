@@ -78,13 +78,13 @@ class CustomScene : public kiwi::IScene {
 // To make the scene creator aware of your custom scene, you need to construct a
 // scene declaration, or SceneDecl object.
 //
-// To simplify construction, libkiwi provides the K_SCENE_DECL macro.
+// To simplify construction, libkiwi provides the K_DECL_SCENE macro.
 // Its argument must be the scene's class name.
 //
 // This macro creates a static object, so it must be placed within the .cpp
 // file, not the header file.
 //
-K_SCENE_DECL(CustomScene);
+K_DECL_SCENE(CustomScene);
 
 //=============================================================================
 // Scene change

@@ -86,11 +86,11 @@ String GenerateKey() {
     Random r;
     u8 key[16];
 
-    for (int i = 0; i < LENGTHOF(key); i++) {
+    for (int i = 0; i < K_LENGTHOF(key); i++) {
         key[i] = static_cast<u8>(r.NextU32());
     }
 
-    return B64Encode(key, LENGTHOF(key));
+    return B64Encode(key, K_LENGTHOF(key));
 }
 
 /**
@@ -140,7 +140,7 @@ void WebSocket::Connect(const String& rHost, Callback pCallback, void* pArg) {
     }
 
     mpRequest = new HttpRequest(rHost);
-    K_ASSERT(mpRequest != nullptr);
+    K_ASSERT_PTR(mpRequest);
 
     K_LOG("Connecting...\n");
 
@@ -163,11 +163,11 @@ void WebSocket::Connect(const String& rHost, Callback pCallback, void* pArg) {
  * @param pArg Callback user argument
  */
 void WebSocket::RequestCallback(const HttpResponse& rResp, void* pArg) {
-    K_ASSERT(pArg != nullptr);
+    K_ASSERT_PTR(pArg);
 
     // User argument is this object
     WebSocket* p = static_cast<WebSocket*>(pArg);
-    K_ASSERT(p->mpRequest != nullptr);
+    K_ASSERT_PTR(p->mpRequest);
 
     // Validate upgrade-related fields
     if (rResp.error != EHttpErr_Success ||
@@ -210,7 +210,7 @@ void WebSocket::RequestCallback(const HttpResponse& rResp, void* pArg) {
  * @param pArg User callback argument
  */
 void WebSocket::SocketCallbackFunc(SOResult result, void* pArg) {
-    K_ASSERT(pArg != nullptr);
+    K_ASSERT_PTR(pArg);
 
     // User argument is this object
     WebSocket* p = static_cast<WebSocket*>(pArg);

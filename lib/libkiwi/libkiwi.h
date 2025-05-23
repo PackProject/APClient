@@ -1,5 +1,5 @@
-#ifndef LIBKIWI_H
-#define LIBKIWI_H
+#ifndef LIBKIWI_LIBRARY_H
+#define LIBKIWI_LIBRARY_H
 
 #include <libkiwi/core/kiwiColor.h>
 #include <libkiwi/core/kiwiConsoleOut.h>
@@ -12,7 +12,6 @@
 #include <libkiwi/core/kiwiJSON.h>
 #include <libkiwi/core/kiwiMemStream.h>
 #include <libkiwi/core/kiwiMemoryMgr.h>
-#include <libkiwi/core/kiwiMessage.h>
 #include <libkiwi/core/kiwiNandStream.h>
 #include <libkiwi/core/kiwiRuntime.h>
 #include <libkiwi/core/kiwiSPR.h>
@@ -31,7 +30,6 @@
 #include <libkiwi/debug/kiwiNw4rConsole.h>
 #include <libkiwi/debug/kiwiNw4rDirectPrint.h>
 #include <libkiwi/debug/kiwiNw4rException.h>
-#include <libkiwi/debug/kiwiStackChecker.h>
 #include <libkiwi/debug/kiwiTextBuilder.h>
 #include <libkiwi/debug/kiwiTextWriter.h>
 #include <libkiwi/fun/kiwiGameCorruptor.h>
@@ -65,7 +63,6 @@
 #include <libkiwi/support/kiwiLibSO.h>
 #include <libkiwi/util/kiwiAutoLock.h>
 #include <libkiwi/util/kiwiBitUtil.h>
-#include <libkiwi/util/kiwiBuildTarget.h>
 #include <libkiwi/util/kiwiDynamicSingleton.h>
 #include <libkiwi/util/kiwiExtension.h>
 #include <libkiwi/util/kiwiGlobalInstance.h>
@@ -73,6 +70,7 @@
 #include <libkiwi/util/kiwiIosObject.h>
 #include <libkiwi/util/kiwiIosVector.h>
 #include <libkiwi/util/kiwiNonCopyable.h>
+#include <libkiwi/util/kiwiProductInfo.h>
 #include <libkiwi/util/kiwiPtrUtil.h>
 #include <libkiwi/util/kiwiRandom.h>
 #include <libkiwi/util/kiwiStaticSingleton.h>

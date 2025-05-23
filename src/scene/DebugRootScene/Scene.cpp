@@ -7,7 +7,7 @@
 namespace AP {
 namespace DebugRoot {
 
-K_SCENE_DECL(Scene);
+K_DECL_SCENE(Scene);
 
 /**
  * @brief Constructor

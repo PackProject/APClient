@@ -12,11 +12,11 @@ RichPresenceMgr::RichPresenceMgr()
 
     // TODO: Only Dolphin Emulator is supported for now
     mpClient = new EmuRichPresenceClient();
-    K_ASSERT(mpClient != nullptr);
+    K_ASSERT_PTR(mpClient);
 
     // Start periodic alarm for routine updates
     OSCreateAlarm(&mAlarm);
-    OSSetPeriodicAlarm(&mAlarm, OSGetTime(), OS_SEC_TO_TICKS(ALARM_PERIOD_SEC),
+    OSSetPeriodicAlarm(&mAlarm, OSGetTime(), OS_SEC_TO_TICKS(scAlarmPeriod),
                        AlarmCallbackFunc);
 }
 
@@ -44,7 +44,7 @@ void RichPresenceMgr::SetProfile(IRichPresenceProfile* pProfile) {
         return;
     }
 
-    K_ASSERT(mpClient != nullptr);
+    K_ASSERT_PTR(mpClient);
     mpClient->SetAppID(pProfile->GetAppID());
     mpClient->UpdateApp();
 }
@@ -54,21 +54,21 @@ void RichPresenceMgr::SetProfile(IRichPresenceProfile* pProfile) {
  *
  * @param pScene Current scene
  */
-void RichPresenceMgr::Reset(RPSysScene* pScene) {
-    K_ASSERT(pScene != nullptr);
+void RichPresenceMgr::AfterReset(RPSysScene* pScene) {
+    K_ASSERT_PTR(pScene);
 
     if (mpProfile == nullptr) {
         return;
     }
 
-    K_ASSERT(mpClient != nullptr);
+    K_ASSERT_PTR(mpClient);
 
     // Allow user to update activity
 #if defined(PACK_SPORTS) || defined(PACK_PLAY)
     s32 scene = pScene->getSceneID();
     mpProfile->SceneCallback(*mpClient, scene);
 #elif defined(PACK_RESORT)
-    K_ASSERT_EX(false, "Not implemented.");
+    K_NOT_IMPLEMENTED();
 #endif
 }
 

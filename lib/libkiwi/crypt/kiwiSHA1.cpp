@@ -23,7 +23,7 @@ String SHA1::Finalize() {
 
     // Convert nibbles to characters
     static const char sHexDigits[] = "0123456789ABCDEF";
-    for (int i = 0; i < LENGTHOF(buffer); i++) {
+    for (int i = 0; i < K_LENGTHOF(buffer); i++) {
         digest[i * 2 + 0] = sHexDigits[(buffer[i] & 0xF0) >> 8];
         digest[i * 2 + 1] = sHexDigits[(buffer[i] & 0x0F) >> 0];
     }
@@ -187,6 +187,9 @@ void SHA1Init(SHA1_CTX* pContext) {
  * @param len Data length
  */
 void SHA1Update(SHA1_CTX* pContext, const u8* pData, u32 len) {
+    K_ASSERT_PTR(pContext);
+    K_ASSERT_PTR(pData);
+
     u32 i;
     u32 j;
 
@@ -220,6 +223,8 @@ void SHA1Update(SHA1_CTX* pContext, const u8* pData, u32 len) {
  * @param pContext SHA1 context
  */
 void SHA1Final(u8 pDigest[20], SHA1_CTX* pContext) {
+    K_ASSERT_PTR(pContext);
+
     unsigned i;
     u8 finalcount[8];
     u8 c;

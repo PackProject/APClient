@@ -39,7 +39,7 @@ const u8 scDecodeTable[128] = {
  * @param size Binary data size
  */
 u32 GetEncodeSize(u32 size) {
-    return ROUND_UP((4 * size) / 3, 4);
+    return RoundUp((4 * size) / 3, 4);
 }
 
 /**
@@ -49,7 +49,7 @@ u32 GetEncodeSize(u32 size) {
  * @return Success
  */
 bool TryDecodeChar(u8& rCh) {
-    if (rCh > LENGTHOF(scDecodeTable)) {
+    if (rCh > K_LENGTHOF(scDecodeTable)) {
         return false;
     }
 
@@ -119,7 +119,7 @@ String B64Encode(const void* pData, u32 size) {
     }
 
     case State_EncOctet1st:
-    default:                {
+    default: {
         break;
     }
     }
@@ -148,7 +148,9 @@ bool B64Decode(const String& rData, void* pDst, u32 size) {
         return false;
     }
 
+    K_ASSERT_PTR(pDst);
     u8* p = static_cast<u8*>(pDst);
+
     State state = State_DecOctet1st;
 
     for (int i = 0; i < rData.Length(); i++) {
@@ -227,7 +229,7 @@ void* B64Decode(const String& rData, u32* pSize) {
     u32 size = B64GetDecodeSize(rData);
 
     void* pDst = new u8[size];
-    K_ASSERT(pDst != nullptr);
+    K_ASSERT_PTR(pDst);
 
     bool success = B64Decode(rData, pDst, size);
     if (!success) {

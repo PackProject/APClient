@@ -444,10 +444,10 @@ Macros can be documented like functions, but also a single-line comment will suf
  * @param major Major version number
  * @param minor Minor version number
  */
-#define K_VERSION(major, minor) ((major << 8) | minor)
+#define K_BIN_VERSION(major, minor) ((major << 8) | minor)
 
 //! Helper for creating version numbers
-#define K_VERSION(major, minor) ((major << 8) | minor)
+#define K_BIN_VERSION(major, minor) ((major << 8) | minor)
 ```
 
 ##### Data

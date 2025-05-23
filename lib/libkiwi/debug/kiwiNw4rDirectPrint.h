@@ -121,35 +121,35 @@ private:
 
 public:
     // Font character width (in dots/units)
-    static const u32 scFontCharWidth = 6;
+    static const u32 FONT_CHAR_WIDTH = 6;
     // Font character height (in dots/units)
-    static const u32 scFontCharHeight = 7;
+    static const u32 FONT_CHAR_HEIGHT = 7;
 
     // Font leading (space between lines, in dots/units)
-    static const u32 scFontLeading = 10;
+    static const u32 FONT_LEADING = 10;
 
     // Tab size (in spaces)
-    static const u32 scTabSize = 4;
+    static const u32 TAB_SIZE = 4;
 
 private:
-    u8* mpBuffer;    // Framebuffer in memory
-    u32 mBufferSize; // Framebuffer size (in bytes)
+    u8* mpBuffer;    //!< Framebuffer in memory
+    u32 mBufferSize; //!< Framebuffer size (in bytes)
 
-    u16 mBufferWidth;  // Framebuffer width (in pixels)
-    u16 mBufferHeight; // Framebuffer height (in pixels)
-    u16 mBufferRows;   // Framebuffer rows
+    u16 mBufferWidth;  //!< Framebuffer width (in pixels)
+    u16 mBufferHeight; //!< Framebuffer height (in pixels)
+    u16 mBufferRows;   //!< Framebuffer rows
 
-    Color mBufferColor; // Framebuffer text color
+    Color mBufferColor; //!< Framebuffer text color
 
-    // Default buffer width (in pixels)
+    //! Default buffer width (in pixels)
     static const u16 scBufferWidthDefault = 640;
-    // Default buffer height (in pixels)
+    //! Default buffer height (in pixels)
     static const u16 scBufferHeightDefault = 480;
 
-    static const u32 scFontData[];  // Font data pt. 1
-    static const u32 scFontData2[]; // Font data pt. 2
+    static const u32 scFontData[];  //!< Font data pt. 1
+    static const u32 scFontData2[]; //!< Font data pt. 2
 
-    // Converts from ASCII index to font data index
+    //! Converts from ASCII index to font data index
     static const u8 scAscii2Font[128];
 };
 

@@ -12,13 +12,13 @@ namespace kiwi {
  * @brief Stream seek origin
  */
 enum ESeekDir {
-    ESeekDir_Begin,   //!< Seek relative to the beginning of the stream
-    ESeekDir_Current, //!< Seek relative to the stream's current position
-    ESeekDir_End      //!< Seek relative to the end of the stream
+    ESeekDir_Begin,   //!< Relative to the beginning of the stream
+    ESeekDir_Current, //!< Relative to the stream's current position
+    ESeekDir_End      //!< Relative to the end of the stream
 };
 
 /**
- * @brief Stream interface
+ * @brief Stream type interface
  */
 class IStream {
 public:
@@ -31,12 +31,11 @@ public:
      * @brief Destructor
      */
     virtual ~IStream() {
-        // Warn for derived types :D
-        K_WARN_EX(IsOpen(), "Your class forgot to close the stream!\n");
+        K_ASSERT_EX(!IsOpen(), "Your class forgot to close the stream!");
     }
 
     /**
-     * @brief Closes this stream
+     * @brief Closes the stream
      */
     virtual void Close() = 0;
 
@@ -68,21 +67,15 @@ public:
     /**
      * @brief Gets the size alignment required by this stream type
      */
-    virtual s32 GetSizeAlign() const {
-        return 1;
-    }
+    virtual s32 GetSizeAlign() const = 0;
     /**
      * @brief Gets the offset alignment required by this stream type
      */
-    virtual s32 GetOffsetAlign() const {
-        return 1;
-    }
+    virtual s32 GetOffsetAlign() const = 0;
     /**
      * @brief Gets the buffer alignment required by this stream type
      */
-    virtual s32 GetBufferAlign() const {
-        return 1;
-    }
+    virtual s32 GetBufferAlign() const = 0;
 
     /**
      * @brief Tests whether a given size fits the alignment required by this
