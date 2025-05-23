@@ -86,11 +86,11 @@ String GenerateKey() {
     Random r;
     u8 key[16];
 
-    for (int i = 0; i < LENGTHOF(key); i++) {
+    for (int i = 0; i < K_LENGTHOF(key); i++) {
         key[i] = static_cast<u8>(r.NextU32());
     }
 
-    return B64Encode(key, LENGTHOF(key));
+    return B64Encode(key, K_LENGTHOF(key));
 }
 
 /**

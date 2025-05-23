@@ -93,7 +93,7 @@ const MapFile::Symbol* MapFile::QueryTextSymbol(const void* pAddr) const {
  * @brief Unpacks loaded map file
  */
 void MapFile::Unpack() {
-    K_ASSERT(mpMapBuffer != nullptr);
+    K_ASSERT_PTR(mpMapBuffer);
 
     // Skip map file header (2 lines)
     char* pIt = mpMapBuffer;
@@ -102,28 +102,31 @@ void MapFile::Unpack() {
     }
 
     // Parse lines
-    for (char* pEndl = pIt; (pEndl = std::strchr(pIt, '\n')); pIt = pEndl + 1) {
-        Symbol* sym = new Symbol();
-        K_ASSERT(sym != nullptr);
+    for (char* pEndl = pIt; (pEndl = std::strchr(pIt, '\n')) != nullptr;
+         pIt = pEndl + 1) {
+
+        Symbol* pSymbol = new Symbol();
+        K_ASSERT_PTR(pSymbol);
 
         // Location
         if (mLinkType == ELinkType_Static) {
-            sym->pAddr = reinterpret_cast<void*>(std::strtoul(pIt, &pIt, 16));
+            pSymbol->pAddr =
+                reinterpret_cast<void*>(std::strtoul(pIt, &pIt, 16));
         } else {
-            sym->offset = std::strtoul(pIt, &pIt, 16);
+            pSymbol->offset = std::strtoul(pIt, &pIt, 16);
         }
 
         // Linkage
-        sym->type = mLinkType;
+        pSymbol->type = mLinkType;
 
         // Size
-        sym->size = std::strtoul(pIt, &pIt, 16);
+        pSymbol->size = std::strtoul(pIt, &pIt, 16);
 
         // Trim whitespace from name
         while (*pIt == ' ') {
             pIt++;
         }
-        sym->pName = pIt;
+        pSymbol->pName = pIt;
 
         // Terminate symbol string
         *pEndl = '\0';
@@ -132,7 +135,7 @@ void MapFile::Unpack() {
             *(pEndl - 1) = '\0';
         }
 
-        mSymbols.PushBack(sym);
+        mSymbols.PushBack(pSymbol);
     }
 
     mIsUnpacked = true;

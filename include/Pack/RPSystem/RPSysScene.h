@@ -28,7 +28,7 @@ public:
      * @brief Scene type
      * @ws2
      */
-    enum EKind{
+    enum EKind {
         EKind_System = 'SYS_',   //!< RPSysScene
         EKind_Base = 'BASE',     //!< RPSportsBaseScene
         EKind_Game = 'GAME',     //!< RPSportsGameScene
@@ -39,7 +39,7 @@ public:
      * @brief Island time
      * @ws2
      */
-    enum ETime{
+    enum ETime {
         ETime_Day,     //!< Force daytime
         ETime_Evening, //!< Force evening
         ETime_Night,   //!< Force night
@@ -177,7 +177,7 @@ public:
      * @brief Updates the scene's MotionPlus state
      * @ws2
      */
-    virtual void CalculateMotionPlus() {}
+    virtual void CalculateMPlus() {}
 #endif
 
     /**

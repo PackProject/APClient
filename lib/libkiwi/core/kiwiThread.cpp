@@ -1,3 +1,5 @@
+#include <libkiwi/prim/kiwiBitCast.h>
+
 #include <libkiwi.h>
 
 namespace kiwi {
@@ -6,12 +8,12 @@ namespace detail {
 /**
  * @brief Constructor
  */
-ThreadImpl::ThreadImpl() : mpThreadStack(nullptr) {
+ThreadImpl::ThreadImpl() : mpOSThread(nullptr), mpThreadStack(nullptr) {
     // Thread & stack aligned to 32
     mpOSThread = new (32) OSThread();
-    K_ASSERT(mpOSThread != nullptr);
+    K_ASSERT_PTR(mpOSThread);
     mpThreadStack = new (32) u8[scStackSize];
-    K_ASSERT(mpThreadStack != nullptr);
+    K_ASSERT_PTR(mpThreadStack);
 
     BOOL success =
         OSCreateThread(mpOSThread, nullptr, nullptr,
@@ -23,7 +25,7 @@ ThreadImpl::ThreadImpl() : mpThreadStack(nullptr) {
  * @brief Destructor
  */
 ThreadImpl::~ThreadImpl() {
-    K_ASSERT(mpOSThread != nullptr);
+    K_ASSERT_PTR(mpOSThread);
     K_ASSERT_EX(*mpOSThread->stackEnd == OS_THREAD_STACK_MAGIC,
                 "Thread stack overflow!!!");
 
@@ -37,7 +39,7 @@ ThreadImpl::~ThreadImpl() {
  * @brief Begins execution on this thread
  */
 void ThreadImpl::Start() {
-    K_ASSERT(mpOSThread != nullptr);
+    K_ASSERT_PTR(mpOSThread);
     K_ASSERT(mpOSThread->state == OS_THREAD_STATE_READY);
     K_ASSERT_EX(mpOSThread->context.srr0 != 0, "No function to call");
 
@@ -50,7 +52,7 @@ void ThreadImpl::Start() {
  * @brief Waits for this thread to finish executing
  */
 void ThreadImpl::Join() {
-    K_ASSERT(mpOSThread != nullptr);
+    K_ASSERT_PTR(mpOSThread);
 
     BOOL success = OSJoinThread(mpOSThread, nullptr);
     K_ASSERT(success);
@@ -62,7 +64,7 @@ void ThreadImpl::Join() {
  * @param addr Function address (new SRR0 value)
  */
 void ThreadImpl::SetFunction(const void* addr) {
-    K_ASSERT(mpOSThread != nullptr);
+    K_ASSERT_PTR(mpOSThread);
     K_ASSERT(addr != 0);
     mpOSThread->context.srr0 = BitCast<u32>(addr);
 }
@@ -73,10 +75,10 @@ void ThreadImpl::SetFunction(const void* addr) {
  * @param i GPR number
  * @param value New value
  */
-void ThreadImpl::SetGPR(u32 i, u32 value) {
-    K_ASSERT(mpOSThread != nullptr);
-    K_ASSERT(i >= 0 && i < LENGTHOF(mpOSThread->context.gprs));
-    mpOSThread->context.gprs[i] = value;
+void ThreadImpl::SetGPR(u32 idx, u32 value) {
+    K_ASSERT_PTR(mpOSThread);
+    K_ASSERT(idx >= 0 && idx < K_LENGTHOF(mpOSThread->context.gprs));
+    mpOSThread->context.gprs[idx] = value;
 }
 
 } // namespace detail

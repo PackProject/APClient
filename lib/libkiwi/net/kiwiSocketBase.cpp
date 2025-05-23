@@ -222,7 +222,7 @@ bool SocketBase::CanRecv() const {
     fd[0].revents = 0;
 
     // If peer has closed connection (POLLHUP), reads are still possible
-    bool success = LibSO::Poll(fd, LENGTHOF(fd), 0) >= 0;
+    bool success = LibSO::Poll(fd, K_LENGTHOF(fd), 0) >= 0;
     return success && (fd[0].revents & (SO_POLLRDNORM | SO_POLLHUP));
 }
 
@@ -237,7 +237,7 @@ bool SocketBase::CanSend() const {
     fd[0].events = SO_POLLWRNORM;
     fd[0].revents = 0;
 
-    bool success = LibSO::Poll(fd, LENGTHOF(fd), 0) >= 0;
+    bool success = LibSO::Poll(fd, K_LENGTHOF(fd), 0) >= 0;
     return success && (fd[0].revents & SO_POLLWRNORM);
 }
 

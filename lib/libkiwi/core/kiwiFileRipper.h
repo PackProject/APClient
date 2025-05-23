@@ -15,22 +15,30 @@ class MemStream;
  * @brief File storage devices
  */
 enum EStorage {
-    EStorage_DVD,  //!< Game disc
-    EStorage_NAND, //!< System memory
+    EStorage_DVD,  //!< Game disc (ROM)
+    EStorage_NAND, //!< System flash memory
 };
 
 /**
- * @brief File ripping parameters
+ * @brief File ripper parameters
  */
 struct FileRipperArg {
-    //! @brief Where the file contents are stored
-    //! @details Leave this as nullptr to have the ripper allocate memory.
+    /**
+     * @brief Where the file contents are stored
+     * @details Leave this as NULL (default) to have the ripper allocate memory.
+     */
     void* pDst;
 
-    //! Where the file size is stored
+    /**
+     * @brief Where the file size is stored
+     * @details Leave this as NULL (default) if you don't need this information.
+     */
     u32* pSize;
 
-    //! Memory region to use for ripper memory allocation
+    /**
+     * @brief Memory region to use for ripper memory allocation
+     * @details Defaults to MEM2.
+     */
     EMemory region;
 
     /**
@@ -70,7 +78,7 @@ public:
      *
      * @param rPath Path to the file
      * @param where Storage device on which the file is located
-     * @return File stream
+     * @return File stream (owns buffer)
      */
     static MemStream Open(const String& rPath, EStorage where = EStorage_DVD);
 };

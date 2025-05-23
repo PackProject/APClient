@@ -8,7 +8,7 @@ namespace kiwi {
  * @brief Constructor
  */
 RichPresenceMgr::RichPresenceMgr()
-    : ISceneHook(-1), mpClient(nullptr), mpProfile(nullptr) {
+    : SceneHookBase(-1), mpClient(nullptr), mpProfile(nullptr) {
 
     // TODO: Only Dolphin Emulator is supported for now
     mpClient = new EmuRichPresenceClient();
@@ -54,7 +54,7 @@ void RichPresenceMgr::SetProfile(IRichPresenceProfile* pProfile) {
  *
  * @param pScene Current scene
  */
-void RichPresenceMgr::Reset(RPSysScene* pScene) {
+void RichPresenceMgr::AfterReset(RPSysScene* pScene) {
     K_ASSERT(pScene != nullptr);
 
     if (mpProfile == nullptr) {

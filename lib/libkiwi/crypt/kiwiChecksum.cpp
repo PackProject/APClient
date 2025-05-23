@@ -9,8 +9,7 @@ namespace kiwi {
  * @param size Size of data
  */
 void Checksum::Process(const void* pData, u32 size) {
-    K_ASSERT(pData != nullptr);
-
+    K_ASSERT_PTR(pData);
     const u8* p = static_cast<const u8*>(pData);
 
     // Two bytes at a time when possible

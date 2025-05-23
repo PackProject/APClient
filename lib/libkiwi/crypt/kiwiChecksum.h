@@ -39,8 +39,8 @@ public:
     }
 
 private:
-    u32 mSum;    // Sum
-    u32 mSumInv; // Inverse sum
+    u32 mSum;    //!< Sum
+    u32 mSumInv; //!< Inverse sum
 };
 
 //! @}

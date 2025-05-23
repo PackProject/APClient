@@ -2,6 +2,7 @@
 #define LIBKIWI_CORE_NAND_STREAM_H
 #include <libkiwi/core/kiwiFileStream.h>
 #include <libkiwi/k_types.h>
+
 #include <revolution/NAND.h>
 
 namespace kiwi {
@@ -46,7 +47,7 @@ public:
      */
     bool Open(const String& rPath);
     /**
-     * @brief Closes this stream
+     * @brief Closes the stream
      */
     virtual void Close();
 

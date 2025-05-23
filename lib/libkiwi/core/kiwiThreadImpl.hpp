@@ -7,17 +7,23 @@
 #include <libkiwi/core/kiwiThread.h>
 #endif
 
+#include <libkiwi/prim/kiwiBitCast.h>
+
 namespace kiwi {
 //! @addtogroup libkiwi_core
 //! @{
 
+/**
+ * @name Non-member function
+ */
+/**@{*/
 /**
  * @brief Constructor
  *
  * @param pFunc Static, no-parameter function
  */
 template <typename TRet> Thread::Thread(TRet (*pFunc)()) {
-    K_ASSERT(pFunc != nullptr);
+    K_ASSERT_PTR(pFunc);
 
     SetFunction(pFunc);
     Start();
@@ -31,7 +37,7 @@ template <typename TRet> Thread::Thread(TRet (*pFunc)()) {
  */
 template <typename TRet>
 Thread::Thread(TRet (*pFunc)(Thread::Param), Thread::Param pArg) {
-    K_ASSERT(pFunc != nullptr);
+    K_ASSERT_PTR(pFunc);
 
     SetFunction(pFunc);
     SetGPR(3, BitCast<u32>(pArg));
@@ -51,7 +57,7 @@ Thread::Thread(TRet (*pFunc)(Thread::Param), Thread::Param pArg) {
  */
 template <typename TRet, typename TClass>
 Thread::Thread(TRet (TClass::*pFunc)(), TClass& rObj) {
-    K_ASSERT(pFunc);
+    K_ASSERT_PTR(pFunc);
 
     SetMemberFunction(pFunc, rObj);
     Start();
@@ -67,7 +73,7 @@ Thread::Thread(TRet (TClass::*pFunc)(), TClass& rObj) {
 template <typename TRet, typename TClass>
 Thread::Thread(TRet (TClass::*pFunc)(Thread::Param), TClass& rObj,
                Thread::Param pArg) {
-    K_ASSERT(pFunc);
+    K_ASSERT_PTR(pFunc);
 
     SetMemberFunction(pFunc, rObj);
     SetGPR(4, BitCast<u32>(pArg));
@@ -87,7 +93,7 @@ Thread::Thread(TRet (TClass::*pFunc)(Thread::Param), TClass& rObj,
  */
 template <typename TRet, typename TClass>
 Thread::Thread(TRet (TClass::*pFunc)() const, const TClass& rObj) {
-    K_ASSERT(pFunc);
+    K_ASSERT_PTR(pFunc);
 
     SetMemberFunction(pFunc, rObj);
     Start();
@@ -103,7 +109,7 @@ Thread::Thread(TRet (TClass::*pFunc)() const, const TClass& rObj) {
 template <typename TRet, typename TClass>
 Thread::Thread(TRet (TClass::*pFunc)(Thread::Param) const, const TClass& rObj,
                Thread::Param pArg) {
-    K_ASSERT(pFunc);
+    K_ASSERT_PTR(pFunc);
 
     SetMemberFunction(pFunc, rObj);
     SetGPR(4, BitCast<u32>(pArg));
@@ -135,6 +141,7 @@ struct MemberFunction {
 template <typename TFunc, typename TClass>
 K_DONT_INLINE void ThreadImpl::SetMemberFunction(TFunc pFunc,
                                                  const TClass& rObj) {
+
     K_STATIC_ASSERT_EX(sizeof(TFunc) == sizeof(MemberFunction),
                        "Not a member function");
 
@@ -146,11 +153,11 @@ K_DONT_INLINE void ThreadImpl::SetMemberFunction(TFunc pFunc,
         mr pPtmf, r4 // pFunc -> pPtmf
         mr self, r5 //  rObj  -> self
     }
-    K_ASSERT(pPtmf != nullptr);
+    K_ASSERT_PTR(pPtmf);
     K_ASSERT(self != 0);
     // clang-format on
 
-    K_ASSERT(mpOSThread != nullptr);
+    K_ASSERT_PTR(mpOSThread);
     K_ASSERT(mpOSThread->state == OS_THREAD_STATE_READY);
 
     // Adjust this pointer

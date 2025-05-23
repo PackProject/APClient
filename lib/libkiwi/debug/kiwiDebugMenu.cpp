@@ -82,9 +82,7 @@ bool DebugPage::AddOption(DebugOptionBase& rOption) {
  */
 EDebugMenuResult DebugPage::Calculate() {
     for (int i = 0; i < EPlayer_Max; i++) {
-        const WiiCtrl& rCtrl =
-            CtrlMgr::GetInstance().GetWiiCtrl(static_cast<EPlayer>(i));
-
+        const WiiCtrl& rCtrl = CtrlMgr::GetInstance().GetWiiCtrl(i);
         if (!rCtrl.IsConnected()) {
             continue;
         }

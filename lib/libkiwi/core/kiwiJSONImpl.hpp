@@ -43,12 +43,12 @@ template <> K_INLINE void Element::Set<s64>(const s64& rValue) {
 /**@{*/
 template <> K_INLINE String& Element::Get<String>() {
     K_ASSERT(mType == EType_String);
-    K_ASSERT(mpString != nullptr);
+    K_ASSERT_PTR(mpString);
     return *mpString;
 }
 template <> K_INLINE const String& Element::Get<String>() const {
     K_ASSERT(mType == EType_String);
-    K_ASSERT(mpString != nullptr);
+    K_ASSERT_PTR(mpString);
     return *mpString;
 }
 
@@ -56,7 +56,7 @@ template <> K_INLINE void Element::Set<String>(const String& rValue) {
     Clear();
 
     mpString = new String(rValue);
-    K_ASSERT(mpString != nullptr);
+    K_ASSERT_PTR(mpString);
 
     mType = EType_String;
 }
@@ -89,12 +89,12 @@ template <> K_INLINE void Element::Set<bool>(const bool& rValue) {
 /**@{*/
 template <> K_INLINE Array& Element::Get<Array>() {
     K_ASSERT(mType == EType_Array);
-    K_ASSERT(mpArray != nullptr);
+    K_ASSERT_PTR(mpArray);
     return *mpArray;
 }
 template <> K_INLINE const Array& Element::Get<Array>() const {
     K_ASSERT(mType == EType_Array);
-    K_ASSERT(mpArray != nullptr);
+    K_ASSERT_PTR(mpArray);
     return *mpArray;
 }
 
@@ -102,7 +102,7 @@ template <> K_INLINE void Element::Set<Array>(const Array& rArray) {
     Clear();
 
     mpArray = new Array(rArray);
-    K_ASSERT(mpArray != nullptr);
+    K_ASSERT_PTR(mpArray);
 
     mType = EType_Array;
 }
@@ -114,12 +114,12 @@ template <> K_INLINE void Element::Set<Array>(const Array& rArray) {
 /**@{*/
 template <> K_INLINE Object& Element::Get<Object>() {
     K_ASSERT(mType == EType_Object);
-    K_ASSERT(mpObject != nullptr);
+    K_ASSERT_PTR(mpObject);
     return *mpObject;
 }
 template <> K_INLINE const Object& Element::Get<Object>() const {
     K_ASSERT(mType == EType_Object);
-    K_ASSERT(mpObject != nullptr);
+    K_ASSERT_PTR(mpObject);
     return *mpObject;
 }
 
@@ -127,7 +127,7 @@ template <> K_INLINE void Element::Set<Object>(const Object& rValue) {
     Clear();
 
     mpObject = new Object(rValue);
-    K_ASSERT(mpObject != nullptr);
+    K_ASSERT_PTR(mpObject);
 
     mType = EType_Object;
 }
@@ -166,7 +166,7 @@ template <> K_INLINE void Element::Set<Null_t>(const Null_t& rValue) {
  */
 template <typename T> K_INLINE T Element::GetObj() const {
     K_ASSERT(mType == EType_Object);
-    K_ASSERT(mpObject != nullptr);
+    K_ASSERT_PTR(mpObject);
 
     // User type is responsible for deserializing
     T obj;

@@ -1,5 +1,6 @@
-#include <cstring>
 #include <libkiwi.h>
+
+#include <cstring>
 
 namespace kiwi {
 
@@ -37,7 +38,7 @@ void GeckoDebugger::ExiCallback(EXIChannel chan, OSContext* pCtx) {
  * @return Number of bytes read
  */
 Optional<u32> GeckoDebugger::Read(void* pDst, u32 size) {
-    K_ASSERT(pDst != nullptr);
+    K_ASSERT_PTR(pDst);
     K_ASSERT(size > 0);
 
     // Lock this device while we use it
@@ -78,7 +79,7 @@ Optional<u32> GeckoDebugger::Read(void* pDst, u32 size) {
  * @return Number of bytes read
  */
 Optional<u32> GeckoDebugger::Write(const void* pSrc, u32 size) {
-    K_ASSERT(pSrc != nullptr);
+    K_ASSERT_PTR(pSrc);
     K_ASSERT(size > 0);
 
     // Lock this device while we use it

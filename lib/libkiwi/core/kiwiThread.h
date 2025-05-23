@@ -2,7 +2,7 @@
 #define LIBKIWI_CORE_THREAD_H
 #include <libkiwi/debug/kiwiAssert.h>
 #include <libkiwi/k_types.h>
-#include <libkiwi/prim/kiwiBitCast.h>
+
 #include <revolution/OS.h>
 
 namespace kiwi {
@@ -28,7 +28,6 @@ protected:
      * @brief Constructor
      */
     ThreadImpl();
-
     /**
      * @brief Destructor
      */
@@ -48,10 +47,10 @@ protected:
     /**
      * @brief Sets a GPR's value in this thread
      *
-     * @param i GPR number
+     * @param idx GPR number
      * @param value New value
      */
-    void SetGPR(u32 i, u32 value);
+    void SetGPR(u32 idx, u32 value);
 
     /**
      * @brief Sets a member function to run on this thread

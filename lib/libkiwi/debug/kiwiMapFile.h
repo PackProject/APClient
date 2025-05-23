@@ -9,7 +9,7 @@ namespace kiwi {
 //! @{
 
 /**
- * @brief Kamek symbol map utility
+ * @brief Linker symbol map utility
  */
 class MapFile : public DynamicSingleton<MapFile> {
     friend class DynamicSingleton<MapFile>;
@@ -19,22 +19,22 @@ public:
      * @brief Module link type
      */
     enum ELinkType {
-        ELinkType_None,       // Map file not loaded
-        ELinkType_Static,     // Map file for static module
-        ELinkType_Relocatable // Map file for dynamic/relocatable module
+        ELinkType_None,       //!< Map file not loaded
+        ELinkType_Static,     //!< Map file for static module
+        ELinkType_Relocatable //!< Map file for dynamic/relocatable module
     };
 
     /**
      * @brief Map file symbol
      */
     struct Symbol {
-        ELinkType type; // Linkage
+        ELinkType type; //!< Linkage
         union {
-            void* pAddr; // Address (unpacked)
-            u32 offset;  // Offset (packed)
+            void* pAddr; //!< Address (unpacked)
+            u32 offset;  //!< Offset (packed)
         };
-        u32 size;    // Byte size
-        char* pName; // Mangled name
+        u32 size;    //!< Byte size
+        char* pName; //!< Mangled name
     };
 
 public:
@@ -80,10 +80,10 @@ private:
     void Unpack();
 
 private:
-    ELinkType mLinkType;    // Linkage
-    char* mpMapBuffer;      // Text buffer
-    bool mIsUnpacked;       // Whether the map has been unpacked
-    TList<Symbol> mSymbols; // Map symbols
+    ELinkType mLinkType;    //!< Linkage type
+    char* mpMapBuffer;      //!< Text buffer
+    bool mIsUnpacked;       //!< Whether the map has been unpacked
+    TList<Symbol> mSymbols; //!< Map symbols
 };
 
 //! @}

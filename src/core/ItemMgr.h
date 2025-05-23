@@ -13,7 +13,8 @@ namespace AP {
 /**
  * @brief Archipelago item manager
  */
-class ItemMgr : public kiwi::DynamicSingleton<ItemMgr>, public kiwi::IBinary {
+class ItemMgr : public kiwi::DynamicSingleton<ItemMgr>,
+                public kiwi::IBinary<ItemMgr> {
     friend class kiwi::DynamicSingleton<ItemMgr>;
 
 public:
@@ -52,13 +53,13 @@ public:
         CYCLING_CATEGORY_UNLOCK = 0x001E,
         AIRSPORTS_CATEGORY_UNLOCK = 0x001F,
 
-        //Swordplay Duel
+        // Swordplay Duel
         SWORDPLAY_DUEL_BLOCK = 0x0100,
 
-        //Swordplay Speed Slice
+        // Swordplay Speed Slice
         SWORDPLAY_SPEED_SLICE_PAUSE = 0x0200,
 
-        //Swordplay Showdown
+        // Swordplay Showdown
         SWORDPLAY_SHOWDOWN_BLOCK = 0x0300,
         SWORDPLAY_SHOWDOWN_HEART = 0x0301,
         SWORDPLAY_SHOWDOWN_STAGE_1 = 0x0302,
@@ -82,17 +83,17 @@ public:
         SWORDPLAY_SHOWDOWN_STAGE_19 = 0x0314,
         SWORDPLAY_SHOWDOWN_STAGE_20 = 0x0315,
 
-        //Wakeboarding
+        // Wakeboarding
         WAKEBOARDING_TIMER = 0x0400,
         WAKEBOARDING_BEGINNER = 0x0401,
         WAKEBOARDING_INTERMEDIATE = 0x0402,
         WAKEBOARDING_EXPERT = 0x0403,
 
-        //Frisbee Dog
+        // Frisbee Dog
         FRISBEE_DOG_FRISBEES = 0x0500,
         FRISBEE_DOG_SECRET_POP = 0x0501,
 
-        //Frisbee Golf
+        // Frisbee Golf
         FRISBEE_GOLF_HUD = 0x0600,
         FRISBEE_GOLF_DRIVER = 0x0601,
         FRISBEE_GOLF_MIDRANGE = 0x0602,
@@ -108,7 +109,7 @@ public:
         FRISBEE_GOLF_COURSE_8 = 0x060C,
         FRISBEE_GOLF_COURSE_9 = 0x060D,
 
-        //Archery
+        // Archery
         ARCHERY_AIM_CIRCLE = 0x0700,
         ARCHERY_ARROW = 0x0701,
         ARCHERY_FRUIT_BEGINNER = 0x702,
@@ -118,22 +119,22 @@ public:
         ARCHERY_INTERMEDIATE = 0x706,
         ARCHERY_EXPERT = 0x707,
 
-        //Basketball 3-Point Contest
+        // Basketball 3-Point Contest
         BASKETBALL_3PT_TIMER = 0x0800,
         BASKETBALL_BONUS_BALLS = 0x0801,
 
-        //Basketball Pickup Game
+        // Basketball Pickup Game
         BASKETBALL_PICKUP_TIMER = 0x0900,
         BASKETBALL_PASS = 0x0901,
         BASKETBALL_3PTS = 0x0902,
         BASKETBALL_DUNK = 0x0903,
 
-        //Table Tennis
+        // Table Tennis
         TABLE_TENNIS_SPIN = 0x0A00,
         TABLE_TENNIS_SMASH = 0x0A01,
         TABLE_TENNIS_CANS = 0x0A02,
 
-        //Golf
+        // Golf
         GOLF_HUD = 0x0B00,
         GOLF_DRIVER = 0x0B01,
         GOLF_3_WOOD = 0x0B02,
@@ -158,35 +159,35 @@ public:
         GOLF_VIEW_LOW = 0x0B15,
         GOLF_VIEW_SLOPE = 0x0B16,
 
-        //Bowling 10 Pin
+        // Bowling 10 Pin
         BOWLING_10_PIN_MOVE = 0x0C00,
         BOWLING_10_PIN_TURN = 0x0C01,
         BOWLING_10_PIN_SPIN = 0x0C02,
 
-        //Bowling 100 Pin
+        // Bowling 100 Pin
         BOWLING_100_PIN_MOVE = 0x0D00,
         BOWLING_100_PIN_TURN = 0x0D01,
         BOWLING_100_PIN_SPIN = 0x0D02,
         BOWLING_100_PIN_SECRET_STRIKE = 0x0D03,
 
-        //Bowling Spin Control
+        // Bowling Spin Control
         BOWLING_SPIN_CONTROL_MOVE = 0x0E00,
         BOWLING_SPIN_CONTROL_TURN = 0x0E01,
         BOWLING_SPIN_CONTROL_SPIN = 0x0E02,
 
-        //Power Cruising
+        // Power Cruising
         POWER_CRUISING_BOOST = 0x0F00,
         POWER_CRUISING_RING_TIMER = 0x0F01,
         POWER_CRUISING_DOUBLE_RING = 0x0F02,
         POWER_CRUISING_FREE_CRUISING_TIMER = 0x0F03,
 
-        //Canoeing
+        // Canoeing
         CANOEING_TIMER = 0x1000,
         CANOEING_BEGINNER = 0x1001,
         CANOEING_INTERMEDIATE = 0x1002,
         CANOEING_EXPERT = 0x1003,
 
-        //Cycling
+        // Cycling
         CYCLING_HEART = 0x1100,
         CYCLING_STAGE_0 = 0x1101,
         CYCLING_STAGE_1 = 0x1102,
@@ -214,7 +215,7 @@ public:
     };
 
 public:
-    const char* GetItemName (ItemID itemID);
+    const char* GetItemName(ItemID itemID);
 
 public:
     /**
@@ -558,7 +559,8 @@ public:
      */
     /**@{*/
     //! Number of mii items
-    static const u32 OMK_MII_COUNT = 4; // random value, will need to be changed later
+    static const u32 OMK_MII_COUNT =
+        4; // random value, will need to be changed later
 
     u32 GetOmkMiiNum() const {
         return mOmkMiiFlag.Count();
@@ -600,7 +602,7 @@ private:
     //! Binary file magic
     static const u32 SIGNATURE = 'ITEM';
     //! Binary file version
-    static const int VERSION = K_VERSION(1, 0);
+    static const int VERSION = K_BIN_VERSION(1, 0);
     //! Binary file path
     static const char* PATH;
 
@@ -609,7 +611,7 @@ private:
      * @brief Binary file structure
      */
 #pragma pack(push, 1)
-    struct Bin : kiwi::IBinary::Block {
+    struct BinData {
         /* 0x00    */ u32 sportFlag;    //!< Unlocked sports
         /* 0x04    */ u32 categoryFlag; //!< Unlocked categories
 
@@ -650,12 +652,6 @@ private:
         return SIGNATURE;
     }
     /**
-     * @brief Gets the serialized size of this object
-     */
-    virtual u32 GetBinarySize() const {
-        return sizeof(Bin);
-    }
-    /**
      * @brief Gets the expected version of this object
      */
     virtual u16 GetVersion() const {
@@ -665,15 +661,15 @@ private:
     /**
      * @brief Deserializes binary contents (internal implementation)
      *
-     * @param rHeader Binary file header
+     * @param rBin Binary file contents
      */
-    virtual void DeserializeImpl(const Header& rHeader);
+    virtual void DeserializeImpl(const Bin& rBin);
     /**
      * @brief Serializes binary contents (internal implementation)
      *
-     * @param rHeader Binary file header
+     * @param rBin Binary file contents
      */
-    virtual void SerializeImpl(Header& rHeader) const;
+    virtual void SerializeImpl(Bin& rBin) const;
 
     /**
      * @brief Clears item state
@@ -921,466 +917,468 @@ public:
     void GiveItemToPlayer(ItemID id) {
         kiwi::cout << "Adding Item: " << GetItemName(id) << kiwi::endl;
 
-        switch(id) {
-            case SWORDPLAY_DUEL_SPORT_UNLOCK: 
-                mSportFlag.SetBit(0);
-                break;
-            case SWORDPLAY_SPEED_SLICE_SPORT_UNLOCK: 
-                mSportFlag.SetBit(1);
-                break;
-            case SWORDPLAY_SHOWDOWN_SPORT_UNLOCK: 
-                mSportFlag.SetBit(2);
-                break;
-            case WAKEBOARDING_SPORT_UNLOCK: 
-                mSportFlag.SetBit(3);
-                break;
-            case FRISBEE_DOG_SPORT_UNLOCK: 
-                mSportFlag.SetBit(4);
-                break;
-            case FRISBEE_GOLF_SPORT_UNLOCK: 
-                mSportFlag.SetBit(5);
-                break;
-            case ARCHERY_SPORT_UNLOCK: 
-                mSportFlag.SetBit(6);
-                break;
-            case BASKETBALL_3POINT_CONTEST_SPORT_UNLOCK: 
-                mSportFlag.SetBit(7);
-                break;
-            case BASKETBALL_PICKUP_GAME_SPORT_UNLOCK: 
-                mSportFlag.SetBit(8);
-                break;
-            case TABLE_TENNIS_MATCH_SPORT_UNLOCK: 
-                mSportFlag.SetBit(9);
-                break;
-            case TABLE_TENNIS_RETURN_CHALLENGE_SPORT_UNLOCK: 
-                mSportFlag.SetBit(10);
-                break;
-            case GOLF_SPORT_UNLOCK: 
-                mSportFlag.SetBit(11);
-                break;
-            case BOWLING_STANDARD_GAME_SPORT_UNLOCK: 
-                mSportFlag.SetBit(12);
-                break;
-            case BOWLING_100_PIN_GAME_SPORT_UNLOCK: 
-                mSportFlag.SetBit(13);
-                break;
-            case BOWLING_SPIN_CONTROL_SPORT_UNLOCK: 
-                mSportFlag.SetBit(14);
-                break;
-            case POWER_CRUISING_SPORT_UNLOCK: 
-                mSportFlag.SetBit(15);
-                break;
-            case CANOEING_SPEED_CHALLENGE_SPORT_UNLOCK: 
-                mSportFlag.SetBit(16);
-                break;
-            case CYCLING_SINGLE_RACE_UNLOCK: 
-                mSportFlag.SetBit(17);
-                break;
-            case AIRSPORTS_SKYDIVING_UNLOCK: 
-                mSportFlag.SetBit(18);
-                break;
-            case AIRSPORTS_ISLAND_FLYOVER_UNLOCK: 
-                mSportFlag.SetBit(19);
-                break;
-            case SWORDPLAY_CATEGORY_UNLOCK: 
-                mCategoryFlag.SetBit(0);
-                break;
-            case WAKEBOARD_CATEGORY_UNLOCK: 
-                mCategoryFlag.SetBit(1);
-                break;
-            case FRISBEE_CATEGORY_UNLOCK: 
-                mCategoryFlag.SetBit(2);
-                break;
-            case ARCHERY_CATEGORY_UNLOCK: 
-                mCategoryFlag.SetBit(3);
-                break;
-            case BASKETBALL_CATEGORY_UNLOCK: 
-                mCategoryFlag.SetBit(4);
-                break;
-            case TABLE_TENNIS_CATEGORY_UNLOCK: 
-                mCategoryFlag.SetBit(5);
-                break;
-            case GOLF_CATEGORY_UNLOCK: 
-                mCategoryFlag.SetBit(6);
-                break;
-            case BOWLING_CATEGORY_UNLOCK: 
-                mCategoryFlag.SetBit(7);
-                break;
-            case POWER_CRUISING_CATEGORY_UNLOCK: 
-                mCategoryFlag.SetBit(8);
-                break;
-            case CANOEING_CATEGORY_UNLOCK: 
-                mCategoryFlag.SetBit(9);
-                break;
-            case CYCLING_CATEGORY_UNLOCK: 
-                mCategoryFlag.SetBit(10);
-                break;
-            case AIRSPORTS_CATEGORY_UNLOCK: 
-                mCategoryFlag.SetBit(11);
-                break;
-            case SWORDPLAY_DUEL_BLOCK: 
-                mSwfVsBlockFlag = true;
-                break;
-            case SWORDPLAY_SPEED_SLICE_PAUSE: 
-                mSwfPrcPauseFlag = true;
-                break;
-            case SWORDPLAY_SHOWDOWN_BLOCK: 
-                mSwfVsBlockFlag = true;
-                break;
-            case SWORDPLAY_SHOWDOWN_HEART: 
-                mSwfSglHeartFlag.AddMinBit();
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_1: 
-                mSwfSglStageFlag.SetBit(0);
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_2: 
-                mSwfSglStageFlag.SetBit(1);
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_3: 
-                mSwfSglStageFlag.SetBit(2);
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_4: 
-                mSwfSglStageFlag.SetBit(3);
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_5: 
-                mSwfSglStageFlag.SetBit(4);
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_6: 
-                mSwfSglStageFlag.SetBit(5);;
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_7: 
-                mSwfSglStageFlag.SetBit(6);
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_8: 
-                mSwfSglStageFlag.SetBit(7);;
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_9: 
-                mSwfSglStageFlag.SetBit(8);
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_10: 
-                mSwfSglStageFlag.SetBit(9);
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_11: 
-                mSwfSglStageFlag.SetBit(10);
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_12: 
-                mSwfSglStageFlag.SetBit(11);
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_13: 
-                mSwfSglStageFlag.SetBit(12);
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_14: 
-                mSwfSglStageFlag.SetBit(13);
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_15: 
-                mSwfSglStageFlag.SetBit(14);
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_16: 
-                mSwfSglStageFlag.SetBit(15);
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_17: 
-                mSwfSglStageFlag.SetBit(16);
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_18: 
-                mSwfSglStageFlag.SetBit(17);
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_19: 
-                mSwfSglStageFlag.SetBit(18);
-                break;
-            case SWORDPLAY_SHOWDOWN_STAGE_20: 
-                mSwfSglStageFlag.SetBit(19);
-                break;
-            case WAKEBOARDING_TIMER: 
-                mWkbTimerFlag.AddMinBit();
-                break;
-            case WAKEBOARDING_BEGINNER: 
-                mWkbStageFlag.SetBit(0);
-                break;
-            case WAKEBOARDING_INTERMEDIATE: 
-                mWkbStageFlag.SetBit(1);
-                break;
-            case WAKEBOARDING_EXPERT: 
-                mWkbStageFlag.SetBit(2);
-                break;
-            case FRISBEE_DOG_FRISBEES: 
-                mFldThrowFlag.AddMinBit();
-                break;
-            case FRISBEE_DOG_SECRET_POP: 
-                mFldSecretPopFlag = true;
-                break;
-            case FRISBEE_GOLF_HUD: 
-                mDglHUDFlag = true;
-                break;
-            case FRISBEE_GOLF_DRIVER: 
-                mDglDiscFlag.SetBit(0);
-                break;
-            case FRISBEE_GOLF_MIDRANGE: 
-                mDglDiscFlag.SetBit(1);
-                break;
-            case FRISBEE_GOLF_PUTTER: 
-                mDglDiscFlag.SetBit(2);
-                break;
-            case FRISBEE_GOLF_COURSE_0: 
-                mDglStageFlag.SetBit(0);
-                break;
-            case FRISBEE_GOLF_COURSE_1: 
-                mDglStageFlag.SetBit(1);
-                break;
-            case FRISBEE_GOLF_COURSE_2: 
-                mDglStageFlag.SetBit(2);
-                break;
-            case FRISBEE_GOLF_COURSE_3: 
-                mDglStageFlag.SetBit(3);
-                break;
-            case FRISBEE_GOLF_COURSE_4: 
-                mDglStageFlag.SetBit(4);
-                break;
-            case FRISBEE_GOLF_COURSE_5: 
-                mDglStageFlag.SetBit(5);
-                break;
-            case FRISBEE_GOLF_COURSE_6: 
-                mDglStageFlag.SetBit(6);
-                break;
-            case FRISBEE_GOLF_COURSE_7: 
-                mDglStageFlag.SetBit(7);
-                break;
-            case FRISBEE_GOLF_COURSE_8: 
-                mDglStageFlag.SetBit(8);
-                break;
-            case FRISBEE_GOLF_COURSE_9: 
-                mDglStageFlag.SetBit(9);
-                break;
-            case ARCHERY_AIM_CIRCLE: 
-                mArcAimFlag = true;
-                break;
-            case ARCHERY_ARROW: 
-                mArcArrowFlag.AddMinBit();
-                break;
-            case ARCHERY_FRUIT_BEGINNER: 
-                mArcFruitFlag.SetBit(0);
-                break;
-            case ARCHERY_FRUIT_INTERMEDIATE: 
-                mArcFruitFlag.SetBit(1);
-                break;
-            case ARCHERY_FRUIT_EXPERT: 
-                mArcFruitFlag.SetBit(2);
-                break;
-            case ARCHERY_BEGINNER: 
-                mArcStageFlag.SetBit(0);
-                break;
-            case ARCHERY_INTERMEDIATE: 
-                mArcStageFlag.SetBit(1);
-                break;
-            case ARCHERY_EXPERT: 
-                mArcStageFlag.SetBit(2);
-                break;
-            case BASKETBALL_3PT_TIMER: 
-                mBsk3ptTimerFlag.AddMinBit();
-                break;
-            case BASKETBALL_BONUS_BALLS: 
-                mBsk3ptBonusFlag = true;
-                break;
-            case BASKETBALL_PICKUP_TIMER: 
-                mBskVsTimerFlag.AddMinBit();
-                break;
-            case BASKETBALL_PASS: 
-                mBskVsPassFlag = true;
-                break;
-            case BASKETBALL_3PTS: 
-                mBskVs3ptFlag = true;
-                break;
-            case BASKETBALL_DUNK: 
-                mBskVsDunkFlag = true;
-                break;
-            case TABLE_TENNIS_SPIN: 
-                mPngSpinFlag = true;
-                break;
-            case TABLE_TENNIS_SMASH: 
-                mPngSmashFlag = true;
-                break;
-            case TABLE_TENNIS_CANS: 
-                mPngCansFlag = true;
-                break;
-            case GOLF_HUD: 
-                mGlfHUDFlag = true;
-                break;
-            case GOLF_DRIVER: 
-                mGlfClubFlag.SetBit(0);
-                break;
-            case GOLF_3_WOOD: 
-                mGlfClubFlag.SetBit(1);
-                break;
-            case GOLF_3_IRON: 
-                mGlfClubFlag.SetBit(2);
-                break;
-            case GOLF_5_IRON: 
-                mGlfClubFlag.SetBit(3);
-                break;
-            case GOLF_7_IRON: 
-                mGlfClubFlag.SetBit(4);
-                break;
-            case GOLF_9_IRON: 
-                mGlfClubFlag.SetBit(5);
-                break;
-            case GOLF_WEDGE: 
-                mGlfClubFlag.SetBit(6);
-                break;
-            case GOLF_PUTTER: 
-                mGlfClubFlag.SetBit(7);
-                break;
-            case GOLF_TURN: 
-                mGlfTurnFlag = true;
-                break;
-            case GOLF_BACKSPIN: 
-                mGlfSpinFlag = true;
-                break;
-            case GOLF_COURSE_0: 
-                mGlfStageFlag.SetBit(0);
-                break;
-            case GOLF_COURSE_1: 
-                mGlfStageFlag.SetBit(1);
-                break;
-            case GOLF_COURSE_2: 
-                mGlfStageFlag.SetBit(2);
-                break;
-            case GOLF_COURSE_3: 
-                mGlfStageFlag.SetBit(3);
-                break;
-            case GOLF_COURSE_4: 
-                mGlfStageFlag.SetBit(4);
-                break;
-            case GOLF_COURSE_5: 
-                mGlfStageFlag.SetBit(5);
-                break;
-            case GOLF_COURSE_6: 
-                mGlfStageFlag.SetBit(6);
-                break;
-            case GOLF_COURSE_7: 
-                mGlfStageFlag.SetBit(7);
-                break;
-            case GOLF_COURSE_8: 
-                mGlfStageFlag.SetBit(8);
-                break;
-            case GOLF_COURSE_9: 
-                mGlfStageFlag.SetBit(9);
-                break;
-            case GOLF_VIEW_LOW: 
-                mGlfViewLowFlag = true;
-                break;
-            case GOLF_VIEW_SLOPE: 
-                mGlfViewSlopeFlag = true;
-                break;
-            case BOWLING_10_PIN_MOVE: 
-                mBwlStdMoveFlag = true;
-                break;
-            case BOWLING_10_PIN_TURN: 
-                mBwlStdTurnFlag = true;
-                break;
-            case BOWLING_10_PIN_SPIN: 
-                mBwlStdSpinFlag = true;
-                break;
-            case BOWLING_100_PIN_MOVE: 
-                mBwl100MoveFlag = true;
-                break;
-            case BOWLING_100_PIN_TURN: 
-                mBwl100TurnFlag = true;
-                break;
-            case BOWLING_100_PIN_SPIN:
-                mBwl100SpinFlag = true;
-                break;
-            case BOWLING_100_PIN_SECRET_STRIKE: 
-                mBwl100SecretBtnFlag = true;
-                break;
-            case BOWLING_SPIN_CONTROL_MOVE: 
-                mBwlWalMoveFlag = true;
-                break;
-            case BOWLING_SPIN_CONTROL_TURN: 
-                mBwlWalTurnFlag = true;
-                break;
-            case BOWLING_SPIN_CONTROL_SPIN: 
-                mBwlWalSpinFlag = true;
-                break;
-            case POWER_CRUISING_BOOST: 
-                mJskBoostFlag = true;
-                break;
-            case POWER_CRUISING_RING_TIMER: 
-                mJskRingTimerFlag.AddMinBit();
-                break;
-            case POWER_CRUISING_DOUBLE_RING:
-                mJsk2xRingFlag = true;
-                break;
-            case POWER_CRUISING_FREE_CRUISING_TIMER: 
-                mJskFreeTimerFlag.AddMinBit();
-                break;
-            case CANOEING_TIMER: 
-                mCanTimerFlag.AddMinBit();
-                break;
-            case CANOEING_BEGINNER: 
-                mCanStageFlag.SetBit(0);
-                break;
-            case CANOEING_INTERMEDIATE: 
-                mCanStageFlag.SetBit(1);
-                break;
-            case CANOEING_EXPERT: 
-                mCanStageFlag.SetBit(2);
-                break;
-            case CYCLING_HEART: 
-                mBicHeartFlag.AddMinBit();
-                break;
-            case CYCLING_STAGE_0: 
-                mBicStageFlag.SetBit(0);
-                break;
-            case CYCLING_STAGE_1: 
-                mBicStageFlag.SetBit(1);
-                break;
-            case CYCLING_STAGE_2: 
-                mBicStageFlag.SetBit(2);
-                break;
-            case CYCLING_STAGE_3: 
-                mBicStageFlag.SetBit(3);
-                break;
-            case CYCLING_STAGE_4: 
-                mBicStageFlag.SetBit(4);
-                break;
-            case CYCLING_STAGE_5: 
-                mBicStageFlag.SetBit(5);
-                break;
-            case CYCLING_STAGE_6: 
-                mBicStageFlag.SetBit(6);
-                break;
-            case CYCLING_STAGE_7: 
-                mBicStageFlag.SetBit(7);
-                break;
-            case SKYDIVING_MII: 
-                mOmkMiiFlag.AddMinBit();
-                break;
-            case ISLAND_FLYOVER_TIMER: 
-                mPlnTimerFlag.AddMinBit();
-                break;
-            case ISLAND_FLYOVER_DAY: 
-                mPlnStageFlag.SetBit(0);
-                break;
-            case ISLAND_FLYOVER_EVENING:
-                mPlnStageFlag.SetBit(1); 
-                break;
-            case ISLAND_FLYOVER_NIGHT: 
-                mPlnStageFlag.SetBit(2);
-                break;
-            case ISLAND_FLYOVER_DOUBLE_BLASTERS: 
-                mPlnDoubleBlastersFlag = true;
-                break;
-            case ISLAND_FLYOVER_NIGHT_LIGHTS: 
-                mPlnNightLightsFlag = true;
-                break;
-            case ISLAND_FLYOVER_UNLOCK_BALLOONS: 
-                mPlnBalloonsFlag = true;
-                break;
-            case ISLAND_FLYOVER_UNLOCK_TWO_SEATER: 
-                mPlnTwoSeaterPlaneFlag = true;
-                break;
+        switch (id) {
+        case SWORDPLAY_DUEL_SPORT_UNLOCK:
+            mSportFlag.SetBit(0);
+            break;
+        case SWORDPLAY_SPEED_SLICE_SPORT_UNLOCK:
+            mSportFlag.SetBit(1);
+            break;
+        case SWORDPLAY_SHOWDOWN_SPORT_UNLOCK:
+            mSportFlag.SetBit(2);
+            break;
+        case WAKEBOARDING_SPORT_UNLOCK:
+            mSportFlag.SetBit(3);
+            break;
+        case FRISBEE_DOG_SPORT_UNLOCK:
+            mSportFlag.SetBit(4);
+            break;
+        case FRISBEE_GOLF_SPORT_UNLOCK:
+            mSportFlag.SetBit(5);
+            break;
+        case ARCHERY_SPORT_UNLOCK:
+            mSportFlag.SetBit(6);
+            break;
+        case BASKETBALL_3POINT_CONTEST_SPORT_UNLOCK:
+            mSportFlag.SetBit(7);
+            break;
+        case BASKETBALL_PICKUP_GAME_SPORT_UNLOCK:
+            mSportFlag.SetBit(8);
+            break;
+        case TABLE_TENNIS_MATCH_SPORT_UNLOCK:
+            mSportFlag.SetBit(9);
+            break;
+        case TABLE_TENNIS_RETURN_CHALLENGE_SPORT_UNLOCK:
+            mSportFlag.SetBit(10);
+            break;
+        case GOLF_SPORT_UNLOCK:
+            mSportFlag.SetBit(11);
+            break;
+        case BOWLING_STANDARD_GAME_SPORT_UNLOCK:
+            mSportFlag.SetBit(12);
+            break;
+        case BOWLING_100_PIN_GAME_SPORT_UNLOCK:
+            mSportFlag.SetBit(13);
+            break;
+        case BOWLING_SPIN_CONTROL_SPORT_UNLOCK:
+            mSportFlag.SetBit(14);
+            break;
+        case POWER_CRUISING_SPORT_UNLOCK:
+            mSportFlag.SetBit(15);
+            break;
+        case CANOEING_SPEED_CHALLENGE_SPORT_UNLOCK:
+            mSportFlag.SetBit(16);
+            break;
+        case CYCLING_SINGLE_RACE_UNLOCK:
+            mSportFlag.SetBit(17);
+            break;
+        case AIRSPORTS_SKYDIVING_UNLOCK:
+            mSportFlag.SetBit(18);
+            break;
+        case AIRSPORTS_ISLAND_FLYOVER_UNLOCK:
+            mSportFlag.SetBit(19);
+            break;
+        case SWORDPLAY_CATEGORY_UNLOCK:
+            mCategoryFlag.SetBit(0);
+            break;
+        case WAKEBOARD_CATEGORY_UNLOCK:
+            mCategoryFlag.SetBit(1);
+            break;
+        case FRISBEE_CATEGORY_UNLOCK:
+            mCategoryFlag.SetBit(2);
+            break;
+        case ARCHERY_CATEGORY_UNLOCK:
+            mCategoryFlag.SetBit(3);
+            break;
+        case BASKETBALL_CATEGORY_UNLOCK:
+            mCategoryFlag.SetBit(4);
+            break;
+        case TABLE_TENNIS_CATEGORY_UNLOCK:
+            mCategoryFlag.SetBit(5);
+            break;
+        case GOLF_CATEGORY_UNLOCK:
+            mCategoryFlag.SetBit(6);
+            break;
+        case BOWLING_CATEGORY_UNLOCK:
+            mCategoryFlag.SetBit(7);
+            break;
+        case POWER_CRUISING_CATEGORY_UNLOCK:
+            mCategoryFlag.SetBit(8);
+            break;
+        case CANOEING_CATEGORY_UNLOCK:
+            mCategoryFlag.SetBit(9);
+            break;
+        case CYCLING_CATEGORY_UNLOCK:
+            mCategoryFlag.SetBit(10);
+            break;
+        case AIRSPORTS_CATEGORY_UNLOCK:
+            mCategoryFlag.SetBit(11);
+            break;
+        case SWORDPLAY_DUEL_BLOCK:
+            mSwfVsBlockFlag = true;
+            break;
+        case SWORDPLAY_SPEED_SLICE_PAUSE:
+            mSwfPrcPauseFlag = true;
+            break;
+        case SWORDPLAY_SHOWDOWN_BLOCK:
+            mSwfVsBlockFlag = true;
+            break;
+        case SWORDPLAY_SHOWDOWN_HEART:
+            mSwfSglHeartFlag.SetFirstUnset();
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_1:
+            mSwfSglStageFlag.SetBit(0);
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_2:
+            mSwfSglStageFlag.SetBit(1);
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_3:
+            mSwfSglStageFlag.SetBit(2);
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_4:
+            mSwfSglStageFlag.SetBit(3);
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_5:
+            mSwfSglStageFlag.SetBit(4);
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_6:
+            mSwfSglStageFlag.SetBit(5);
+            ;
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_7:
+            mSwfSglStageFlag.SetBit(6);
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_8:
+            mSwfSglStageFlag.SetBit(7);
+            ;
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_9:
+            mSwfSglStageFlag.SetBit(8);
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_10:
+            mSwfSglStageFlag.SetBit(9);
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_11:
+            mSwfSglStageFlag.SetBit(10);
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_12:
+            mSwfSglStageFlag.SetBit(11);
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_13:
+            mSwfSglStageFlag.SetBit(12);
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_14:
+            mSwfSglStageFlag.SetBit(13);
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_15:
+            mSwfSglStageFlag.SetBit(14);
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_16:
+            mSwfSglStageFlag.SetBit(15);
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_17:
+            mSwfSglStageFlag.SetBit(16);
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_18:
+            mSwfSglStageFlag.SetBit(17);
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_19:
+            mSwfSglStageFlag.SetBit(18);
+            break;
+        case SWORDPLAY_SHOWDOWN_STAGE_20:
+            mSwfSglStageFlag.SetBit(19);
+            break;
+        case WAKEBOARDING_TIMER:
+            mWkbTimerFlag.SetFirstUnset();
+            break;
+        case WAKEBOARDING_BEGINNER:
+            mWkbStageFlag.SetBit(0);
+            break;
+        case WAKEBOARDING_INTERMEDIATE:
+            mWkbStageFlag.SetBit(1);
+            break;
+        case WAKEBOARDING_EXPERT:
+            mWkbStageFlag.SetBit(2);
+            break;
+        case FRISBEE_DOG_FRISBEES:
+            mFldThrowFlag.SetFirstUnset();
+            break;
+        case FRISBEE_DOG_SECRET_POP:
+            mFldSecretPopFlag = true;
+            break;
+        case FRISBEE_GOLF_HUD:
+            mDglHUDFlag = true;
+            break;
+        case FRISBEE_GOLF_DRIVER:
+            mDglDiscFlag.SetBit(0);
+            break;
+        case FRISBEE_GOLF_MIDRANGE:
+            mDglDiscFlag.SetBit(1);
+            break;
+        case FRISBEE_GOLF_PUTTER:
+            mDglDiscFlag.SetBit(2);
+            break;
+        case FRISBEE_GOLF_COURSE_0:
+            mDglStageFlag.SetBit(0);
+            break;
+        case FRISBEE_GOLF_COURSE_1:
+            mDglStageFlag.SetBit(1);
+            break;
+        case FRISBEE_GOLF_COURSE_2:
+            mDglStageFlag.SetBit(2);
+            break;
+        case FRISBEE_GOLF_COURSE_3:
+            mDglStageFlag.SetBit(3);
+            break;
+        case FRISBEE_GOLF_COURSE_4:
+            mDglStageFlag.SetBit(4);
+            break;
+        case FRISBEE_GOLF_COURSE_5:
+            mDglStageFlag.SetBit(5);
+            break;
+        case FRISBEE_GOLF_COURSE_6:
+            mDglStageFlag.SetBit(6);
+            break;
+        case FRISBEE_GOLF_COURSE_7:
+            mDglStageFlag.SetBit(7);
+            break;
+        case FRISBEE_GOLF_COURSE_8:
+            mDglStageFlag.SetBit(8);
+            break;
+        case FRISBEE_GOLF_COURSE_9:
+            mDglStageFlag.SetBit(9);
+            break;
+        case ARCHERY_AIM_CIRCLE:
+            mArcAimFlag = true;
+            break;
+        case ARCHERY_ARROW:
+            mArcArrowFlag.SetFirstUnset();
+            break;
+        case ARCHERY_FRUIT_BEGINNER:
+            mArcFruitFlag.SetBit(0);
+            break;
+        case ARCHERY_FRUIT_INTERMEDIATE:
+            mArcFruitFlag.SetBit(1);
+            break;
+        case ARCHERY_FRUIT_EXPERT:
+            mArcFruitFlag.SetBit(2);
+            break;
+        case ARCHERY_BEGINNER:
+            mArcStageFlag.SetBit(0);
+            break;
+        case ARCHERY_INTERMEDIATE:
+            mArcStageFlag.SetBit(1);
+            break;
+        case ARCHERY_EXPERT:
+            mArcStageFlag.SetBit(2);
+            break;
+        case BASKETBALL_3PT_TIMER:
+            mBsk3ptTimerFlag.SetFirstUnset();
+            break;
+        case BASKETBALL_BONUS_BALLS:
+            mBsk3ptBonusFlag = true;
+            break;
+        case BASKETBALL_PICKUP_TIMER:
+            mBskVsTimerFlag.SetFirstUnset();
+            break;
+        case BASKETBALL_PASS:
+            mBskVsPassFlag = true;
+            break;
+        case BASKETBALL_3PTS:
+            mBskVs3ptFlag = true;
+            break;
+        case BASKETBALL_DUNK:
+            mBskVsDunkFlag = true;
+            break;
+        case TABLE_TENNIS_SPIN:
+            mPngSpinFlag = true;
+            break;
+        case TABLE_TENNIS_SMASH:
+            mPngSmashFlag = true;
+            break;
+        case TABLE_TENNIS_CANS:
+            mPngCansFlag = true;
+            break;
+        case GOLF_HUD:
+            mGlfHUDFlag = true;
+            break;
+        case GOLF_DRIVER:
+            mGlfClubFlag.SetBit(0);
+            break;
+        case GOLF_3_WOOD:
+            mGlfClubFlag.SetBit(1);
+            break;
+        case GOLF_3_IRON:
+            mGlfClubFlag.SetBit(2);
+            break;
+        case GOLF_5_IRON:
+            mGlfClubFlag.SetBit(3);
+            break;
+        case GOLF_7_IRON:
+            mGlfClubFlag.SetBit(4);
+            break;
+        case GOLF_9_IRON:
+            mGlfClubFlag.SetBit(5);
+            break;
+        case GOLF_WEDGE:
+            mGlfClubFlag.SetBit(6);
+            break;
+        case GOLF_PUTTER:
+            mGlfClubFlag.SetBit(7);
+            break;
+        case GOLF_TURN:
+            mGlfTurnFlag = true;
+            break;
+        case GOLF_BACKSPIN:
+            mGlfSpinFlag = true;
+            break;
+        case GOLF_COURSE_0:
+            mGlfStageFlag.SetBit(0);
+            break;
+        case GOLF_COURSE_1:
+            mGlfStageFlag.SetBit(1);
+            break;
+        case GOLF_COURSE_2:
+            mGlfStageFlag.SetBit(2);
+            break;
+        case GOLF_COURSE_3:
+            mGlfStageFlag.SetBit(3);
+            break;
+        case GOLF_COURSE_4:
+            mGlfStageFlag.SetBit(4);
+            break;
+        case GOLF_COURSE_5:
+            mGlfStageFlag.SetBit(5);
+            break;
+        case GOLF_COURSE_6:
+            mGlfStageFlag.SetBit(6);
+            break;
+        case GOLF_COURSE_7:
+            mGlfStageFlag.SetBit(7);
+            break;
+        case GOLF_COURSE_8:
+            mGlfStageFlag.SetBit(8);
+            break;
+        case GOLF_COURSE_9:
+            mGlfStageFlag.SetBit(9);
+            break;
+        case GOLF_VIEW_LOW:
+            mGlfViewLowFlag = true;
+            break;
+        case GOLF_VIEW_SLOPE:
+            mGlfViewSlopeFlag = true;
+            break;
+        case BOWLING_10_PIN_MOVE:
+            mBwlStdMoveFlag = true;
+            break;
+        case BOWLING_10_PIN_TURN:
+            mBwlStdTurnFlag = true;
+            break;
+        case BOWLING_10_PIN_SPIN:
+            mBwlStdSpinFlag = true;
+            break;
+        case BOWLING_100_PIN_MOVE:
+            mBwl100MoveFlag = true;
+            break;
+        case BOWLING_100_PIN_TURN:
+            mBwl100TurnFlag = true;
+            break;
+        case BOWLING_100_PIN_SPIN:
+            mBwl100SpinFlag = true;
+            break;
+        case BOWLING_100_PIN_SECRET_STRIKE:
+            mBwl100SecretBtnFlag = true;
+            break;
+        case BOWLING_SPIN_CONTROL_MOVE:
+            mBwlWalMoveFlag = true;
+            break;
+        case BOWLING_SPIN_CONTROL_TURN:
+            mBwlWalTurnFlag = true;
+            break;
+        case BOWLING_SPIN_CONTROL_SPIN:
+            mBwlWalSpinFlag = true;
+            break;
+        case POWER_CRUISING_BOOST:
+            mJskBoostFlag = true;
+            break;
+        case POWER_CRUISING_RING_TIMER:
+            mJskRingTimerFlag.SetFirstUnset();
+            break;
+        case POWER_CRUISING_DOUBLE_RING:
+            mJsk2xRingFlag = true;
+            break;
+        case POWER_CRUISING_FREE_CRUISING_TIMER:
+            mJskFreeTimerFlag.SetFirstUnset();
+            break;
+        case CANOEING_TIMER:
+            mCanTimerFlag.SetFirstUnset();
+            break;
+        case CANOEING_BEGINNER:
+            mCanStageFlag.SetBit(0);
+            break;
+        case CANOEING_INTERMEDIATE:
+            mCanStageFlag.SetBit(1);
+            break;
+        case CANOEING_EXPERT:
+            mCanStageFlag.SetBit(2);
+            break;
+        case CYCLING_HEART:
+            mBicHeartFlag.SetFirstUnset();
+            break;
+        case CYCLING_STAGE_0:
+            mBicStageFlag.SetBit(0);
+            break;
+        case CYCLING_STAGE_1:
+            mBicStageFlag.SetBit(1);
+            break;
+        case CYCLING_STAGE_2:
+            mBicStageFlag.SetBit(2);
+            break;
+        case CYCLING_STAGE_3:
+            mBicStageFlag.SetBit(3);
+            break;
+        case CYCLING_STAGE_4:
+            mBicStageFlag.SetBit(4);
+            break;
+        case CYCLING_STAGE_5:
+            mBicStageFlag.SetBit(5);
+            break;
+        case CYCLING_STAGE_6:
+            mBicStageFlag.SetBit(6);
+            break;
+        case CYCLING_STAGE_7:
+            mBicStageFlag.SetBit(7);
+            break;
+        case SKYDIVING_MII:
+            mOmkMiiFlag.SetFirstUnset();
+            break;
+        case ISLAND_FLYOVER_TIMER:
+            mPlnTimerFlag.SetFirstUnset();
+            break;
+        case ISLAND_FLYOVER_DAY:
+            mPlnStageFlag.SetBit(0);
+            break;
+        case ISLAND_FLYOVER_EVENING:
+            mPlnStageFlag.SetBit(1);
+            break;
+        case ISLAND_FLYOVER_NIGHT:
+            mPlnStageFlag.SetBit(2);
+            break;
+        case ISLAND_FLYOVER_DOUBLE_BLASTERS:
+            mPlnDoubleBlastersFlag = true;
+            break;
+        case ISLAND_FLYOVER_NIGHT_LIGHTS:
+            mPlnNightLightsFlag = true;
+            break;
+        case ISLAND_FLYOVER_UNLOCK_BALLOONS:
+            mPlnBalloonsFlag = true;
+            break;
+        case ISLAND_FLYOVER_UNLOCK_TWO_SEATER:
+            mPlnTwoSeaterPlaneFlag = true;
+            break;
 
-            default:
-                kiwi::cout << "Error giving item with id: " << id << kiwi::endl;
+        default:
+            kiwi::cout << "Error giving item with id: " << id << kiwi::endl;
         }
     }
 };

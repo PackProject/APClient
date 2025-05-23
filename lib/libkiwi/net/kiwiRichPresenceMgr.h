@@ -55,7 +55,7 @@ public:
  * @brief Discord rich presence manager
  */
 class RichPresenceMgr : public StaticSingleton<RichPresenceMgr>,
-                        public ISceneHook {
+                        public SceneHookBase {
     friend class StaticSingleton<RichPresenceMgr>;
 
 public:
@@ -85,7 +85,7 @@ private:
      *
      * @param pScene Current scene
      */
-    virtual void Reset(RPSysScene* pScene);
+    virtual void AfterReset(RPSysScene* pScene);
 
     /**
      * @brief Handles periodic alarm event

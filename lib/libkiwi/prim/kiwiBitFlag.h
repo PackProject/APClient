@@ -48,31 +48,21 @@ public:
      * @return Bitfield
      */
     T GetDirect() const {
-        return mValue;
+        return mValue & MakeMask();
     }
 
     /**
-     * @brief Adds the next possible bit
+     * @brief Sets the first (left-to-right) unset bit
      */
-    void AddMinBit() {
-        for (u32 i = 0; i < N; i++) {
-            if ((mValue & (T(1) << i)) == 0) {
-                SetBit(i);
-                return;
-            }
-        }
+    void SetFirstUnset() {
+        SetDirect(BitUtil<T>::SetFirstUnset(GetDirect()));
     }
 
     /**
-     * @brief Adds the last possible bit
+     * @brief Sets the last (right-to-left) unset bit
      */
-    void AddMaxBit() {
-        for(u32 i = N - 1; i >= 0; i++) {
-            if((mValue & (T(1) << i)) == 0) {
-                SetBit(i);
-                return;
-            }
-        }
+    void SetLastUnset() {
+        SetDirect(BitUtil<T>::SetLastUnset(GetDirect()));
     }
 
     /**
@@ -158,22 +148,14 @@ public:
      * @return Number of bits set
      */
     u32 Count() const {
-        return BitUtil::Count(mValue & MakeMask());
+        return BitUtil<T>::CountOne(GetDirect());
     }
 
     /**
      * @brief Randomizes the bits
      */
     void Randomize() {
-        Random rnd;
-        u32 value = 0;
-
-        for (u32 i = 0; i < N; i++) {
-            value |= rnd.CoinFlip();
-            value <<= 1;
-        }
-
-        SetDirect(value);
+        SetDirect(BitUtil<T>::MakeRandom());
     }
 
 private:

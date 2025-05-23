@@ -1,5 +1,5 @@
-#ifndef LIBKIWI_UTIL_BUILDTARGET_H
-#define LIBKIWI_UTIL_BUILDTARGET_H
+#ifndef LIBKIWI_UTIL_PRODUCT_INFO_H
+#define LIBKIWI_UTIL_PRODUCT_INFO_H
 #include <libkiwi/debug/kiwiAssert.h>
 #include <libkiwi/k_types.h>
 

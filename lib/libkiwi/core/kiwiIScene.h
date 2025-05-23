@@ -10,25 +10,29 @@
  *
  * @param T Scene class type
  */
-#define K_SCENE_DECL(T) static kiwi::SceneDecl<T> SceneDecl_##T;
+#define K_DECL_SCENE(T) static kiwi::detail::SceneDecl<T> SceneDecl_##T
 
 namespace kiwi {
 //! @addtogroup libkiwi_core
 //! @{
 
+// Forward declarations
+namespace detail {
+template <typename T> class SceneDecl;
+}
+
 /**
  * @brief User scene interface
  */
 class IScene : public RPSysScene {
-    //! Needs to see 'Create' method
-    template <typename> friend class SceneDecl;
+    //! Needs to access 'Create' method
+    template <typename> friend class detail::SceneDecl;
 
 public:
     /**
      * @brief Constructor
      */
     IScene() {}
-
     /**
      * @brief Destructor
      */
@@ -45,7 +49,6 @@ public:
     virtual String GetName() const {
         return "Dummy";
     }
-
     /**
      * @brief Gets the scene's resource directory name
      */
@@ -57,7 +60,6 @@ public:
      * @brief Gets the scene's ID
      */
     virtual s32 GetID() const = 0;
-
     /**
      * @brief Gets the scene's target pack
      */
@@ -71,7 +73,6 @@ public:
     virtual ECreateType GetCreateType() const {
         return ECreateType_Sibling;
     }
-
     /**
      * @brief Gets the scene's exit type
      */
@@ -242,6 +243,10 @@ private:
     }
 }; // namespace kiwi
 
+namespace detail {
+//! @addtogroup libkiwi_core
+//! @{
+
 /**
  * @brief User scene declaration
  * @details Makes user scene visible to the scene creator
@@ -271,6 +276,9 @@ public:
         SceneCreator::GetInstance().RegistScene(info);
     }
 };
+
+//! @}
+} // namespace detail
 
 //! @}
 } // namespace kiwi

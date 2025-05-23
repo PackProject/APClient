@@ -1,6 +1,6 @@
-#include <egg/core.h>
-
 #include <libkiwi.h>
+
+#include <egg/core.h>
 
 namespace kiwi {
 namespace {
@@ -33,17 +33,17 @@ void CheckDoubleFree(const void* pBlock) {
         return;
     }
 
-    // Catch invalid pointers while we're here
-    K_ASSERT(OSIsMEM1Region(pBlock) || OSIsMEM2Region(pBlock));
+    K_ASSERT_PTR(pBlock);
 
     // Sanity check, should always be ExpHeap
     MEMiHeapHead* pHandle = MEMFindContainHeap(pBlock);
-    K_ASSERT(pHandle != nullptr);
+    K_ASSERT_PTR(pHandle);
     K_ASSERT(pHandle->magic == 'EXPH');
 
-    // Check that the block is still marked as used
-    MEMiExpHeapMBlock* pMBlock = static_cast<MEMiExpHeapMBlock*>(
-        AddToPtr(pMBlock, -sizeof(MEMiExpHeapMBlock)));
+    // Heap block lives before the allocated memory
+    const MEMiExpHeapMBlock* pMBlock = static_cast<const MEMiExpHeapMBlock*>(
+        AddToPtr(pBlock, -sizeof(MEMiExpHeapMBlock)));
+
     K_ASSERT_EX(pMBlock->state == 'UD', "Double free!");
 #endif
 }
@@ -62,16 +62,19 @@ MemoryMgr::MemoryMgr() {
     EGG::Heap* pMem2HeapRP = RP_GET_INSTANCE(RPSysSystem)->getResourceHeap();
 #endif
 
+    K_ASSERT_PTR(pMem1HeapRP);
     LogHeap("RPSysSystem:System", pMem1HeapRP);
+
+    K_ASSERT_PTR(pMem2HeapRP);
     LogHeap("RPSysSystem:Resource", pMem2HeapRP);
 
-    mpHeapMEM1 = EGG::ExpHeap::create(scHeapSize, pMem1HeapRP, 0);
-    K_ASSERT(mpHeapMEM1 != nullptr);
+    mpHeapMEM1 = EGG::ExpHeap::create(HEAP_SIZE, pMem1HeapRP);
+    K_ASSERT_PTR(mpHeapMEM1);
     K_ASSERT(OSIsMEM1Region(mpHeapMEM1));
     LogHeap("libkiwi:MEM1", mpHeapMEM1);
 
-    mpHeapMEM2 = EGG::ExpHeap::create(scHeapSize, pMem2HeapRP, 0);
-    K_ASSERT(mpHeapMEM2 != nullptr);
+    mpHeapMEM2 = EGG::ExpHeap::create(HEAP_SIZE, pMem2HeapRP);
+    K_ASSERT_PTR(mpHeapMEM2);
     K_ASSERT(OSIsMEM2Region(mpHeapMEM2));
     LogHeap("libkiwi:MEM2", mpHeapMEM2);
 }
@@ -90,26 +93,22 @@ MemoryMgr::~MemoryMgr() {
  * @param memory Target memory region
  */
 EGG::Heap* MemoryMgr::GetHeap(EMemory memory) const {
-    EGG::Heap* pHeap = nullptr;
-
     switch (memory) {
     case EMemory_MEM1: {
-        pHeap = mpHeapMEM1;
-        break;
+        K_ASSERT_PTR(mpHeapMEM1);
+        return mpHeapMEM1;
     }
 
     case EMemory_MEM2: {
-        pHeap = mpHeapMEM2;
-        break;
+        K_ASSERT_PTR(mpHeapMEM2);
+        return mpHeapMEM2;
     }
 
     default: {
-        K_ASSERT(false);
+        K_UNREACHABLE();
+        return nullptr;
     }
     }
-
-    K_ASSERT(pHeap != nullptr);
-    return pHeap;
 }
 
 /**
@@ -118,7 +117,7 @@ EGG::Heap* MemoryMgr::GetHeap(EMemory memory) const {
  * @param size Block size
  * @param align Block alignment
  * @param memory Target memory region
- * @return void* Pointer to allocated block
+ * @return Pointer to allocated block
  */
 void* MemoryMgr::Alloc(u32 size, s32 align, EMemory memory) const {
     void* pBlock = GetHeap(memory)->alloc(size, align);
@@ -155,7 +154,8 @@ u32 MemoryMgr::GetFreeSize(EMemory memory) const {
  * @param pAddr Memory address
  */
 bool MemoryMgr::IsHeapMemory(const void* pAddr) const {
-    K_ASSERT(mpHeapMEM1 != nullptr && mpHeapMEM2 != nullptr);
+    K_ASSERT_PTR(mpHeapMEM1);
+    K_ASSERT_PTR(mpHeapMEM2);
 
     // Check MEM1 heap
     if (pAddr >= mpHeapMEM1->getStartAddress() &&

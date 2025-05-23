@@ -1,7 +1,9 @@
-#include <cstdio>
 #include <libkiwi.h>
+
 #include <revolution/KPAD.h>
 #include <revolution/VI.h>
+
+#include <cstdio>
 
 namespace kiwi {
 
@@ -14,6 +16,7 @@ Nw4rException::Nw4rException()
     : mpUserCallback(DefaultCallback),
       mpUserCallbackArg(nullptr),
       mpRenderMode(nullptr) {
+
     Nw4rConsole::CreateInstance();
 
     // Create exception thread
@@ -373,7 +376,7 @@ void Nw4rException::PrintStack(u32 depth) {
     Printf("Address:   BackChain   LR save\n");
 
     for (int i = 0; i < depth; i++, pFrame = pFrame->next) {
-        if (pFrame == nullptr || !PtrUtil::IsPointer(pFrame)) {
+        if (!PtrUtil::IsPointer(pFrame)) {
             break;
         }
 
@@ -406,7 +409,6 @@ void Nw4rException::PrintSymbol(const void* pAddr) {
 
     // Symbol is from game (outside module)
     if (textOffset < 0 || textOffset >= GetModuleTextSize()) {
-        // Print raw address
         Printf("%08X (game)", pAddr);
         return;
     }
@@ -416,6 +418,7 @@ void Nw4rException::PrintSymbol(const void* pAddr) {
         /**
          * If the map file is not available, we are in one of two
          * situations:
+         *
          * 1. The exception occurred before the map file could be read
          * 2. The map file does not exist
          *
@@ -426,33 +429,35 @@ void Nw4rException::PrintSymbol(const void* pAddr) {
         return;
     }
 
-    // Map file is available, let's use it
-    const MapFile::Symbol* sym = MapFile::GetInstance().QueryTextSymbol(pAddr);
+    const MapFile::Symbol* pSymbol =
+        MapFile::GetInstance().QueryTextSymbol(pAddr);
 
     /**
      * At this point we know the symbol is in module code, so the map
-     * file should always return a result. However, to prevent the exception
-     * handler from itself throwing an exception we do not assert this.
+     * file *should* always return a result.
+     *
+     * However, to prevent the exception handler from itself throwing an
+     * exception, we do not assert this.
      */
-    K_WARN_EX(sym == nullptr,
+    K_WARN_EX(pSymbol == nullptr,
               "Symbol missing(?) from module link map: reloc %08X\n",
               textOffset);
 
     // Symbol doesn't exist in map file
-    if (sym == nullptr) {
-        // Print raw address
+    if (pSymbol == nullptr) {
         Printf("%08X (MODULE)", pAddr);
         return;
     }
 
     // Offset into function where exception occurred
     u32 offset =
-        sym->type == MapFile::ELinkType_Relocatable
-            ? PtrDistance(AddToPtr(GetModuleTextStart(), sym->offset), pAddr)
-            : PtrDistance(sym->pAddr, pAddr);
+        pSymbol->type == MapFile::ELinkType_Relocatable
+            ? PtrDistance(AddToPtr(GetModuleTextStart(), pSymbol->offset),
+                          pAddr)
+            : PtrDistance(pSymbol->pAddr, pAddr);
 
     // Print function name and instruction offset
-    Printf("%s(+0x%04X)", sym->pName, offset);
+    Printf("%s(+0x%04X)", pSymbol->pName, offset);
 }
 
 /**

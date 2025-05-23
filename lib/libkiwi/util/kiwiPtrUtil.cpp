@@ -12,14 +12,25 @@ namespace kiwi {
 bool PtrUtil::IsPointer(const void* addr) {
     uintptr_t bits = reinterpret_cast<uintptr_t>(addr);
 
-    // MEM1
-    if (((bits & 0xFF000000) == 0x80000000) ||
-        ((bits & 0xFF000000) == 0x81000000)) {
+    // MEM1 (cached)
+    if ((bits & 0xFF000000) == 0x80000000 ||
+        (bits & 0xFF800000) == 0x81000000) {
         return true;
     }
 
-    // MEM2
+    // MEM1 (uncached)
+    if ((bits & 0xFF000000) == 0xC0000000 ||
+        (bits & 0xFF800000) == 0xC1000000) {
+        return true;
+    }
+
+    // MEM2 (cached)
     if ((bits & 0xF8000000) == 0x90000000) {
+        return true;
+    }
+
+    // MEM2 (uncached)
+    if ((bits & 0xF8000000) == 0xD0000000) {
         return true;
     }
 
@@ -116,7 +127,7 @@ bool PtrUtil::IsString(const void* addr) {
     int chars = 0;
     int length = 0;
 
-    for (; length < LENGTHOF(buffer); length++) {
+    for (; length < K_LENGTHOF(buffer); length++) {
         char c = buffer[length];
 
         // "String-like" characters

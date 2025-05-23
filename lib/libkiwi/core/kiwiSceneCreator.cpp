@@ -6,10 +6,12 @@
 
 namespace kiwi {
 
-//! Pack Project scenes
+/**
+ * @brief Pack Project scenes
+ */
 const SceneCreator::Info SceneCreator::scPackScenes[] = {
 // clang-format off
-#ifdef PACK_SPORTS
+#if defined(PACK_SPORTS)
     {nullptr, "Logo",                         "RPCommon/",             kiwi::ESceneID_RPSysBootScene,               kiwi::EPackID_AllPack,    kiwi::ECreateType_Standard, kiwi::EExitType_Sibling,  true},
     {nullptr, "Player Select",                "RPCommon/",             kiwi::ESceneID_RPSysPlayerSelectScene,       kiwi::EPackID_AllPack,    kiwi::ECreateType_Standard, kiwi::EExitType_2,        true},
     {nullptr, "Nunchuk Check",                "RPCommon/",             kiwi::ESceneID_RPSysNunchukScene,            kiwi::EPackID_AllPack,    kiwi::ECreateType_Sibling,  kiwi::EExitType_3,        false},
@@ -25,7 +27,7 @@ const SceneCreator::Info SceneCreator::scPackScenes[] = {
     {nullptr, "Physical Measure Explanation", "RPSportsPhysical/",     kiwi::ESceneID_RPSportsPhysicalPreviewScene, kiwi::EPackID_SportsPack, kiwi::ECreateType_Sibling,  kiwi::EExitType_3,        true},
     {nullptr, "Physical Measure Results",     "RPSportsPhysical/",     kiwi::ESceneID_RPSportsPhysicalResultScene,  kiwi::EPackID_SportsPack, kiwi::ECreateType_Sibling,  kiwi::EExitType_3,        true},
     {nullptr, "Golf Course Select",           "RPGolScene/",           kiwi::ESceneID_RPGolSelectScene,             kiwi::EPackID_SportsPack, kiwi::ECreateType_Sibling,  kiwi::EExitType_Standard, false},
-#elif PACK_PLAY
+#elif defined(PACK_PLAY)
     {nullptr, "Logo",                         "RPCommonParty/",        kiwi::ESceneID_RPSysBootScene,               kiwi::EPackID_AllPack,    kiwi::ECreateType_Standard, kiwi::EExitType_Sibling,  true},
     {nullptr, "Player Select",                "RPCommonParty/",        kiwi::ESceneID_RPSysPlayerSelectScene,       kiwi::EPackID_AllPack,    kiwi::ECreateType_Standard, kiwi::EExitType_2,        true},
     {nullptr, "Nunchuk Check",                "RPCommonParty/",        kiwi::ESceneID_RPSysNunchukScene,            kiwi::EPackID_AllPack,    kiwi::ECreateType_Sibling,  kiwi::EExitType_3,        false},
@@ -41,7 +43,7 @@ const SceneCreator::Info SceneCreator::scPackScenes[] = {
     {nullptr, "Party Pack",                   "RPPartyTitle/",         kiwi::ESceneID_RPPartyTitleScene,            kiwi::EPackID_PartyPack,  kiwi::ECreateType_Standard, kiwi::EExitType_Sibling,  true},
     {nullptr, "Tour Menu",                    "RPPartyCommon/",        kiwi::ESceneID_RPPartyMiiLoadScene,          kiwi::EPackID_PartyPack,  kiwi::ECreateType_Standard, kiwi::EExitType_Child,    true},
     {nullptr, "Tour Menu",                    "RPPartyCommon/",        kiwi::ESceneID_RPPartyMenuScene,             kiwi::EPackID_PartyPack,  kiwi::ECreateType_Sibling,  kiwi::EExitType_3,        true},
-#elif PACK_RESORT
+#elif defined(PACK_RESORT)
     {nullptr, "Strap",                        "StrapScene/",           kiwi::ESceneID_Sp2StrapScene,           false, kiwi::EGroupID_Cmn,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Standard, true},
     {nullptr, "SaveDataLoad",                 "SeqScene1/",            kiwi::ESceneID_Sp2SaveDataLoadScene,    false, kiwi::EGroupID_Cmn,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Standard, true},
     {nullptr, "Title",                        "SeqScene1/",            kiwi::ESceneID_Sp2TitleScene,           false, kiwi::EGroupID_Cmn,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Standard, true},
@@ -52,14 +54,14 @@ const SceneCreator::Info SceneCreator::scPackScenes[] = {
     {nullptr, "Fld(Frisbee)",                 "FldScene/",             kiwi::ESceneID_Sp2FldScene,             true,  kiwi::EGroupID_Fld,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Standard, true},
     {nullptr, "Bsk(Basket)",                  "BskScene/",             kiwi::ESceneID_Sp2BskScene,             true,  kiwi::EGroupID_Bsk,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Standard, true},
     {nullptr, "Bwl(Bowling)",                 "BwlScene/",             kiwi::ESceneID_Sp2BwlScene,             true,  kiwi::EGroupID_Bwl,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Standard, true},
-    {nullptr, "Can(Canoe)",                   "CanScene/",             kiwi::ESceneID_Sp2CanScene,             true,  kiwi::EGroupID_Can,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Standard, true},
+    {nullptr, "Can(Kata)",                    "CanScene/",             kiwi::ESceneID_Sp2CanScene,             true,  kiwi::EGroupID_Can,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Standard, true},
     {nullptr, "Png(PingPong)",                "PngScene/",             kiwi::ESceneID_Sp2PngScene,             true,  kiwi::EGroupID_Png,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Standard, true},
     {nullptr, "Wkb(Wakeboard)",               "JskScene/",             kiwi::ESceneID_Sp2WkbScene,             true,  kiwi::EGroupID_Wkb,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Standard, true},
-    {nullptr, "Pln(Airplane)",                "PlnScene/",             kiwi::ESceneID_Sp2PlnScene,             true,  kiwi::EGroupID_Pln,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Standard, true},
+    {nullptr, "Pln(Plane)",                   "PlnScene/",             kiwi::ESceneID_Sp2PlnScene,             true,  kiwi::EGroupID_Pln,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Standard, true},
     {nullptr, "Glf(Golf)",                    "GlfScene/",             kiwi::ESceneID_Sp2GlfScene,             true,  kiwi::EGroupID_Glf,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Standard, true},
     {nullptr, "Dgl(DiscGolf)",                "DglScene/",             kiwi::ESceneID_Sp2DglScene,             true,  kiwi::EGroupID_Dgl,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Standard, true},
     {nullptr, "Bic(Bicycle)",                 "BicScene/",             kiwi::ESceneID_Sp2BicScene,             true,  kiwi::EGroupID_Bic,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Standard, true},
-    {nullptr, "Omk(Bonus)",                   "OmkScene/",             kiwi::ESceneID_Sp2OmkScene,             true,  kiwi::EGroupID_Omk,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Standard, true},
+    {nullptr, "Omk(Omake)",                   "OmkScene/",             kiwi::ESceneID_Sp2OmkScene,             true,  kiwi::EGroupID_Omk,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Standard, true},
     {nullptr, "DebugRoot",                    "TestScene1/",           kiwi::ESceneID_Sp2DebugRootScene,       false, kiwi::EGroupID_Cmn,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Sibling,  true},
     {nullptr, "SaveDataDebug",                "TestScene1/",           kiwi::ESceneID_Sp2SaveDataDebugScene,   false, kiwi::EGroupID_Cmn,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Sibling,  true},
     {nullptr, "ContestMiiDebug",              "TestScene1/",           kiwi::ESceneID_Sp2ContestMiiDebugScene, false, kiwi::EGroupID_Cmn,   kiwi::EPackID_SportsPack, kiwi::ECreateType_Standard, kiwi::EExitType_Sibling,  true},
@@ -74,14 +76,24 @@ const SceneCreator::Info SceneCreator::scPackScenes[] = {
     // clang-format on
 };
 
-//! User-registered scenes
+/**
+ * @brief User-registered scenes
+ */
 TMap<s32, SceneCreator::Info> SceneCreator::sUserScenes;
 
-//! Root debug menu scene ID
+/**
+ * @brief Root debug menu scene ID
+ */
 s32 SceneCreator::sDebugRootID = -1;
-//! Whether to boot into the root debug menu
+
+/**
+ * @brief Whether to boot into the root debug menu
+ */
 bool SceneCreator::sDebugRootBootUp = false;
-//! Root debug menu button combination (held)
+
+/**
+ * @brief Button combination required to be held to access the root debug menu
+ */
 u16 SceneCreator::sDebugRootButtons = 0xFFFF;
 
 /**
@@ -97,16 +109,13 @@ const SceneCreator::Info* SceneCreator::GetSceneInfo(s32 id) {
         id = RP_GET_INSTANCE(RPSysSceneMgr)->getCurrentSceneID();
     }
 
-    // Check user scenes first
     pInfo = sUserScenes.Find(id);
     if (pInfo != nullptr) {
         return pInfo;
     }
 
-    // Check RP scenes
-    for (int i = 0; i < LENGTHOF(scPackScenes); i++) {
+    for (int i = 0; i < K_LENGTHOF(scPackScenes); i++) {
         pInfo = &scPackScenes[i];
-
         if (pInfo->id == id) {
             return pInfo;
         }
@@ -125,10 +134,12 @@ void SceneCreator::RegistScene(const Info& rInfo) {
 
     // Don't allow duplicate scene IDs
     const Info* pInfo = GetSceneInfo(rInfo.id);
-    K_ASSERT_EX(pInfo == nullptr, "Scene ID %d already used (%s)",
+    K_ASSERT_EX(pInfo == nullptr, "Scene ID %d already used: %s",
                 pInfo->name.CStr());
 
-    sUserScenes.Insert(rInfo.id, rInfo);
+    if (pInfo == nullptr) {
+        sUserScenes.Insert(rInfo.id, rInfo);
+    }
 }
 
 /**
@@ -201,13 +212,16 @@ bool SceneCreator::ChangeSceneAfterFade(s32 id, bool reload) {
     // Visit debug root instead of menu if buttons are held
     if (id == GetMenuScene() && current != sDebugRootID) {
         for (int i = 0; i < EPlayer_Max; i++) {
-            const WiiCtrl& rCtrl =
-                CtrlMgr::GetInstance().GetWiiCtrl(static_cast<EPlayer>(i));
+            const WiiCtrl& rCtrl = CtrlMgr::GetInstance().GetWiiCtrl(i);
 
-            bool visit = sDebugRootBootUp;   // Visit on boot
-            visit |= sDebugRootButtons == 0; // Always visit
-            visit |= rCtrl.IsConnected() &&
-                     rCtrl.IsHold(sDebugRootButtons); // Button combo held
+            // Visit on boot
+            bool visit = sDebugRootBootUp;
+
+            // Always visit (no button combo)
+            visit |= sDebugRootButtons == 0;
+
+            // Button combo held
+            visit |= rCtrl.IsConnected() && rCtrl.IsHold(sDebugRootButtons);
 
             if (visit) {
                 sDebugRootBootUp = false;
@@ -254,16 +268,24 @@ bool SceneCreator::ChangeSceneAfterFade(s32 id, const nw4r::ut::Color* pColor) {
         id = current;
     }
 
+    // WS2 debug menu is replaced
+    if (id == ESceneID_Sp2DebugRootScene) {
+        id = sDebugRootID;
+    }
+
     // Visit debug root instead of menu if on boot, or if buttons are held
     if (id == GetMenuScene() && current != sDebugRootID) {
         for (int i = 0; i < EPlayer_Max; i++) {
-            const WiiCtrl& rCtrl =
-                CtrlMgr::GetInstance().GetWiiCtrl(static_cast<EPlayer>(i));
+            const WiiCtrl& rCtrl = CtrlMgr::GetInstance().GetWiiCtrl(i);
 
-            bool visit = sDebugRootBootUp;   // Visit on boot
-            visit |= sDebugRootButtons == 0; // Always visit
-            visit |= rCtrl.IsConnected() &&
-                     rCtrl.IsHold(sDebugRootButtons); // Button combo held
+            // Visit on boot
+            bool visit = sDebugRootBootUp;
+
+            // Always visit (no button combo)
+            visit |= sDebugRootButtons == 0;
+
+            // Button combo held
+            visit |= rCtrl.IsConnected() && rCtrl.IsHold(sDebugRootButtons);
 
             if (visit) {
                 sDebugRootBootUp = false;
@@ -277,7 +299,7 @@ bool SceneCreator::ChangeSceneAfterFade(s32 id, const nw4r::ut::Color* pColor) {
     bool success =
         RP_GET_INSTANCE(RPSysSceneMgr)->changeNextSceneAfterFade(id, true);
 
-    if (success && id >= 0) {
+    if (success && current >= 0) {
         // Fade out common sound effects
         s16 frame = RP_GET_INSTANCE(RPSysSceneMgr)->getSceneFadeFrame();
         RP_GET_INSTANCE(RPSndAudioMgr)->setSystemSeFadeInFrame(frame);
@@ -293,14 +315,14 @@ bool SceneCreator::ChangeSceneAfterFade(s32 id, const nw4r::ut::Color* pColor) {
     return success;
 }
 #endif
-// clang-format off
+
 KOKESHI_BY_PACK(KM_BRANCH_MF(0x80184ba4, SceneCreator, ChangeSceneAfterFade),  // Wii Sports
                 KM_BRANCH_MF(0x8018459c, SceneCreator, ChangeSceneAfterFade),  // Wii Play
                 KM_BRANCH_MF(0x8022edfc, SceneCreator, ChangeSceneAfterFade)); // Wii Sports Resort
-// clang-format on
 
 /**
  * @brief Gets the specified scene's name
+ * @details The ID defaults to the current scene (-1).
  *
  * @param id Scene ID
  */
@@ -311,6 +333,7 @@ const char* SceneCreator::GetSceneName(s32 id) const {
 
 /**
  * @brief Gets the specified scene's resource directory name
+ * @details The ID defaults to the current scene (-1).
  *
  * @param id Scene ID
  */
@@ -318,102 +341,96 @@ const char* SceneCreator::GetSceneDirectory(s32 id) const {
     const Info* pInfo = GetSceneInfo(id);
     return pInfo->dir;
 }
-// clang-format off
 KOKESHI_BY_PACK(KM_BRANCH_MF(0x80184758, SceneCreator, GetSceneDirectory),  // Wii Sports
                 KM_BRANCH_MF(0x80184124, SceneCreator, GetSceneDirectory),  // Wii Play
                 KM_BRANCH_MF(0x8022ebe8, SceneCreator, GetSceneDirectory)); // Wii Sports Resort
-// clang-format on
 
 #if defined(PACK_RESORT)
 /**
  * @brief Tests whether the specified scene should display the warning
  * screen while loading
+ * @details The ID defaults to the current scene (-1).
  *
  * @param id Scene ID
  */
 bool SceneCreator::IsSceneWarnAsLoading(s32 id) const {
     const Info* pInfo = GetSceneInfo(id);
-    K_ASSERT_EX(pInfo != nullptr, "Invalid scene ID: %d", id);
+    K_ASSERT_PTR(pInfo);
     return pInfo->warnAsSceneLoading;
 }
-// clang-format off
-KM_BRANCH_MF(0x8022eaf8, SceneCreator, IsSceneWarnAsLoading);  // Wii Sports Resort
-// clang-format on
+KM_BRANCH_MF(0x8022eaf8, SceneCreator, IsSceneWarnAsLoading); // Wii Sports Resort
 
 /**
  * @brief Gets the specified scene's group
+ * @details The ID defaults to the current scene (-1).
  *
  * @param id Scene ID
  */
 EGroupID SceneCreator::GetSceneGroup(s32 id) const {
     const Info* pInfo = GetSceneInfo(id);
-    K_ASSERT_EX(pInfo != nullptr, "Invalid scene ID: %d", id);
+    K_ASSERT_PTR(pInfo);
     return pInfo->group;
 }
-// clang-format off
 KM_BRANCH_MF(0x8022eb78, SceneCreator, GetSceneGroup); // Wii Sports Resort
-// clang-format on
 #endif
 
 /**
  * @brief Gets the specified scene's target pack
+ * @details The ID defaults to the current scene (-1).
  *
  * @param id Scene ID
  */
 EPackID SceneCreator::GetScenePack(s32 id) const {
     const Info* pInfo = GetSceneInfo(id);
-    K_ASSERT_EX(pInfo != nullptr, "Invalid scene ID: %d", id);
+    K_ASSERT_PTR(pInfo);
     return pInfo->pack;
 }
 
 /**
  * @brief Gets the specified scene's create type
+ * @details The ID defaults to the current scene (-1).
  *
  * @param id Scene ID
  */
 ECreateType SceneCreator::GetSceneCreateType(s32 id) const {
     const Info* pInfo = GetSceneInfo(id);
-    K_ASSERT_EX(pInfo != nullptr, "Invalid scene ID: %d", id);
+    K_ASSERT_PTR(pInfo);
     return pInfo->create;
 }
-// clang-format off
 KOKESHI_BY_PACK(KM_BRANCH_MF(0x801845f4, SceneCreator, GetSceneCreateType), // Wii Sports
                 KM_BRANCH_MF(0x8018402c, SceneCreator, GetSceneCreateType), // Wii Play
-                /* not applicable */);                                      // Wii Sports Resort
-// clang-format on
+                /* not applicable */); // Wii Sports Resort
 
 /**
  * @brief Gets the specified scene's exit type
+ * @details The ID defaults to the current scene (-1).
  *
  * @param id Scene ID
  */
 EExitType SceneCreator::GetSceneExitType(s32 id) const {
     const Info* pInfo = GetSceneInfo(id);
-    K_ASSERT_EX(pInfo != nullptr, "Invalid scene ID: %d", id);
+    K_ASSERT_PTR(pInfo);
     return pInfo->exit;
 }
-// clang-format off
 KOKESHI_BY_PACK(KM_BRANCH_MF(0x80184558, SceneCreator, GetSceneExitType),  // Wii Sports
                 KM_BRANCH_MF(0x80183f90, SceneCreator, GetSceneExitType),  // Wii Play
                 KM_BRANCH_MF(0x8022eac4, SceneCreator, GetSceneExitType)); // Wii Sports Resort
-// clang-format on
 
 /**
  * @brief Tests whether the specified scene requires the RP common sound
  * archive
+ * @details The ID defaults to the current scene (-1).
  *
  * @param id Scene ID
  */
 bool SceneCreator::IsSceneCommonSound(s32 id) const {
     const Info* pInfo = GetSceneInfo(id);
-    K_ASSERT_EX(pInfo != nullptr, "Invalid scene ID: %d", id);
+    K_ASSERT_PTR(pInfo);
     return pInfo->common;
 }
-// clang-format off
 KOKESHI_BY_PACK(KM_BRANCH_MF(0x801844bc, SceneCreator, IsSceneCommonSound), // Wii Sports
                 KM_BRANCH_MF(0x80183ef4, SceneCreator, IsSceneCommonSound), // Wii Play
-                /* not applicable */);                                      // Wii Sports Resort
-// clang-format on
+                /* not applicable */); // Wii Sports Resort
 
 /**
  * @brief Creates a new scene by ID
@@ -441,10 +458,14 @@ RPSysScene* SceneCreator::Create(s32 id) {
         }
 
         case EPackID_MusicPack:
-        case EPackID_HealthPack:
+        case EPackID_HealthPack: {
+            K_NOT_IMPLEMENTED();
+            return nullptr;
+        }
+
         default: {
-            K_ASSERT_EX(false, "Not for this pack yet.");
-            break;
+            K_UNREACHABLE();
+            return nullptr;
         }
         }
 #elif defined(PACK_RESORT)
@@ -452,7 +473,7 @@ RPSysScene* SceneCreator::Create(s32 id) {
 #endif
     }
 
-    K_ASSERT_EX(pScene != nullptr, "Failed to create scene (id %d)", id);
+    K_ASSERT_PTR(pScene);
 
 #if defined(PACK_SPORTS) || defined(PACK_PLAY)
     if (GetSceneExitType(id) == EExitType_Child) {
@@ -469,11 +490,9 @@ RPSysScene* SceneCreator::Create(s32 id) {
     pScene->setCreatorSceneID(mLastSceneID);
     return pScene;
 }
-// clang-format off
 KOKESHI_BY_PACK(KM_BRANCH_MF(0x80184838, SceneCreator, Create),  // Wii Sports
                 KM_BRANCH_MF(0x80184230, SceneCreator, Create),  // Wii Play
                 KM_BRANCH_MF(0x8022ec90, SceneCreator, Create)); // Wii Sports Resort
-// clang-format on
 
 /**
  * @brief Creates a new system scene by ID
@@ -482,7 +501,7 @@ KOKESHI_BY_PACK(KM_BRANCH_MF(0x80184838, SceneCreator, Create),  // Wii Sports
  */
 RPSysScene* SceneCreator::CreateSystemScene(s32 id) {
 #if defined(PACK_RESORT)
-    K_ASSERT_EX(false, "Not for this pack yet.");
+    K_NOT_IMPLEMENTED();
     return nullptr;
 #else
     switch (id) {
@@ -513,14 +532,15 @@ RPSysScene* SceneCreator::CreateSystemScene(s32 id) {
 RPSysScene* SceneCreator::CreatePackScene(s32 id) {
     EGG::Scene* pScene = nullptr;
 
-#ifdef PACK_SPORTS
+#if defined(PACK_SPORTS)
     pScene = RPSysSceneCreator::createSportsScene(id);
-#elif PACK_PLAY
+#elif defined(PACK_PLAY)
     pScene = RPSysSceneCreator::createPartyScene(id);
-#elif PACK_RESORT
+#elif defined(PACK_RESORT)
     pScene = RPSysSceneCreator::createSp2Scene(id);
 #endif
 
+    K_ASSERT_PTR(pScene);
     return static_cast<RPSysScene*>(pScene);
 }
 
@@ -531,7 +551,7 @@ RPSysScene* SceneCreator::CreatePackScene(s32 id) {
  */
 RPSysScene* SceneCreator::CreateUserScene(s32 id) {
     const Info* pInfo = GetSceneInfo(id);
-    K_ASSERT_EX(pInfo != nullptr, "Cannot create scene ID %d", id);
+    K_ASSERT_PTR(pInfo);
     return pInfo->pCt();
 }
 

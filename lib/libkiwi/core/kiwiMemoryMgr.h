@@ -1,8 +1,9 @@
 #ifndef LIBKIWI_CORE_MEMORY_MGR_H
 #define LIBKIWI_CORE_MEMORY_MGR_H
-#include <egg/core.h>
 #include <libkiwi/k_types.h>
 #include <libkiwi/util/kiwiStaticSingleton.h>
+
+#include <egg/core.h>
 
 namespace kiwi {
 //! @addtogroup libkiwi_core
@@ -77,10 +78,10 @@ private:
 // TODO: How to get more MEM1 memory from WS2?
 #if defined(PACK_SPORTS) || defined(PACK_PLAY)
     //! Initial size for each heap
-    static const u32 scHeapSize = OS_MEM_KB_TO_B(1024);
+    static const u32 HEAP_SIZE = OS_MEM_KB_TO_B(1024);
 #elif defined(PACK_RESORT)
     //! Initial size for each heap
-    static const u32 scHeapSize = OS_MEM_KB_TO_B(512);
+    static const u32 HEAP_SIZE = OS_MEM_KB_TO_B(512);
 #endif
 
     EGG::Heap* mpHeapMEM1; //!< Heap in MEM1 region

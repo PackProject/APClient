@@ -2,6 +2,7 @@
 #define LIBKIWI_CORE_DVD_STREAM_H
 #include <libkiwi/core/kiwiFileStream.h>
 #include <libkiwi/k_types.h>
+
 #include <revolution/DVD.h>
 
 namespace kiwi {
@@ -43,7 +44,7 @@ public:
      */
     bool Open(const String& rPath);
     /**
-     * @brief Closes this stream
+     * @brief Closes the stream
      */
     virtual void Close();
 

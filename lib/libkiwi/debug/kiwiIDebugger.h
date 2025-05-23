@@ -3,6 +3,7 @@
 #include <libkiwi/k_types.h>
 #include <libkiwi/prim/kiwiOptional.h>
 #include <libkiwi/util/kiwiGlobalInstance.h>
+
 #include <revolution/OS.h>
 
 namespace kiwi {
@@ -161,9 +162,9 @@ private:
 #undef DEFINE_CMD
 
 private:
-    EExecState mExecState;  // Program execution status
-    OSContext mExecContext; // Program execution context
-    BreakPoint mBreakPoint; // Active breakpoint
+    EExecState mExecState;  //!< Program execution status
+    OSContext mExecContext; //!< Program execution context
+    BreakPoint mBreakPoint; //!< Active breakpoint
 };
 
 //! @}

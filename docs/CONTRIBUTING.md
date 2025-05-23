@@ -444,10 +444,10 @@ Macros can be documented like functions, but also a single-line comment will suf
  * @param major Major version number
  * @param minor Minor version number
  */
-#define K_VERSION(major, minor) ((major << 8) | minor)
+#define K_BIN_VERSION(major, minor) ((major << 8) | minor)
 
 //! Helper for creating version numbers
-#define K_VERSION(major, minor) ((major << 8) | minor)
+#define K_BIN_VERSION(major, minor) ((major << 8) | minor)
 ```
 
 ##### Data
@@ -470,12 +470,12 @@ The brief description for constructors should be "Constructor", and the brief de
 /**
  * @brief Constructor
  */
-IStream();
+StreamBase();
 
 /**
  * @brief Destructor
  */
-virtual ~IStream();
+virtual ~StreamBase();
 ```
 
 If there are many constructor overloads for purposes such as moving/copying, feel free to specify the constructor "type" in the Doxygen detailed description:

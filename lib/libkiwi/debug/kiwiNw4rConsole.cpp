@@ -1,5 +1,6 @@
-#include <cstdio>
 #include <libkiwi.h>
+
+#include <cstdio>
 
 namespace kiwi {
 
@@ -83,9 +84,9 @@ void Nw4rConsole::DrawDirect() const {
 
     // Clear console framebuffer
     Nw4rDirectPrint::GetInstance().EraseXfb(
-        mViewX - Nw4rDirectPrint::scFontCharWidth, mViewY - 3,
-        mWidth * Nw4rDirectPrint::scFontCharWidth + 12,
-        mViewNumLine * Nw4rDirectPrint::scFontLeading + 4);
+        mViewX - Nw4rDirectPrint::FONT_CHAR_WIDTH, mViewY - 3,
+        mWidth * Nw4rDirectPrint::FONT_CHAR_WIDTH + 12,
+        mViewNumLine * Nw4rDirectPrint::FONT_LEADING + 4);
 
     // Draw console
     DrawDirectImpl();
@@ -158,7 +159,7 @@ char* Nw4rConsole::PutTab(char* pDst) {
         *pDst++ = ' ';
         mPrintX++;
     } while (mPrintX < mWidth &&
-             (mPrintX & (Nw4rDirectPrint::scTabSize - 1)) != 0);
+             (mPrintX & (Nw4rDirectPrint::TAB_SIZE - 1)) != 0);
 
     return pDst;
 }
@@ -315,8 +316,8 @@ void Nw4rConsole::DrawDirectImpl() const {
     u16 printLines = 0;
     while (line != topLine) {
         Nw4rDirectPrint::GetInstance().DrawString(
-            mViewX, mViewY + printLines * Nw4rDirectPrint::scFontLeading,
-            "%s\n", GetTextPtr(line, 0));
+            mViewX, mViewY + printLines * Nw4rDirectPrint::FONT_LEADING, "%s\n",
+            GetTextPtr(line, 0));
 
         printLines++;
         line++;

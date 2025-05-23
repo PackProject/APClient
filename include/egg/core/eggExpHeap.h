@@ -16,8 +16,8 @@ struct ExpHeap : Heap {
     virtual u32 getAllocatableSize(s32);         // at 0x24
     virtual u32 adjust();                        // at 0x28
 
-    static ExpHeap* create(void*, u32, u16);
-    static ExpHeap* create(u32, Heap*, u16);
+    static ExpHeap* create(void*, u32, u16 = 0);
+    static ExpHeap* create(u32, Heap*, u16 = 0);
 };
 } // namespace EGG
 
