@@ -44,7 +44,7 @@ void* FileRipper::Rip(FileStream& rStrm, const FileRipperArg& rArg) {
 
     // Storage device may require byte-aligned size
     u32 fileSize = rStrm.GetSize();
-    u32 bufferSize = ROUND_UP(fileSize, rStrm.GetSizeAlign());
+    u32 bufferSize = RoundUp(fileSize, rStrm.GetSizeAlign());
 
     // User may have specified a destination buffer...
     u8* pBuffer = static_cast<u8*>(rArg.pDst);

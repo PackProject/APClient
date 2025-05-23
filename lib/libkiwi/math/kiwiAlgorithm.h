@@ -1,12 +1,15 @@
 #ifndef LIBKIWI_MATH_ALGORITHM_H
 #define LIBKIWI_MATH_ALGORITHM_H
 #include <libkiwi/k_types.h>
+
 #include <nw4r/math.h>
 
 namespace kiwi {
 //! @addtogroup libkiwi_math
 //! @{
 namespace {
+//! @addtogroup libkiwi_math
+//! @{
 
 /**
  * @brief Gets the minimum of two values
@@ -33,7 +36,7 @@ template <typename T> K_INLINE const T& Max(const T& rA, const T& rB) {
  * @param rX Initial value
  */
 template <typename T> K_INLINE T Abs(const T& rX) {
-#ifdef __MWCC__
+#ifdef LIBKIWI_TARGET_RVL
     return __abs(rX);
 #else
     return rX < 0 ? -rX : rX;
@@ -68,6 +71,46 @@ K_INLINE T Clamp(const T& rValue, const T& rMin, const T& rMax) {
     }
 
     return rValue;
+}
+
+/**
+ * @brief Rounds a value up to the specified alignment
+ *
+ * @param value Initial value
+ * @param align Alignment
+ */
+template <typename T> K_INLINE T RoundUp(T value, u32 align) {
+    return (align + value - 1) & ~(align - 1);
+}
+/**
+ * @brief Rounds a pointer up to the specified alignment
+ *
+ * @param pValue Initial pointer value
+ * @param align Alignment
+ */
+template <typename T> K_INLINE T* RoundUp(T* pValue, u32 align) {
+    uintptr_t value = reinterpret_cast<uintptr_t>(pValue);
+    return reinterpret_cast<T*>(RoundUp(value, align));
+}
+
+/**
+ * @brief Rounds a value down to the specified alignment
+ *
+ * @param value Initial value
+ * @param align Alignment
+ */
+template <typename T> K_INLINE T RoundDown(T value, u32 align) {
+    return value & ~(align - 1);
+}
+/**
+ * @brief Rounds a pointer down to the specified alignment
+ *
+ * @param pValue Initial pointer value
+ * @param align Alignment
+ */
+template <typename T> K_INLINE T* RoundDown(T* pValue, u32 align) {
+    uintptr_t value = reinterpret_cast<uintptr_t>(pValue);
+    return reinterpret_cast<T*>(RoundDown(value, align));
 }
 
 /**
@@ -122,6 +165,7 @@ K_INLINE const T* AddToPtr(const void* pAddr, ptrdiff_t ofs) {
     return reinterpret_cast<const T*>(static_cast<const char*>(pAddr) + ofs);
 }
 
+//! @}
 } // namespace
 //! @}
 } // namespace kiwi

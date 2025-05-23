@@ -31,7 +31,7 @@ void WaitVIRetrace() {
  */
 void* CreateFB(const GXRenderModeObj* pRmo) {
     // Calculate framebuffer size in bytes
-    u32 size = ROUND_UP(pRmo->fbWidth, 16) * pRmo->xfbHeight * sizeof(u16);
+    u32 size = RoundUp(pRmo->fbWidth, 16) * pRmo->xfbHeight * sizeof(u16);
 
     // Try using heap, but be careful to not throw a nested exception
     void* pXfb = nullptr;
@@ -115,7 +115,7 @@ void Nw4rDirectPrint::ChangeXfb(void* pXfb, u16 w, u16 h) {
     mBufferWidth = w;
     mBufferHeight = h;
 
-    mBufferRows = ROUND_UP(w, 16);
+    mBufferRows = RoundUp(w, 16);
     mBufferSize = mBufferRows * h * sizeof(u16);
 }
 

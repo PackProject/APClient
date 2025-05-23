@@ -39,7 +39,7 @@ const u8 scDecodeTable[128] = {
  * @param size Binary data size
  */
 u32 GetEncodeSize(u32 size) {
-    return ROUND_UP((4 * size) / 3, 4);
+    return RoundUp((4 * size) / 3, 4);
 }
 
 /**

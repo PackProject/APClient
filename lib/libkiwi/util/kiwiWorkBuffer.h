@@ -42,7 +42,7 @@ public:
           mSizeAlign(arg.sizeAlign),
           mMemAlign(arg.memAlign) {
 
-        mBufferAlignSize = ROUND_UP(mBufferSize, mSizeAlign);
+        mBufferAlignSize = RoundUp(mBufferSize, mSizeAlign);
         mpBuffer = new (mMemAlign, mMemRegion) u8[mBufferAlignSize];
         K_ASSERT(mpBuffer != nullptr);
     }

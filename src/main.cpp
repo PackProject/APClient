@@ -36,9 +36,6 @@ void KokeshiMain() {
     AP::CheckMgr::GetInstance().Debug();
 #endif
 
-    kiwi::GameCorruptor::CreateInstance();
-    kiwi::GameCorruptor::GetInstance().Begin();
-
     // Register debug menu
     kiwi::SceneCreator::GetInstance().RegistDebugRoot(
         AP::EAPScene_DebugRootScene);

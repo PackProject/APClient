@@ -24,7 +24,7 @@ void** GetRandomAddr(const void* pBegin, const void* pEnd) {
     do {
         // Make sure to align the address to 4 bytes
         offset = Random().NextU32(size);
-        offset = ROUND_UP(offset, 4);
+        offset = RoundUp(offset, 4);
     }
     // Adjusting for alignment may take us out of the range
     while (offset >= size);
@@ -40,8 +40,7 @@ K_DYNAMIC_SINGLETON_IMPL(GameCorruptor);
  * @brief Constructor
  */
 GameCorruptor::GameCorruptor()
-    : mDomainFlag(ECorruptDomain_Mem1 | ECorruptDomain_Mem2 |
-                  ECorruptDomain_Scene),
+    : mDomainFlag(ECorruptDomain_Mem2 | ECorruptDomain_Scene),
       mCorruptNum(scDefaultNum),
       mInterval(OS_SEC_TO_TICKS(scDefaultInterval)) {}
 
