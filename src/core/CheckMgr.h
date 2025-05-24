@@ -138,6 +138,28 @@ public:
         ISLAND_FLYOVER_IPOINT_GROUP_11 = 0x1B0A,
         ISLAND_FLYOVER_IPOINT_GROUP_12 = 0x1B0B,
 
+        GOLF_COMPLTE_HOLE_1 = 0x0D00,
+        GOLF_COMPLTE_HOLE_2 = 0x0D01,
+        GOLF_COMPLTE_HOLE_3 = 0x0D02,
+        GOLF_COMPLTE_HOLE_4 = 0x0D03,
+        GOLF_COMPLTE_HOLE_5 = 0x0D04,
+        GOLF_COMPLTE_HOLE_6 = 0x0D05,
+        GOLF_COMPLTE_HOLE_7 = 0x0D06,
+        GOLF_COMPLTE_HOLE_8 = 0x0D07,
+        GOLF_COMPLTE_HOLE_9 = 0x0D08,
+        GOLF_COMPLTE_HOLE_10 = 0x0D09,
+        GOLF_COMPLTE_HOLE_11 = 0x0D0A,
+        GOLF_COMPLTE_HOLE_12 = 0x0D0B,
+        GOLF_COMPLTE_HOLE_13 = 0x0D0C,
+        GOLF_COMPLTE_HOLE_14 = 0x0D0D,
+        GOLF_COMPLTE_HOLE_15 = 0x0D0E,
+        GOLF_COMPLTE_HOLE_16 = 0x0D0F,
+        GOLF_COMPLTE_HOLE_17 = 0x0D10,
+        GOLF_COMPLTE_HOLE_18 = 0x0D11,
+        GOLF_COMPLTE_HOLE_19 = 0x0D12,
+        GOLF_COMPLTE_HOLE_20 = 0x0D13,
+        GOLF_COMPLTE_HOLE_21 = 0x0D14,
+
         COUNT
     }; // CheckID;
 
@@ -263,7 +285,7 @@ public:
     }
 
 public:
-    kiwi::TArray<CheckID, 114> checkIDArr;
+    kiwi::TArray<CheckID, 135> checkIDArr;
 
 private:
     kiwi::TMap<CheckID, bool> mCheckState;   //!< Check state

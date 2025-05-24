@@ -244,33 +244,42 @@ const char* CheckMgr::GetCheckName(CheckMgr::CheckID id) const {
     case SWORDPLAY_DUEL_FIRST_WIN:
         return "Swordplay Duel - First Win!";
 
-    case BOWLING_STANDARD_FIRST_STRIKE:
-        return "Bowling Standard Game - First Strike!";
+    case GOLF_COMPLTE_HOLE_1: return "Golf - Complete Hole 1!";
+    case GOLF_COMPLTE_HOLE_2: return "Golf - Complete Hole 2!";
+    case GOLF_COMPLTE_HOLE_3: return "Golf - Complete Hole 3!";
+    case GOLF_COMPLTE_HOLE_4: return "Golf - Complete Hole 4!";
+    case GOLF_COMPLTE_HOLE_5: return "Golf - Complete Hole 5!";
+    case GOLF_COMPLTE_HOLE_6: return "Golf - Complete Hole 6!";
+    case GOLF_COMPLTE_HOLE_7: return "Golf - Complete Hole 7!";
+    case GOLF_COMPLTE_HOLE_8: return "Golf - Complete Hole 8!";
+    case GOLF_COMPLTE_HOLE_9: return "Golf - Complete Hole 9!";
+    case GOLF_COMPLTE_HOLE_10: return "Golf - Complete Hole 10!";
+    case GOLF_COMPLTE_HOLE_11: return "Golf - Complete Hole 11!";
+    case GOLF_COMPLTE_HOLE_12: return "Golf - Complete Hole 12!";
+    case GOLF_COMPLTE_HOLE_13: return "Golf - Complete Hole 13!";
+    case GOLF_COMPLTE_HOLE_14: return "Golf - Complete Hole 14!";
+    case GOLF_COMPLTE_HOLE_15: return "Golf - Complete Hole 15!";
+    case GOLF_COMPLTE_HOLE_16: return "Golf - Complete Hole 16!";
+    case GOLF_COMPLTE_HOLE_17: return "Golf - Complete Hole 17!";
+    case GOLF_COMPLTE_HOLE_18: return "Golf - Complete Hole 18!";
+    case GOLF_COMPLTE_HOLE_19: return "Golf - Complete Hole 19!";
+    case GOLF_COMPLTE_HOLE_20: return "Golf - Complete Hole 20!";
+    case GOLF_COMPLTE_HOLE_21: return "Golf - Complete Hole 21!";
 
-    case ISLAND_FLYOVER_IPOINT_GROUP_1:
-        return "Progressive Island Flyover I Point Group 1";
-    case ISLAND_FLYOVER_IPOINT_GROUP_2:
-        return "Progressive Island Flyover I Point Group 2";
-    case ISLAND_FLYOVER_IPOINT_GROUP_3:
-        return "Progressive Island Flyover I Point Group 3";
-    case ISLAND_FLYOVER_IPOINT_GROUP_4:
-        return "Progressive Island Flyover I Point Group 4";
-    case ISLAND_FLYOVER_IPOINT_GROUP_5:
-        return "Progressive Island Flyover I Point Group 5";
-    case ISLAND_FLYOVER_IPOINT_GROUP_6:
-        return "Progressive Island Flyover I Point Group 6";
-    case ISLAND_FLYOVER_IPOINT_GROUP_7:
-        return "Progressive Island Flyover I Point Group 7";
-    case ISLAND_FLYOVER_IPOINT_GROUP_8:
-        return "Progressive Island Flyover I Point Group 8";
-    case ISLAND_FLYOVER_IPOINT_GROUP_9:
-        return "Progressive Island Flyover I Point Group 9";
-    case ISLAND_FLYOVER_IPOINT_GROUP_10:
-        return "Progressive Island Flyover I Point Group 10";
-    case ISLAND_FLYOVER_IPOINT_GROUP_11:
-        return "Progressive Island Flyover I Point Group 11";
-    case ISLAND_FLYOVER_IPOINT_GROUP_12:
-        return "Progressive Island Flyover I Point Group 12";
+    case BOWLING_STANDARD_FIRST_STRIKE: return "Bowling Standard Game - First Strike!";
+
+    case ISLAND_FLYOVER_IPOINT_GROUP_1: return "Progressive Island Flyover I Point Group 1";
+    case ISLAND_FLYOVER_IPOINT_GROUP_2: return "Progressive Island Flyover I Point Group 2";
+    case ISLAND_FLYOVER_IPOINT_GROUP_3: return "Progressive Island Flyover I Point Group 3";
+    case ISLAND_FLYOVER_IPOINT_GROUP_4: return "Progressive Island Flyover I Point Group 4";
+    case ISLAND_FLYOVER_IPOINT_GROUP_5: return "Progressive Island Flyover I Point Group 5";
+    case ISLAND_FLYOVER_IPOINT_GROUP_6: return "Progressive Island Flyover I Point Group 6";
+    case ISLAND_FLYOVER_IPOINT_GROUP_7: return "Progressive Island Flyover I Point Group 7";
+    case ISLAND_FLYOVER_IPOINT_GROUP_8: return "Progressive Island Flyover I Point Group 8";
+    case ISLAND_FLYOVER_IPOINT_GROUP_9: return "Progressive Island Flyover I Point Group 9";
+    case ISLAND_FLYOVER_IPOINT_GROUP_10: return "Progressive Island Flyover I Point Group 10";
+    case ISLAND_FLYOVER_IPOINT_GROUP_11: return "Progressive Island Flyover I Point Group 11";
+    case ISLAND_FLYOVER_IPOINT_GROUP_12: return "Progressive Island Flyover I Point Group 12";
 
     default:
         kiwi::cout << "Bad ID: " << id << kiwi::endl;
@@ -425,19 +434,40 @@ void CheckMgr::GenerateCheckIDArray() {
     checkIDArr[98] = SKYDIVING_STAMP_4;
     checkIDArr[99] = SKYDIVING_STAMP_5;
     checkIDArr[100] = SWORDPLAY_DUEL_FIRST_WIN;
-    checkIDArr[101] = BOWLING_STANDARD_FIRST_STRIKE;
-    checkIDArr[102] = ISLAND_FLYOVER_IPOINT_GROUP_1;
-    checkIDArr[103] = ISLAND_FLYOVER_IPOINT_GROUP_2;
-    checkIDArr[104] = ISLAND_FLYOVER_IPOINT_GROUP_3;
-    checkIDArr[105] = ISLAND_FLYOVER_IPOINT_GROUP_4;
-    checkIDArr[106] = ISLAND_FLYOVER_IPOINT_GROUP_5;
-    checkIDArr[107] = ISLAND_FLYOVER_IPOINT_GROUP_6;
-    checkIDArr[108] = ISLAND_FLYOVER_IPOINT_GROUP_7;
-    checkIDArr[109] = ISLAND_FLYOVER_IPOINT_GROUP_8;
-    checkIDArr[110] = ISLAND_FLYOVER_IPOINT_GROUP_9;
-    checkIDArr[111] = ISLAND_FLYOVER_IPOINT_GROUP_10;
-    checkIDArr[112] = ISLAND_FLYOVER_IPOINT_GROUP_11;
-    checkIDArr[113] = ISLAND_FLYOVER_IPOINT_GROUP_12;
+    checkIDArr[101] = GOLF_COMPLTE_HOLE_1;
+    checkIDArr[102] = GOLF_COMPLTE_HOLE_2;
+    checkIDArr[103] = GOLF_COMPLTE_HOLE_3;
+    checkIDArr[104] = GOLF_COMPLTE_HOLE_4;
+    checkIDArr[105] = GOLF_COMPLTE_HOLE_5;
+    checkIDArr[106] = GOLF_COMPLTE_HOLE_6;
+    checkIDArr[107] = GOLF_COMPLTE_HOLE_7;
+    checkIDArr[108] = GOLF_COMPLTE_HOLE_8;
+    checkIDArr[109] = GOLF_COMPLTE_HOLE_9;
+    checkIDArr[110] = GOLF_COMPLTE_HOLE_10;
+    checkIDArr[111] = GOLF_COMPLTE_HOLE_11;
+    checkIDArr[112] = GOLF_COMPLTE_HOLE_12;
+    checkIDArr[113] = GOLF_COMPLTE_HOLE_13;
+    checkIDArr[114] = GOLF_COMPLTE_HOLE_14;
+    checkIDArr[115] = GOLF_COMPLTE_HOLE_15;
+    checkIDArr[116] = GOLF_COMPLTE_HOLE_16;
+    checkIDArr[117] = GOLF_COMPLTE_HOLE_17;
+    checkIDArr[118] = GOLF_COMPLTE_HOLE_18;
+    checkIDArr[119] = GOLF_COMPLTE_HOLE_19;
+    checkIDArr[120] = GOLF_COMPLTE_HOLE_20;
+    checkIDArr[121] = GOLF_COMPLTE_HOLE_21;
+    checkIDArr[122] = BOWLING_STANDARD_FIRST_STRIKE;
+    checkIDArr[123] = ISLAND_FLYOVER_IPOINT_GROUP_1;
+    checkIDArr[124] = ISLAND_FLYOVER_IPOINT_GROUP_2;
+    checkIDArr[125] = ISLAND_FLYOVER_IPOINT_GROUP_3;
+    checkIDArr[126] = ISLAND_FLYOVER_IPOINT_GROUP_4;
+    checkIDArr[127] = ISLAND_FLYOVER_IPOINT_GROUP_5;
+    checkIDArr[128] = ISLAND_FLYOVER_IPOINT_GROUP_6;
+    checkIDArr[129] = ISLAND_FLYOVER_IPOINT_GROUP_7;
+    checkIDArr[130] = ISLAND_FLYOVER_IPOINT_GROUP_8;
+    checkIDArr[131] = ISLAND_FLYOVER_IPOINT_GROUP_9;
+    checkIDArr[132] = ISLAND_FLYOVER_IPOINT_GROUP_10;
+    checkIDArr[133] = ISLAND_FLYOVER_IPOINT_GROUP_11;
+    checkIDArr[134] = ISLAND_FLYOVER_IPOINT_GROUP_12;
 }
 
 } // namespace AP
