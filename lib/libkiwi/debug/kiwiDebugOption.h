@@ -35,10 +35,11 @@ public:
     /**
      * @brief Constructor
      *
+     * @param rPage Parent page
      * @param rName Option name
      */
-    explicit DebugOptionBase(const String& rName)
-        : mIsEnabled(true), mName(rName) {}
+    DebugOptionBase(DebugPage& rPage, const String& rName)
+        : mrPage(rPage), mIsEnabled(true), mName(rName) {}
 
     /**
      * @brief Destructor
@@ -48,17 +49,8 @@ public:
     /**
      * @brief Gets the options's parent menu page
      */
-    DebugPage& GetParent() const {
-        K_ASSERT(mpParent != nullptr);
-        return *mpParent;
-    }
-    /**
-     * @brief Sets the options's parent menu page
-     *
-     * @param rPage Parent menu page
-     */
-    void SetParent(DebugPage& rPage) {
-        mpParent = &rPage;
+    DebugPage& GetPage() const {
+        return mrPage;
     }
 
     /**
@@ -139,7 +131,7 @@ protected:
 
 protected:
     //! Parent menu page
-    DebugPage* mpParent;
+    DebugPage& mrPage;
 
     //! Enable option
     bool mIsEnabled;
@@ -165,12 +157,13 @@ public:
     /**
      * @brief Constructor
      *
+     * @param rPage Parent page
      * @param rName Option name
      * @param min Minimum value (inclusive)
      * @param max Maximum value (inclusive)
      * @param initial Initial value (optional)
      */
-    DebugIntOption(const String& rName, int min, int max,
+    DebugIntOption(DebugPage& rPage, const String& rName, int min, int max,
                    Optional<int> initial = kiwi::nullopt);
 
     /**
@@ -279,12 +272,13 @@ public:
     /**
      * @brief Constructor
      *
+     * @param rPage Parent page
      * @param rName Option name
      * @param initial Initial value (optional)
      */
-    explicit DebugBoolOption(const String& rName, bool initial = false)
-        : DebugIntOption(rName, static_cast<int>(false), static_cast<int>(true),
-                         static_cast<int>(initial)) {
+    DebugBoolOption(DebugPage& rPage, const String& rName, bool initial = false)
+        : DebugIntOption(rPage, rName, static_cast<int>(false),
+                         static_cast<int>(true), static_cast<int>(initial)) {
 
         UpdateString();
     }
@@ -318,15 +312,17 @@ public:
     /**
      * @brief Constructor
      *
+     * @param rPage Parent page
      * @param rName Option name
      * @param ppValues Enum value strings
      * @param min Minimum value (inclusive)
      * @param max Maximum value (inclusive)
      * @param initial Initial value (optional)
      */
-    DebugEnumOption(const String& rName, const char** ppValues, int min,
-                    int max, Optional<int> initial = kiwi::nullopt)
-        : DebugIntOption(rName, min, max, initial), mppValues(ppValues) {
+    DebugEnumOption(DebugPage& rPage, const String& rName,
+                    const char** ppValues, int min, int max,
+                    Optional<int> initial = kiwi::nullopt)
+        : DebugIntOption(rPage, rName, min, max, initial), mppValues(ppValues) {
 
         ASSERT(ppValues != nullptr);
 
@@ -379,13 +375,14 @@ public:
     /**
      * @brief Constructor
      *
+     * @param rPage Parent page
      * @param rName Option name
      * @param pCallback Select callback function
      * @param pCallbackArg Select callback user argument
      */
-    DebugProcOption(const String& rName, SelectCallback pCallback,
-                    void* pCallbackArg = nullptr)
-        : DebugOptionBase(rName),
+    DebugProcOption(DebugPage& rPage, const String& rName,
+                    SelectCallback pCallback, void* pCallbackArg = nullptr)
+        : DebugOptionBase(rPage, rName),
           mpCallback(pCallback),
           mpCallbackArg(pCallbackArg) {}
 
@@ -424,13 +421,15 @@ public:
     /**
      * @brief Constructor
      *
+     * @param rPage Parent page
      * @param rName Option name
-     * @param rPage Sub-page to open
+     * @param rOpenPage Sub-page to open
      */
-    DebugOpenPageOption(const String& rName, DebugPage& rPage)
-        : DebugProcOption(rName, OpenPageProc, this) {
+    DebugOpenPageOption(DebugPage& rPage, const String& rName,
+                        DebugPage& rOpenPage)
+        : DebugProcOption(rPage, rName, OpenPageProc, this) {
 
-        mpPage = &rPage;
+        mpOpenPage = &rOpenPage;
     }
 
     /**
@@ -450,7 +449,7 @@ private:
 
 private:
     //! Sub-page to open
-    DebugPage* mpPage;
+    DebugPage* mpOpenPage;
 };
 
 //! @}

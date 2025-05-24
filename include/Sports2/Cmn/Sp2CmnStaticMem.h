@@ -10,12 +10,18 @@ class StaticMem {
     RP_SINGLETON_DECL(StaticMem);
 
 public:
-    int getStaticVar(int var, bool absolute);
-    void setStaticVar(int var, int value, bool absolute);
+    u32 getVariable(u32 index, bool local = false);
+    void setVariable(u32 index, u32 value, bool local = false);
 
-    u32 getSequence() const {
-        return mSequence;
+    u32 getSceneSeq() const {
+        return mSequenceNo;
     }
+    void setSceneSeq(u32 seq);
+
+    u32 getSceneGroup() const {
+        return mGroupNo;
+    }
+    void setSceneGroup(u32 group);
 
     RPSysScene::ETime getIslandTime() const {
         return mIslandTime;
@@ -25,8 +31,9 @@ public:
     }
 
 private:
-    char _04[0x14];
-    u32 mSequence; // at 0x18
+    char _04[0x14 - 0x4];
+    u32 mGroupNo;    // at 0x14
+    u32 mSequenceNo; // at 0x18
     char _1C[0x380 - 0x1C];
     RPSysScene::ETime mIslandTime; // at 0x380
 };

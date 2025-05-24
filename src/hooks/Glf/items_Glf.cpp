@@ -15,7 +15,7 @@ namespace Glf {
  *
  ******************************************************************************/
 int GlfClubUp(int currentClubIdx) {
-    for (int i = currentClubIdx - 1; i>= 0; i--) {
+    for (int i = currentClubIdx - 1; i >= 0; i--) {
         if (ItemMgr::GetInstance().IsGlfClubUnlock(i)) {
             return i;
         }
@@ -39,7 +39,6 @@ TRAMPOLINE_DEF(0x8040945c, 0x80409460) {
     blr
     // clang-format on
 }
-
 
 int GlfClubDown(int currentClubIdx) {
     for (int i = currentClubIdx + 1; i <= 7; i++) {
@@ -66,7 +65,6 @@ TRAMPOLINE_DEF(0x804093a0, 0x804093a4) {
     blr
     // clang-format on
 }
-
 
 int GetMaxClubID() {
     int maxClubID = 0;
@@ -102,7 +100,7 @@ int GetNextClubUp(int currentClubIdx) {
         }
     }
 
-    //if no club up, go down
+    // if no club up, go down
     if (nextClubIdx == currentClubIdx) {
         for (int i = currentClubIdx; i < 7; i++) {
             if (ItemMgr::GetInstance().IsGlfClubUnlock(i)) {
@@ -125,7 +123,7 @@ int GetNextClubDown(int currentClubIdx) {
         }
     }
 
-    //if no club down, go up
+    // if no club down, go up
     if (nextClubIdx == currentClubIdx) {
         for (int i = currentClubIdx; i >= 0; i--) {
             if (ItemMgr::GetInstance().IsGlfClubUnlock(i)) {
@@ -141,7 +139,7 @@ int GetNextClubDown(int currentClubIdx) {
 /**
  * @brief Putter Set trampoline
  */
-TRAMPOLINE_DEF(0x80409148, 0x8040914c) {
+TRAMPOLINE_DEF(0x80409148, 0x8040914c){
     // clang-format off
     TRAMPOLINE_BEGIN
 
@@ -156,7 +154,7 @@ TRAMPOLINE_DEF(0x80409148, 0x8040914c) {
 /**
  * @brief 3 Iron Set trampoline
  */
-TRAMPOLINE_DEF(0x8040917c, 0x80409180) {
+TRAMPOLINE_DEF(0x8040917c, 0x80409180){
     // clang-format off
     TRAMPOLINE_BEGIN
 
@@ -172,7 +170,7 @@ TRAMPOLINE_DEF(0x8040917c, 0x80409180) {
 /**
  * @brief Driver Set trampoline
  */
-TRAMPOLINE_DEF(0x804091b0, 0x804091b4) {
+TRAMPOLINE_DEF(0x804091b0, 0x804091b4){
     // clang-format off
     TRAMPOLINE_BEGIN
 
@@ -188,7 +186,7 @@ TRAMPOLINE_DEF(0x804091b0, 0x804091b4) {
  * @brief R26 Club Set trampoline
  *
  */
-TRAMPOLINE_DEF(0x80409264, 0x80409268) {
+TRAMPOLINE_DEF(0x80409264, 0x80409268){
     // clang-format off
     TRAMPOLINE_BEGIN
 
@@ -218,22 +216,20 @@ TRAMPOLINE_DEF(0x8040924c, 0x80409250) {
     // clang-format on
 }
 
-
-
 void GlfSetBlindFlag(bool hold2) {
     if (hold2 || !ItemMgr::GetInstance().IsGlfHUD()) {
-        RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->setStaticVar(3, 1, false);
+        RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->setVariable(3, 1, false);
     }
 
     else {
-        RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->setStaticVar(3, 0, false);
+        RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->setVariable(3, 0, false);
     }
 }
 
 /**
  * @brief GlfSetBlindFlag trampoline
  */
-TRAMPOLINE_DEF(0x80406a1c, 0x80406a30) {
+TRAMPOLINE_DEF(0x80406a1c, 0x80406a30){
     // clang-format off
     TRAMPOLINE_BEGIN
 
@@ -244,16 +240,17 @@ TRAMPOLINE_DEF(0x80406a1c, 0x80406a30) {
     // clang-format on
 }
 
-
 u32 GlfDisableZoom(u32 input) {
-    if (!ItemMgr::GetInstance().IsGlfViewLow()) return 0;
-    else return input;
+    if (!ItemMgr::GetInstance().IsGlfViewLow())
+        return 0;
+    else
+        return input;
 }
 
 /**
  * @brief GlfDisableZoom trampoline
  */
-TRAMPOLINE_DEF(0x803facdc, 0x803face0) {
+TRAMPOLINE_DEF(0x803facdc, 0x803face0){
     // clang-format off
     TRAMPOLINE_BEGIN
 
@@ -267,10 +264,11 @@ TRAMPOLINE_DEF(0x803facdc, 0x803face0) {
     // clang-format on
 }
 
-
 u32 GlfDisableTopo(u32 input) {
-    if (!ItemMgr::GetInstance().IsGlfViewSlope()) return 0;
-    else return input;
+    if (!ItemMgr::GetInstance().IsGlfViewSlope())
+        return 0;
+    else
+        return input;
 }
 
 /**

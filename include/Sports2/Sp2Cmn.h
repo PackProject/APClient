@@ -3,6 +3,7 @@
 
 #include <Sports2/Cmn/Sp2CmnConst.h>
 #include <Sports2/Cmn/Sp2CmnController.h>
+#include <Sports2/Cmn/Sp2CmnGameMgr.h>
 #include <Sports2/Cmn/Sp2CmnModel.h>
 #include <Sports2/Cmn/Sp2CmnSeqModel.h>
 #include <Sports2/Cmn/Sp2CmnStaticMem.h>

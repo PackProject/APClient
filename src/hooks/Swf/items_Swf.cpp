@@ -37,7 +37,7 @@ void TryBlock(Sp2::Swf::UserCtrl* pUserCtrl,
     }
 
     bool unlocked = false;
-    u32 sequence = RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->getSequence();
+    u32 sequence = RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->getSceneSeq();
 
     // Check the appropriate AP item to see if blocking is allowed
     switch (sequence) {

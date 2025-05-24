@@ -26,7 +26,7 @@ namespace Cmn {
 void TryPause() {
     bool isSwfPrc = RP_GET_INSTANCE(RPSysSceneMgr)->getCurrentSceneID() ==
                         kiwi::ESceneID_Sp2SwfScene &&
-                    RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->getSequence() ==
+                    RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->getSceneSeq() ==
                         Sp2::Cmn::ESeq_Swf_Prc;
 
     // Pausing is disabled in Speed Slice while objects are falling
@@ -45,7 +45,7 @@ KM_CALL(0x8023536C, TryPause);
 bool TryHomeButton() {
     bool isSwfPrc = RP_GET_INSTANCE(RPSysSceneMgr)->getCurrentSceneID() ==
                         kiwi::ESceneID_Sp2SwfScene &&
-                    RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->getSequence() ==
+                    RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->getSceneSeq() ==
                         Sp2::Cmn::ESeq_Swf_Prc;
 
     // Home menu is disabled in Speed Slice while objects are falling
@@ -118,8 +118,6 @@ Sp2::Cmn::EUnlockState GetSeqUnlockState(UNKWORD, Sp2::Cmn::ESaveSeq seq) {
                   : Sp2::Cmn::EUnlockState_Locked;
 }
 KM_BRANCH(0x80261F84, GetSeqUnlockState);
-
-
 
 } // namespace Cmn
 } // namespace AP

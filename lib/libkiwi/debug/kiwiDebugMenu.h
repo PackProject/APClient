@@ -22,7 +22,8 @@ enum EDebugMenuResult {
     EDebugMenuResult_Cursor,  //!< Cursor changed
     EDebugMenuResult_Change,  //!< State changed
     EDebugMenuResult_Select,  //!< Button selected
-    EDebugMenuResult_Close,   //!< Request to close page/menu
+    EDebugMenuResult_Back,    //!< Request to close page
+    EDebugMenuResult_Exit,    //!< Request to exit menu
 };
 
 /**
@@ -49,7 +50,9 @@ public:
      *
      * @param rPage Menu page
      */
-    void OpenPage(DebugPage& rPage);
+    void OpenPage(DebugPage& rPage) {
+        mPageStack.Push(&rPage);
+    }
 
     /**
      * @brief Updates the menu state
@@ -73,43 +76,27 @@ protected:
 class DebugPage {
 public:
     //! Default options limit
-    static const u32 DEFAULT_MAX_OPTIONS = 16;
+    static const u32 DEFAULT_MAX_OPTIONS = 20;
 
 public:
     /**
      * @brief Constructor
      *
+     * @param rMenu Parent menu
      * @param maxOptions Maximum number of options on the page
      */
-    DebugPage(u32 maxOptions = DEFAULT_MAX_OPTIONS)
-        : mCursor(0), mMaxOptions(maxOptions) {}
+    DebugPage(DebugMenu& rMenu, u32 maxOptions = DEFAULT_MAX_OPTIONS)
+        : mrMenu(rMenu), mCursor(0), mMaxOptions(maxOptions) {}
 
     /**
      * @brief Gets the page's parent menu
      */
-    DebugMenu& GetParent() const {
-        K_ASSERT(mpParent != nullptr);
-        return *mpParent;
-    }
-    /**
-     * @brief Sets the page's parent menu
-     *
-     * @param rMenu Parent menu
-     */
-    void SetParent(DebugMenu& rMenu) {
-        mpParent = &rMenu;
+    DebugMenu& GetMenu() const {
+        return mrMenu;
     }
 
     /**
-     * @brief Appends a new option to the page
-     *
-     * @param rOption Debug option
-     * @return Success
-     */
-    bool AddOption(DebugOptionBase& rOption);
-
-    /**
-     * @brief Updates the menu state
+     * @brief Updates the page state
      * @return Result of actions
      */
     virtual EDebugMenuResult Calculate();
@@ -121,7 +108,7 @@ public:
 
 protected:
     //! Parent menu
-    DebugMenu* mpParent;
+    DebugMenu& mrMenu;
 
     //! Cursor position
     u32 mCursor;

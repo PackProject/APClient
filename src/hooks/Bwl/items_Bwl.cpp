@@ -19,7 +19,7 @@ namespace Bwl {
  */
 bool BwlCheckMoveState() {
     bool unlocked = false;
-    u32 sequence = RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->getSequence();
+    u32 sequence = RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->getSceneSeq();
 
     switch (sequence) {
     case Sp2::Cmn::ESeq_Bwl_Std: {
@@ -91,7 +91,7 @@ TRAMPOLINE_DEF(0x804ea5dc, 0x804ea5e0) {
  */
 bool BwlCheckTurnState() {
     bool unlocked = false;
-    u32 sequence = RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->getSequence();
+    u32 sequence = RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->getSceneSeq();
 
     switch (sequence) {
     case Sp2::Cmn::ESeq_Bwl_Std: {
@@ -164,14 +164,14 @@ TRAMPOLINE_DEF(0x804ea658, 0x804ea65C) {
  *
  ******************************************************************************/
 
- /**
+/**
  * @brief Determines if the player can press the secret strike button
  */
 bool BwlSecretStrike() {
     return ItemMgr::GetInstance().IsBwl100SecretBtn();
 }
 
- /**
+/**
  * @brief BwlSecretStrike trampoline
  */
 TRAMPOLINE_DEF(0x804f0058, 0x804f0068) {

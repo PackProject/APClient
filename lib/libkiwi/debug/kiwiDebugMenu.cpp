@@ -9,16 +9,6 @@ namespace kiwi {
  ******************************************************************************/
 
 /**
- * @brief Opens a new menu page
- *
- * @param rPage Menu page
- */
-void DebugMenu::OpenPage(DebugPage& rPage) {
-    rPage.SetParent(*this);
-    mPageStack.Push(&rPage);
-}
-
-/**
  * @brief Updates the menu state
  * @return Result of actions
  */
@@ -29,12 +19,12 @@ EDebugMenuResult DebugMenu::Calculate() {
 
     EDebugMenuResult result = mPageStack.Top().Calculate();
 
-    if (result == EDebugMenuResult_Close) {
-        // Can't close the root page
+    if (result == EDebugMenuResult_Back) {
         if (mPageStack.Size() > 1) {
             mPageStack.Pop();
         } else {
-            result = EDebugMenuResult_Invalid;
+            // Can't close the root page
+            result = EDebugMenuResult_Exit;
         }
     }
 
@@ -59,29 +49,17 @@ void DebugMenu::UserDraw() {
  ******************************************************************************/
 
 /**
- * @brief Appends a new option to the page
- *
- * @param rOption Debug option
- * @return Success
- */
-bool DebugPage::AddOption(DebugOptionBase& rOption) {
-    if (mOptions.Size() >= mMaxOptions) {
-        K_LOG_EX("Can't add option: %s\n", rOption.GetName().CStr());
-        return false;
-    }
-
-    rOption.SetParent(*this);
-    mOptions.PushBack(&rOption);
-
-    return true;
-}
-
-/**
  * @brief Updates the menu state
  * @return Result of actions
  */
 EDebugMenuResult DebugPage::Calculate() {
+    EDebugMenuResult result = EDebugMenuResult_None;
+
     for (int i = 0; i < EPlayer_Max; i++) {
+        if (mOptions.Size() == 0) {
+            break;
+        }
+
         const WiiCtrl& rCtrl = CtrlMgr::GetInstance().GetWiiCtrl(i);
         if (!rCtrl.IsConnected()) {
             continue;
@@ -105,6 +83,7 @@ EDebugMenuResult DebugPage::Calculate() {
         // Change option with Left/Right
         if (rCtrl.IsTrig(EButton_Right)) {
             return pOption->Increment();
+
         } else if (rCtrl.IsTrig(EButton_Left)) {
             return pOption->Decrement();
         }
@@ -116,30 +95,38 @@ EDebugMenuResult DebugPage::Calculate() {
 
         // Close page with B
         if (rCtrl.IsTrig(EButton_B)) {
-            return EDebugMenuResult_Close;
+            return EDebugMenuResult_Back;
         }
     }
-
-    return EDebugMenuResult_None;
 }
 
 /**
  * @brief User-level render pass
  */
 void DebugPage::UserDraw() {
-    f32 x = 0.15f;
-    f32 y = 0.20f;
+    static const f32 ox = 0.15f;
+    static const f32 oy = 0.20f;
 
     static const f32 cursor = 0.015f;
     static const f32 option = 0.25f;
+
     static const f32 row = 0.05f;
+    static const f32 column = 0.30f;
+
+    f32 x = ox;
+    f32 y = oy;
 
     for (u32 i = 0; i < mOptions.Size(); i++) {
+        // Options marked as disabled are displayed in darker colors
+        Color fill = mOptions[i]->IsEnabled() ? Color::WHITE : Color::GREY;
+
         Text(mOptions[i]->GetName())
+            .SetTextColor(fill)
             .SetStrokeType(ETextStroke_Outline)
             .SetPosition(x, y);
 
         Text(mOptions[i]->GetValueText())
+            .SetTextColor(fill)
             .SetStrokeType(ETextStroke_Outline)
             .SetPosition(x + option, y);
 
@@ -151,6 +138,12 @@ void DebugPage::UserDraw() {
         }
 
         y += row;
+
+        // Half of them are in the other column
+        if (i > 0 && (i % (DEFAULT_MAX_OPTIONS / 2)) == 0) {
+            x += column;
+            y = oy;
+        }
     }
 }
 

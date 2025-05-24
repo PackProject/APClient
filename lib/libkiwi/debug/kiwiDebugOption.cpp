@@ -27,14 +27,15 @@ void DebugOptionBase::SetEnabled(bool enable) {
 /**
  * @brief Constructor
  *
+ * @param rPage Parent page
  * @param rName Option name
  * @param min Minimum value (inclusive)
  * @param max Maximum value (inclusive)
  * @param initial Initial value (optional)
  */
-DebugIntOption::DebugIntOption(const String& rName, int min, int max,
-                               Optional<int> initial)
-    : DebugOptionBase(rName), mMin(min), mMax(max) {
+DebugIntOption::DebugIntOption(DebugPage& rPage, const String& rName, int min,
+                               int max, Optional<int> initial)
+    : DebugOptionBase(rPage, rName), mMin(min), mMax(max) {
 
     K_ASSERT(max >= min);
 
@@ -51,6 +52,10 @@ EDebugMenuResult DebugIntOption::Increment() {
         return EDebugMenuResult_Invalid;
     }
 
+    if (mMin == mMax) {
+        return EDebugMenuResult_Invalid;
+    }
+
     // Value wraps around
     SetValue(mValue == mMax ? mMin : mValue + 1);
     return EDebugMenuResult_Change;
@@ -62,6 +67,10 @@ EDebugMenuResult DebugIntOption::Increment() {
  */
 EDebugMenuResult DebugIntOption::Decrement() {
     if (!IsEnabled()) {
+        return EDebugMenuResult_Invalid;
+    }
+
+    if (mMin == mMax) {
         return EDebugMenuResult_Invalid;
     }
 
@@ -172,7 +181,7 @@ void DebugBoolOption::UpdateString() {
  * @param ppValues Enum value strings
  */
 void DebugEnumOption::SetEnumValues(const char** ppValues) {
-    K_ASSERT(ppValues != nullptr);
+    K_ASSERT_PTR(ppValues);
 
     mppValues = ppValues;
     UpdateString();
@@ -182,7 +191,7 @@ void DebugEnumOption::SetEnumValues(const char** ppValues) {
  * @brief Updates the option value string
  */
 void DebugEnumOption::UpdateString() {
-    K_ASSERT(mppValues != nullptr);
+    K_ASSERT_PTR(mppValues);
 
     if (IsEnabled()) {
         mValueText = mppValues[GetValue()];
@@ -225,10 +234,10 @@ EDebugMenuResult DebugProcOption::Select() {
  * @param pArg Callback user argument
  */
 EDebugMenuResult DebugOpenPageOption::OpenPageProc(void* pArg) {
-    K_ASSERT(pArg != nullptr);
+    K_ASSERT_PTR(pArg);
 
     DebugOpenPageOption* p = static_cast<DebugOpenPageOption*>(pArg);
-    p->GetParent().GetParent().OpenPage(*p->mpPage);
+    p->GetPage().GetMenu().OpenPage(*p->mpOpenPage);
 
     return EDebugMenuResult_Select;
 }

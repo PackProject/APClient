@@ -1,7 +1,7 @@
 #ifndef APCLIENT_SCENE_DEBUGROOTSCENE_SCENE_H
 #define APCLIENT_SCENE_DEBUGROOTSCENE_SCENE_H
 #include "core/const.h"
-#include "scene/DebugRootScene/MainPage.h"
+#include "scene/DebugRootScene/RootPage.h"
 
 #include <libkiwi.h>
 
@@ -51,8 +51,13 @@ public:
 private:
     //! Debug menu
     kiwi::DebugMenu mDebugMenu;
-    //! Main menu page
-    MainPage mMainPage;
+    //! Root menu page
+    RootPage mRootPage;
+
+    //! Ambient sound effect timer
+    u32 mAmbientTimer;
+    //! Scene exit timer
+    s32 mExitTimer;
 };
 
 } // namespace DebugRoot

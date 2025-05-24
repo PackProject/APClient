@@ -16,11 +16,11 @@ namespace Dgl {
  ******************************************************************************/
 void DglSetBlindFlag(bool hold2) {
     if (hold2 || !ItemMgr::GetInstance().IsDglHUD()) {
-        RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->setStaticVar(3, 1, false);
+        RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->setVariable(3, 1, false);
     }
 
     else {
-        RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->setStaticVar(3, 0, false);
+        RP_GET_INSTANCE(Sp2::Cmn::StaticMem)->setVariable(3, 0, false);
     }
 }
 
