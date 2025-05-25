@@ -118,6 +118,7 @@ void SeqSelectPage::SetNextScene(s32 scene) {
     case kiwi::ESceneID_Sp2##S##Scene: {                                       \
         mGameMode.SetEnumValues(GameMode_Keys_##S);                            \
         mGameMode.SetRange(0, LENGTHOF(GameMode_Keys_##S) - 1);                \
+        mGameMode.SetEnabled(LENGTHOF(GameMode_Keys_##S) != 1);                \
         break;                                                                 \
     }
 

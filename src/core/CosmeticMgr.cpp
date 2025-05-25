@@ -56,7 +56,7 @@ void CosmeticMgr::Debug() {
     }
 
     kiwi::Shuffle(mRandomBgmMapping, K_LENGTHOF(mRandomBgmMapping));
-    mRandomBgmFlag = true;
+    mRandomBgmFlag = false;
 }
 
 } // namespace AP
