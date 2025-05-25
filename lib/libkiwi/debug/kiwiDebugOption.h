@@ -35,11 +35,11 @@ public:
     /**
      * @brief Constructor
      *
-     * @param rPage Parent page
+     * @param rMenu Parent menu
      * @param rName Option name
      */
-    DebugOptionBase(DebugPage& rPage, const String& rName)
-        : mrPage(rPage), mIsEnabled(true), mName(rName) {}
+    DebugOptionBase(DebugMenu& rMenu, const String& rName)
+        : mrMenu(rMenu), mIsEnabled(true), mName(rName) {}
 
     /**
      * @brief Destructor
@@ -47,10 +47,10 @@ public:
     virtual ~DebugOptionBase() {}
 
     /**
-     * @brief Gets the options's parent menu page
+     * @brief Gets the option's parent menu
      */
-    DebugPage& GetPage() const {
-        return mrPage;
+    DebugMenu& GetMenu() const {
+        return mrMenu;
     }
 
     /**
@@ -130,8 +130,8 @@ protected:
     virtual void UpdateString() {}
 
 protected:
-    //! Parent menu page
-    DebugPage& mrPage;
+    //! Parent menu
+    DebugMenu& mrMenu;
 
     //! Enable option
     bool mIsEnabled;
@@ -157,13 +157,13 @@ public:
     /**
      * @brief Constructor
      *
-     * @param rPage Parent page
+     * @param rMenu Parent menu
      * @param rName Option name
      * @param min Minimum value (inclusive)
      * @param max Maximum value (inclusive)
      * @param initial Initial value (optional)
      */
-    DebugIntOption(DebugPage& rPage, const String& rName, int min, int max,
+    DebugIntOption(DebugMenu& rMenu, const String& rName, int min, int max,
                    Optional<int> initial = kiwi::nullopt);
 
     /**
@@ -272,12 +272,12 @@ public:
     /**
      * @brief Constructor
      *
-     * @param rPage Parent page
+     * @param rMenu Parent menu
      * @param rName Option name
      * @param initial Initial value (optional)
      */
-    DebugBoolOption(DebugPage& rPage, const String& rName, bool initial = false)
-        : DebugIntOption(rPage, rName, static_cast<int>(false),
+    DebugBoolOption(DebugMenu& rMenu, const String& rName, bool initial = false)
+        : DebugIntOption(rMenu, rName, static_cast<int>(false),
                          static_cast<int>(true), static_cast<int>(initial)) {
 
         UpdateString();
@@ -312,17 +312,17 @@ public:
     /**
      * @brief Constructor
      *
-     * @param rPage Parent page
+     * @param rMenu Parent menu
      * @param rName Option name
      * @param ppValues Enum value strings
      * @param min Minimum value (inclusive)
      * @param max Maximum value (inclusive)
      * @param initial Initial value (optional)
      */
-    DebugEnumOption(DebugPage& rPage, const String& rName,
+    DebugEnumOption(DebugMenu& rMenu, const String& rName,
                     const char** ppValues, int min, int max,
                     Optional<int> initial = kiwi::nullopt)
-        : DebugIntOption(rPage, rName, min, max, initial), mppValues(ppValues) {
+        : DebugIntOption(rMenu, rName, min, max, initial), mppValues(ppValues) {
 
         ASSERT(ppValues != nullptr);
 
@@ -375,14 +375,14 @@ public:
     /**
      * @brief Constructor
      *
-     * @param rPage Parent page
+     * @param rMenu Parent menu
      * @param rName Option name
      * @param pCallback Select callback function
      * @param pCallbackArg Select callback user argument
      */
-    DebugProcOption(DebugPage& rPage, const String& rName,
+    DebugProcOption(DebugMenu& rMenu, const String& rName,
                     SelectCallback pCallback, void* pCallbackArg = nullptr)
-        : DebugOptionBase(rPage, rName),
+        : DebugOptionBase(rMenu, rName),
           mpCallback(pCallback),
           mpCallbackArg(pCallbackArg) {}
 
@@ -421,13 +421,13 @@ public:
     /**
      * @brief Constructor
      *
-     * @param rPage Parent page
+     * @param rMenu Parent menu
      * @param rName Option name
      * @param rOpenPage Sub-page to open
      */
-    DebugOpenPageOption(DebugPage& rPage, const String& rName,
+    DebugOpenPageOption(DebugMenu& rMenu, const String& rName,
                         DebugPage& rOpenPage)
-        : DebugProcOption(rPage, rName, OpenPageProc, this) {
+        : DebugProcOption(rMenu, rName, OpenPageProc, this) {
 
         mpOpenPage = &rOpenPage;
     }

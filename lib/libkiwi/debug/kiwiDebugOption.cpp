@@ -27,15 +27,15 @@ void DebugOptionBase::SetEnabled(bool enable) {
 /**
  * @brief Constructor
  *
- * @param rPage Parent page
+ * @param rMenu Parent menu
  * @param rName Option name
  * @param min Minimum value (inclusive)
  * @param max Maximum value (inclusive)
  * @param initial Initial value (optional)
  */
-DebugIntOption::DebugIntOption(DebugPage& rPage, const String& rName, int min,
+DebugIntOption::DebugIntOption(DebugMenu& rMenu, const String& rName, int min,
                                int max, Optional<int> initial)
-    : DebugOptionBase(rPage, rName), mMin(min), mMax(max) {
+    : DebugOptionBase(rMenu, rName), mMin(min), mMax(max) {
 
     K_ASSERT(max >= min);
 
@@ -237,7 +237,7 @@ EDebugMenuResult DebugOpenPageOption::OpenPageProc(void* pArg) {
     K_ASSERT_PTR(pArg);
 
     DebugOpenPageOption* p = static_cast<DebugOpenPageOption*>(pArg);
-    p->GetPage().GetMenu().OpenPage(*p->mpOpenPage);
+    p->GetMenu().OpenPage(*p->mpOpenPage);
 
     return EDebugMenuResult_Select;
 }
