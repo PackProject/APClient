@@ -53,13 +53,11 @@ void DebugMenu::UserDraw() {
  * @return Result of actions
  */
 EDebugMenuResult DebugPage::Calculate() {
-    EDebugMenuResult result = EDebugMenuResult_None;
+    if (mOptions.Empty()) {
+        return EDebugMenuResult_None;
+    }
 
     for (int i = 0; i < EPlayer_Max; i++) {
-        if (mOptions.Size() == 0) {
-            break;
-        }
-
         const WiiCtrl& rCtrl = CtrlMgr::GetInstance().GetWiiCtrl(i);
         if (!rCtrl.IsConnected()) {
             continue;

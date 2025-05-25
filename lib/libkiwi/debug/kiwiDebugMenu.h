@@ -32,15 +32,6 @@ enum EDebugMenuResult {
 class DebugMenu : public IRPGrpDrawObject {
 public:
     /**
-     * @brief Constructor
-     *
-     * @param rRootPage Menu root page
-     */
-    DebugMenu(DebugPage& rRootPage) {
-        OpenPage(rRootPage);
-    }
-
-    /**
      * @brief Destructor
      */
     virtual ~DebugMenu() {}

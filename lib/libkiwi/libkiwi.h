@@ -73,6 +73,7 @@
 #include <libkiwi/util/kiwiProductInfo.h>
 #include <libkiwi/util/kiwiPtrUtil.h>
 #include <libkiwi/util/kiwiRandom.h>
+#include <libkiwi/util/kiwiStateMachine.h>
 #include <libkiwi/util/kiwiStaticSingleton.h>
 #include <libkiwi/util/kiwiWatch.h>
 #include <libkiwi/util/kiwiWorkBuffer.h>

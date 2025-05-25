@@ -30,7 +30,9 @@ public:
      * @brief Updates the menu state
      * @return Result of actions
      */
-    virtual kiwi::EDebugMenuResult Calculate();
+    virtual kiwi::EDebugMenuResult Calculate() {
+        return mStateMachine.Calculate();
+    }
 
     /**
      * @brief User-level render pass
@@ -39,11 +41,23 @@ public:
 
 private:
     /**
+     * @brief State machine state IDs
+     */
+    enum EState { EState_Select, EState_Decide, EState_Max };
+
+    K_STATE_DECL_EX(kiwi::EDebugMenuResult, Select);
+    K_STATE_DECL_EX(kiwi::EDebugMenuResult, Decide);
+
+private:
+    /**
      * @brief Sets up the global state and changes to the next scene
      */
     void SetupGame();
 
 private:
+    //! Logic state machine
+    kiwi::StateMachine<SeqSelectPage, kiwi::EDebugMenuResult> mStateMachine;
+
     //! Selected scene ID
     s32 mNextScene;
     //! Scene exit timer

@@ -53,6 +53,7 @@ ALL_SEQ();
  */
 SeqSelectPage::SeqSelectPage(kiwi::DebugMenu& rMenu)
     : kiwi::DebugPage(rMenu),
+      mStateMachine(this, EState_Max, EState_Select),
       mNextScene(-1),
       mExitTimer(0),
       mPlayerNum(*this, "PlayerNum", 1, kiwi::EPlayer_Max),
@@ -61,43 +62,13 @@ SeqSelectPage::SeqSelectPage(kiwi::DebugMenu& rMenu)
                 LENGTHOF(GameMode_Keys_Swf)),
       mStageNo(*this, "StageNo", 0, 0) {
 
+    mStateMachine.RegistState(EState_Select, &State_Select_calc);
+    mStateMachine.RegistState(EState_Decide, &State_Decide_calc);
+
     mOptions.PushBack(&mPlayerNum);
     mOptions.PushBack(&mRemoteNum);
     mOptions.PushBack(&mGameMode);
     mOptions.PushBack(&mStageNo);
-}
-
-/**
- * @brief Updates the page state
- * @return Result of actions
- */
-kiwi::EDebugMenuResult SeqSelectPage::Calculate() {
-    K_ASSERT(mNextScene >= 0);
-
-    // Let sound effects finish before exiting
-    if (mExitTimer > 0) {
-        if (--mExitTimer <= 0) {
-            SetupGame();
-        }
-
-        return kiwi::EDebugMenuResult_None;
-    }
-
-    // Press A at any point to commit settings
-    for (int i = 0; i < kiwi::EPlayer_Max; i++) {
-        const kiwi::WiiCtrl& rCtrl = kiwi::CtrlMgr::GetInstance().GetWiiCtrl(i);
-        if (!rCtrl.IsConnected()) {
-            continue;
-        }
-
-        if (rCtrl.IsTrig(kiwi::EButton_A)) {
-            Sp2::Snd::startSe(SE_CMN_MII_DECIDE);
-            mExitTimer = 45;
-            break;
-        }
-    }
-
-    return DebugPage::Calculate();
 }
 
 /**
@@ -153,6 +124,47 @@ void SeqSelectPage::SetNextScene(s32 scene) {
     switch (mNextScene) { ALL_SEQ(); }
 #undef X
 #undef Y
+}
+
+/**
+ * @brief Scene select ('Select' state)
+ * @return Result of actions
+ */
+kiwi::EDebugMenuResult SeqSelectPage::State_Select_calc() {
+    // Press A at any point to commit settings
+    for (int i = 0; i < kiwi::EPlayer_Max; i++) {
+        const kiwi::WiiCtrl& rCtrl = kiwi::CtrlMgr::GetInstance().GetWiiCtrl(i);
+
+        if (!rCtrl.IsConnected()) {
+            continue;
+        }
+
+        if (rCtrl.IsTrig(kiwi::EButton_A)) {
+            mStateMachine.ChangeState(EState_Decide);
+            break;
+        }
+    }
+
+    return DebugPage::Calculate();
+}
+
+/**
+ * @brief Apply chosen settings ('Decide' state)
+ * @return Result of actions
+ */
+kiwi::EDebugMenuResult SeqSelectPage::State_Decide_calc() {
+    K_ASSERT(mNextScene >= 0);
+
+    if (mStateMachine.IsFirstStep()) {
+        Sp2::Snd::startSe(SE_CMN_DECIDE_01);
+    }
+
+    // Let sound effects finish before exiting
+    if (++mExitTimer >= 30) {
+        SetupGame();
+    }
+
+    return kiwi::EDebugMenuResult_None;
 }
 
 /**

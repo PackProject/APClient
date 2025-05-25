@@ -337,6 +337,11 @@ lbl_80322F18:
     // clang-format on
 }
 
+/**
+ * @brief Null PTMF constant
+ */
+u8 __ptmf_null[0xC] = {};
+
 #ifdef __cplusplus
 }
 #endif

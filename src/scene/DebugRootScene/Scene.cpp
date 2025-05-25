@@ -12,40 +12,25 @@ K_DECL_SCENE(Scene);
 /**
  * @brief Constructor
  */
-Scene::Scene()
-    : mDebugMenu(mRootPage),
-      mRootPage(mDebugMenu),
-      mAmbientTimer(0),
-      mExitTimer(0) {}
+Scene::Scene() : mRootPage(mDebugMenu), mAmbientTimer(0), mExitTimer(0) {}
 
 /**
  * @brief Performs initial scene setup
  */
 void Scene::OnConfigure() {
     RPGrpRenderer::GetCurrent()->AppendDrawObject(&mDebugMenu);
+    mDebugMenu.OpenPage(mRootPage);
 }
 
 /**
  * @brief Calculate state user callback
  */
 void Scene::OnCalculate() {
-    // 1/10 chance to play resort-themed sound effect every second
-    if ((++mAmbientTimer % 60) == 0 && kiwi::Random().Chance(0.1f)) {
-        switch (kiwi::Random().NextU32() % 3) {
-        case 0: {
+    if ((++mAmbientTimer % 120) == 0 && kiwi::RNG.Chance(0.10)) {
+        if (kiwi::RNG.Chance(0.70)) {
             Sp2::Snd::startSe(SE_CMN_TITLE_COAST);
-            break;
-        }
-
-        case 1: {
-            Sp2::Snd::startSe(SE_CMN_TITLE_COAST);
-            break;
-        }
-
-        case 2: {
+        } else {
             Sp2::Snd::startSe(SE_CMN_SEAGULL_CHIRP);
-            break;
-        }
         }
     }
 
