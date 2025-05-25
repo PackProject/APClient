@@ -50,6 +50,11 @@ private:
 
 private:
     /**
+     * @brief Updates the option ranges
+     */
+    void CalcOption();
+
+    /**
      * @brief Sets up the global state and changes to the next scene
      */
     void SetupGame();
@@ -71,7 +76,7 @@ private:
     //! Game mode
     kiwi::DebugEnumOption mGameMode;
     //! Game stage
-    kiwi::DebugIntOption mStageNo;
+    kiwi::DebugEnumOption mStageNo;
 };
 
 } // namespace DebugRoot

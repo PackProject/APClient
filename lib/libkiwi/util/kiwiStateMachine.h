@@ -3,6 +3,8 @@
 #include <libkiwi/debug/kiwiAssert.h>
 #include <libkiwi/k_types.h>
 
+#include <climits>
+
 /**
  * @brief Declares state calc/exit functions
  */
@@ -129,15 +131,17 @@ public:
             mPrevState = mState;
             mState = mNextState;
 
-            mDuration = 0;
+            mDuration = -1;
             mEntering = false;
         }
 
-        K_ASSERT(mpCalcFunctions[mState]);
-        TStateReturn result = (mpObject->*mpCalcFunctions[mState])();
+        // Prevent overflow
+        if (mDuration < INT_MAX) {
+            mDuration++;
+        }
 
-        mDuration++;
-        return result;
+        K_ASSERT(mpCalcFunctions[mState]);
+        return (mpObject->*mpCalcFunctions[mState])();
     }
 
 private:
@@ -146,7 +150,7 @@ private:
     s32 mState;    //!< Current state
     u32 mStateNum; //!< Number of possible states
 
-    u32 mDuration;  //!< Current state duration
+    s32 mDuration;  //!< Current state duration
     s32 mPrevState; //!< Previous state
     s32 mNextState; //!< Next state
 
@@ -154,7 +158,7 @@ private:
     bool mExiting;  //!< Whether to call the enter function
 
     StateFunc* mpCalcFunctions; //!< State update functions
-    StateFunc* mpExitFunctions; //!< State update functions
+    StateFunc* mpExitFunctions; //!< State exit functions
 };
 
 //! @}
