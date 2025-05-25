@@ -12,7 +12,7 @@ namespace DebugRoot {
  */
 RootPage::RootPage(kiwi::DebugMenu& rMenu)
     : kiwi::DebugPage(rMenu),
-      mSceneSelect(*this, "Scene Select", mSceneSelectPage),
+      mSceneSelect(rMenu, "Scene Select", mSceneSelectPage),
       mSceneSelectPage(rMenu) {
 
     mOptions.PushBack(&mSceneSelect);

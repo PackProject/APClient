@@ -56,11 +56,11 @@ SeqSelectPage::SeqSelectPage(kiwi::DebugMenu& rMenu)
       mStateMachine(this, EState_Max, EState_Select),
       mNextScene(-1),
       mExitTimer(0),
-      mPlayerNum(*this, "PlayerNum", 1, kiwi::EPlayer_Max),
-      mRemoteNum(*this, "RemoteNum", 1, kiwi::EPlayer_Max),
-      mGameMode(*this, "GameMode", GameMode_Keys_Swf, 0,
+      mPlayerNum(rMenu, "PlayerNum", 1, kiwi::EPlayer_Max),
+      mRemoteNum(rMenu, "RemoteNum", 1, kiwi::EPlayer_Max),
+      mGameMode(rMenu, "GameMode", GameMode_Keys_Swf, 0,
                 LENGTHOF(GameMode_Keys_Swf)),
-      mStageNo(*this, "StageNo", 0, 0) {
+      mStageNo(rMenu, "StageNo", 0, 0) {
 
     mStateMachine.RegistState(EState_Select, &State_Select_calc);
     mStateMachine.RegistState(EState_Decide, &State_Decide_calc);
@@ -131,7 +131,6 @@ void SeqSelectPage::SetNextScene(s32 scene) {
  * @return Result of actions
  */
 kiwi::EDebugMenuResult SeqSelectPage::State_Select_calc() {
-    // Press A at any point to commit settings
     for (int i = 0; i < kiwi::EPlayer_Max; i++) {
         const kiwi::WiiCtrl& rCtrl = kiwi::CtrlMgr::GetInstance().GetWiiCtrl(i);
 
@@ -139,6 +138,7 @@ kiwi::EDebugMenuResult SeqSelectPage::State_Select_calc() {
             continue;
         }
 
+        // Press A at any point to commit settings
         if (rCtrl.IsTrig(kiwi::EButton_A)) {
             mStateMachine.ChangeState(EState_Decide);
             break;

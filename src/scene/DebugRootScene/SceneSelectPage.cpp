@@ -20,7 +20,7 @@ SceneSelectPage::SceneSelectPage(kiwi::DebugMenu& rMenu)
         ASSERT_PTR(pSceneName);
 
         kiwi::DebugProcOption* pOption =
-            new kiwi::DebugProcOption(*this, pSceneName, SelectProc, this);
+            new kiwi::DebugProcOption(rMenu, pSceneName, SelectProc, this);
 
         ASSERT_PTR(pOption);
 
