@@ -24,6 +24,18 @@ private:
     //! Debug scene select
     kiwi::DebugOpenPageOption mSceneSelect;
     SceneSelectPage mSceneSelectPage;
+
+    //! AP item debug
+    kiwi::DebugOpenPageOption mItemDebug;
+    // ItemDebugPage mItemDebugPage;
+
+    //! AP check debug
+    kiwi::DebugOpenPageOption mCheckDebug;
+    // ItemDebugPage mItemDebugPage;
+
+    //! AP cosmetic debug
+    kiwi::DebugOpenPageOption mCosmeticDebug;
+    // ItemDebugPage mItemDebugPage;
 };
 
 } // namespace DebugRoot

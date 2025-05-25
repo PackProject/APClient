@@ -48,8 +48,8 @@ enum ESeq {
     ESeq_Bwl_100 = 3, //!< Bowling (100-Pin Game)
     ESeq_Bwl_Wal = 4, //!< Bowling (Spin Control)
 
-    ESeq_Can = 7,    //!< Canoeing (Speed Challenge)
-    ESeq_Can_Vs = 8, //!< Canoeing (VS)
+    ESeq_Can = 8,    //!< Canoeing (Speed Challenge)
+    ESeq_Can_Vs = 7, //!< Canoeing (VS)
 
     ESeq_Png_Ret = 2, //!< Table Tennis (Return Challenge)
     ESeq_Png = 5,     //!< Table Tennis (Match)
