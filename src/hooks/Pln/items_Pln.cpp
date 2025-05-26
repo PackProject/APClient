@@ -42,5 +42,37 @@ TRAMPOLINE_DEF(0x80428898, 0x8042889C) {
     // clang-format on
 }
 
+/**
+ * @brief Unlocks balloons in Island Flyover
+ */
+bool PlnSetBalloons() {
+    return ItemMgr::GetInstance().IsPlnBalloonsUnlock();
+}
+
+/**
+ * @brief PlnSetBalloons trampoline
+ */
+TRAMPOLINE_DEF(0x8042aff0, 0x8042b010) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    bl PlnSetBalloons
+    cmpwi r3, 0
+    beq Locked
+    b End
+   
+Locked:
+    lis r14, 0x8042
+    ori r14, r14, 0xb340
+    mtctr r14
+    TRAMPOLINE_END
+    bctrl
+
+End:
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
 } // namespace Pln
 } // namespace AP

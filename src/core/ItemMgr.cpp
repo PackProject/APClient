@@ -438,7 +438,7 @@ void ItemMgr::Clear() {
     mPlnStageFlag.SetDirect(0b1); // Start with one stage
     mPlnDoubleBlastersFlag = false;
     mPlnNightLightsFlag = false;
-    mPlnBalloonsFlag = false;
+    mPlnBalloonsFlag = true;
     mPlnTwoSeaterPlaneFlag = false;
 }
 
@@ -536,7 +536,7 @@ void ItemMgr::Debug() {
     mPlnStageFlag.Randomize();
     mPlnDoubleBlastersFlag = r.CoinFlip();
     mPlnNightLightsFlag = r.CoinFlip();
-    mPlnBalloonsFlag = r.CoinFlip();
+    //mPlnBalloonsFlag = r.CoinFlip();
     mPlnTwoSeaterPlaneFlag = r.CoinFlip();
 }
 
