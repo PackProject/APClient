@@ -11,6 +11,9 @@
 
 namespace AP {
 
+/**
+ * @brief Archipelago cosmetic manager
+ */
 class CosmeticMgr : public kiwi::DynamicSingleton<CosmeticMgr>,
                     public kiwi::IBinary<CosmeticMgr> {
     friend class kiwi::DynamicSingleton<CosmeticMgr>;

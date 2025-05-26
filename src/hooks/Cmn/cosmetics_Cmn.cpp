@@ -70,7 +70,9 @@ RPSysScene::ETime InterceptIslandTime(RPSysScene* pScene) {
         return pScene->getIslandTime();
     }
 
-    return CosmeticMgr::GetInstance().GetRandomTime(group);
+    // 'Auto' delegates to the scene
+    RPSysScene::ETime time = CosmeticMgr::GetInstance().GetRandomTime(group);
+    return time != RPSysScene::ETime_Auto ? time : pScene->getIslandTime();
 }
 KM_CALL(0x8026a56c, InterceptIslandTime);
 
