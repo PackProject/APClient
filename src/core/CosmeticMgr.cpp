@@ -13,7 +13,6 @@ const char* CosmeticMgr::PATH = "cosmetic.bin";
 
 /**
  * @brief Constructor
- *
  */
 CosmeticMgr::CosmeticMgr() {
     Clear();
@@ -58,16 +57,26 @@ void CosmeticMgr::Clear() {
 void CosmeticMgr::Debug() {
     kiwi::Random r;
 
+    mRandomBgmFlag = true;
     for (int i = 0; i < K_LENGTHOF(mRandomBgmMapping); i++) {
         mRandomBgmMapping[i] = i;
     }
-
     kiwi::Shuffle(mRandomBgmMapping, K_LENGTHOF(mRandomBgmMapping));
-    mRandomBgmFlag = r.CoinFlip();
 
-    mRandomTimeFlag = r.CoinFlip();
+    mRandomTimeFlag = true;
     for (int i = 0; i < LENGTHOF(mRandomTimeMapping); i++) {
-        mRandomTimeMapping[i] = static_cast<RPSysScene::ETime>(r.NextU32(3));
+        // Scene groups where changing the time of day is disallowed
+        if (i == Sp2::Cmn::EGroupID_Fld + 1 ||
+            i == Sp2::Cmn::EGroupID_Bwl + 1 ||
+            i == Sp2::Cmn::EGroupID_Png + 1 ||
+            i == Sp2::Cmn::EGroupID_Pln + 1 ||
+            i == Sp2::Cmn::EGroupID_Glf + 1 ||
+            i == Sp2::Cmn::EGroupID_Dgl + 1) {
+            mRandomTimeMapping[i] = RPSysScene::ETime_Auto;
+        } else {
+            mRandomTimeMapping[i] = static_cast<RPSysScene::ETime>(
+                r.NextU32(RPSysScene::ETime_Night + 1));
+        }
     }
 }
 
