@@ -322,5 +322,41 @@ TRAMPOLINE_DEF(0x803fac54, 0x803fac58) {
     // clang-format on
 }
 
+bool GlfHasBackSpin() {
+    return ItemMgr::GetInstance().IsGlfSpin();
+}
+
+/**
+ * @brief GlfHasBackSpin trampoline
+ */
+TRAMPOLINE_DEF(0x80414068, 0x80414088) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    // r30 = pGlfBall
+    mr r31, r3 // r31 = pSpinVel
+
+    bl GlfHasBackSpin
+    cmpwi r3, 0
+    beq NoBackSpin
+
+    // add spin velocity X+Y
+    psq_l  f1, 0x88(r30), 0, 0
+    psq_l  f0, 0x0(r31), 0, 0
+    ps_add f0, f1, f0
+    psq_st f0, 0x88(r30), 0, 0
+
+    // add spin velocity Z
+    psq_l  f1, 0x90(r30), 1, 0
+    psq_l  f0, 0x8(r31), 1, 0
+    ps_add f0, f1, f0
+    psq_st f0, 0x90(r30), 1, 0
+
+NoBackSpin:
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
 } // namespace Glf
 } // namespace AP
