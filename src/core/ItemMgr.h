@@ -504,6 +504,9 @@ public:
     //! Timer increment (in seconds)
     static const u32 JSK_FREE_TIMER_VALUE = 60;
 
+    //! Number of stage unlock items
+    static const u32 JSK_STAGE_COUNT = 6;
+
     bool IsJskBoost() const {
         return mJskBoostFlag;
     }
@@ -515,6 +518,9 @@ public:
     }
     u32 GetJskFreeTimerNum() const {
         return mJskFreeTimerFlag.Count();
+    }
+    bool IsJskStageUnlock(u32 id) const {
+        return mJskStageFlag.GetBit(id);
     }
     /**@}*/
 
@@ -866,6 +872,8 @@ private:
     bool mJsk2xRingFlag;
     //! Free cruising timer items
     kiwi::TBitFlag<u32, JSK_FREE_TIMER_COUNT> mJskFreeTimerFlag;
+    //! Stage items
+    kiwi::TBitFlag<u32, JSK_STAGE_COUNT> mJskStageFlag;
     /**@}*/
 
     /**

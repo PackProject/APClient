@@ -420,6 +420,7 @@ void ItemMgr::Clear() {
     mJskRingTimerFlag.ResetAll();
     mJsk2xRingFlag = false;
     mJskFreeTimerFlag.SetDirect(0b1); // Start with one timer
+    mJskStageFlag.SetDirect(0b1);     // Start with one stage
 
     // Canoeing
     mCanTimerFlag.SetDirect(0b1); // Start with one timer
@@ -482,7 +483,7 @@ void ItemMgr::Debug() {
     mBskVsTimerFlag.Randomize();
     mBskVsPassFlag = r.CoinFlip();
     mBskVs3ptFlag = r.CoinFlip();
-    // mBskVsDunkFlag = r.CoinFlip();
+    mBskVsDunkFlag = r.CoinFlip();
 
     // Table Tennis
     mPngSpinFlag = r.CoinFlip();
@@ -513,11 +514,12 @@ void ItemMgr::Debug() {
     // Power Cruising
     mJskBoostFlag = r.CoinFlip();
     mJskRingTimerFlag.Randomize();
-    // mJsk2xRingFlag = r.CoinFlip();
+    mJsk2xRingFlag = r.CoinFlip();
     mJskFreeTimerFlag.Randomize();
+    mJskStageFlag.Randomize();
 
     // Canoeing
-    // mCanTimerFlag.Randomize();
+    mCanTimerFlag.Randomize();
     mCanStageFlag.Randomize();
 
     mCanTimerFlag.SetAll();

@@ -27,6 +27,30 @@ enum ESport {
 };
 
 /**
+ * @brief Scene group ID
+ */
+enum EGroupID {
+    EGroupID_Cmn = -1, //!< Common
+    EGroupID_Swf,      //!< Swordplay
+    EGroupID_Jsk,      //!< Power Cruising
+    EGroupID_Arc,      //!< Archery
+    EGroupID_Fld,      //!< Frisbee
+    EGroupID_Bsk,      //!< Basketball
+    EGroupID_Bwl,      //!< Bowling
+    EGroupID_Can,      //!< Canoeing
+    EGroupID_Png,      //!< Table Tennis
+    EGroupID_Wkb,      //!< Wakeboarding
+    EGroupID_Pln,      //!< Air Sports
+    EGroupID_Glf,      //!< Golf
+    EGroupID_Dgl,      //!< Frisbee Golf
+    EGroupID_Bic,      //!< Cycling
+    EGroupID_Omk,      //!< Skydiving
+    EGroupID_Debug,    //!< Debug
+
+    EGroupID_Max,
+};
+
+/**
  * @brief Sequence ("category") ID
  */
 enum ESeq {
