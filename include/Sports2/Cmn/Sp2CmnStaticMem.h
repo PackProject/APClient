@@ -29,10 +29,10 @@ public:
         mSequenceNo = seq;
     }
 
-    u32 getSceneGroup() const {
+    s32 getSceneGroup() const {
         return mGroupNo;
     }
-    void setSceneGroup(u32 group) {
+    void setSceneGroup(s32 group) {
         mGroupNo = group;
     }
 

@@ -4,6 +4,7 @@
 
 #include "core/const.h"
 
+#include <Sports2/Sp2Cmn.h>
 #include <Sports2/Sp2Snd.h>
 
 #include <libkiwi.h>
@@ -43,8 +44,26 @@ public:
      * @param id Standard music ID
      */
     u32 GetRandomBgm(u32 id) const {
-        K_ASSERT(IsBgm(id));
+        ASSERT(IsBgm(id));
         return mRandomBgmMapping[id - BGM_ID_MIN];
+    }
+
+    /**
+     * @brief Tests whether island time randomization is enabled
+     */
+    bool IsRandomTime() const {
+        return mRandomTimeFlag;
+    }
+
+    /**
+     * @brief Gets the random island time that should be used instead of the
+     * current one
+     *
+     * @param group Scene group ID
+     */
+    RPSysScene::ETime GetRandomTime(s32 group) const {
+        ASSERT(group < Sp2::Cmn::EGroupID_Max);
+        return mRandomTimeMapping[1 + group];
     }
 
 private:
@@ -116,6 +135,11 @@ private:
     bool mRandomBgmFlag;
     //! Random music mapping table
     u32 mRandomBgmMapping[BGM_ID_MAX - BGM_ID_MIN];
+
+    //! Random island time enabled
+    bool mRandomTimeFlag;
+    //! Random island time mapping table (+1 for Cmn group)
+    RPSysScene::ETime mRandomTimeMapping[Sp2::Cmn::EGroupID_Max + 1];
 };
 
 } // namespace AP

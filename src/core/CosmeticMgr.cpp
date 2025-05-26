@@ -45,18 +45,30 @@ void CosmeticMgr::Clear() {
     for (int i = 0; i < K_LENGTHOF(mRandomBgmMapping); i++) {
         mRandomBgmMapping[i] = i;
     }
+
+    mRandomTimeFlag = false;
+    for (int i = 0; i < K_LENGTHOF(mRandomTimeMapping); i++) {
+        mRandomTimeMapping[i] = RPSysScene::ETime_Auto;
+    }
 }
 
 /**
  * @brief Sets debug state
  */
 void CosmeticMgr::Debug() {
+    kiwi::Random r;
+
     for (int i = 0; i < K_LENGTHOF(mRandomBgmMapping); i++) {
         mRandomBgmMapping[i] = i;
     }
 
     kiwi::Shuffle(mRandomBgmMapping, K_LENGTHOF(mRandomBgmMapping));
-    mRandomBgmFlag = false;
+    mRandomBgmFlag = r.CoinFlip();
+
+    mRandomTimeFlag = r.CoinFlip();
+    for (int i = 0; i < LENGTHOF(mRandomTimeMapping); i++) {
+        mRandomTimeMapping[i] = static_cast<RPSysScene::ETime>(r.NextU32(3));
+    }
 }
 
 } // namespace AP

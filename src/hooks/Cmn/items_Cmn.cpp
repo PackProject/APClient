@@ -13,6 +13,7 @@
 
 namespace AP {
 namespace Cmn {
+namespace Item {
 
 /******************************************************************************
  *
@@ -60,48 +61,6 @@ KM_CALL(0x802431B0, TryHomeButton);
 
 /******************************************************************************
  *
- * Randomization
- *
- ******************************************************************************/
-
-/**
- * @brief Gets the random music ID that should be played instead of the
- * provided ID
- *
- * @param id Original music ID
- */
-u32 RandomizeBgm(u32 id) {
-    // Randomization disabled
-    if (!CosmeticMgr::GetInstance().IsRandomBgm()) {
-        return id;
-    }
-
-    // Not music
-    if (!CosmeticMgr::IsBgm(id)) {
-        return id;
-    }
-
-    return CosmeticMgr::GetInstance().GetRandomBgm(id);
-}
-
-/**
- * @brief RandomizeBgm trampoline
- */
-TRAMPOLINE_DEF(0x802B722C, 0x802B7230){
-    // clang-format off
-    TRAMPOLINE_BEGIN
-
-    bl RandomizeBgm
-    mr r0, r3 // New ID must outlive the stack frame
-
-    TRAMPOLINE_END
-    mr r4, r0
-    blr
-    // clang-format on
-}
-
-/******************************************************************************
- *
  * Menu
  *
  ******************************************************************************/
@@ -119,5 +78,6 @@ Sp2::Cmn::EUnlockState GetSeqUnlockState(UNKWORD, Sp2::Cmn::ESaveSeq seq) {
 }
 KM_BRANCH(0x80261F84, GetSeqUnlockState);
 
+} // namespace Item
 } // namespace Cmn
 } // namespace AP

@@ -7,6 +7,7 @@
 
 namespace AP {
 namespace Cmn {
+namespace Check {
 
 /******************************************************************************
  *
@@ -14,19 +15,28 @@ namespace Cmn {
  *
  ******************************************************************************/
 
-void SetStampCheckIfNew(int playerDataPtr,int sportID,int stampIdx) {
+void SetStampCheckIfNew(int playerDataPtr, int sportID, int stampIdx) {
     int stampID = (sportID * 5) + stampIdx;
-    bool hasCheck = CheckMgr::GetInstance().GetCheckState(CheckMgr::CheckID(stampID));
-    if(!hasCheck) {
+    bool hasCheck =
+        CheckMgr::GetInstance().GetCheckState(CheckMgr::CheckID(stampID));
+
+    if (!hasCheck) {
         CheckMgr::GetInstance().GiveItemFromCheck(CheckMgr::CheckID(stampID));
-        hasCheck = CheckMgr::GetInstance().GetCheckState(CheckMgr::CheckID(stampID));
-        kiwi::cout << "Stamp Check: " << CheckMgr::GetInstance().GetCheckName(CheckMgr::CheckID(stampID)) << " has been set to " << hasCheck << kiwi::endl;
-    }
-    else
+
+        hasCheck =
+            CheckMgr::GetInstance().GetCheckState(CheckMgr::CheckID(stampID));
+
+        kiwi::cout << "Stamp Check: "
+                   << CheckMgr::GetInstance().GetCheckName(
+                          CheckMgr::CheckID(stampID))
+                   << " has been set to " << hasCheck << kiwi::endl;
+    } else {
         kiwi::cout << "Already has check..." << kiwi::endl;
+    }
 }
 
 TRAMPOLINE_DEF(0x802619e8, 0x802619ec) {
+    // clang-format off
     TRAMPOLINE_BEGIN
 
     mr r31, r3
@@ -42,7 +52,9 @@ TRAMPOLINE_DEF(0x802619e8, 0x802619ec) {
     TRAMPOLINE_END
     mr r4, r0
     blr
+    // clang-format on
 }
 
+} // namespace Check
 } // namespace Cmn
 } // namespace AP
