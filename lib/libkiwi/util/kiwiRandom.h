@@ -113,6 +113,17 @@ public:
     }
 
     /**
+     * @brief Get random float (lower+upper bound)
+     *
+     * @param min Lower bound (inclusive)
+     * @param max Upper bound (exclusive)
+     */
+    f32 NextF32(f32 min, f32 max) {
+        K_ASSERT(min < max);
+        return min + NextF32(max - min);
+    }
+
+    /**
      * @brief Roll random chance
      *
      * @param p Probability to succeed

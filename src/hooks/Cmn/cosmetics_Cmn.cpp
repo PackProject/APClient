@@ -76,6 +76,17 @@ RPSysScene::ETime InterceptIslandTime(RPSysScene* pScene) {
 }
 KM_CALL(0x8026a56c, InterceptIslandTime);
 
+/**
+ * @brief Overrides the Mii favorite color based on the randomizer settings
+ */
+u32 InterceptFavoriteColor() {
+    return kiwi::Color::FromHsv(kiwi::Random().NextF32(1.0f),
+                                kiwi::Random().NextF32(0.85f, 0.9f),
+                                kiwi::Random().NextF32(0.5f, 0.9f));
+}
+
+KM_BRANCH(0x80102a20, InterceptFavoriteColor);
+
 } // namespace Cosmetic
 } // namespace Cmn
 } // namespace AP

@@ -203,7 +203,7 @@ void Nw4rDirectPrint::DrawString(s32 x, s32 y, const char* pMsg, ...) const {
  */
 void Nw4rDirectPrint::SetColor(Color rgb) {
     // Framebuffer uses YUV format, so we convert the color
-    mBufferColor = rgb.Yuv();
+    mBufferColor = rgb.ToYuv();
 }
 
 /**

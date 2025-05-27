@@ -71,7 +71,16 @@ public:
     /**
      * @brief Converts RGB color to YUV format
      */
-    Color Yuv() const;
+    Color ToYuv() const;
+
+    /**
+     * @brief Converts HSV color to RGB format
+     *
+     * @param h Hue [0, 1]
+     * @param s Saturation [0, 1]
+     * @param v Value [0, 1]
+     */
+    static Color FromHsv(f32 h, f32 s, f32 v);
 
 public:
     /**
