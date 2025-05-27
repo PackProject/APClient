@@ -438,7 +438,7 @@ void ItemMgr::Clear() {
     mPlnStageFlag.SetDirect(0b1); // Start with one stage
     mPlnDoubleBlastersFlag = false;
     mPlnNightLightsFlag = false;
-    mPlnBalloonsFlag = true;
+    mPlnBalloonsFlag = false;
     mPlnTwoSeaterPlaneFlag = false;
 }
 
@@ -534,10 +534,10 @@ void ItemMgr::Debug() {
     // Air Sports
     mPlnTimerFlag.Randomize();
     mPlnStageFlag.Randomize();
-    mPlnDoubleBlastersFlag = r.CoinFlip();
-    mPlnNightLightsFlag = r.CoinFlip();
+    //mPlnDoubleBlastersFlag = r.CoinFlip();
+    //mPlnNightLightsFlag = r.CoinFlip();
     //mPlnBalloonsFlag = r.CoinFlip();
-    mPlnTwoSeaterPlaneFlag = r.CoinFlip();
+    //mPlnTwoSeaterPlaneFlag = r.CoinFlip();
 }
 
 } // namespace AP

@@ -74,5 +74,52 @@ End:
     // clang-format on
 }
 
+/**
+ * @brief Unlocks double blasters, night lights, two-seater plane in Island Flyover
+ */
+u32 PlnSetMisc(u32 currentField) {
+
+    kiwi::TBitFlag<u32> plnUnlocks = currentField;
+
+    if (ItemMgr::GetInstance().IsPlnDoubleBlastersUnlock()) {
+        plnUnlocks.SetBit(2);
+    } else {
+        plnUnlocks.ResetBit(2);
+    }
+
+    if (ItemMgr::GetInstance().IsPlnNightLightsUnlock()) {
+        plnUnlocks.SetBit(4);
+    } else {
+        plnUnlocks.ResetBit(4);
+    }
+    
+    if (ItemMgr::GetInstance().IsPlnTwoSeaterUnlock()) {
+        plnUnlocks.SetBit(5);
+    } else {
+        plnUnlocks.ResetBit(5);
+    }
+    
+    return plnUnlocks;
+}
+
+/**
+ * @brief PlnSetMisc trampoline
+ */
+TRAMPOLINE_DEF(0x804455e0, 0x804455e4) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    mr r14, r6
+    mr r3, r0
+    bl PlnSetMisc
+    sth r3, 0x3358(r14)
+    mr r0, r3
+
+    TRAMPOLINE_END
+    lis r4, 0x807d
+    blr
+    // clang-format on
+}
+
 } // namespace Pln
 } // namespace AP
