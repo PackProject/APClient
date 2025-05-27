@@ -81,10 +81,9 @@ KM_CALL(0x8026a56c, InterceptIslandTime);
  */
 u32 InterceptFavoriteColor() {
     return kiwi::Color::FromHsv(kiwi::Random().NextF32(1.0f),
-                                kiwi::Random().NextF32(0.85f, 0.9f),
-                                kiwi::Random().NextF32(0.5f, 0.9f));
+                                kiwi::Random().NextF32(0.65f, 1.0f),
+                                kiwi::Random().NextF32(0.50f, 1.0f));
 }
-
 KM_BRANCH(0x80102a20, InterceptFavoriteColor);
 
 } // namespace Cosmetic
