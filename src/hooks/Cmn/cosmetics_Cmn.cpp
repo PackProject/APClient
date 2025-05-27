@@ -227,6 +227,18 @@ void InterceptFavoriteColorHat(const RFLiCharModelRes* pCharModel,
 }
 
 /**
+ * @brief Disable MiiClothChanger
+ */
+TRAMPOLINE_DEF(0x801f546c, 0x801f5514){
+    // clang-format off
+    TRAMPOLINE_BEGIN
+    nop
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
+/**
  * @brief InterceptFavoriteColorHat trampoline
  */
 TRAMPOLINE_DEF(0x801032c4, 0x801032c8){
