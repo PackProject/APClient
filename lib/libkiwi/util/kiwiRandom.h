@@ -130,7 +130,7 @@ public:
      */
     bool Chance(f32 p) {
         K_ASSERT(p <= 1.0f);
-        return NextF32() > p;
+        return NextF32() <= p;
     }
 
     /**

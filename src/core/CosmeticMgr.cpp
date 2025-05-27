@@ -45,6 +45,8 @@ void CosmeticMgr::Clear() {
         mRandomBgmMapping[i] = i;
     }
 
+    mRandomFavoriteColor = false;
+
     mRandomTimeFlag = false;
     for (int i = 0; i < K_LENGTHOF(mRandomTimeMapping); i++) {
         mRandomTimeMapping[i] = RPSysScene::ETime_Auto;
@@ -62,6 +64,8 @@ void CosmeticMgr::Debug() {
         mRandomBgmMapping[i] = i;
     }
     kiwi::Shuffle(mRandomBgmMapping, K_LENGTHOF(mRandomBgmMapping));
+
+    mRandomFavoriteColor = true;
 
     mRandomTimeFlag = true;
     for (int i = 0; i < LENGTHOF(mRandomTimeMapping); i++) {

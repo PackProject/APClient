@@ -11,9 +11,17 @@
 
 #include <libkiwi.h>
 
+#include <RVLFaceLibInternal.h>
+
 namespace AP {
 namespace Cmn {
 namespace Cosmetic {
+
+/******************************************************************************
+ *
+ * Random Music
+ *
+ ******************************************************************************/
 
 /**
  * @brief Overrides the BGM ID based on the randomizer settings
@@ -37,7 +45,7 @@ u32 InterceptBgm(u32 id) {
 /**
  * @brief InterceptBgm trampoline
  */
-TRAMPOLINE_DEF(0x802B722C, 0x802B7230){
+TRAMPOLINE_DEF(0x802B722C, 0x802B7230) {
     // clang-format off
     TRAMPOLINE_BEGIN
 
@@ -49,6 +57,196 @@ TRAMPOLINE_DEF(0x802B722C, 0x802B7230){
     blr
     // clang-format on
 }
+
+/******************************************************************************
+ *
+ * Random Mii Outfit/Color
+ *
+ ******************************************************************************/
+
+namespace {
+
+/**
+ * @brief Generates a random Mii favorite color
+ */
+kiwi::Color GetRandomFavoriteColor() {
+    kiwi::Random r;
+
+    // 1% chance for white/black/grey
+    if (r.Chance(0.01)) {
+        return kiwi::Color::WHITE;
+    }
+    if (r.Chance(0.01)) {
+        return kiwi::Color::BLACK;
+    }
+    if (r.Chance(0.01)) {
+        return kiwi::Color::GREY;
+    }
+
+    f32 h = r.NextF32(1.0f);
+    f32 s = 0.0f;
+    f32 v = 0.0f;
+
+    switch (r.NextU32(4)) {
+    // High saturation, high value
+    case 0:
+    case 1: {
+        s = r.NextF32(0.75f, 0.95f);
+        v = r.NextF32(0.8f, 1.0f);
+        break;
+    }
+
+    // Low saturation, high value
+    case 2: {
+        s = r.NextF32(0.6f, 0.7f);
+        v = r.NextF32(0.8f, 1.0f);
+        break;
+    }
+
+    // High saturation, low value
+    case 3: {
+        s = r.NextF32(0.8f, 1.0f);
+        v = r.NextF32(0.4f, 0.8f);
+        break;
+    }
+    }
+
+    return kiwi::Color::FromHsv(h, s, v);
+
+    // return kiwi::Color::FromHsv(r.NextF32(1.0f), r.NextF32(0.65f, 1.0f),
+    //                             r.NextF32(0.40f, 1.0f));
+}
+
+} // namespace
+
+/**
+ * @brief Generates a random RFL favorite color
+ *
+ * @param color Favorite color ID
+ */
+GXColor InterceptFavoriteColor(RFLFavoriteColor color) {
+    static const GXColor cFavoriteColor[RFLFavoriteColor_Max] = {
+        // clang-format off
+        {184, 64,  48,  255}, //!< RFLFavoriteColor_Red
+        {240, 120, 40,  255}, //!< RFLFavoriteColor_Orange
+        {248, 216, 32,  255}, //!< RFLFavoriteColor_Yellow
+        {128, 200, 40,  255}, //!< RFLFavoriteColor_YellowGreen
+        {0,   116, 40,  255}, //!< RFLFavoriteColor_Green
+        {32,  72,  152, 255}, //!< RFLFavoriteColor_Blue
+        {64,  160, 216, 255}, //!< RFLFavoriteColor_SkyBlue
+        {232, 96,  120, 255}, //!< RFLFavoriteColor_Pink
+        {112, 44,  168, 255}, //!< RFLFavoriteColor_Purple
+        {72,  56,  24,  255}, //!< RFLFavoriteColor_Brown
+        {224, 224, 224, 255}, //!< RFLFavoriteColor_White
+        {24,  24,  20,  255}, //!< RFLFavoriteColor_Black
+        // clang-format on
+    };
+
+    if (!CosmeticMgr::GetInstance().IsRandomFavoriteColor()) {
+        return cFavoriteColor[color];
+    }
+
+    return GetRandomFavoriteColor();
+}
+
+/**
+ * @brief InterceptFavoriteColor trampoline
+ */
+TRAMPOLINE_DEF(0x80102a20, 0x80102a30) {
+    // clang-format off
+    TRAMPOLINE_BEGIN_SAVED
+
+    bl InterceptFavoriteColor
+
+    TRAMPOLINE_END_SAVED
+    blr
+    // clang-format on
+}
+
+/**
+ * @brief Intercepts RFLiInitCharModel calls to store the hat randomized color
+ *
+ * @param pCharModel RFL character model
+ * @param ... RFLInitCharModel params
+ */
+void InterceptInitCharModel(RFLCharModel* pCharModel, RFLiCharInfo* pCharInfo,
+                            void* pModelWork, RFLResolution modelRes,
+                            u32 exprFlags) {
+
+    ASSERT_PTR(pCharModel);
+    RFLiInitCharModel(pCharModel, pCharInfo, pModelWork, modelRes, exprFlags);
+
+    // Access internal RFL structure
+    RFLiCharModel* pModelImpl = reinterpret_cast<RFLiCharModel*>(pCharModel);
+    ASSERT_PTR(pModelImpl->res);
+
+    GXColor favColor = InterceptFavoriteColor(
+        static_cast<RFLFavoriteColor>(pModelImpl->res->favoriteColor));
+
+    // Use unused space as work memory for the random color
+    *reinterpret_cast<GXColor*>(pModelImpl->res->UNK_0x8250) = favColor;
+}
+
+/**
+ * @brief InterceptInitCharModel trampoline
+ */
+TRAMPOLINE_DEF(0x80102614, 0x80102618) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    bl InterceptInitCharModel
+
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
+/**
+ * @brief Intercepts the RFL favorite color used for drawing hat models
+ *
+ * @param pChara RFL character model resources
+ * @param pSetting RFL draw setting
+ */
+void InterceptFavoriteColorHat(const RFLiCharModelRes* pCharModel,
+                               const RFLDrawCoreSetting* pSetting) {
+    ASSERT_PTR(pCharModel);
+    ASSERT_PTR(pSetting);
+
+    if (!CosmeticMgr::GetInstance().IsRandomFavoriteColor()) {
+        RFLFavoriteColor color =
+            static_cast<RFLFavoriteColor>(pCharModel->favoriteColor);
+
+        GXSetTevKColor(pSetting->tevKColorID, RFLGetFavoriteColor(color));
+
+    } else {
+        // InterceptInitCharModel writes the color to this unused memory
+        GXColor favColor =
+            *reinterpret_cast<const GXColor*>(pCharModel->UNK_0x8250);
+        GXSetTevKColor(pSetting->tevKColorID, favColor);
+    }
+}
+
+/**
+ * @brief InterceptFavoriteColorHat trampoline
+ */
+TRAMPOLINE_DEF(0x801032c4, 0x801032c8){
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    mr r3, r30
+    mr r4, r29
+    bl InterceptFavoriteColorHat
+
+    TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
+/******************************************************************************
+ *
+ * Random Island Time
+ *
+ ******************************************************************************/
 
 /**
  * @brief Overrides the island time based on the randomizer settings
@@ -75,16 +273,6 @@ RPSysScene::ETime InterceptIslandTime(RPSysScene* pScene) {
     return time != RPSysScene::ETime_Auto ? time : pScene->getIslandTime();
 }
 KM_CALL(0x8026a56c, InterceptIslandTime);
-
-/**
- * @brief Overrides the Mii favorite color based on the randomizer settings
- */
-u32 InterceptFavoriteColor() {
-    return kiwi::Color::FromHsv(kiwi::Random().NextF32(1.0f),
-                                kiwi::Random().NextF32(0.65f, 1.0f),
-                                kiwi::Random().NextF32(0.50f, 1.0f));
-}
-KM_BRANCH(0x80102a20, InterceptFavoriteColor);
 
 } // namespace Cosmetic
 } // namespace Cmn

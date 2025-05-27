@@ -52,6 +52,13 @@ public:
     }
 
     /**
+     * @brief Tests whether Mii favorite color randomization is enabled
+     */
+    bool IsRandomFavoriteColor() const {
+        return mRandomFavoriteColor;
+    }
+
+    /**
      * @brief Tests whether island time randomization is enabled
      */
     bool IsRandomTime() const {
@@ -138,6 +145,9 @@ private:
     bool mRandomBgmFlag;
     //! Random music mapping table
     u32 mRandomBgmMapping[BGM_ID_MAX - BGM_ID_MIN];
+
+    //! Random Mii favorite color enabled
+    bool mRandomFavoriteColor;
 
     //! Random island time enabled
     bool mRandomTimeFlag;

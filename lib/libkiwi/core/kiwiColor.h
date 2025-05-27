@@ -23,6 +23,16 @@ public:
 
     /**
      * @brief Constructor
+     * @details For GXColor
+     *
+     * @param rColor GX color data
+     */
+    Color(const GXColor& rColor) {
+        *this = rColor;
+    }
+
+    /**
+     * @brief Constructor
      *
      * @param r Red component
      * @param g Green component
