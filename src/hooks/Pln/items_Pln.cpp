@@ -154,5 +154,61 @@ Exit:
     // clang-format on
 }
 
+/**
+ * @brief Unlocks boosting in Island Flyover
+ */
+bool PlnSetBoost() {
+    return ItemMgr::GetInstance().IsPlnBoostUnlock();
+}
+
+/**
+ * @brief PlnSetBoost trampolines
+*/
+TRAMPOLINE_DEF(0x80433f70, 0x80433f74) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    mr r14, r0
+    bl PlnSetBoost
+    cmpwi r3, 1
+    beq Unlocked
+    b Locked
+
+Unlocked:
+    mr r0, r14
+    TRAMPOLINE_END
+    stb r0, 0x120(r29)
+    b Exit
+Locked:
+    mr r0, r14
+    TRAMPOLINE_END
+Exit:
+    blr
+    // clang-format on
+}
+
+TRAMPOLINE_DEF(0x80433f28, 0x80433f2c) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    mr r14, r0
+    bl PlnSetBoost
+    cmpwi r3, 1
+    beq Unlocked
+    b Locked
+
+Unlocked:
+    mr r0, r14
+    TRAMPOLINE_END
+    stb r0, 0x120(r29)
+    b Exit
+Locked:
+    mr r0, r14
+    TRAMPOLINE_END
+Exit:
+    blr
+    // clang-format on
+}
+
 } // namespace Pln
 } // namespace AP

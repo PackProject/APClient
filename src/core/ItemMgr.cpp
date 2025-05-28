@@ -444,7 +444,7 @@ void ItemMgr::Clear() {
     mPlnNightLightsFlag = false;
     mPlnBalloonsFlag = false;
     mPlnTwoSeaterPlaneFlag = false;
-    mPlnBoostFlag = false;
+    mPlnBoostFlag = true;
     mPlnBrakeFlag = true;
 }
 
