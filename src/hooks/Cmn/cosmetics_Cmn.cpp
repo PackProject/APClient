@@ -5,9 +5,11 @@
 #include "hooks/Swf/items_Swf.h"
 #include "hooks/trampoline.h"
 
+#include <Pack/RPGraphics.h>
 #include <Pack/RPKernel.h>
 #include <Pack/RPSystem.h>
 #include <Sports2/Sp2Cmn.h>
+#include <nw4r/g3d.h>
 
 #include <libkiwi.h>
 
@@ -45,7 +47,7 @@ u32 InterceptBgm(u32 id) {
 /**
  * @brief InterceptBgm trampoline
  */
-TRAMPOLINE_DEF(0x802B722C, 0x802B7230) {
+TRAMPOLINE_DEF(0x802B722C, 0x802B7230){
     // clang-format off
     TRAMPOLINE_BEGIN
 
@@ -63,8 +65,6 @@ TRAMPOLINE_DEF(0x802B722C, 0x802B7230) {
  * Random Mii Outfit/Color
  *
  ******************************************************************************/
-
-namespace {
 
 /**
  * @brief Generates a random Mii favorite color
@@ -116,8 +116,6 @@ kiwi::Color GetRandomFavoriteColor() {
     // return kiwi::Color::FromHsv(r.NextF32(1.0f), r.NextF32(0.65f, 1.0f),
     //                             r.NextF32(0.40f, 1.0f));
 }
-
-} // namespace
 
 /**
  * @brief Generates a random RFL favorite color
@@ -241,7 +239,7 @@ TRAMPOLINE_DEF(0x801f546c, 0x801f5514){
 /**
  * @brief InterceptFavoriteColorHat trampoline
  */
-TRAMPOLINE_DEF(0x801032c4, 0x801032c8){
+TRAMPOLINE_DEF(0x801032c4, 0x801032c8) {
     // clang-format off
     TRAMPOLINE_BEGIN
 
@@ -250,6 +248,91 @@ TRAMPOLINE_DEF(0x801032c4, 0x801032c8){
     bl InterceptFavoriteColorHat
 
     TRAMPOLINE_END
+    blr
+    // clang-format on
+}
+
+/******************************************************************************
+ *
+ * Random Bowling Ball Color
+ *
+ ******************************************************************************/
+/**
+ * @brief Overrides the bowling ball model color based on the randomizer
+ * settings
+ *
+ * @param mdl Ball model
+ */
+void PatchBwlBallColor(nw4r::g3d::ResMdl mdl, kiwi::Color color) {
+    ASSERT(mdl.IsValid());
+
+    nw4r::g3d::ResMat bwg_ball_mat = mdl.GetResMat("bwg_ball_mat");
+    ASSERT(bwg_ball_mat.IsValid());
+
+    /**
+     * Ball color is stored in TEV color 0
+     */
+    nw4r::g3d::ResMatTevColor tevColor = bwg_ball_mat.GetResMatTevColor();
+    ASSERT(tevColor.IsValid());
+    tevColor.GXSetTevColor(GX_TEVREG0, color);
+
+    /**
+     * Patch the shader to use TEVREG0
+     */
+    nw4r::g3d::ResTev tev = bwg_ball_mat.GetResTev();
+
+    // TODO: Need to decompile GXSetTevColorOp to set the result of the shader
+#if 0
+    // Texture color * 1/4 to keep pattern but lower color impact
+    tev.GXSetTevColorIn(GX_TEVSTAGE3, GX_CC_ZERO, GX_CC_HALF, GX_CC_TEXC,
+                        GX_CC_ZERO);
+
+    // Multiply by ball color in TEV register
+    tev.GXSetTevColorIn(GX_TEVSTAGE4, GX_CC_ZERO, GX_CC_TEXC, GX_CC_C0,
+                        GX_CC_ZERO);
+
+    // Activate shader stages
+    tev.SetNumTevStages(tev.GetNumTevStages() + 2);
+#else
+    tev.GXSetTevColorIn(GX_TEVSTAGE2, GX_CC_ZERO, GX_CC_CPREV, GX_CC_HALF,
+                        GX_CC_ZERO);
+#endif
+}
+
+void InterceptBwlBallColor(RPGrpModelG3D* pModel, RPGrpModelG3D* pModelMirror) {
+    ASSERT_PTR(pModel);
+    ASSERT_PTR(pModelMirror);
+
+    nw4r::g3d::ResMdl mdl =
+        pModel->GetModelEx()->getScnMdlSimple()->GetResMdl();
+
+    ASSERT(mdl.IsValid());
+
+    nw4r::g3d::ResMdl mdlMirror =
+        pModelMirror->GetModelEx()->getScnMdlSimple()->GetResMdl();
+
+    ASSERT(mdlMirror.IsValid());
+
+    kiwi::Color color =
+        kiwi::Color::FromHsv(kiwi::Random().NextF32(1.0f), 0.5f, 1.0f);
+
+    PatchBwlBallColor(mdl, color);
+    PatchBwlBallColor(mdlMirror, color);
+}
+
+/**
+ * @brief InterceptBwlBallColor trampoline
+ */
+TRAMPOLINE_DEF(0x804d1174, 0x804d1178){
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    mr r3, r5
+    mr r4, r6
+    bl InterceptBwlBallColor
+
+    TRAMPOLINE_END
+    rlwinm r0, r4, 0x3, 0x0, 0x1C // original instruction
     blr
     // clang-format on
 }

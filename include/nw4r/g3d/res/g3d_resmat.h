@@ -519,16 +519,19 @@ struct ResMatDLData {
 };
 
 struct ResMatData {
-    u32 size;                   // at 0x0
-    s32 toResMdlData;           // at 0x4
-    s32 name;                   // at 0x8
-    u32 id;                     // at 0xC
-    u32 flag;                   // at 0x10
-    ResGenModeData genMode;     // at 0x14
-    ResMatMiscData misc;        // at 0x1C
-    s32 toResTevData;           // at 0x28
-    u32 numResTexPlttInfo;      // at 0x2C
-    s32 toResTexPlttInfo;       // at 0x30
+    u32 size;               // at 0x0
+    s32 toResMdlData;       // at 0x4
+    s32 name;               // at 0x8
+    u32 id;                 // at 0xC
+    u32 flag;               // at 0x10
+    ResGenModeData genMode; // at 0x14
+    ResMatMiscData misc;    // at 0x1C
+    s32 toResTevData;       // at 0x28
+    u32 numResTexPlttInfo;  // at 0x2C
+    s32 toResTexPlttInfo;   // at 0x30
+#if defined(PACK_RESORT)
+    s32 toResMatFurData;
+#endif
     s32 toResUserData;          // at 0x34
     s32 toResMatDLData;         // at 0x38
     ResTexObjData texObjData;   // at 0x3C

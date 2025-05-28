@@ -88,6 +88,9 @@ public:
     u8 GetNumTevStages() const {
         return ref().nStages;
     }
+    void SetNumTevStages(u8 num) {
+        ref().nStages = num;
+    }
 
     void EndEdit() {
         DCStore(false);

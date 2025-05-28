@@ -101,28 +101,39 @@ public:
  *
  ******************************************************************************/
 struct ResMdlData {
-    ResBlockHeaderData header;         // at 0x0
-    u32 revision;                      // at 0x8
-    s32 toResFileData;                 // at 0xC
-    s32 toResByteCodeDic;              // at 0x10
-    s32 toResNodeDic;                  // at 0x14
-    s32 toResVtxPosDic;                // at 0x18
-    s32 toResVtxNrmDic;                // at 0x1C
-    s32 toResVtxClrDic;                // at 0x20
-    s32 toResVtxTexCoordDic;           // at 0x24
+    ResBlockHeaderData header; // at 0x0
+    u32 revision;              // at 0x8
+    s32 toResFileData;         // at 0xC
+    s32 toResByteCodeDic;      // at 0x10
+    s32 toResNodeDic;          // at 0x14
+    s32 toResVtxPosDic;        // at 0x18
+    s32 toResVtxNrmDic;        // at 0x1C
+    s32 toResVtxClrDic;        // at 0x20
+    s32 toResVtxTexCoordDic;   // at 0x24
+#if defined(PACK_RESORT)
+    s32 toResVtxFurVecDic;
+    s32 toResVtxFurPosDic;
+#endif
     s32 toResMatDic;                   // at 0x28
     s32 toResTevDic;                   // at 0x2C
     s32 toResShpDic;                   // at 0x30
     s32 toResTexNameToTexPlttInfoDic;  // at 0x34
     s32 toResPlttNameToTexPlttInfoDic; // at 0x38
-    s32 name;                          // at 0x3C
-    ResMdlInfoData info;               // at 0x40
+#if defined(PACK_RESORT)
+    s32 toResUserData;
+#endif
+    s32 name;            // at 0x3C
+    ResMdlInfoData info; // at 0x40
 };
 
 class ResMdl : public ResCommon<ResMdlData> {
 public:
     static const u32 SIGNATURE = 'MDL0';
+#if defined(PACK_RESORT)
+    static const int REVISION = 11;
+#else
     static const int REVISION = 9;
+#endif
 
 public:
     NW4R_G3D_RESOURCE_FUNC_DEF(ResMdl);
