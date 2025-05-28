@@ -210,6 +210,8 @@ public:
         ISLAND_FLYOVER_NIGHT_LIGHTS = 0x1305,
         ISLAND_FLYOVER_UNLOCK_BALLOONS = 0x1306,
         ISLAND_FLYOVER_UNLOCK_TWO_SEATER = 0x1307,
+        ISLAND_FLYOVER_UNLOCK_BOOST = 0x1308,
+        ISLAND_FLYOVER_UNLOCK_BRAKE = 0x1309,
 
         FINAL_ITEM_ID
     };
@@ -602,6 +604,12 @@ public:
     bool IsPlnTwoSeaterUnlock() const {
         return mPlnTwoSeaterPlaneFlag;
     }
+    bool IsPlnBoostUnlock() const {
+        return mPlnBoostFlag;
+    }
+    bool IsPlnBrakeUnlock() const {
+        return mPlnBrakeFlag;
+    }
     /**@}*/
 
 private:
@@ -919,6 +927,10 @@ private:
     bool mPlnBalloonsFlag;
     //! Two Seater Plane
     bool mPlnTwoSeaterPlaneFlag;
+    //! Braking
+    bool mPlnBrakeFlag;
+    //! Boosting
+    bool mPlnBoostFlag;
     /**@}*/
 
 public:
@@ -1383,6 +1395,12 @@ public:
             break;
         case ISLAND_FLYOVER_UNLOCK_TWO_SEATER:
             mPlnTwoSeaterPlaneFlag = true;
+            break;
+        case ISLAND_FLYOVER_UNLOCK_BOOST:
+            mPlnBoostFlag = true;
+            break;
+        case ISLAND_FLYOVER_UNLOCK_BRAKE:
+            mPlnBrakeFlag = true;
             break;
 
         default:

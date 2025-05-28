@@ -121,5 +121,38 @@ TRAMPOLINE_DEF(0x804455e0, 0x804455e4) {
     // clang-format on
 }
 
+/**
+ * @brief Unlocks braking in Island Flyover
+ */
+bool PlnSetBrake() {
+    return ItemMgr::GetInstance().IsPlnBrakeUnlock();
+}
+
+/**
+ * @brief PlnSetBrake trampoline
+*/
+TRAMPOLINE_DEF(0x80433858, 0x8043385c) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    mr r14, r0
+    bl PlnSetBrake
+    cmpwi r3, 1
+    beq Unlocked
+    b Locked
+
+Unlocked:
+    TRAMPOLINE_END
+    mr r0, r14
+    stb r6, 0x120(r3)
+    b Exit
+Locked:
+    TRAMPOLINE_END
+    mr r0, r14
+Exit:
+    blr
+    // clang-format on
+}
+
 } // namespace Pln
 } // namespace AP

@@ -342,6 +342,10 @@ const char* ItemMgr::GetItemName(ItemMgr::ItemID id) {
         return "Island Flyover Unlock Balloons";
     case ISLAND_FLYOVER_UNLOCK_TWO_SEATER:
         return "Island Flyover Unlock Two Seater";
+    case ISLAND_FLYOVER_UNLOCK_BOOST:
+        return "Island Flyover Unlock Boosting";
+    case ISLAND_FLYOVER_UNLOCK_BRAKE:
+        return "Island Flyover Unlock Braking";
 
     default:
         kiwi::cout << "Unknown ID" << kiwi::endl;
@@ -440,6 +444,8 @@ void ItemMgr::Clear() {
     mPlnNightLightsFlag = false;
     mPlnBalloonsFlag = false;
     mPlnTwoSeaterPlaneFlag = false;
+    mPlnBoostFlag = false;
+    mPlnBrakeFlag = true;
 }
 
 /**
@@ -538,6 +544,8 @@ void ItemMgr::Debug() {
     //mPlnNightLightsFlag = r.CoinFlip();
     //mPlnBalloonsFlag = r.CoinFlip();
     //mPlnTwoSeaterPlaneFlag = r.CoinFlip();
+    //mPlnBoostFlag = r.CoinFlip();
+    //mPlnBrakeFlag = r.CoinFlip();
 }
 
 } // namespace AP
