@@ -269,14 +269,34 @@ void PatchBwlBallColor(nw4r::g3d::ResMdl mdl, kiwi::Color color) {
     nw4r::g3d::ResMat bwg_ball_mat = mdl.GetResMat("bwg_ball_mat");
     ASSERT(bwg_ball_mat.IsValid());
 
-    // Ball color is stored in TEV color 0
+    /**
+     * Ball color is stored in TEV color 0
+     */
     nw4r::g3d::ResMatTevColor tevColor = bwg_ball_mat.GetResMatTevColor();
     ASSERT(tevColor.IsValid());
-
     tevColor.GXSetTevColor(GX_TEVREG0, color);
 
-    // TODO: Patch the shader to use the TEV color
-    ;
+    /**
+     * Patch the shader to use TEVREG0
+     */
+    nw4r::g3d::ResTev tev = bwg_ball_mat.GetResTev();
+
+    // TODO: Need to decompile GXSetTevColorOp to set the result of the shader
+#if 0
+    // Texture color * 1/4 to keep pattern but lower color impact
+    tev.GXSetTevColorIn(GX_TEVSTAGE3, GX_CC_ZERO, GX_CC_HALF, GX_CC_TEXC,
+                        GX_CC_ZERO);
+
+    // Multiply by ball color in TEV register
+    tev.GXSetTevColorIn(GX_TEVSTAGE4, GX_CC_ZERO, GX_CC_TEXC, GX_CC_C0,
+                        GX_CC_ZERO);
+
+    // Activate shader stages
+    tev.SetNumTevStages(tev.GetNumTevStages() + 2);
+#else
+    tev.GXSetTevColorIn(GX_TEVSTAGE2, GX_CC_ZERO, GX_CC_CPREV, GX_CC_HALF,
+                        GX_CC_ZERO);
+#endif
 }
 
 void InterceptBwlBallColor(RPGrpModelG3D* pModel, RPGrpModelG3D* pModelMirror) {
