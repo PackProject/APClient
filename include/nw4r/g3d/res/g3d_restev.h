@@ -79,6 +79,9 @@ public:
     void GXSetTevColorIn(GXTevStageID stage, GXTevColorArg a, GXTevColorArg b,
                          GXTevColorArg c, GXTevColorArg d);
 
+    void GXSetTevColorOp(GXTevStageID stage, GXTevOp op, GXTevBias bias,
+                         GXTevScale scale, GXBool clamp, GXTevRegID output);
+
     void CallDisplayList(bool sync) const;
 
     ResTev CopyTo(void* pDst);

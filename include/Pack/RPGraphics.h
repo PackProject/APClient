@@ -7,6 +7,7 @@
 #include <RPGraphics/RPGrpModelBoundingInfo.h>
 #include <RPGraphics/RPGrpModelG3D.h>
 #include <RPGraphics/RPGrpModelManager.h>
+#include <RPGraphics/RPGrpModelMaterial.h>
 #include <RPGraphics/RPGrpModelResManager.h>
 #include <RPGraphics/RPGrpRenderer.h>
 #include <RPGraphics/RPGrpScreen.h>

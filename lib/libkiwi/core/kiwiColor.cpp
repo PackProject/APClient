@@ -15,6 +15,14 @@ Color Color::ToYuv() const {
 }
 
 /**
+ * @brief Converts RGB color to GX signed 10-bit format
+ */
+GXColorS10 Color::ToS10() const {
+    const GXColorS10 color = {r, g, b, a};
+    return color;
+}
+
+/**
  * @brief Creates RGB color from HSV format
  *
  * @param h Hue [0, 1]

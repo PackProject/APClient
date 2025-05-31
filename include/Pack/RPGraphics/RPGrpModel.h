@@ -4,18 +4,28 @@
 
 #include <egg/gfx/eggModelEx.h>
 
+class RPGrpModelMaterial;
+
 class RPGrpModel {
 public:
     EGG::ModelEx* GetModelEx() const {
         return mModelEx;
     }
 
+    RPGrpModelMaterial* GetMaterial(u32 id) const {
+        return mppMaterials[id];
+    }
+
 private:
-    char _00[0x40];
 #if defined(PACK_RESORT)
-    char _40[0x4];
-#endif
+    char _00[0x38];
+    RPGrpModelMaterial** mppMaterials; // at 0x38
+    char _3C[0x44 - 0x3C];
+    EGG::ModelEx* mModelEx; // at 0x44
+#else
+    char _00[0x40];
     EGG::ModelEx* mModelEx; // at 0x40
+#endif
 };
 
 #endif

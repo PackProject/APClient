@@ -257,67 +257,108 @@ TRAMPOLINE_DEF(0x801032c4, 0x801032c8) {
  * Random Bowling Ball Color
  *
  ******************************************************************************/
+
 /**
  * @brief Overrides the bowling ball model color based on the randomizer
  * settings
  *
- * @param mdl Ball model
+ * @param pModel Ball model
  */
-void PatchBwlBallColor(nw4r::g3d::ResMdl mdl, kiwi::Color color) {
-    ASSERT(mdl.IsValid());
-
-    nw4r::g3d::ResMat bwg_ball_mat = mdl.GetResMat("bwg_ball_mat");
-    ASSERT(bwg_ball_mat.IsValid());
+void PatchBwlBallColor(RPGrpModelG3D* pModel, kiwi::Color color) {
+    ASSERT_PTR(pModel);
 
     /**
-     * Ball color is stored in TEV color 0
+     * Get access to the model material
      */
-    nw4r::g3d::ResMatTevColor tevColor = bwg_ball_mat.GetResMatTevColor();
-    ASSERT(tevColor.IsValid());
-    tevColor.GXSetTevColor(GX_TEVREG0, color);
+    nw4r::g3d::ScnMdl* pScnMdl = pModel->GetModelEx()->getScnMdl();
+    ASSERT_PTR(pScnMdl);
+
+    nw4r::g3d::ResMdl resMdl = pScnMdl->GetResMdl();
+    ASSERT(resMdl.IsValid());
+
+    nw4r::g3d::ResMat resMat = resMdl.GetResMat("bwg_ball_mat");
+    ASSERT(resMat.IsValid());
+
+    RPGrpModelMaterial* pMaterial = pModel->GetMaterial(resMat.GetID());
+    ASSERT_PTR(pMaterial);
+
+    nw4r::g3d::ScnMdl::CopiedMatAccess& rMatAccess =
+        pMaterial->GetCopiedMatAccess();
 
     /**
-     * Patch the shader to use TEVREG0
+     * Write the required TEV colors
      */
-    nw4r::g3d::ResTev tev = bwg_ball_mat.GetResTev();
+    // TEVREG0 holds the ball accent color
+    pMaterial->SetTevColor(GX_TEVREG0, color.ToS10());
+    // TEVKREG2 is used for greyscale conversion (P * 85 == P / 3)
+    pMaterial->SetTevKColor(GX_KCOLOR2, kiwi::Color(0, 0, 0, 85));
 
-    // TODO: Need to decompile GXSetTevColorOp to set the result of the shader
-#if 0
-    // Texture color * 1/4 to keep pattern but lower color impact
-    tev.GXSetTevColorIn(GX_TEVSTAGE3, GX_CC_ZERO, GX_CC_HALF, GX_CC_TEXC,
-                        GX_CC_ZERO);
+    /**
+     * Prepare the material for the new shader
+     */
+    nw4r::g3d::ResGenMode genMode = rMatAccess.GetResGenMode(false);
+    ASSERT(genMode.IsValid());
+    {
+        // The new shader will have 7 stages
+        genMode.GXSetNumTevStages(7);
+    }
+    genMode.EndEdit();
 
-    // Multiply by ball color in TEV register
-    tev.GXSetTevColorIn(GX_TEVSTAGE4, GX_CC_ZERO, GX_CC_TEXC, GX_CC_C0,
-                        GX_CC_ZERO);
+    /**
+     * Write the TEV shader fragments
+     */
+    nw4r::g3d::ResTev tev = rMatAccess.GetResTev(false);
+    ASSERT(tev.IsValid());
+    {
+        /**
+         * Ball texture color is converted to greyscale,
+         * then blended (Addition) with the accent color in TEVREG0
+         */
+        static const u8 ballShader[] = {
+            0x61, 0xfe, 0x00, 0x00, 0x0f, 0x61, 0xf6, 0x00, 0x00, 0x04, 0x61,
+            0xfe, 0x00, 0x00, 0x0f, 0x61, 0xf7, 0x00, 0x00, 0x0e, 0x61, 0xfe,
+            0x00, 0x00, 0x0f, 0x61, 0xf8, 0x00, 0x00, 0x00, 0x61, 0xfe, 0x00,
+            0x00, 0x0f, 0x61, 0xf9, 0x00, 0x00, 0x0c, 0x61, 0xfe, 0x00, 0x00,
+            0x0f, 0x61, 0xfa, 0x00, 0x00, 0x05, 0x61, 0xfe, 0x00, 0x00, 0x0f,
+            0x61, 0xfb, 0x00, 0x00, 0x0d, 0x61, 0xfe, 0x00, 0x00, 0x0f, 0x61,
+            0xfc, 0x00, 0x00, 0x0a, 0x61, 0xfe, 0x00, 0x00, 0x0f, 0x61, 0xfd,
+            0x00, 0x00, 0x0e, 0x61, 0x27, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x61, 0xfe, 0xff,
+            0xff, 0xf0, 0x61, 0xf6, 0xe7, 0xb9, 0xe0, 0x61, 0x28, 0x3c, 0x03,
+            0xc0, 0x61, 0xc0, 0x88, 0xfe, 0x8f, 0x61, 0xc2, 0x88, 0xfe, 0x84,
+            0x61, 0xc1, 0x08, 0xff, 0xf4, 0x61, 0xc3, 0x08, 0xff, 0xf8, 0x61,
+            0x10, 0x00, 0x00, 0x00, 0x61, 0x11, 0x00, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0x61, 0xfe, 0xff, 0xff, 0xf0, 0x61, 0xf7, 0xe0, 0x39, 0xe0,
+            0x61, 0x29, 0x3b, 0xf3, 0xc0, 0x61, 0xc4, 0x08, 0xfe, 0x84, 0x61,
+            0xc6, 0x08, 0x2c, 0x0f, 0x61, 0xc5, 0x08, 0xff, 0xfc, 0x61, 0xc7,
+            0x08, 0xff, 0xf0, 0x61, 0x12, 0x00, 0x00, 0x00, 0x61, 0x13, 0x00,
+            0x00, 0x00, 0x00, 0x00, 0x00, 0x61, 0xfe, 0xff, 0xff, 0xf0, 0x61,
+            0xf8, 0xff, 0xff, 0xf0, 0x61, 0x2a, 0x3c, 0x90, 0x40, 0x61, 0xc8,
+            0x08, 0xf0, 0xaf, 0x61, 0xca, 0x08, 0x8f, 0xe0, 0x61, 0xc9, 0x08,
+            0xf3, 0x70, 0x61, 0xcb, 0x08, 0x9f, 0x00, 0x61, 0x14, 0x00, 0x00,
+            0x00, 0x61, 0x15, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x61, 0xfe,
+            0xff, 0xff, 0xf0, 0x61, 0xf9, 0x00, 0x38, 0xc0, 0x61, 0x2b, 0x3b,
+            0xf3, 0xd2, 0x61, 0xcc, 0x08, 0xf8, 0x0f, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0x61, 0xcd, 0x08, 0xff, 0xe0, 0x00, 0x00, 0x00, 0x00, 0x00,
+            0x61, 0x16, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0x00,
+        };
 
-    // Activate shader stages
-    tev.SetNumTevStages(tev.GetNumTevStages() + 2);
-#else
-    tev.GXSetTevColorIn(GX_TEVSTAGE2, GX_CC_ZERO, GX_CC_CPREV, GX_CC_HALF,
-                        GX_CC_ZERO);
-#endif
+        std::memcpy(&tev.ref().dl, ballShader, sizeof(ballShader));
+        tev.SetNumTevStages(7);
+    }
+    tev.EndEdit();
 }
 
 void InterceptBwlBallColor(RPGrpModelG3D* pModel, RPGrpModelG3D* pModelMirror) {
     ASSERT_PTR(pModel);
     ASSERT_PTR(pModelMirror);
 
-    nw4r::g3d::ResMdl mdl =
-        pModel->GetModelEx()->getScnMdlSimple()->GetResMdl();
-
-    ASSERT(mdl.IsValid());
-
-    nw4r::g3d::ResMdl mdlMirror =
-        pModelMirror->GetModelEx()->getScnMdlSimple()->GetResMdl();
-
-    ASSERT(mdlMirror.IsValid());
-
     kiwi::Color color =
-        kiwi::Color::FromHsv(kiwi::Random().NextF32(1.0f), 0.5f, 1.0f);
+        kiwi::Color::FromHsv(kiwi::Random().NextF32(1.0f), 1.0f, 0.7f);
 
-    PatchBwlBallColor(mdl, color);
-    PatchBwlBallColor(mdlMirror, color);
+    PatchBwlBallColor(pModel, color);
+    PatchBwlBallColor(pModelMirror, color);
 }
 
 /**
@@ -333,6 +374,31 @@ TRAMPOLINE_DEF(0x804d1174, 0x804d1178){
 
     TRAMPOLINE_END
     rlwinm r0, r4, 0x3, 0x0, 0x1C // original instruction
+    blr
+    // clang-format on
+}
+
+/**
+ * @brief Allow TEV manipulation in bowling ball models
+ */
+TRAMPOLINE_DEF(0x804c89d4, 0x804c89d8){
+    // clang-format off
+    li r7, 0x918 // Enable ScnMdl BUFFER_RESTEV buffer option
+    blr
+    // clang-format on
+} TRAMPOLINE_DEF(0x804c89f8, 0x804c89fc){
+    // clang-format off
+    li r7, 0x918 // Enable ScnMdl BUFFER_RESTEV buffer option
+    blr
+    // clang-format on
+} TRAMPOLINE_DEF(0x804c8a24, 0x804c8a28){
+    // clang-format off
+    li r7, 0x918 // Enable ScnMdl BUFFER_RESTEV buffer option
+    blr
+    // clang-format on
+} TRAMPOLINE_DEF(0x804c8a48, 0x804c8a4c){
+    // clang-format off
+    li r7, 0x918 // Enable ScnMdl BUFFER_RESTEV buffer option
     blr
     // clang-format on
 }
