@@ -68,7 +68,7 @@ bool SocketBase::Bind(SockAddrAny& rAddr) const {
     if (rAddr.port == 0) {
         // Retry up to 10 times in case the random port is in use
         for (int i = 0; i < 10; i++) {
-            rAddr.port = Random().NextU32(49152, 65535);
+            rAddr.port = RNG.NextU32(49152, 65535);
 
             if (LibSO::Bind(mHandle, rAddr) == SO_SUCCESS) {
                 return true;

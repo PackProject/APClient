@@ -72,7 +72,7 @@ const char* strstr(const char* pStr, const char* pSeq) {
     K_ASSERT(pStr != nullptr);
 
     // No sequence/empty sequence
-    if (pSeq == nullptr || *pSeq == L'\0') {
+    if (pSeq == nullptr || *pSeq == '\0') {
         return pStr;
     }
 
@@ -80,7 +80,7 @@ const char* strstr(const char* pStr, const char* pSeq) {
     char begin = *pSeq;
 
     // Check for sequence
-    while (*pStr != L'\0') {
+    while (*pStr != '\0') {
         // Matches beginning of sequence
         if (*pStr == begin) {
             // Backup original pointers
@@ -88,8 +88,9 @@ const char* strstr(const char* pStr, const char* pSeq) {
             const char* pExpect = pSeq;
 
             // Look for rest of sequence
-            while (*++pCheck == *++pExpect) {
-                ;
+            while (*pCheck == *pExpect && *pExpect != '\0') {
+                pCheck++;
+                pExpect++;
             }
 
             // Did we hit the end?
@@ -344,12 +345,13 @@ const wchar_t* wcsstr(const wchar_t* pwStr, const wchar_t* pwSeq) {
             const wchar_t* pExpect = pwSeq;
 
             // Look for rest of sequence
-            while (*++pCheck == *++pExpect) {
-                ;
+            while (*pCheck == *pExpect && *pExpect != L'\0') {
+                pCheck++;
+                pExpect++;
             }
 
             // Did we hit the end?
-            if (*pExpect == '\0') {
+            if (*pExpect == L'\0') {
                 return pwStr;
             }
         }
