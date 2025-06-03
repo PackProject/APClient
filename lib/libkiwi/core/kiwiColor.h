@@ -84,6 +84,11 @@ public:
     Color ToYuv() const;
 
     /**
+     * @brief Converts RGB color to GX signed 10-bit format
+     */
+    GXColorS10 ToS10() const;
+
+    /**
      * @brief Converts HSV color to RGB format
      *
      * @param h Hue [0, 1]

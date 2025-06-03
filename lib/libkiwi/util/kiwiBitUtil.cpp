@@ -104,7 +104,7 @@ template <typename T> T BitUtil<T>::PickRandom(T bits) {
     }
 
     // Choice means n'th set bit
-    u32 choice = 1 + Random().NextU32(max);
+    u32 choice = 1 + RNG.NextU32(max);
 
     u32 mask = 1 << 0;
 

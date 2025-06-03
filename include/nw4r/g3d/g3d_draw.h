@@ -24,6 +24,9 @@ G3DState::IndMtxOp* GetIndMtxOp(ResMat mat, ResNode node, ResShp shp);
 } // namespace detail
 
 struct DrawResMdlReplacement {
+#if defined(PACK_RESORT)
+    u32 flag;
+#endif
     u8* visArray;                               // at 0x0
     ResTexObjData* texObjDataArray;             // at 0x4
     ResTlutObjData* tlutObjDataArray;           // at 0x8

@@ -23,7 +23,7 @@ void** GetRandomAddr(const void* pBegin, const void* pEnd) {
 
     do {
         // Make sure to align the address to 4 bytes
-        offset = Random().NextU32(size);
+        offset = RNG.NextU32(size);
         offset = RoundUp(offset, 4);
     }
     // Adjusting for alignment may take us out of the range
@@ -89,7 +89,7 @@ void GameCorruptor::Corrupt() const {
 
     case ECorruptDomain_DolData: {
         // 50/50 between .data and .rodata
-        if (Random().CoinFlip()) {
+        if (RNG.CoinFlip()) {
             CorruptData(GetDolDataStart(), GetDolDataEnd());
         } else {
             CorruptData(GetDolRodataStart(), GetDolRodataEnd());
@@ -170,11 +170,11 @@ void GameCorruptor::CorruptData(const void* pBegin, const void* pEnd) const {
         // Corrupt float
         if (PtrUtil::IsFloat(ppAddr)) {
             *reinterpret_cast<f32*>(ppAddr) =
-                Random().NextF32(10000000.0f) * Random().Sign();
+                RNG.NextF32(10000000.0f) * RNG.Sign();
         }
         // Corrupt integer
         else {
-            *reinterpret_cast<u32*>(ppAddr) = Random().NextU32();
+            *reinterpret_cast<u32*>(ppAddr) = RNG.NextU32();
         }
 
         i++;
