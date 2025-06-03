@@ -19,21 +19,20 @@ namespace Jsk {
  *
  */
 int JskSetTimer() {
-    return 120;
+    return ItemMgr::GetInstance().GetJskFreeTimerNum() * 60;
 }
 
 /**
  * @brief JskSetTimer trampoline
  */
-TRAMPOLINE_DEF(0x805ae988, 0x805ae98c) {
+TRAMPOLINE_DEF(0x8058321c, 0x80583220) {
     // clang-format off
     TRAMPOLINE_BEGIN
     
-    li r4, 0
-    stw r4, 0x110(r3)
+    bl JskSetTimer
+    stw r3, 0x54(r31)
 
     TRAMPOLINE_END
-    mr r4, r0
     blr
     // clang-format on
 }

@@ -420,7 +420,7 @@ void ItemMgr::Clear() {
     mBwlWalSpinFlag = false;
 
     // Power Cruising
-    mJskBoostFlag = false;
+    mJskBoostFlag = true;
     mJskRingTimerFlag.ResetAll();
     mJsk2xRingFlag = false;
     mJskFreeTimerFlag.SetDirect(0b1); // Start with one timer
@@ -518,7 +518,7 @@ void ItemMgr::Debug() {
     mBwlWalSpinFlag = r.CoinFlip();
 
     // Power Cruising
-    mJskBoostFlag = r.CoinFlip();
+    //mJskBoostFlag = r.CoinFlip();
     mJskRingTimerFlag.Randomize();
     mJsk2xRingFlag = r.CoinFlip();
     mJskFreeTimerFlag.Randomize();
