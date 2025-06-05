@@ -75,4 +75,37 @@
     addi r1, r1, 0x100;
 // clang-format on
 
+/******************************************************************************
+ *
+ * Save/restore all registers (r3-r31) and leave room on the stack
+ *
+ ******************************************************************************/
+
+/**
+ * @brief Saves *ALL* registers at the start of a trampoline function
+ */
+// clang-format off
+#define TRAMPOLINE_BEGIN_SP(length) \
+    nofralloc          ;            \
+    stwu r1, (-0x100 - length)(r1); \
+    stmw r3, (0x0C + length)(r1) ;  \
+    mflr r12           ;            \
+    stw  r12, (0x08 + length)(r1) ;            \
+    mfcr r12           ;            \
+    stw  r12, (0x88 + length)(r1) ;            \
+// clang-format on
+
+/**
+ * @brief Restores registers at the end of a trampoline function
+ */
+// clang-format off
+#define TRAMPOLINE_END_SP(length)  \
+    lwz  r12, (0x88 + length)(r1);            \
+    mtcr r12          ;            \
+    lwz  r12, (0x08 + length)(r1);            \
+    mtlr r12          ;            \
+    lmw  r3, (0x0C + length)(r1);            \
+    addi r1, r1, (0x100 + length); \
+// clang-format on
+
 #endif

@@ -38,6 +38,32 @@ TRAMPOLINE_DEF(0x8058321c, 0x80583220) {
 }
 
 /**
+ * @brief Sets the balloon time in Power Cruising
+ *
+ */
+int JskSetBalloons() {
+    return ItemMgr::GetInstance().GetJskFreeTimerNum() * 12;
+}
+
+/**
+ * @brief JskSetBalloons trampoline
+ */
+TRAMPOLINE_DEF(0x80581eb0, 0x80581eb4) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    bl JskSetBalloons
+    mr r0, r3
+
+    TRAMPOLINE_END
+    mr r4, r0
+    li r0, 0
+    
+    blr
+    // clang-format on
+}
+
+/**
  * @brief Unlocks Boosting in Power Cruising
  */
 bool JskSetBoost() {
