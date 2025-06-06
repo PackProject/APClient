@@ -64,6 +64,13 @@ TRAMPOLINE_DEF(0x80581eb0, 0x80581eb4) {
 }
 
 /**
+ * @brief Empty trampoline - disables balloon get text
+ */
+TRAMPOLINE_DEF(0x8059ecc4, 0x8059ecc8) {
+    blr
+}
+
+/**
  * @brief Unlocks Boosting in Power Cruising
  */
 bool JskSetBoost() {
