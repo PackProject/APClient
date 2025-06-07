@@ -470,7 +470,7 @@ void ItemMgr::Debug() {
     mWkbStageFlag.Randomize();
 
     // Frisbee Dog
-    mFldThrowFlag.Randomize();
+    mFldThrowFlag.SetDirect(0b111111);
     mFldSecretPopFlag = r.CoinFlip();
 
     // Frisbee Golf
