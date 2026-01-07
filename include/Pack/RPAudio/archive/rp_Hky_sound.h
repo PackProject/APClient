@@ -9,9 +9,7 @@
 
 //! @}
 
-namespace rp_Hky_sound {
-
-enum ESoundID {
+enum {
     /* 0x00 */ RP_HKY_SE_HIT_A_01,
     /* 0x01 */ RP_HKY_SE_HIT_B_01,
     /* 0x02 */ RP_HKY_SE_Bound_Wall_A_01,
@@ -89,7 +87,5 @@ enum ESoundID {
     /* 0x4A */ RP_COM_BGM_RENEW_RECORD2,
     /* 0x4B */ RP_COM_BGM_RENEW_RECORD
 };
-
-} // namespace rp_Hky_sound
 
 #endif

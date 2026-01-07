@@ -154,6 +154,10 @@ public:
                                  AmbientArgAllocaterCallback* pArgAlloc,
                                  void* pArg);
 
+    bool GetStartedFlag() const {
+        return mStartedFlag;
+    }
+
     void SetPriority(int priority) {
         mPriority = priority;
     }

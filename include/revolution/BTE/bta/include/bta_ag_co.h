@@ -109,3 +109,4 @@ BTA_API extern void bta_ag_co_data_close(UINT16 handle);
 BTA_API extern void bta_ag_co_tx_write(UINT16 handle, UINT8 *p_data, UINT16 len);
 
 #endif /* BTA_AG_CO_H */
+

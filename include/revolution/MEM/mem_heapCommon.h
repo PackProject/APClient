@@ -34,6 +34,10 @@ typedef struct MEMiHeapHead {
     }; // at 0x38
 } MEMiHeapHead;
 
+#if defined(LIBKIWI_PRECOMPILE)
+#define static inline
+#endif
+
 void MEMiInitHeapHead(MEMiHeapHead* heap, u32 magic, void* start, void* end,
                       u16 opt);
 void MEMiFinalizeHeap(MEMiHeapHead* heap);
@@ -89,9 +93,17 @@ static void FillAllocMemory(MEMiHeapHead* heap, void* memBlock, u32 size) {
     }
 }
 
-static s32 MEMGetHeapTotalSize(MEMiHeapHead* heap) {
+static s32 MEMGetHeapTotalSize(const MEMiHeapHead* heap) {
     return GetOffsetFromPtr(heap, heap->end);
 }
+
+static void* MEMGetHeapEndAddress(const MEMiHeapHead* heap) {
+    return heap->end;
+}
+
+#if defined(LIBKIWI_PRECOMPILE)
+#undef static
+#endif
 
 #ifdef __cplusplus
 }

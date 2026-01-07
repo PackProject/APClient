@@ -23,8 +23,16 @@ public:
 private:
     static const int SPEAKER_ALARM_HZ = 150;
 
+#if defined(__KOKESHI__)
+#pragma warning off(10124)
+#endif
+
     static const int SPEAKER_ALARM_PERIOD_NSEC =
         static_cast<int>(1.0f / SPEAKER_ALARM_HZ * 1000 * 1000 * 1000);
+
+#if defined(__KOKESHI__)
+#pragma warning reset(10124)
+#endif
 
 private:
     RemoteSpeakerManager();

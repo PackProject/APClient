@@ -253,3 +253,4 @@ BTA_API extern void bta_fs_ci_resume_op(int fd, tBTA_FS_CO_STATUS status, const 
 #endif
 
 #endif /* BTA_FS_CI_H */
+

@@ -79,3 +79,4 @@ BTA_API extern  BOOLEAN bta_gatts_co_load_handle_range(UINT8 index,
 
 
 #endif /* BTA_GATTS_CO_H */
+

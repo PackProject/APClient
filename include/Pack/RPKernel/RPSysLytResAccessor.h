@@ -48,7 +48,7 @@ public:
      * @return Success
      * @address 80198b6c
      */
-    bool mountArchive(void* archive, const char* dir);
+    bool mountArchive(void* archive, const char* dir = nullptr);
 
     /**
      * @brief Get resource from the open archive

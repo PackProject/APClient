@@ -3,6 +3,7 @@
 #include <types.h>
 
 #include <revolution/ARC.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -18,6 +19,10 @@ typedef struct CNTFileInfo {
     u32 length;        // at 0x8
     u32 position;      // at 0xC
 } CNTFileInfo;
+
+typedef enum {
+    CNT_RESULT_OK = 0,
+} CNTResult;
 
 s32 contentFastOpenNAND(CNTHandle* handle, s32 entrynum, CNTFileInfo* info);
 s32 contentConvertPathToEntrynumNAND(CNTHandle* handle, const char* path);

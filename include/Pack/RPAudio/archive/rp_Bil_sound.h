@@ -9,8 +9,6 @@
 
 //! @}
 
-namespace rp_Bil_sound {
-
 enum {
     /* 0x00 */ RP_BIL_SE_KANSEI_END,
     /* 0x01 */ RP_BIL_SE_CUE_FIX,
@@ -120,7 +118,5 @@ enum {
     /* 0x69 */ RP_COMMON_SE_KEY_BACK_01,
     /* 0x6A */ RP_COMMON_SE_KEY_CURSOR_01
 };
-
-} // namespace rp_Bil_sound
 
 #endif

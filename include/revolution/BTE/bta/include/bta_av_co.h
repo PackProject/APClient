@@ -389,3 +389,4 @@ BTA_API extern void bta_av_co_audio_delay(tBTA_AV_HNDL hndl, UINT16 delay);
 BTA_API extern void bta_av_co_video_delay(tBTA_AV_HNDL hndl, UINT16 delay);
 
 #endif /* BTA_AV_CO_H */
+

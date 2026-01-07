@@ -9,9 +9,7 @@
 
 //! @}
 
-namespace rp_Pnp_sound {
-
-enum ESoundID {
+enum {
     /* 0x00 */ RP_PNP_SE_HIT_ME_L_01,
     /* 0x01 */ RP_PNP_SE_HIT_ME_L_02,
     /* 0x02 */ RP_PNP_SE_HIT_ME_L_03,
@@ -134,7 +132,5 @@ enum ESoundID {
     /* 0x77 */ RP_COM_BGM_RENEW_RECORD2,
     /* 0x78 */ RP_COM_BGM_RENEW_RECORD
 };
-
-} // namespace rp_Pnp_sound
 
 #endif

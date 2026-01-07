@@ -138,3 +138,4 @@ void userial_close(void);
 void userial_ioctl(userial_ioctl_op_t op, void *p_data);
 
 #endif /* USERIAL_H */
+

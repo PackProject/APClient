@@ -7,20 +7,26 @@
 
 #include <revolution/BTE.h>
 #include <revolution/OS.h>
+#include <revolution/SC.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-typedef enum {
-    WUD_STATE_START = 0,
+#define WUD_BDCMP(LHS, RHS) memcmp(LHS, RHS, BD_ADDR_LEN)
+#define WUD_BDCPY(DST, SRC) memcpy(DST, SRC, BD_ADDR_LEN)
 
-    WUD_STATE_WII_FIT_OPEN = 100,
-    WUD_STATE_WII_FIT_SEEK = 101,
-    WUD_STATE_WII_FIT_UPDATE = 102,
-    WUD_STATE_WII_FIT_CLOSE = 103,
+// clang-format off
+#define WUD_DEV_NAME_IS(NAME, VALUE)                                           \
+    (memcmp(NAME, VALUE, sizeof(VALUE) - 1) == 0)
 
-    WUD_STATE_ERROR = 255
-} WUDState;
+#define WUD_DEV_NAME_IS_CNT(NAME)                                              \
+    WUD_DEV_NAME_IS(NAME, "Nintendo RVL-CNT")
+
+#define WUD_DEV_NAME_IS_CNT_01(NAME)                                           \
+    WUD_DEV_NAME_IS(NAME, "Nintendo RVL-CNT-01")
+// clang-format on
+
+typedef enum { WUD_STATE_START = 0, WUD_STATE_ERROR = 255 } WUDState;
 
 typedef enum {
     WUD_STATE_SYNC_PREPARE_SEARCH = 1,
@@ -47,7 +53,7 @@ typedef enum {
     WUD_STATE_SYNC_COMPLETE = 23,
     WUD_STATE_SYNC_WAIT_FOR_INCOMING = 24,
     WUD_STATE_SYNC_SC_FLUSH = 25,
-    WUD_STATE_SYNC_26 = 26,
+    WUD_STATE_SYNC_CANCEL_SEARCH = 26,
     WUD_STATE_SYNC_WAIT_FOR_START_SEARCH = 29,
 } WUDSyncState;
 
@@ -120,6 +126,16 @@ typedef struct WUDDiscResp {
     u8 UNK_0x104[0x4];
 } WUDDiscResp;
 
+typedef struct WUDPatchCmd {
+    u8 data[13]; // at 0x0
+} WUDPatchCmd;
+typedef struct WUDPatchList {
+    u8 num;             // at 0x0
+    WUDPatchCmd cmds[]; // at 0x1
+} WUDPatchList;
+#define WUD_PATCH_BUFFER_SIZE 0xFF
+#define WUD_MAX_PATCHES (WUD_PATCH_BUFFER_SIZE / (s32)sizeof(WUDPatchCmd))
+
 typedef struct WUDCB {
     WUDSyncDeviceCallback syncStdCB;   // at 0x0
     WUDSyncDeviceCallback syncSmpCB;   // at 0x4
@@ -157,8 +173,8 @@ typedef struct WUDCB {
     u8 connectable;  // at 0x6EA
     u8 discoverable; // at 0x6EB
 
-    WUDHidReceiveCallback hidRecvCB; // at 0x6EC
-    WUDHidConnectCallback hidConnCB; // at 0x6F0
+    WUDHidRecvCallback hidRecvCB; // at 0x6EC
+    WUDHidConnCallback hidConnCB; // at 0x6F0
 
     WUDAllocFunc allocFunc; // at 0x6F4
     WUDFreeFunc freeFunc;   // at 0x6F8
@@ -176,13 +192,16 @@ typedef struct WUDCB {
 
     u16 bufferStatus0; // at 0x744
     u16 bufferStatus1; // at 0x746
-
-    s8 initWaitDeviceUpFrames; // at 0x748
-    s8 waitStartSearchFrames;  // at 0x749
-    s16 waitIncomingFrames;    // at 0x74A
 } WUDCB;
 
 extern WUDCB _wcb;
+extern WUDDevInfo _work;
+
+extern SCBtDeviceInfoArray _scArray;
+
+extern BD_ADDR_PTR _dev_handle_to_bda[WUD_MAX_DEV_ENTRY];
+extern u16 _dev_handle_queue_size[WUD_MAX_DEV_ENTRY];
+extern u16 _dev_handle_notack_num[WUD_MAX_DEV_ENTRY];
 
 #ifdef __cplusplus
 }

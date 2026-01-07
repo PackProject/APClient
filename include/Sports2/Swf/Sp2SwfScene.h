@@ -11,7 +11,7 @@ class PrcRuleObject;
 
 class Scene /* : public RPSysMplsGameScene */ {
 public:
-    static Scene* getInstance() {
+    static Scene* instance() {
         return sInstance;
     }
 

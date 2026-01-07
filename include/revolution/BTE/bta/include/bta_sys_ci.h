@@ -66,3 +66,4 @@ BTA_API void bta_sys_hw_ci_disabled( tBTA_SYS_HW_MODULE module  );
 #endif
 
 #endif
+

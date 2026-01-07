@@ -121,3 +121,5 @@ BTA_API extern void bta_hl_ci_put_echo_data(  tBTA_HL_MCL_HANDLE mcl_handle,
                                               tBTA_HL_STATUS status,
                                               UINT16 evt );
 #endif /* BTA_HL_CI_H */
+
+

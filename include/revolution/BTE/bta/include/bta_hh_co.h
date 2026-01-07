@@ -69,3 +69,4 @@ BTA_API extern void bta_hh_co_open(UINT8 dev_handle, UINT8 sub_class,
 BTA_API extern void bta_hh_co_close(UINT8 dev_handle, UINT8 app_id);
 
 #endif /* BTA_HH_CO_H */
+

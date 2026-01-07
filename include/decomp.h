@@ -44,4 +44,7 @@
 #define DECOMP_DONT_INLINE __attribute__((never_inline))
 #endif
 
+#define DECOMP_SIZE_ASSERT(cls, size)                                          \
+    extern u8 __SZ_PREDICATE[(sizeof(cls) == size) ? 1 : -1]
+
 #endif

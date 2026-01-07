@@ -276,3 +276,4 @@ AVCT_API extern UINT16 AVCT_MsgReq(UINT8 handle, UINT8 label, UINT8 cr, BT_HDR *
 
 
 #endif /* AVCT_API_H */
+

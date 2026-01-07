@@ -16,7 +16,8 @@ public:
      * @details MsgInfoBlock stores the sizes of its entries,
      * allowing games to add extra features to their text.
      */
-    struct RPMsgInfoBlockEntry : public EGG::MsgRes::MsgInfoBlockEntry {
+    struct RPMsgInfoBlockEntry
+        : public EGG::MsgRes::MessageInfoDataBlock::Entry {
         // @brief Text scale
         u16 mScale; // at 0x8
         // @brief Text kerning

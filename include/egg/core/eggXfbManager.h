@@ -1,29 +1,44 @@
-#ifndef EGG_CORE_XFBMANAGER_H
-#define EGG_CORE_XFBMANAGER_H
-#include "eggXfb.h"
-#include "types_egg.h"
+#ifndef EGG_CORE_XFB_MANAGER_H
+#define EGG_CORE_XFB_MANAGER_H
+#include <egg/types_egg.h>
 
 namespace EGG {
+
+// Forward declarations
+class Xfb;
+
 class XfbManager {
 public:
-    XfbManager(Heap* heap) {}
-    ~XfbManager() {}
+    XfbManager()
+        : mQueueFront(NULL),
+          mQueueEnd(NULL),
+          mCopiedXfb(NULL),
+          mShowXfb(NULL) {}
 
-    bool isReadytoCopy() const {
-        return mListTail != mShowXfb && mListTail != mListHead;
-    }
-
-    bool attach(Xfb*);
-    void copyEFB(bool);
+    bool attach(Xfb* pXfb);
+    void copyEFB(bool clearEfb);
     void setNextFrameBuffer();
     void postVRetrace();
 
+    bool isReadytoCopy() {
+        return mQueueEnd != mCopiedXfb && mQueueEnd != mQueueFront;
+    }
+
+    Xfb* getShowXfb() {
+        return mShowXfb;
+    }
+    Xfb* getCopiedXfb() {
+        return mCopiedXfb;
+    }
+
 private:
-    Xfb* mListHead;  // at 0x0
-    Xfb* mListTail;  // at 0x4
-    Xfb* mCopiedXfb; // at 0x8
-    Xfb* mShowXfb;   // at 0xC
+    Xfb* mQueueFront; // at 0x0
+    Xfb* mQueueEnd;   // at 0x4
+
+    Xfb* mShowXfb;   // at 0x8
+    Xfb* mCopiedXfb; // at 0xC
 };
+
 } // namespace EGG
 
 #endif

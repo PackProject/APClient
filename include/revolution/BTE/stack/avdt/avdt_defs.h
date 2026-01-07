@@ -200,3 +200,4 @@
     *(p)++ = (UINT8) (nosp);
 
 #endif /* AVDT_DEFS_H */
+

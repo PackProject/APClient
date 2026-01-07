@@ -47,3 +47,4 @@ BTA_API extern int bta_co_rfc_data_outgoing_size(void *user_data, int *size);
 BTA_API extern int bta_co_rfc_data_outgoing(void *user_data, UINT8* buf, UINT16 size);
 
 #endif /* BTA_DG_CO_H */
+

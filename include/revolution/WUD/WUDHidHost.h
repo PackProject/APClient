@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-void WUDiHidHostEventCallback(tBTA_HH_EVT event, tBTA_HH* p_data);
+void WUDHidHostCallback(tBTA_HH_EVT event, tBTA_HH* pData);
 
 #ifdef __cplusplus
 }

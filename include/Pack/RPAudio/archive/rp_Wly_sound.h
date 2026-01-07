@@ -9,9 +9,7 @@
 
 //! @}
 
-namespace rp_Wly_sound {
-
-enum ESoundID {
+enum {
     /* 0x00 */ RP_WLY_SE_TIME_COUNT_01,
     /* 0x01 */ RP_WLY_SE_TIME_COUNT_02,
     /* 0x02 */ RP_WLY_SE_TIME_UP_01,
@@ -143,7 +141,5 @@ enum ESoundID {
     /* 0x80 */ RP_COM_BGM_RENEW_RECORD2,
     /* 0x81 */ RP_COM_BGM_RENEW_RECORD
 };
-
-} // namespace rp_Wly_sound
 
 #endif

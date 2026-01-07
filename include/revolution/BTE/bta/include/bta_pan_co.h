@@ -198,3 +198,4 @@ BTA_API extern void bta_pan_co_mfilt_ind(UINT16 handle,  BOOLEAN indication, tBT
                                     UINT16 len, UINT8 *p_filters);
 
 #endif /* BTA_PAN_CO_H */
+

@@ -39,21 +39,23 @@ public:
         GAME_BIL, // Billiards
         GAME_FSH, // Fishing
         GAME_COW, // Charge!
-        GAME_TNK  // Tanks!
+        GAME_TNK, // Tanks!
+        GAME_MAX
     };
 
     // @brief Bit indices for the dialog seen bitfield
     enum EDialogSeen {
-        DIALOG_WELCOME,          // Game is played for first time
-        DIALOG_STAGE_TWO,        // Stage two is unlocked
-        DIALOG_STAGE_THREE,      // Stage three is unlocked
-        DIALOG_STAGE_FOUR,       // Stage four is unlocked
-        DIALOG_STAGE_FIVE,       // Stage five is unlocked
-        DIALOG_STAGE_SIX,        // Stage six is unlocked
-        DIALOG_STAGE_SEVEN,      // Stage seven is unlocked
-        DIALOG_STAGE_EIGHT,      // Stage eight is unlocked
-        DIALOG_FINAL_STAGE,      // Stage nine (final stage) is unlocked
-        DIALOG_WII_REMOTE_MASTER // All stages are completed
+        DIALOG_WELCOME,           // Game is played for first time
+        DIALOG_STAGE_TWO,         // Stage two is unlocked
+        DIALOG_STAGE_THREE,       // Stage three is unlocked
+        DIALOG_STAGE_FOUR,        // Stage four is unlocked
+        DIALOG_STAGE_FIVE,        // Stage five is unlocked
+        DIALOG_STAGE_SIX,         // Stage six is unlocked
+        DIALOG_STAGE_SEVEN,       // Stage seven is unlocked
+        DIALOG_STAGE_EIGHT,       // Stage eight is unlocked
+        DIALOG_FINAL_STAGE,       // Stage nine (final stage) is unlocked
+        DIALOG_WII_REMOTE_MASTER, // All stages are completed
+        DIALOG_MAX
     };
 
 public:
@@ -61,7 +63,15 @@ public:
      * @brief Check if a game has been unlocked
      * @address 8018d6ac
      */
-    bool isGameUnlock(u32 id) const;
+    bool isGameOpen(u32 idx) const;
+
+    void setGameOpen(u32 idx) {
+        mGameUnlockBitfield |= 1 << idx;
+    }
+
+    void setDialogSeen(u32 idx) {
+        mDialogSeenBitfield |= 1 << idx;
+    }
 
 private:
     // @brief Mii History for every possible amount of players

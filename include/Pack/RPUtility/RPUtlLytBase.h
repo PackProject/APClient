@@ -11,14 +11,16 @@ class RPUtlLytBase {
 public:
     RPUtlLytBase();
 
-    virtual void LoadResource(EGG::Archive* arc);
-    virtual void Reset();
-    virtual void Calculate();
-    virtual void UserDraw();
-    virtual void VF_18();
-    // virtual ~RPUtlLytBase() = 0;
+    virtual void LoadResource(EGG::Archive* pArchive); // at 0x8
+    virtual void Reset();                              // at 0xC
+    virtual void Calculate();                          // at 0x10
+    virtual void VF_14();                              // at 0x14
+    virtual void VF_18();                              // at 0x18
 
-private:
+    static void mountArchive(EGG::Archive* pArchive, const char* pPath,
+                             RPSysLytResAccessor* pAccessor);
+
+protected:
     RPSysLytResAccessor* mAccessor; // at 0x4
 };
 

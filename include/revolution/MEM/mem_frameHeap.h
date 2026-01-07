@@ -32,6 +32,10 @@ typedef struct MEMiFrmHeapHead {
     MEMiFrmHeapState* states; // at 0x8
 } MEMiFrmHeapHead;
 
+#if defined(LIBKIWI_PRECOMPILE)
+#define static inline
+#endif
+
 MEMiHeapHead* MEMCreateFrmHeapEx(void* start, u32 size, u16 opt);
 MEMiHeapHead* MEMDestroyFrmHeap(MEMiHeapHead* heap);
 void* MEMAllocFromFrmHeapEx(MEMiHeapHead* heap, u32 size, s32 align);
@@ -53,6 +57,10 @@ static void* MEMAllocFromFrmHeap(MEMiHeapHead* heap, u32 size) {
 static u32 MEMGetAllocatableSizeForFrmHeap(MEMiHeapHead* heap) {
     return MEMGetAllocatableSizeForFrmHeapEx(heap, 4);
 }
+
+#if defined(LIBKIWI_PRECOMPILE)
+#undef static
+#endif
 
 #ifdef __cplusplus
 }

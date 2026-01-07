@@ -9,9 +9,7 @@
 
 //! @}
 
-namespace rp_Cow_sound {
-
-enum ESoundID {
+enum {
     /* 0x00 */ RP_COW_SE_CON_01_L_CTSP,
     /* 0x01 */ RP_COW_SE_CON_01_R_CTSP,
     /* 0x02 */ RP_COW_SE_CON_02_1P_TALK_CTSP,
@@ -174,7 +172,5 @@ enum ESoundID {
     /* 0x9F */ RP_COM_BGM_RENEW_RECORD2,
     /* 0xA0 */ RP_COM_BGM_RENEW_RECORD
 };
-
-} // namespace rp_Cow_sound
 
 #endif

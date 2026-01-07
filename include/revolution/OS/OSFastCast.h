@@ -10,6 +10,10 @@ extern "C" {
 #define OS_GQR_TYPE_S8 6
 #define OS_GQR_TYPE_S16 7
 
+#if defined(LIBKIWI_PRECOMPILE)
+#define static inline
+#endif
+
 static void OSInitFastCast(void) {
     // clang-format off
     asm {
@@ -176,6 +180,10 @@ static s16 __OSf32tos16(register f32 arg) {
 static void OSf32tos16(f32* in, volatile s16* out) {
     *out = __OSf32tos16(*in);
 }
+
+#if defined(LIBKIWI_PRECOMPILE)
+#undef static
+#endif
 
 #ifdef __cplusplus
 }

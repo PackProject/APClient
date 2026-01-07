@@ -135,3 +135,4 @@ extern BOOLEAN avrc_is_valid_opcode(UINT8 opcode);
 #endif
 
 #endif /* AVRC_INT_H */
+

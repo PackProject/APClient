@@ -13,8 +13,14 @@ public:
     void Calculate();
     void Reset();
 
+    static u32 GetPlayerNum() {
+        return sPlayerNum;
+    }
+
 private:
     RPUtlBaseFsm<RPBilMain>* mpStateMachine; // at 0x4
+
+    static u32 sPlayerNum;
 };
 
 #endif

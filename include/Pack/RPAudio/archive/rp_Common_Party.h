@@ -9,9 +9,7 @@
 
 //! @}
 
-namespace rp_Common_Party {
-
-enum ESoundID {
+enum {
     /* 0x00 */ RP_COMMON_SE_LOGO_01,
     /* 0x01 */ RP_COMMON_SE_WIN_OPEN_01,
     /* 0x02 */ RP_COMMON_SE_WIN_CLOSE_01,
@@ -82,7 +80,5 @@ enum ESoundID {
     /* 0x43 */ RP_COMMON_SE_KEY_BACK_01,
     /* 0x44 */ RP_COMMON_SE_KEY_CURSOR_01
 };
-
-} // namespace rp_Common_Party
 
 #endif

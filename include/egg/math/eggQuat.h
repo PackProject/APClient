@@ -1,27 +1,30 @@
 #ifndef EGG_MATH_QUAT_H
 #define EGG_MATH_QUAT_H
-#include "types_egg.h"
+#include <egg/types_egg.h>
+
+#include <egg/math/eggVector.h>
 
 namespace EGG {
 
-// Forward declaration
-class Vector3f;
-
-Quatf operator*(const Quatf& lhs, const Vector3f& rhs);
-Quatf operator*(const Quatf& lhs, const Quatf& rhs);
-
-struct Quatf {
+class Quatf {
+public:
     Quatf() {}
+    Quatf(f32 fw, Vector3f vxyz) : v(vxyz), w(fw) {}
     ~Quatf() {}
 
-    void setAxisRotation(const Vector3f&, f32);
-    Quatf conjugate() const;
+    void multScalar(f32 scale) {
+        v *= scale;
+        w *= scale;
+    }
 
-    Vector3f rotateVector(const Vector3f& v);
-    void slerpTo(const Quatf& q2, f32 t, Quatf& out) const;
+    void set(f32 fw, f32 fx, f32 fy, f32 fz);
+    void setAxisRotation(const Vector3f& rAxis, f32 angle);
 
-    f32 x, y, z, w;
+public:
+    Vector3f v; // at 0x0
+    f32 w;      // at 0xC
 };
+
 } // namespace EGG
 
 #endif

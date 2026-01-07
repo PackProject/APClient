@@ -155,3 +155,4 @@ typedef struct sdp_info
 } tHID_DEV_SDP_INFO;
 
 #endif
+

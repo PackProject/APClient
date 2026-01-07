@@ -1,13 +1,9 @@
 #ifndef EGG_GFX_MODEL_EX_H
 #define EGG_GFX_MODEL_EX_H
 #include "eggAssert.h"
-#include "g3d_resmat.h"
-#include "g3d_resmdl.h"
-#include "g3d_resshp.h"
-#include "g3d_scnobj.h"
-#include "g3d_scnproc.h"
 #include "math_types.h"
 #include "types_egg.h"
+#include <nw4r/g3d.h>
 namespace EGG {
 struct TextureReplaceResult {
     union Data {
@@ -34,17 +30,10 @@ public:
     enum EDrawShape { cDrawShape_None = (1 << 0) };
 
 private:
-#if defined(PACK_RESORT)
-    nw4r::g3d::ScnObj* mScnObj; // at 0x0
-    EType mType;                // at 0x4
-    u16 mFlag;                  // at 0x8
-    ModelBoundingInfo* mpBV;    // at 0xC
-#else
     EType mType;                // at 0x0
     u16 mFlag;                  // at 0x4
     nw4r::g3d::ScnObj* mScnObj; // at 0x8
     ModelBoundingInfo* mpBV;    // at 0xC
-#endif
 
     static u32 sDrawFlag;
     static const char* sByteCodeCalcStr;

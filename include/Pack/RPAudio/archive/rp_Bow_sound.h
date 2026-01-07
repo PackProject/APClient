@@ -9,9 +9,7 @@
 
 //! @}
 
-namespace rp_Bow_sound {
-
-enum ESoundID {
+enum {
     /* 0x00 */ SE_TR_Training_Kabeyoke_Replay_WallEffect,
     /* 0x01 */ SE_TR_HitFloor,
     /* 0x02 */ SE_TR_HitFloor_TVSP,
@@ -172,7 +170,5 @@ enum ESoundID {
     /* 0x9D */ RP_COM_GAME_SE_PAUSE_KEY_A_01_TVSP,
     /* 0x9E */ RP_COM_GAME_SE_PAUSE_KEY_A_01
 };
-
-} // namespace rp_Bow_sound
 
 #endif

@@ -384,3 +384,4 @@ extern void PORT_LineStatusInd (tRFC_MCB *p_mcb, UINT8 dlci, UINT8 line_status);
 #endif
 
 #endif
+

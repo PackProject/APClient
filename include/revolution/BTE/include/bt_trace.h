@@ -4774,3 +4774,5 @@ extern UINT8 btif_trace_level;
 
 
 #endif /* BT_TRACE_H */
+
+

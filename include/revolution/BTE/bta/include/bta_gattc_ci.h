@@ -117,3 +117,4 @@ BTA_API extern void bta_gattc_ci_cache_save(BD_ADDR server_bda, UINT16 evt,
 #endif
 
 #endif /* BTA_GATTC_CI_H */
+

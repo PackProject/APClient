@@ -23,6 +23,16 @@ extern "C" {
 #include <revolution/BTE/bta/include/bta_api.h>
 #include <revolution/BTE/bta/include/bta_hh_api.h>
 
+/******************************************************************************
+ *
+ * RVL
+ *
+ ******************************************************************************/
+#include <revolution/BTE/rvl/uusb_ppc.h>
+
+// Yeah...
+#undef TRUE
+
 #ifdef __cplusplus
 }
 #endif

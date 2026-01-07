@@ -51,12 +51,20 @@ typedef void (*EXICallback)(EXIChannel chan, OSContext* ctx);
 
 extern const u32 __EXIFreq;
 
+#if defined(LIBKIWI_PRECOMPILE)
+#define static inline
+#endif
+
 static u32 __EXISwap32(u32 val) {
     return val >> 24 & 0x000000FF | val >> 8 & 0x0000FF00 |
            val << 8 & 0x00FF0000 | val << 24 & 0xFF000000;
 }
 
 BOOL EXIWriteReg(EXIChannel chan, u32 dev, u32 cmd, const void* buf, s32 len);
+
+#if defined(LIBKIWI_PRECOMPILE)
+#undef static
+#endif
 
 #ifdef __cplusplus
 }

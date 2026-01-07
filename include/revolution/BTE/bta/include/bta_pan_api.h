@@ -198,3 +198,4 @@ BTA_API extern void BTA_PanClose(UINT16 handle);
 #endif
 
 #endif /* BTA_PAN_API_H */
+

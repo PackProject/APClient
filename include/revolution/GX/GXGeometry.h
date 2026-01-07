@@ -7,6 +7,10 @@
 extern "C" {
 #endif
 
+#if defined(LIBKIWI_PRECOMPILE)
+#define static inline
+#endif
+
 void GXBegin(GXPrimitive prim, GXVtxFmt fmt, u16 verts);
 static void GXEnd(void) {}
 
@@ -20,6 +24,10 @@ void GXSetCoPlanar(GXBool coplanar);
 void __GXSetDirtyState(void);
 void __GXSendFlushPrim(void);
 void __GXSetGenMode(void);
+
+#if defined(LIBKIWI_PRECOMPILE)
+#undef static
+#endif
 
 #ifdef __cplusplus
 }

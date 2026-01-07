@@ -44,3 +44,4 @@ extern UINT8 *ntoh6(UINT8 *p);
 #endif
 
 #endif /* GKI_INET_H */
+

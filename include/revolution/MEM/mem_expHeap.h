@@ -52,6 +52,10 @@ typedef struct MEMiExpHeapHead {
     }; // at 0x12
 } MEMiExpHeapHead;
 
+#if defined(LIBKIWI_PRECOMPILE)
+#define static inline
+#endif
+
 MEMiHeapHead* MEMCreateExpHeapEx(void* start, u32 size, u16 opt);
 MEMiHeapHead* MEMDestroyExpHeap(MEMiHeapHead* heap);
 void* MEMAllocFromExpHeapEx(MEMiHeapHead* heap, u32 size, s32 align);
@@ -71,6 +75,10 @@ static void* MEMAllocFromExpHeap(MEMiHeapHead* heap, u32 size) {
 static u32 MEMGetAllocatableSizeForExpHeap(MEMiHeapHead* heap) {
     return MEMGetAllocatableSizeForExpHeapEx(heap, 4);
 }
+
+#if defined(LIBKIWI_PRECOMPILE)
+#undef static
+#endif
 
 #ifdef __cplusplus
 }

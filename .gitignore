@@ -1,4 +1,9 @@
 #=========================================================#
+# OS Files
+#=========================================================#
+.DS_Store
+
+#=========================================================#
 # IDE Configuration
 #=========================================================#
 # VSCode configuration
@@ -10,19 +15,17 @@
 # Base ROM filesystem
 romfs/**
 # Base ROM executable(s)
-baserom*.dol
+base/**.dol
 
 #=========================================================#
 # Tools
 #=========================================================#
-# Kamek
-tools/Kamek/*
-tools/Kamek*.*
+# Executables
+tools/kamek/*
+!tools/kamek/.gitkeep
 # CodeWarrior
-tools/mwasmeppc.exe
-tools/mwcceppc.exe
-tools/mwldeppc.exe
-tools/*.dll
+tools/codewarrior/*
+!tools/codewarrior/.gitkeep
 # Compiled Python
 tools/**/*.pyc
 
@@ -33,3 +36,7 @@ tools/**/*.pyc
 build/**
 # Symbol maps
 *.MAP
+# Ninja artifacts
+.ninja_deps
+.ninja_log
+build.ninja

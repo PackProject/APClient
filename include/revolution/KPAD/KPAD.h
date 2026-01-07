@@ -1,14 +1,13 @@
 #ifndef RVL_SDK_KPAD_H
 #define RVL_SDK_KPAD_H
-#ifdef __cplusplus
 #include <types.h>
 
 #include <revolution/MTX.h>
+#ifdef __cplusplus
 extern "C" {
 #endif
 
-//! @addtogroup rvl_kpad
-//! @{
+#define KPAD_MAX_SAMPLES 16
 
 typedef enum {
     KPAD_RESULT_OK = 0,
@@ -40,20 +39,15 @@ typedef enum {
     KPAD_BTN_HOME = (1 << 15),
 } KPADButton;
 
-typedef struct Vec2 {
-    f32 x, y;
-} Vec2;
-
-typedef union KPADExStatus {
+typedef union KPADEXStatus {
     // Wii Remote ("free style")
     struct {
         Vec2 stick;    // at 0x0
         Vec acc;       // at 0x8
         f32 acc_value; // at 0x14
         f32 acc_speed; // at 0x18
-    } fs;
+    } fs;              // at 0x0
 
-    // Classic Controller
     struct {
         u32 hold;     // at 0x0
         u32 trig;     // at 0x4
@@ -62,17 +56,8 @@ typedef union KPADExStatus {
         Vec2 rstick;  // at 0x14
         f32 ltrigger; // at 0x1C
         f32 rtrigger; // at 0x20
-    } cl;
-
-    // Balance Board
-    struct {
-        f64 tgc_weight;     // at 0x0
-        f64 weight[4];      // at 0x8
-        f64 weight_ave[4];  // at 0x28
-        s32 weight_err;     // at 0x48
-        s32 tgc_weight_err; // at 0x4C
-    } bl;
-} KPADExStatus;
+    } cl;             // at 0x0
+} KPADEXStatus;
 
 typedef struct KPADStatus {
     u32 hold;               // at 0x0
@@ -95,12 +80,19 @@ typedef struct KPADStatus {
     s8 wpad_err;            // at 0x5D
     s8 dpd_valid_fg;        // at 0x5E
     u8 data_format;         // at 0x5F
-    KPADExStatus ex_status; // at 0x60
+    KPADEXStatus ex_status; // at 0x60
 } KPADStatus;
 
-s32 KPADRead(s32 chan, KPADStatus* status, u32 num);
+void KPADSetBtnRepeat(s32 chan, f32, f32);
 
-//! @}
+void KPADSetPosParam(s32 chan, f32 playRadius, f32 sensitivity);
+void KPADSetHoriParam(s32 chan, f32 playRadius, f32 sensitivity);
+void KPADSetDistParam(s32 chan, f32 playRadius, f32 sensitivity);
+void KPADSetAccParam(s32 chan, f32 playRadius, f32 sensitivity);
+
+s32 KPADRead(s32 chan, KPADStatus* pSamples, s32 numSamples);
+
+void KPADInit(void);
 
 #ifdef __cplusplus
 }

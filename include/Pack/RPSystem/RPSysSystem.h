@@ -39,7 +39,7 @@ public:
     /**
      * @brief Gets this class's singleton instance
      */
-    static RPSysSystem* getInstance() {
+    static RPSysSystem* instance() {
         return spInstance;
     }
 

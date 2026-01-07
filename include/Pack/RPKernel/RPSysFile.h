@@ -26,6 +26,27 @@ public:
      */
     virtual ~RPSysFile();
 
+    /**
+     * @brief Gets the path to this file
+     */
+    const char* GetPath() const {
+        return mPath;
+    }
+
+    /**
+     * @brief Gets the size of this file
+     */
+    u32 GetSize() const {
+        return mSize;
+    }
+
+    /**
+     * @brief Gets the data of this file
+     */
+    const void* GetData() const {
+        return mpData;
+    }
+
 public:
     //! Link node used for cache lists
     nw4r::ut::Link node; // at 0x10

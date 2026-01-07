@@ -312,3 +312,4 @@ extern void smp_set_state(tSMP_STATE state);
 extern tSMP_STATE smp_get_state(void);
 
 #endif /* SMP_INT_H */
+

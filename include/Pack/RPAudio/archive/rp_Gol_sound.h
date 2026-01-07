@@ -9,9 +9,7 @@
 
 //! @}
 
-namespace rp_Gol_sound {
-
-enum ESoundID {
+enum {
     /* 0x00 */ SE_TR_FlagHit,
     /* 0x01 */ SE_TR_DRIVER_HIT,
     /* 0x02 */ SE_TR_DRIVER_HIT_TVSP,
@@ -227,7 +225,5 @@ enum ESoundID {
     /* 0xD4 */ RP_COM_GAME_SE_PAUSE_KEY_A_01_TVSP,
     /* 0xD5 */ RP_COM_GAME_SE_PAUSE_KEY_A_01
 };
-
-} // namespace rp_Gol_sound
 
 #endif

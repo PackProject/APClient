@@ -6,6 +6,8 @@
 #include <nw4r/ut/ut_Color.h>
 #include <nw4r/ut/ut_list.h>
 
+#include <nw4r/lyt.h>
+
 // Forward declarations
 class RPSysLytBounding;
 class RPSysLytTextBox;
@@ -338,6 +340,10 @@ public:
 
     nw4r::lyt::Pane* getRootPane() {
         return findPane("RootPane");
+    }
+
+    nw4r::lyt::DrawInfo* getDrawInfo() {
+        return mDrawInfo;
     }
 
 private:

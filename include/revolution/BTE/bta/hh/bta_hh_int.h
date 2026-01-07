@@ -245,3 +245,4 @@ extern void bta_hh_trace_dev_db(void);
 #endif
 
 #endif
+
