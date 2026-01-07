@@ -129,18 +129,6 @@ public:
     bool GetPeerAddr(SockAddrAny& rAddr) const;
 
     /**
-     * @brief Tests whether socket is blocking
-     */
-    bool IsBlocking() const;
-    /**
-     * @brief Toggles socket blocking
-     *
-     * @param enable Whether to enable blocking
-     * @return Success
-     */
-    bool SetBlocking(bool enable) const;
-
-    /**
      * @brief Toggles port reuse
      *
      * @param enable Whether to enable port reuse
@@ -328,6 +316,18 @@ protected:
      * @param type Socket type
      */
     SocketBase(SOSocket socket, SOProtoFamily family, SOSockType type);
+
+    /**
+     * @brief Tests whether socket is kernel-blocking (at the IOP level)
+     */
+    bool IsBlockingIOP() const;
+    /**
+     * @brief Toggles socket kernel-blocking (at the IOP level)
+     *
+     * @param enable Whether to enable blocking
+     * @return Success
+     */
+    bool SetBlockingIOP(bool enable) const;
 
 private:
     /**

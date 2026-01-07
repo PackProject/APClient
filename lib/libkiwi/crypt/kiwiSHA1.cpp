@@ -27,6 +27,8 @@ String SHA1::Finalize() {
         digest[i * 2 + 0] = sHexDigits[(buffer[i] & 0xF0) >> 8];
         digest[i * 2 + 1] = sHexDigits[(buffer[i] & 0x0F) >> 0];
     }
+
+    return digest;
 }
 
 namespace detail {

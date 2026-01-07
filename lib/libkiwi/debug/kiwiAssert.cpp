@@ -12,14 +12,14 @@
  * @param ... Format string arguments
  */
 void kiwi_log(const char* pMsg, ...) {
-    char msgbuf[1024];
+    char msgBuf[1024];
     std::va_list list;
 
     va_start(list, pMsg);
-    std::vsnprintf(msgbuf, sizeof(msgbuf), pMsg, list);
+    std::vsnprintf(msgBuf, sizeof(msgBuf), pMsg, list);
     va_end(list);
 
-    OSReport(msgbuf);
+    OSReport(msgBuf);
 }
 
 /**
@@ -31,14 +31,43 @@ void kiwi_log(const char* pMsg, ...) {
  * @param ... Format string arguments
  */
 void kiwi_fail_assert(const char* pFile, int line, const char* pMsg, ...) {
-    char msgbuf[1024];
+    static bool firstTime = true;
+
+    char msgBuf[1024];
     std::va_list list;
 
     va_start(list, pMsg);
-    std::vsnprintf(msgbuf, sizeof(msgbuf), pMsg, list);
+    std::vsnprintf(msgBuf, sizeof(msgBuf), pMsg, list);
     va_end(list);
 
-    kiwi::Nw4rException::GetInstance().FailAssert(pFile, line, msgbuf);
+    // Stuck in an assertion loop if this is not our first time
+    bool recursive = !firstTime;
+    // Early enough assertion can happen before the handler is created
+    bool noHandler = !kiwi::Nw4rException::IsCreateInstance();
+
+    // Need to avoid using Nw4rException when it could recurse/OOM
+    if (recursive || noHandler) {
+        char fatalBuf[2048];
+
+        std::snprintf(fatalBuf, sizeof(fatalBuf),             //
+                      "******** ASSERTION FAILED! ********\n" //
+                      "%s\n"                                  //
+                      "Source: %s(%d)\n",                     //
+                      msgBuf, pFile, line);
+
+        if (recursive) {
+            std::strncat(fatalBuf, "(Recursive assertion)\n", sizeof(fatalBuf));
+        } else {
+            std::strncat(fatalBuf, "(Before exception handler created)\n",
+                         sizeof(fatalBuf));
+        }
+
+        OSFatal(kiwi::Color(kiwi::Color::WHITE), kiwi::Color(kiwi::Color::BLUE),
+                fatalBuf);
+    }
+
+    firstTime = false;
+    kiwi::Nw4rException::GetInstance().FailAssert(pFile, line, msgBuf);
 }
 // Catch EGG_ASSERT
 KOKESHI_BY_PACK(KM_BRANCH(0x800a1f08, kiwi_fail_assert), // Wii Sports

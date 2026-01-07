@@ -1,13 +1,14 @@
 #ifndef LIBKIWI_UTIL_DYNAMIC_SINGLETON_H
 #define LIBKIWI_UTIL_DYNAMIC_SINGLETON_H
 #include <libkiwi/k_types.h>
-#include <libkiwi/util/kiwiAutoLock.h>
+#include <libkiwi/prim/kiwiMutex.h>
 #include <libkiwi/util/kiwiNonCopyable.h>
+
 #include <revolution/OS.h>
 
 #define K_DYNAMIC_SINGLETON_IMPL(T)                                            \
     T* kiwi::DynamicSingleton<T>::sInstance = nullptr;                         \
-    OSMutex kiwi::DynamicSingleton<T>::sMutex;
+    kiwi::Mutex kiwi::DynamicSingleton<T>::sMutex;
 
 namespace kiwi {
 //! @addtogroup libkiwi_util
@@ -19,36 +20,49 @@ namespace kiwi {
 template <typename T> class DynamicSingleton : private NonCopyable {
 public:
     /**
-     * @brief Gets reference to singleton object
+     * @brief Gets a reference to the singleton object
      */
     static T& GetInstance() {
-        AutoLock<OSMutex> lock(sMutex);
-        K_ASSERT(sInstance != nullptr);
+        AutoMutexLock lock(sMutex);
+        K_ASSERT_PTR(sInstance);
         return *sInstance;
     }
 
     /**
-     * @brief Initializes singleton object
+     * @brief Initializes the singleton object
      */
-    static void CreateInstance() {
-        AutoLock<OSMutex> lock(sMutex);
+    static T* CreateInstance() {
+        AutoMutexLock lock(sMutex);
         K_ASSERT_EX(sInstance == nullptr, "Created singleton twice");
+
         if (sInstance == nullptr) {
             sInstance = new T();
+            K_ASSERT_PTR(sInstance);
         }
+
+        return sInstance;
     }
 
     /**
-     * @brief Destroys singleton object
+     * @brief Destroys the singleton object
      */
     static void DestroyInstance() {
-        AutoLock<OSMutex> lock(sMutex);
+        AutoMutexLock lock(sMutex);
         delete sInstance;
+        sInstance = nullptr;
+    }
+
+    /**
+     * @brief Tests whether the instance has been created
+     */
+    static bool IsCreateInstance() {
+        AutoMutexLock lock(sMutex);
+        return sInstance != nullptr;
     }
 
 private:
-    static T* sInstance;   // Static instance
-    static OSMutex sMutex; // Mutex lock for safe access
+    static T* sInstance; //! Static instance
+    static Mutex sMutex; //! Mutex lock for safe access
 };
 
 //! @}

@@ -313,9 +313,14 @@ void Nw4rException::PrintHeapInfo() {
            OS_MEM_B_TO_KB(static_cast<f32>(
                MemoryMgr::GetInstance().GetFreeSize(EMemory_MEM2))));
 
-    Printf("RPSysSystem: %.2f KB free\n",
+    Printf("RPSysSystem (System): %.2f KB free\n",
            OS_MEM_B_TO_KB(static_cast<f32>(
                RPSysSystem::getSystemHeap()->getAllocatableSize())));
+
+    Printf("RPSysSystem (Resource): %.2f KB free\n",
+           OS_MEM_B_TO_KB(static_cast<f32>(RP_GET_INSTANCE(RPSysSystem)
+                                               ->getResourceHeap()
+                                               ->getAllocatableSize())));
 
     Printf("\n");
 }
@@ -328,6 +333,7 @@ void Nw4rException::PrintBuildInfo() {
 
     Printf("%s\n", GetBuildDate());
     Printf("%s (%s)\n", GetBuildPack(), GetBuildTarget());
+    Printf("Commit %s\n", GetGitCommitHash());
     Printf("\n");
 }
 

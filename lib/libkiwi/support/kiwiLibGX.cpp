@@ -1,4 +1,5 @@
 #include <libkiwi.h>
+
 #include <revolution/VI.h>
 
 namespace kiwi {
@@ -8,11 +9,26 @@ namespace kiwi {
  */
 const GXRenderModeObj* LibGX::GetDefaultRenderMode() {
     switch (VIGetTvFormat()) {
-    case VI_TV_FMT_NTSC:    return &GXNtsc480IntDf;
-    case VI_TV_FMT_PAL:     return &GXPal528IntDf;
-    case VI_TV_FMT_EURGB60: return &GXEurgb60Hz480IntDf;
-    case VI_TV_FMT_MPAL:    return &GXMpal480IntDf;
-    default:                return nullptr;
+    case VI_TVFORMAT_NTSC: {
+        return &GXNtsc480IntDf;
+    }
+
+    case VI_TVFORMAT_PAL: {
+        return &GXPal528IntDf;
+    }
+
+    case VI_TVFORMAT_EURGB60: {
+        return &GXEurgb60Hz480IntDf;
+    }
+
+    case VI_TVFORMAT_MPAL: {
+        return &GXMpal480IntDf;
+    }
+
+    default: {
+        K_UNREACHABLE();
+        return nullptr;
+    }
     }
 }
 

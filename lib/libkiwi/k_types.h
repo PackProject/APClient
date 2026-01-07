@@ -64,8 +64,7 @@ typedef void (*funcptr_t)(void);
 #undef RP_GET_INSTANCE
 #endif
 
-#define RP_GET_INSTANCE(T)                                                     \
-    (K_ASSERT(T::getInstance() != nullptr), T::getInstance())
+#define RP_GET_INSTANCE(T) (K_ASSERT_PTR(T::instance()), T::instance())
 
 #endif
 
@@ -76,7 +75,7 @@ typedef void (*funcptr_t)(void);
  * @param rContainer Container reference
  */
 #define K_FOREACH(name, rContainer)                                            \
-    for (K_DECLTYPE(rContainer.Begin()) name = rContainer.Begin();             \
-         name != rContainer.End(); ++name)
+    for (K_DECLTYPE((rContainer).Begin()) name = (rContainer).Begin();         \
+         name != (rContainer).End(); ++name)
 
 #endif // LIBKIWI_TYPES_H

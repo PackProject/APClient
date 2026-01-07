@@ -1,7 +1,7 @@
 #ifndef LIBKIWI_DEBUG_MAP_FILE_H
 #define LIBKIWI_DEBUG_MAP_FILE_H
 #include <libkiwi/k_types.h>
-#include <libkiwi/prim/kiwiLinkList.h>
+#include <libkiwi/prim/kiwiList.h>
 #include <libkiwi/util/kiwiDynamicSingleton.h>
 
 namespace kiwi {
@@ -80,10 +80,10 @@ private:
     void Unpack();
 
 private:
-    ELinkType mLinkType;    //!< Linkage type
-    char* mpMapBuffer;      //!< Text buffer
-    bool mIsUnpacked;       //!< Whether the map has been unpacked
-    TList<Symbol> mSymbols; //!< Map symbols
+    ELinkType mLinkType;     //!< Linkage type
+    char* mpMapBuffer;       //!< Text buffer
+    bool mIsUnpacked;        //!< Whether the map has been unpacked
+    TList<Symbol*> mSymbols; //!< Map symbols
 };
 
 //! @}

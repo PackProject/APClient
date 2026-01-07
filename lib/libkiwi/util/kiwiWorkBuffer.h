@@ -45,7 +45,7 @@ public:
 
         mBufferAlignSize = RoundUp(mBufferSize, mSizeAlign);
         mpBuffer = new (mMemAlign, mMemRegion) u8[mBufferAlignSize];
-        K_ASSERT(mpBuffer != nullptr);
+        K_ASSERT_PTR(mpBuffer);
     }
 
     /**

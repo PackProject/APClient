@@ -118,7 +118,7 @@ template <typename T> void TextImpl<T>::Print() {
         }
 
         default: {
-            K_ASSERT(false);
+            K_UNREACHABLE();
             break;
         }
         }

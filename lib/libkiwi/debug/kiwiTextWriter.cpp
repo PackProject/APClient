@@ -14,7 +14,7 @@ namespace kiwi {
 TextWriter::TextWriter() : mIsRendering(false), mOldDrawFlags(0) {
 
 #if defined(PACK_SPORTS) || defined(PACK_PLAY)
-    bool success = SetResFont(EResFont_nRodDb_32_IA4);
+    bool success = SetResFont(EResFont_nRodEb_32_I4);
 #elif defined(PACK_RESORT)
     bool success = SetResFont(EResFont_nRodB_32_IA4);
 #endif
@@ -33,7 +33,7 @@ bool TextWriter::SetResFont(EResFont font) {
     K_ASSERT(font < EResFont_Max);
 
     const nw4r::ut::Font* pFont = FontMgr::GetInstance().GetResFont(font);
-    K_ASSERT(pFont != nullptr);
+    K_ASSERT_PTR(pFont);
 
     return SetFont(*pFont);
 }
@@ -47,7 +47,7 @@ bool TextWriter::SetResFont(EResFont font) {
  */
 bool TextWriter::SetResFont(const String& rName) {
     const nw4r::ut::Font* pFont = FontMgr::GetInstance().GetResFont(rName);
-    K_ASSERT(pFont != nullptr);
+    K_ASSERT_PTR(pFont);
 
     return SetFont(*pFont);
 }

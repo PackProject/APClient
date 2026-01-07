@@ -13,16 +13,16 @@ namespace kiwi {
 class NonConstructable {
 private:
     NonConstructable() {
-        K_ASSERT(false);
+        K_UNREACHABLE();
     }
     ~NonConstructable() {
-        K_ASSERT(false);
+        K_UNREACHABLE();
     }
     NonConstructable(const NonConstructable& /* rOther */) {
-        K_ASSERT(false);
+        K_UNREACHABLE();
     }
     NonConstructable& operator=(const NonConstructable& /* rOther */) {
-        K_ASSERT(false);
+        K_UNREACHABLE();
         return *this;
     }
 };

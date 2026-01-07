@@ -80,10 +80,10 @@ private:
     static u32 ConvertMask(u32 mask);
 
     /**
-     * @brief Gets KPAD data (read-only)
+     * @brief Gets controller status data (read-only)
      */
-    const KPADStatus& GetStatus() const {
-        return *reinterpret_cast<KPADStatus*>(getCoreStatus());
+    const EGG::CoreStatus& GetStatus() const {
+        return *const_cast<WiiCtrl*>(this)->getCoreStatus();
     }
 };
 

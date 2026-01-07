@@ -20,7 +20,7 @@ u8 AsyncSocket::sSocketThreadStack[scThreadStackSize];
 /**
  * @brief Open async sockets
  */
-TList<AsyncSocket> AsyncSocket::sSocketList;
+TList<AsyncSocket*> AsyncSocket::sSocketList;
 
 /**
  * @brief Async receive operation
@@ -191,10 +191,9 @@ void* AsyncSocket::ThreadFunc(void* pArg) {
 
     // Update all open sockets
     while (true) {
-        for (TList<AsyncSocket>::Iterator it = sSocketList.Begin();
-             it != sSocketList.End(); it++) {
-            K_ASSERT(it->IsOpen());
-            it->Calc();
+        K_FOREACH (it, sSocketList) {
+            K_ASSERT((*it)->IsOpen());
+            (*it)->Calc();
         }
     }
 
@@ -238,10 +237,6 @@ AsyncSocket::AsyncSocket(SOSocket socket, SOProtoFamily family, SOSockType type)
  * @brief Prepares socket for async operation
  */
 void AsyncSocket::Initialize() {
-    // Make socket non-blocking
-    bool success = SetBlocking(false);
-    K_ASSERT(success);
-
     // Thread needs to see this socket
     sSocketList.PushBack(this);
 
@@ -361,7 +356,7 @@ void AsyncSocket::CalcRecv() {
     }
 
     // Find next incomplete job (FIFO)
-    RecvJob& rJob = mRecvJobs.Front();
+    RecvJob& rJob = *mRecvJobs.Front();
     K_ASSERT_EX(!rJob.IsComplete(), "Completed job should be removed");
 
     // Attempt to complete job
@@ -384,7 +379,7 @@ void AsyncSocket::CalcSend() {
     }
 
     // Find next incomplete job (FIFO)
-    SendJob& rJob = mSendJobs.Front();
+    SendJob& rJob = *mSendJobs.Front();
     K_ASSERT_EX(!rJob.IsComplete(), "Completed job should be removed");
 
     // Attempt to complete job

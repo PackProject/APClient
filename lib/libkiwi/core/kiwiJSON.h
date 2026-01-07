@@ -3,7 +3,6 @@
 #include <libkiwi/k_types.h>
 #include <libkiwi/prim/kiwiHashMap.h>
 #include <libkiwi/prim/kiwiOptional.h>
-#include <libkiwi/prim/kiwiPair.h>
 #include <libkiwi/prim/kiwiString.h>
 #include <libkiwi/prim/kiwiVector.h>
 #include <libkiwi/util/kiwiNonCopyable.h>
@@ -21,7 +20,7 @@ class Element;
 //! JSON 'array' contains zero or more elements
 typedef TVector<Element> Array;
 //! JSON 'object' contains zero or more key/value pairs
-typedef TMap<String, Element> Object;
+typedef THashMap<String, Element> Object;
 
 struct Null_t {};
 //! JavaScript 'null' keyword

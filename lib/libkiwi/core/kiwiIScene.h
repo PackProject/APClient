@@ -19,7 +19,7 @@ namespace kiwi {
 // Forward declarations
 namespace detail {
 template <typename T> class SceneDecl;
-}
+} // namespace detail
 
 /**
  * @brief User scene interface

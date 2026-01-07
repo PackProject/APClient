@@ -17,7 +17,7 @@ EDebugMenuResult DebugMenu::Calculate() {
         return EDebugMenuResult_None;
     }
 
-    EDebugMenuResult result = mPageStack.Top().Calculate();
+    EDebugMenuResult result = mPageStack.Top()->Calculate();
 
     if (result == EDebugMenuResult_Back) {
         if (mPageStack.Size() > 1) {
@@ -39,7 +39,7 @@ void DebugMenu::UserDraw() {
         return;
     }
 
-    mPageStack.Top().UserDraw();
+    mPageStack.Top()->UserDraw();
 }
 
 /******************************************************************************
@@ -76,7 +76,7 @@ EDebugMenuResult DebugPage::Calculate() {
         K_ASSERT(0 <= mCursor && mCursor < mOptions.Size());
 
         DebugOptionBase* pOption = mOptions[mCursor];
-        K_ASSERT(pOption != nullptr);
+        K_ASSERT_PTR(pOption);
 
         // Change option with Left/Right
         if (rCtrl.IsTrig(EButton_Right)) {
@@ -96,6 +96,8 @@ EDebugMenuResult DebugPage::Calculate() {
             return EDebugMenuResult_Back;
         }
     }
+
+    return EDebugMenuResult_None;
 }
 
 /**

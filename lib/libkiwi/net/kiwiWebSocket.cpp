@@ -217,7 +217,7 @@ void WebSocket::SocketCallbackFunc(SOResult result, void* pArg) {
 
     K_LOG("SocketCallbackFunc...\n");
     K_LOG_EX("result:%d, mState:%d\n", result, p->mState);
-    K_ASSERT(false);
+    K_UNREACHABLE();
 
     // Dispatch state machine
     switch (p->mState) {

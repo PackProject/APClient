@@ -14,14 +14,20 @@ bool SyncSocket::Connect(const SockAddrAny& rAddr, Callback pCallback,
                          void* pArg) {
     K_ASSERT(IsOpen());
 
-    s32 result = LibSO::Connect(mHandle, rAddr);
-    bool success = result == SO_SUCCESS || result == SO_EISCONN;
+    while (true) {
+        s32 result = LibSO::Connect(mHandle, rAddr);
+        bool success = result == SO_SUCCESS || result == SO_EISCONN;
 
-    if (pCallback != nullptr) {
-        pCallback(LibSO::GetLastError(), pArg);
+        if (mIsBlocking && LibSO::GetLastError() == SO_EWOULDBLOCK) {
+            continue;
+        }
+
+        if (pCallback != nullptr) {
+            pCallback(LibSO::GetLastError(), pArg);
+        }
+
+        return success;
     }
-
-    return success;
 }
 
 /**
@@ -34,22 +40,29 @@ bool SyncSocket::Connect(const SockAddrAny& rAddr, Callback pCallback,
 SyncSocket* SyncSocket::Accept(AcceptCallback pCallback, void* pArg) {
     K_ASSERT(IsOpen());
 
-    SyncSocket* pPeer = nullptr;
-    SockAddr4 addr; // TODO: Will forcing ipv4 cause problems?
+    while (true) {
+        // TODO: Will forcing ipv4 cause problems?
+        SyncSocket* pPeer = nullptr;
+        SockAddr4 addr;
 
-    s32 fd = LibSO::Accept(mHandle, addr);
+        s32 fd = LibSO::Accept(mHandle, addr);
 
-    // Result code is the peer descriptor
-    if (fd > 0) {
-        pPeer = new SyncSocket(fd, mFamily, mType);
-        K_ASSERT_PTR(pPeer);
+        if (mIsBlocking && LibSO::GetLastError() == SO_EWOULDBLOCK) {
+            continue;
+        }
+
+        // Result code is the peer descriptor
+        if (fd > 0) {
+            pPeer = new SyncSocket(fd, mFamily, mType);
+            K_ASSERT_PTR(pPeer);
+        }
+
+        if (pCallback != nullptr) {
+            pCallback(LibSO::GetLastError(), pPeer, addr, pArg);
+        }
+
+        return pPeer;
     }
-
-    if (pCallback != nullptr) {
-        pCallback(LibSO::GetLastError(), pPeer, addr, pArg);
-    }
-
-    return pPeer;
 }
 
 /**
@@ -74,21 +87,28 @@ SOResult SyncSocket::RecvImpl(void* pDst, u32 len, u32& rRecv,
     rRecv = 0;
     SockAddr4 addr;
 
-    s32 result = LibSO::RecvFrom(mHandle, pDst, len, 0, addr);
-    if (result > 0) {
-        rRecv += result;
-    }
+    while (true) {
+        s32 result = LibSO::RecvFrom(mHandle, pDst, len, 0, addr);
+        if (result > 0) {
+            rRecv += result;
+        }
 
-    if (pAddr != nullptr) {
-        *pAddr = addr;
-    }
+        if (mIsBlocking &&
+            (LibSO::GetLastError() == SO_EWOULDBLOCK || rRecv < len)) {
+            continue;
+        }
 
-    if (pCallback != nullptr) {
-        pCallback(LibSO::GetLastError(), pArg);
-    }
+        if (pAddr != nullptr) {
+            *pAddr = addr;
+        }
 
-    // Successful if some amount of bytes read
-    return result >= 0 ? SO_SUCCESS : static_cast<SOResult>(result);
+        if (pCallback != nullptr) {
+            pCallback(LibSO::GetLastError(), pArg);
+        }
+
+        // Successful if some amount of bytes read
+        return result >= 0 ? SO_SUCCESS : static_cast<SOResult>(result);
+    }
 }
 
 /**
@@ -112,23 +132,31 @@ SOResult SyncSocket::SendImpl(const void* pSrc, u32 len, u32& rSend,
 
     rSend = 0;
 
-    s32 result;
-    if (pAddr != nullptr) {
-        result = LibSO::SendTo(mHandle, pSrc, len - rSend, 0, *pAddr);
-    } else {
-        result = LibSO::Send(mHandle, pSrc, len - rSend, 0);
-    }
+    while (true) {
+        s32 result;
 
-    if (result > 0) {
-        rSend += result;
-    }
+        if (pAddr != nullptr) {
+            result = LibSO::SendTo(mHandle, pSrc, len - rSend, 0, *pAddr);
+        } else {
+            result = LibSO::Send(mHandle, pSrc, len - rSend, 0);
+        }
 
-    if (pCallback != nullptr) {
-        pCallback(LibSO::GetLastError(), pArg);
-    }
+        if (result > 0) {
+            rSend += result;
+        }
 
-    // Successful if some amount of bytes sent
-    return result >= 0 ? SO_SUCCESS : static_cast<SOResult>(result);
+        if (mIsBlocking &&
+            (LibSO::GetLastError() == SO_EWOULDBLOCK || rSend < len)) {
+            continue;
+        }
+
+        if (pCallback != nullptr) {
+            pCallback(LibSO::GetLastError(), pArg);
+        }
+
+        // Successful if some amount of bytes sent
+        return result >= 0 ? SO_SUCCESS : static_cast<SOResult>(result);
+    }
 }
 
 } // namespace kiwi

@@ -49,11 +49,11 @@ void MapFile::Open(const String& rPath, ELinkType type) {
  * @brief Closes map file
  */
 void MapFile::Close() {
-    TList<Symbol>::Iterator it = mSymbols.Begin();
-    for (; it != mSymbols.End(); it++) {
-        TList<Symbol>::Iterator next = it++;
+    TList<Symbol*>::Iterator it = mSymbols.Begin();
+    while (it != mSymbols.End()) {
+        TList<Symbol*>::Iterator next = it++;
         mSymbols.Erase(next);
-        delete &*next;
+        delete *next;
     }
 
     delete mpMapBuffer;
@@ -72,17 +72,17 @@ const MapFile::Symbol* MapFile::QueryTextSymbol(const void* pAddr) const {
         return nullptr;
     }
 
-    TList<Symbol>::ConstIterator it = mSymbols.Begin();
+    TList<Symbol*>::ConstIterator it = mSymbols.Begin();
     for (; it != mSymbols.End(); it++) {
         // Resolve the symbol's address
         const void* pResolved =
-            it->type == ELinkType_Static
-                ? it->pAddr
-                : AddToPtr(GetModuleTextStart(), it->offset);
+            (*it)->type == ELinkType_Static
+                ? (*it)->pAddr
+                : AddToPtr(GetModuleTextStart(), (*it)->offset);
 
         // Determine if the specified address falls within the symbol
-        if (PtrDistance(pResolved, pAddr) < it->size) {
-            return &*it;
+        if (PtrDistance(pResolved, pAddr) < (*it)->size) {
+            return *it;
         }
     }
 

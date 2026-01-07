@@ -85,7 +85,7 @@ s32 IosDevice::IoctlV(s32 id, const TVector<IosVector>& in,
     // Vectors need to be contiguous and usually(?) in MEM2
     IPCIOVector* vectors =
         new (32, EMemory_MEM2) IPCIOVector[in.Size() + out.Size()];
-    K_ASSERT(vectors != nullptr);
+    K_ASSERT_PTR(vectors);
 
     // Copy in user vectors
     int i = 0;

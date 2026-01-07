@@ -1,9 +1,10 @@
 #ifndef LIBKIWI_PRIM_SMART_PTR_H
 #define LIBKIWI_PRIM_SMART_PTR_H
-#include <algorithm>
 #include <libkiwi/debug/kiwiAssert.h>
 #include <libkiwi/k_types.h>
 #include <libkiwi/util/kiwiNonCopyable.h>
+
+#include <algorithm>
 
 namespace kiwi {
 //! @addtogroup libkiwi_prim
@@ -128,8 +129,8 @@ public:
     T*       operator->()       { return Get(); }
     const T* operator->() const { return Get(); }
 
-    T& operator*()             { K_ASSERT(mpData != nullptr); return *Get(); }
-    const T& operator*() const { K_ASSERT(mpData != nullptr); return *Get(); }
+    T& operator*()             { K_ASSERT_PTR(mpData); return *Get(); }
+    const T& operator*() const { K_ASSERT_PTR(mpData); return *Get(); }
     // clang-format on
 
 private:

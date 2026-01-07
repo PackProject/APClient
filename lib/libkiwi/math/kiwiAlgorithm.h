@@ -1,6 +1,7 @@
 #ifndef LIBKIWI_MATH_ALGORITHM_H
 #define LIBKIWI_MATH_ALGORITHM_H
 #include <libkiwi/k_types.h>
+#include <libkiwi/util/kiwiRandom.h>
 
 #include <nw4r/math.h>
 
@@ -163,6 +164,81 @@ template <typename T> K_INLINE T* AddToPtr(void* pAddr, ptrdiff_t ofs) {
 template <typename T>
 K_INLINE const T* AddToPtr(const void* pAddr, ptrdiff_t ofs) {
     return reinterpret_cast<const T*>(static_cast<const char*>(pAddr) + ofs);
+}
+
+/**
+ * @brief Performs the Fisher-Yates shuffle algorithm to generate a random
+ * permutation of the specified values
+ *
+ * @tparam TElem Shuffled array element type
+ * @tparam ElemNum Length of shuffled array
+ *
+ * @param[in,out] rArray Input array
+ */
+template <typename TElem, u32 ElemNum>
+K_INLINE void Shuffle(TElem (&rArray)[ElemNum]) {
+    K_ASSERT(ElemNum > 0);
+
+    Random r;
+    for (u32 i = ElemNum - 1; i >= 1; i--) {
+        u32 j = r.NextU32(i + 1);
+        std::swap(rArray[j], rArray[i]);
+    }
+}
+
+/**
+ * @brief Performs the Fisher-Yates shuffle algorithm to generate a random
+ * permutation of numbers in the range [0, {array-length})
+ *
+ * @tparam TElem Shuffled array element type
+ * @tparam ElemNum Length of shuffled array
+ *
+ * @param[out] rArray Input array
+ */
+template <typename TElem, u32 ElemNum>
+K_INLINE void InitAndShuffle(TElem (&rArray)[ElemNum]) {
+    for (u32 i = 0; i < ElemNum; i++) {
+        rArray[i] = i;
+    }
+
+    Shuffle(rArray);
+}
+
+/**
+ * @brief "Un-shuffles" a previously shuffled array by moving values matching
+ * the specified keys back to their original position in the array.
+ *
+ * @tparam TKey Key element type
+ * @tparam KeyNum Length of keys array
+ * @tparam TElem Shuffled array element type
+ * @tparam ElemNum Length of shuffled array
+ *
+ * @param rKeys Keys to unshuffle
+ * @param[in, out] rArray Shuffled array
+ */
+template <typename TKey, u32 KeyNum, typename TElem, u32 ElemNum>
+K_INLINE void UnShuffle(const TKey (&rKeys)[KeyNum], TElem (&rArray)[ElemNum]) {
+    while (true) {
+        bool changed = false;
+
+        for (u32 i = 0; i < ElemNum; i++) {
+            if (rArray[i] == i) {
+                continue;
+            }
+
+            // TODO: Binary search through the keys?
+            for (u32 j = 0; j < KeyNum; j++) {
+                if (rArray[i] == rKeys[j]) {
+                    std::swap(rArray[i], rArray[rArray[i]]);
+                    changed = true;
+                }
+            }
+        }
+
+        if (!changed) {
+            break;
+        }
+    }
 }
 
 //! @}

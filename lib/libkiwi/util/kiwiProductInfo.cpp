@@ -24,10 +24,21 @@ const char* GetBuildPack() {
  * @brief Gets the target for which the module was built
  */
 const char* GetBuildTarget() {
-#ifdef NDEBUG
+#if defined(NDEBUG)
     return "Release";
 #else
     return "Debug";
+#endif
+}
+
+/**
+ * @brief Gets the hash (shortened) of the latest Git commit
+ */
+const char* GetGitCommitHash() {
+#if defined(GIT_COMMIT_HASH)
+    return K_STRINGITIZE(GIT_COMMIT_HASH);
+#else
+    return "";
 #endif
 }
 

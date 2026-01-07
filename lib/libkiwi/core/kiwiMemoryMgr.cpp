@@ -2,6 +2,8 @@
 
 #include <egg/core.h>
 
+#include <revolution/MEM.h>
+
 namespace kiwi {
 namespace {
 
@@ -35,14 +37,21 @@ void CheckDoubleFree(const void* pBlock) {
 
     K_ASSERT_PTR(pBlock);
 
-    // Sanity check, should always be ExpHeap
     MEMiHeapHead* pHandle = MEMFindContainHeap(pBlock);
     K_ASSERT_PTR(pHandle);
-    K_ASSERT(pHandle->magic == 'EXPH');
+    K_ASSERT(pHandle->magic == 'EXPH' || pHandle->magic == 'FRMH');
+
+    // Only expanded heaps have memory blocks we can check
+    if (pHandle->magic != 'EXPH') {
+        return;
+    }
 
     // Heap block lives before the allocated memory
-    const MEMiExpHeapMBlock* pMBlock = static_cast<const MEMiExpHeapMBlock*>(
-        AddToPtr(pBlock, -sizeof(MEMiExpHeapMBlock)));
+    const MEMiExpHeapMBlock* pMBlock =
+        AddToPtr<MEMiExpHeapMBlock>(pBlock, -sizeof(MEMiExpHeapMBlock));
+
+    K_ASSERT_EX(pMBlock->state == 'UD' || pMBlock->state == 'FR',
+                "Heap block is corrupted");
 
     K_ASSERT_EX(pMBlock->state == 'UD', "Double free!");
 #endif
@@ -121,7 +130,7 @@ EGG::Heap* MemoryMgr::GetHeap(EMemory memory) const {
  */
 void* MemoryMgr::Alloc(u32 size, s32 align, EMemory memory) const {
     void* pBlock = GetHeap(memory)->alloc(size, align);
-    K_ASSERT_EX(pBlock != nullptr, "Out of memory (alloc %d)", size);
+    K_ASSERT_PTR_EX(pBlock, "Out of memory (alloc %d)", size);
 
     K_ASSERT(memory == EMemory_MEM1 ? OSIsMEM1Region(pBlock)
                                     : OSIsMEM2Region(pBlock));
@@ -140,12 +149,21 @@ void MemoryMgr::Free(void* pBlock) const {
 }
 
 /**
- * @brief Gets total size of available heap memory
+ * @brief Gets size of available heap memory
  *
  * @param memory Target memory region
  */
 u32 MemoryMgr::GetFreeSize(EMemory memory) const {
     return GetHeap(memory)->getAllocatableSize();
+}
+
+/**
+ * @brief Gets size of total heap memory
+ *
+ * @param memory Target memory region
+ */
+u32 MemoryMgr::GetTotalSize(EMemory memory) const {
+    return static_cast<u32>(GetHeap(memory)->getTotalSize());
 }
 
 /**
@@ -241,6 +259,37 @@ void* operator new[](size_t size, kiwi::EMemory memory) {
  * @brief Allocates a block of memory
  *
  * @param size Block size
+ * @param pHeap Target heap
+ * @return Pointer to allocated block
+ */
+void* operator new(size_t size, EGG::Heap* pHeap) {
+    K_ASSERT_PTR(pHeap);
+
+    void* pBlock = pHeap->alloc(size);
+    K_ASSERT_PTR_EX(pBlock, "Out of memory (alloc %d)", size);
+
+    return pBlock;
+}
+/**
+ * @brief Allocates a block of memory for an array
+ *
+ * @param size Block size
+ * @param pHeap Target heap
+ * @return Pointer to allocated block
+ */
+void* operator new[](size_t size, EGG::Heap* pHeap) {
+    K_ASSERT_PTR(pHeap);
+
+    void* pBlock = pHeap->alloc(size);
+    K_ASSERT_PTR_EX(pBlock, "Out of memory (alloc %d)", size);
+
+    return pBlock;
+}
+
+/**
+ * @brief Allocates a block of memory
+ *
+ * @param size Block size
  * @param align Block address alignment
  * @param memory Target memory region
  * @return Pointer to allocated block
@@ -258,6 +307,39 @@ void* operator new(size_t size, s32 align, kiwi::EMemory memory) {
  */
 void* operator new[](size_t size, s32 align, kiwi::EMemory memory) {
     return kiwi::MemoryMgr::GetInstance().Alloc(size, align, memory);
+}
+
+/**
+ * @brief Allocates a block of memory
+ *
+ * @param size Block size
+ * @param align Block address alignment
+ * @param pHeap Target heap
+ * @return Pointer to allocated block
+ */
+void* operator new(size_t size, s32 align, EGG::Heap* pHeap) {
+    K_ASSERT_PTR(pHeap);
+
+    void* pBlock = pHeap->alloc(size, align);
+    K_ASSERT_PTR_EX(pBlock, "Out of memory (alloc %d)", size);
+
+    return pBlock;
+}
+/**
+ * @brief Allocates a block of memory for an array
+ *
+ * @param size Block size
+ * @param align Block address alignment
+ * @param pHeap Target heap
+ * @return Pointer to allocated block
+ */
+void* operator new[](size_t size, s32 align, EGG::Heap* pHeap) {
+    K_ASSERT_PTR(pHeap);
+
+    void* pBlock = pHeap->alloc(size, align);
+    K_ASSERT_PTR_EX(pBlock, "Out of memory (alloc %d)", size);
+
+    return pBlock;
 }
 
 /**

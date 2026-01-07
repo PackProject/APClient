@@ -36,7 +36,7 @@ void* CreateFB(const GXRenderModeObj* pRmo) {
     // Try using heap, but be careful to not throw a nested exception
     void* pXfb = nullptr;
     if (MemoryMgr::GetInstance().GetFreeSize(EMemory_MEM1) > size) {
-        pXfb = new (32) u8[size];
+        pXfb = new (32, EMemory_MEM1) u8[size];
     }
 
     // Force allocation from OS arena

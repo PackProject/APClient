@@ -10,201 +10,112 @@ namespace kiwi {
 //! @{
 
 /**
- * @brief Dynamically-sized, contiguous array (std::vector)
+ * @brief Dynamically-sized array with contiguous elements
+ * @details Same concept as std::vector
  */
 template <typename T> class TVector {
 public:
-    // Forward declarations
-    class ConstIterator;
-
     /**
      * @brief Vector iterator
      */
-    class Iterator {
-        template <typename> friend class TVector;
-        friend class ConstIterator;
+    template <typename TValue>
+    class IteratorImpl
+        : public RandomAccessIterator<IteratorImpl<TValue>, TValue> {
+        friend class TVector<T>;
+
+        // Allow promotion to const iterator
+        friend class IteratorImpl<typename mp::add_const<TValue>::type>;
 
     public:
         /**
          * @brief Constructor
          *
-         * @param pVector Parent container
-         * @param index Element index
+         * @param pVector Parent vector
+         * @param index Vector position
          */
-        explicit Iterator(TVector<T>* pVector, u32 index)
-            : mpParent(pVector), mIndex(index) {
+        IteratorImpl(TVector* pVector, u32 index)
+            : mpVector(pVector), mIndex(index) {
 
-            K_ASSERT(pVector != nullptr);
-            K_ASSERT(0 <= index && index <= pVector->Size());
+            K_ASSERT_PTR(mpVector);
+            K_ASSERT(mIndex <= mpVector->Size());
         }
-
-        /**
-         * @brief Pre-increment operator
-         */
-        Iterator& operator++() {
-            // Can't iterate
-            if (mIndex >= mpParent->Size()) {
-                return *this;
-            }
-
-            mIndex++;
-            return *this;
-        }
-        /**
-         * @brief Post-increment operator
-         */
-        Iterator operator++(int) {
-            Iterator clone(*this);
-            ++*this;
-            return clone;
-        }
-
-        /**
-         * @brief Pre-decrement operator
-         */
-        Iterator& operator--() {
-            // Can't iterate
-            if (mIndex == 0) {
-                return *this;
-            }
-
-            mIndex--;
-            return *this;
-        }
-        /**
-         * @brief Post-decrement operator
-         */
-        Iterator operator--(int) {
-            Iterator clone(*this);
-            --*this;
-            return clone;
-        }
-
-        T* operator->() const {
-            K_ASSERT(mpParent != nullptr);
-
-            if (mIndex >= mpParent->Size()) {
-                return nullptr;
-            }
-
-            return &(*mpParent)[mIndex];
-        }
-        T& operator*() const {
-            K_ASSERT(mpParent != nullptr);
-            K_ASSERT(0 <= mIndex && mIndex < mpParent->Size());
-
-            return (*mpParent)[mIndex];
-        }
-
-        // clang-format off
-        bool operator==(Iterator rhs) const { return mpParent == rhs.mpParent && mIndex == rhs.mIndex; }
-        bool operator!=(Iterator rhs) const { return mpParent != rhs.mpParent || mIndex != rhs.mIndex; }
-        // clang-format on
-
-    private:
-        TVector<T>* mpParent; //!< Parent vector
-        u32 mIndex;           //!< Element index
-    };
-
-    /**
-     * @brief Vector iterator (const-view)
-     */
-    class ConstIterator {
-        template <typename> friend class TVector;
-
-    public:
         /**
          * @brief Constructor
          *
-         * @param pVector Parent container
-         * @param index Element index
+         * @param rOther Iterator
          */
-        explicit ConstIterator(TVector<T>* pVector, u32 index)
-            : mpParent(pVector), mIndex(index) {
+        template <typename TOtherValue>
+        IteratorImpl(const IteratorImpl<TOtherValue>& rOther)
+            : mpVector(rOther.mpVector), mIndex(rOther.mIndex) {
 
-            K_ASSERT(pVector != nullptr);
-            K_ASSERT(0 <= index && index <= pVector->Size());
+            K_ASSERT_PTR(mpVector);
+            K_ASSERT(mIndex <= mpVector->Size());
         }
 
         /**
-         * @brief Constructor
-         *
-         * @param iter Iterator
+         * @brief Increments the iterator once
          */
-        ConstIterator(Iterator iter)
-            : mpParent(iter.mpParent), mIndex(iter.mIndex) {
-
-            K_ASSERT(mpParent != nullptr);
-            K_ASSERT(0 <= mIndex && mIndex <= mpParent->Size());
-        }
-
-        /**
-         * @brief Pre-increment operator
-         */
-        ConstIterator& operator++() {
-            // Can't iterate
-            if (mIndex >= mpParent->Size()) {
-                return *this;
-            }
-
+        void Next() {
             mIndex++;
-            return *this;
         }
         /**
-         * @brief Post-increment operator
+         * @brief Decrements the iterator once
          */
-        ConstIterator operator++(int) {
-            ConstIterator clone(*this);
-            ++*this;
-            return clone;
-        }
-
-        /**
-         * @brief Pre-decrement operator
-         */
-        ConstIterator& operator--() {
-            // Can't iterate
-            if (mIndex == 0) {
-                return *this;
-            }
-
+        void Prev() {
             mIndex--;
-            return *this;
         }
+
         /**
-         * @brief Post-decrement operator
+         * @brief Advances the iterator by a specified amount
+         *
+         * @param n Amount to move
          */
-        ConstIterator operator--(int) {
-            ConstIterator clone(*this);
-            --*this;
-            return clone;
+        void Move(int n) {
+            mIndex += n;
         }
 
-        const T* operator->() const {
-            K_ASSERT(mpParent != nullptr);
-
-            if (mIndex >= mpParent->Size()) {
-                return nullptr;
-            }
-
-            return &(*mpParent)[mIndex];
-        }
-        const T& operator*() const {
-            K_ASSERT(mpParent != nullptr);
-            K_ASSERT(0 <= mIndex && mIndex < mpParent->Size());
-
-            return (*mpParent)[mIndex];
+        /**
+         * @brief Computes the distance between iterators
+         *
+         * @param other Other iterator
+         */
+        template <typename TOtherValue>
+        int Dist(IteratorImpl<TOtherValue> other) const {
+            K_ASSERT(mpVector == other.mpVector);
+            return other.mIndex - mIndex;
         }
 
-        // clang-format off
-        bool operator==(ConstIterator rhs) const { return mpParent == rhs.mpParent && mIndex == rhs.mIndex; }
-        bool operator!=(ConstIterator rhs) const { return mpParent != rhs.mpParent || mIndex != rhs.mIndex; }
-        // clang-format on
+        /**
+         * @brief Accesses the iterator's value
+         */
+        TValue& Get() {
+            K_ASSERT_PTR(mpVector);
+            K_ASSERT_EX(mIndex < mpVector->Size(),
+                        "Invalid iterator (index: %d)", mIndex);
+
+            return mpVector->At(mIndex);
+        }
+
+        /**
+         * @brief Tests two iterators for equality
+         *
+         * @param other Other iterator
+         */
+        template <typename TOtherValue>
+        bool Equals(IteratorImpl<TOtherValue> other) const {
+            return mpVector == other.mpVector && mIndex == other.mIndex;
+        }
 
     private:
-        TVector<T>* mpParent; //!< Parent vector
-        u32 mIndex;           //!< Element index
+        //! Parent vector
+        TVector* mpVector;
+        //! Vector position
+        int mIndex;
     };
+
+    // Autogen typedefs and const/reverse getters
+    K_GEN_ITERATOR_TYPEDEFS(IteratorImpl, T);
+    K_GEN_ITERATOR_METHODS(TVector);
 
 public:
     /**
@@ -228,165 +139,27 @@ public:
      * @param rOther Vector to copy
      */
     TVector(const TVector& rOther) : mpData(nullptr), mCapacity(0), mSize(0) {
-        CopyFrom(rOther);
+        *this = rOther;
     }
-
-#ifdef LIBKIWI_CPP1X
-    /**
-     * @brief Constructor
-     * @details Move constructor
-     *
-     * @param rOther Vector to move
-     */
-    TVector(TVector&& rOther) : mpData(nullptr), mCapacity(0), mSize(0) {
-        MoveFrom(std::move(rOther));
-    }
-#endif
 
     /**
      * @brief Destructor
      */
-    ~TVector() {
-        // Destroy contents
-        Clear();
-
-        // Free array buffer
-        delete mpData;
-    }
+    ~TVector();
 
     /**
      * @brief Vector copy assignment
      *
      * @param rOther Vector to copy
      */
-    TVector& operator=(const TVector& rOther) {
-        CopyFrom(rOther);
-        return *this;
+    TVector& operator=(const TVector& rOther);
+
+    /**
+     * @brief Erases all elements from the vector
+     */
+    void Clear() {
+        Erase(Begin(), End());
     }
-
-#ifdef LIBKIWI_CPP1X
-    /**
-     * @brief Vector move assignment
-     *
-     * @param rOther Vector to move
-     */
-    TVector& operator=(TVector&& rOther) {
-        MoveFrom(std::move(rOther));
-        return *this;
-    }
-#endif
-
-    /**
-     * @brief Gets iterator to beginning of vector
-     */
-    Iterator Begin() {
-        return Iterator(this, 0);
-    }
-    /**
-     * @brief Gets iterator to beginning of vector (const view)
-     */
-    ConstIterator Begin() const {
-        return ConstIterator(const_cast<TVector*>(this)->Begin());
-    }
-
-    /**
-     * @brief Gets iterator to end of vector
-     */
-    Iterator End() {
-        return Iterator(this, Size());
-    }
-    /**
-     * @brief Gets iterator to end of vector (const-view)
-     */
-    ConstIterator End() const {
-        return ConstIterator(const_cast<TVector*>(this)->End());
-    }
-
-    /**
-     * @brief Gets the number of elements in the vector
-     */
-    u32 Size() const {
-        return mSize;
-    }
-
-    /**
-     * @brief Tests whether the vector is empty
-     */
-    bool Empty() const {
-        return mSize == 0;
-    }
-
-    /**
-     * @brief Accesses element
-     *
-     * @param i Element index
-     * @return Reference to element
-     */
-    T& operator[](u32 i) {
-        K_ASSERT(i < mSize);
-        K_ASSERT(mpData != nullptr);
-        return Buffer()[i];
-    }
-    /**
-     * @brief Accesses element (read-only)
-     *
-     * @param i Element index
-     * @return Reference to element
-     */
-    const T& operator[](u32 i) const {
-        K_ASSERT(i < mSize);
-        K_ASSERT(mpData != nullptr);
-        return Buffer()[i];
-    }
-
-    /**
-     * @brief Clears vector contents
-     */
-    void Clear();
-
-    /**
-     * @brief Inserts a new element at the specified position
-     *
-     * @param rElem New element
-     * @param pos Element position
-     */
-    void Insert(const T& rElem, u32 pos);
-
-    /**
-     * @brief Removes an element if it exists in the vector
-     *
-     * @param rElem Element to remove
-     * @return Whether the element existed and was removed
-     */
-    bool Remove(const T& rElem);
-
-    /**
-     * @brief Removes an element at the specified position
-     *
-     * @param pos Element position
-     */
-    void RemoveAt(u32 pos);
-
-    /**
-     * @brief Inserts a new element at the back of the vector
-     *
-     * @param rElem New element
-     */
-    void PushBack(const T& rElem);
-
-    /**
-     * @brief Removes the last element from the vector
-     */
-    void PopBack();
-
-private:
-    /**
-     * @brief Accesses underlying array buffer
-     */
-    T* Buffer() const {
-        return reinterpret_cast<T*>(mpData);
-    }
-
     /**
      * @brief Reserves space for elements in the vector
      *
@@ -395,23 +168,196 @@ private:
     void Reserve(u32 capacity);
 
     /**
-     * @brief Copies vector contents
-     *
-     * @param other Vector to copy from
+     * @brief Gets an iterator to beginning of the vector
      */
-    void CopyFrom(const TVector& rOther);
+    Iterator Begin() {
+        return Iterator(this, 0);
+    }
+    /**
+     * @brief Gets an iterator to the end of the vector
+     */
+    Iterator End() {
+        return Iterator(this, Size());
+    }
 
     /**
-     * @brief Moves vector contents
-     *
-     * @param other Vector to move
+     * @brief Gets the number of elements in the vector
      */
-    void MoveFrom(TVector&& rOther);
+    u32 Size() const {
+        return mSize;
+    }
+    /**
+     * @brief Tests whether the vector is empty
+     */
+    bool Empty() const {
+        return Size() == 0;
+    }
+
+    /**
+     * @brief Erases the last element from the vector
+     *
+     * @returns The element that was just erased
+     */
+    T PopBack();
+    /**
+     * @brief Appends an element to the end of the vector
+     *
+     * @param rElement New element
+     */
+    void PushBack(const T& rElement) {
+        Insert(End(), rElement);
+    }
+
+    /**
+     * @brief Gets a reference to the first element of the vector
+     */
+    T& Front() {
+        K_ASSERT_PTR(mpData);
+        K_ASSERT(!Empty());
+        return Data()[0];
+    }
+    /**
+     * @brief Gets a reference to the first element of the vector (const-view)
+     */
+    const T& Front() const {
+        K_ASSERT_PTR(mpData);
+        K_ASSERT(!Empty());
+        return Data()[0];
+    }
+
+    /**
+     * @brief Gets a reference to the last element of the vector
+     */
+    T& Back() {
+        K_ASSERT_PTR(mpData);
+        K_ASSERT(!Empty());
+        return Data()[Size() - 1];
+    }
+    /**
+     * @brief Gets a reference to the last element of the vector (const-view)
+     */
+    const T& Back() const {
+        K_ASSERT_PTR(mpData);
+        K_ASSERT(!Empty());
+        return Data()[Size() - 1];
+    }
+
+    /**
+     * @brief Accesses an element by index
+     *
+     * @param i Element index
+     */
+    T& At(u32 i) {
+        K_ASSERT(i < Size());
+        return Data()[i];
+    }
+    /**
+     * @brief Accesses an element by index (const-view)
+     *
+     * @param i Element index
+     */
+    const T& At(u32 i) const {
+        K_ASSERT(i < Size());
+        return Data()[i];
+    }
+
+    /**
+     * @brief Accesses the underlying element data
+     */
+    T* Data() {
+        return reinterpret_cast<T*>(mpData);
+    }
+    /**
+     * @brief Accesses the underlying element data (const-view)
+     */
+    const T* Data() const {
+        return reinterpret_cast<const T*>(mpData);
+    }
+
+    /**
+     * @brief Removes the first occurrence of an element from the vector
+     *
+     * @param rElement Element to remove
+     * @return Whether the element was found and removed
+     */
+    bool Remove(const T& rElement);
+
+    /**
+     * @brief Removes an element at the specified position
+     *
+     * @param pos Element position
+     */
+    void RemoveAt(u32 pos) {
+        K_ASSERT(pos < Size());
+        Erase(Begin() + pos);
+    }
+
+    /**
+     * @brief Removes all elements from the list satisfying the condition
+     *
+     * @param pPredicate Function to test if the element should be removed
+     * @return How many elements were removed
+     */
+    u32 RemoveIf(bool (*pPredicate)(const T&));
+
+    /**
+     * @brief Inserts a new element at the specified position
+     * @details Value is inserted before the given iterator
+     *
+     * @param it Iterator at which to insert the element
+     * @param rElement Element to insert
+     * @returns Iterator to the new element
+     */
+    Iterator Insert(Iterator it, const T& rElement);
+
+    /**
+     * @brief Erases the element at the specified iterator's position
+     *
+     * @param it Iterator at which to erase element
+     * @return Iterator to the next element after the erased element
+     */
+    Iterator Erase(Iterator it) {
+        Iterator copy(it);
+        return Erase(it, ++copy);
+    }
+
+    /**
+     * @brief Erases range of nodes
+     *
+     * @param begin Beginning of range (inclusive)
+     * @param end End of range (exclusive)
+     * @return Iterator to end of range
+     */
+    Iterator Erase(Iterator begin, Iterator end);
+
+    /**
+     * @brief Sorts elements in the vector using the specified comparator
+     * function
+     * @details The sort order defaults to ascending order when a comparator is
+     * not specified.
+     *
+     * @param pComparator Function used to compare two elements. Returns true
+     * when the first element is less-than the second element.
+     */
+    void Sort(bool (*pComparator)(const T&, const T&) = kiwi::Less) {
+        kiwi::Sort(Begin(), End(), pComparator);
+    }
+
+    // clang-format off
+    T&       operator[](u32 i)       { return At(i); }
+    T&       operator()(u32 i)       { return At(i); }
+    const T& operator[](u32 i) const { return At(i); }
+    const T& operator()(u32 i) const { return At(i); }
+    // clang-format on
 
 private:
-    u8* mpData;    // Allocated buffer
-    u32 mCapacity; // Buffer size
-    u32 mSize;     // Number of elements
+    //! Number of elements in the vector
+    u32 mSize;
+    //! Maximum number of elements
+    u32 mCapacity;
+
+    //! Element data buffer
+    u8* mpData;
 };
 
 //! @}

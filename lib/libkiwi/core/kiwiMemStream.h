@@ -79,6 +79,13 @@ public:
     virtual void Close();
 
     /**
+     * @brief Gets the currently open buffer
+     */
+    const u8* GetBuffer() const {
+        return mpBuffer;
+    }
+
+    /**
      * @brief Gets the size of the currently open buffer
      */
     virtual u32 GetSize() const {

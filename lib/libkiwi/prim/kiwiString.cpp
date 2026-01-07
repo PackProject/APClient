@@ -139,7 +139,7 @@ u32 StringImpl<T>::Find(const StringImpl<T>& rStr, u32 pos) const {
  * @return Match position if found, otherwise npos
  */
 template <typename T> u32 StringImpl<T>::Find(const T* pStr, u32 pos) const {
-    K_ASSERT(pStr != nullptr);
+    K_ASSERT_PTR(pStr);
 
     // Cannot match past end of string
     if (pos >= mLength) {
@@ -199,7 +199,7 @@ bool StringImpl<T>::StartsWith(const StringImpl<T>& rStr) const {
  * @param pStr Prefix sequence
  */
 template <typename T> bool StringImpl<T>::StartsWith(const T* pStr) const {
-    K_ASSERT(pStr != nullptr);
+    K_ASSERT_PTR(pStr);
     return Find(pStr) == 0;
 }
 
@@ -220,7 +220,7 @@ bool StringImpl<T>::EndsWith(const StringImpl<T>& rStr) const {
  * @param pStr Suffix sequence
  */
 template <typename T> bool StringImpl<T>::EndsWith(const T* pStr) const {
-    K_ASSERT(pStr != nullptr);
+    K_ASSERT_PTR(pStr);
 
     size_t pos = mLength - StrLen(pStr);
     return Find(pStr, pos) == pos;
@@ -286,7 +286,7 @@ bool StringImpl<T>::operator==(const StringImpl<T>& rStr) const {
  * @param pStr C-style string to compare against
  */
 template <typename T> bool StringImpl<T>::operator==(const T* pStr) const {
-    K_ASSERT(pStr != nullptr);
+    K_ASSERT_PTR(pStr);
 
     // Compare string data
     return StrNCmp(mpBuffer, pStr, mLength) == 0;
@@ -316,7 +316,7 @@ template <typename T> void StringImpl<T>::Assign(const StringImpl<T>& rStr) {
  * @param n Number of characters to copy
  */
 template <typename T> void StringImpl<T>::Assign(const T* pStr, u32 n) {
-    K_ASSERT(pStr != nullptr);
+    K_ASSERT_PTR(pStr);
 
     // Reserve string buffer
     u32 len = n != npos ? n : StrLen(pStr);
@@ -411,7 +411,7 @@ template <> String StringImpl<char>::ToMultiByte() const {
  */
 template <> String StringImpl<wchar_t>::ToMultiByte() const {
     char* pMultiByteBuffer = new char[Length()];
-    K_ASSERT(pMultiByteBuffer != nullptr);
+    K_ASSERT_PTR(pMultiByteBuffer);
 
     std::wcstombs(pMultiByteBuffer, CStr(), Length());
     String str(pMultiByteBuffer);
@@ -425,7 +425,7 @@ template <> String StringImpl<wchar_t>::ToMultiByte() const {
  */
 template <> WString StringImpl<char>::ToWideChar() const {
     wchar_t* pWideCharBuffer = new wchar_t[Length()];
-    K_ASSERT(pWideCharBuffer != nullptr);
+    K_ASSERT_PTR(pWideCharBuffer);
 
     std::mbstowcs(pWideCharBuffer, CStr(), Length());
     WString wstr(pWideCharBuffer);

@@ -26,7 +26,7 @@ public:
         K_ASSERT(size > 0);
 
         u8* buffer = new (32, EMemory_MEM2) u8[size * sizeof(T)];
-        K_ASSERT(buffer != nullptr);
+        K_ASSERT_PTR(buffer);
 
         Set(buffer, size);
     }
@@ -100,7 +100,7 @@ public:
      * @brief Access underlying object (pointer)
      */
     T* Ptr() const {
-        K_ASSERT(Base() != nullptr);
+        K_ASSERT_PTR(Base());
         return reinterpret_cast<T*>(Base());
     }
 

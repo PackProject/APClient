@@ -51,7 +51,13 @@ void* FileRipper::Rip(FileStream& rStrm, const FileRipperArg& rArg) {
 
     // ...or ripper may be responsible for allocating one
     if (pBuffer == nullptr) {
-        pBuffer = new (rStrm.GetBufferAlign(), rArg.region) u8[bufferSize];
+        s32 align = Max(rStrm.GetBufferAlign(), rArg.align);
+
+        if (rArg.pHeap != nullptr) {
+            pBuffer = new (align, rArg.pHeap) u8[bufferSize];
+        } else {
+            pBuffer = new (align, rArg.region) u8[bufferSize];
+        }
     }
 
     K_ASSERT_PTR(pBuffer);
