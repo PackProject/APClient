@@ -1,3 +1,6 @@
+// TODO(kiwi) Needs changes for WSR
+#if !defined(PACK_RESORT)
+
 // Implementation must be visible to the extension
 #define private protected
 #include <Pack/RPSystem/RPSysResourceManager.h>
@@ -55,10 +58,9 @@ const char* ResourceMgr::scStaticDirs[kiwi::EPackID_Max] = {
  * @brief Scenes with cached archives
  */
 const kiwi::ESceneID ResourceMgr::scCachedScenes[] = {
+#if defined(PACK_SPORTS)
     ESceneID_RPSysPlayerSelectScene,
     ESceneID_RPSysNunchukScene,
-
-#if defined(PACK_SPORTS)
     ESceneID_RPBsbScene,
     ESceneID_RPBowScene,
     ESceneID_RPGolScene,
@@ -72,6 +74,8 @@ const kiwi::ESceneID ResourceMgr::scCachedScenes[] = {
     ESceneID_RPSportsPhysicalResultScene,
     ESceneID_RPGolSelectScene,
 #elif defined(PACK_PLAY)
+    ESceneID_RPSysPlayerSelectScene,
+    ESceneID_RPSysNunchukScene,
     ESceneID_RPFshScene,
     ESceneID_RPHkyScene,
     ESceneID_RPDucScene,
@@ -518,3 +522,5 @@ RPSysFile* ResourceMgr::DecompFile(const RPSysFile& rFile, EGG::Heap* pHeap) {
 }
 
 } // namespace kiwi
+
+#endif

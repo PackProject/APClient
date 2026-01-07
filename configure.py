@@ -24,7 +24,7 @@ proj = KokeshiProject()
 # PACK_{NAME}, (i.e. PACK_SPORTS, PACK_RESORT).
 #
 # =============================================================================#
-proj.packs = ["play"]
+proj.packs = ["resort"]
 
 # =============================================================================#
 # Common compiler flags to apply across all code.

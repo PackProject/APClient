@@ -3,7 +3,6 @@
 #include <types.h>
 
 #include "core/const.h"
-
 #include <Sports2/Sp2Cmn.h>
 
 #include <libkiwi.h>
@@ -288,8 +287,8 @@ public:
     kiwi::TArray<CheckID, 135> checkIDArr;
 
 private:
-    kiwi::TMap<CheckID, bool> mCheckState;   //!< Check state
-    kiwi::TMap<CheckID, u16> mCheckToItemID; //!< Check to item mapping
+    kiwi::THashMap<CheckID, bool> mCheckState;   //!< Check state
+    kiwi::THashMap<CheckID, u16> mCheckToItemID; //!< Check to item mapping
 };
 
 } // namespace AP

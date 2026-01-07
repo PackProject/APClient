@@ -259,9 +259,18 @@ private:
     u32 mFSStickTrig;    // at 0xC
     u32 mFSStickRelease; // at 0x10
 
+#if defined(PACK_RESORT)
+    char _14[0x4];
+#endif
+
     CoreStatus mCoreStatus[KPAD_MAX_SAMPLES]; // at 0x14
-    s32 mKPADReadLength;                      // at 0x854
-    Vector3f mAccelPrev;                      // at 0x858
+
+#if defined(PACK_RESORT)
+    char _858[0xF18 - 0x858];
+#endif
+
+    s32 mKPADReadLength; // at 0x854
+    Vector3f mAccelPrev; // at 0x858
 
     u32 mSimpleRumblePattern;        // at 0x864
     bool mEnableSimpleRumble;        // at 0x868

@@ -1,3 +1,6 @@
+// TODO(kiwi) Needs changes for WSR
+#if !defined(PACK_RESORT)
+
 #include <Pack/RPKernel.h>
 
 #include <libkiwi.h>
@@ -39,3 +42,5 @@ Resource::~Resource() {
 }
 
 } // namespace kiwi
+
+#endif

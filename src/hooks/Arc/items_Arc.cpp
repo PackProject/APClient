@@ -1,6 +1,5 @@
 #include "core/ItemMgr.h"
 #include "hooks/trampoline.h"
-
 #include <Sports2/Sp2Arc.h>
 
 #include <libkiwi.h>
@@ -18,9 +17,12 @@ namespace Arc {
  * @brief Sets the aim flag in Archery
  */
 bool ArcSetAimFlag(bool hold2) {
-    if (!ItemMgr::GetInstance().IsArcAim()) return false;
-    else if (!hold2) return false;
-    else return true;
+    if (!ItemMgr::GetInstance().IsArcAim())
+        return false;
+    else if (!hold2)
+        return false;
+    else
+        return true;
 }
 
 /**
@@ -45,36 +47,36 @@ TRAMPOLINE_DEF(0x80548828, 0x8054882c) {
  */
 bool ArcSetFruitFlag(int stageID) {
 
-    int difficulty;
+    int difficulty = 0;
 
-    switch(stageID) {
-        case 11:
-        case 24:
-        case 12:
-        case 3:
-            difficulty = 0;
-            break;
+    switch (stageID) {
+    case 11:
+    case 24:
+    case 12:
+    case 3:
+        difficulty = 0;
+        break;
 
-        case 31:
-        case 9:
-        case 32:
-        case 13:
-            difficulty = 1;
-            break;
+    case 31:
+    case 9:
+    case 32:
+    case 13:
+        difficulty = 1;
+        break;
 
-        case 17:
-        case 22:
-        case 35:
-        case 4:
-            difficulty = 2;
-            break;
+    case 17:
+    case 22:
+    case 35:
+    case 4:
+        difficulty = 2;
+        break;
 
-        default:
-            K_LOG_EX("stageID: %d\n", stageID);
-            K_LOG_EX("difficulty: %d\n", difficulty);
-            K_ASSERT(false);
+    default:
+        K_LOG_EX("stageID: %d\n", stageID);
+        K_LOG_EX("difficulty: %d\n", difficulty);
+        K_ASSERT(false);
     }
-    
+
     return ItemMgr::GetInstance().IsArcFruitUnlock(difficulty) == 1;
 }
 
@@ -82,8 +84,7 @@ bool ArcSetFruitFlag(int stageID) {
  * @brief ArcSetFruitFlag trampoline
  */
 
-
-TRAMPOLINE_DEF(0x8057cbe0, 0x8057cbe4) {
+TRAMPOLINE_DEF(0x8057cbe0, 0x8057cbe4){
     // clang-format off
     TRAMPOLINE_BEGIN
 

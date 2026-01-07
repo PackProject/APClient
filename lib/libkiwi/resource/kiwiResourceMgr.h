@@ -1,3 +1,6 @@
+// TODO(kiwi) Needs changes for WSR
+#if !defined(PACK_RESORT)
+
 #ifndef LIBKIWI_RESOURCE_RESOURCE_MGR_H
 #define LIBKIWI_RESOURCE_RESOURCE_MGR_H
 #include <libkiwi/k_types.h>
@@ -144,5 +147,7 @@ private:
 
 //! @}
 } // namespace kiwi
+
+#endif
 
 #endif

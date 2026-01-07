@@ -90,12 +90,21 @@ public:
         mPosition = rPos;
     }
 
+#if defined(PACK_SPORTS) || defined(PACK_PLAY)
     static u16 GetSizeXMax() {
         return sTVModeWidths[sTVMode];
     }
     static u16 GetSizeYMax() {
         return sTVModeHeights[sTVMode];
     }
+#elif defined(PACK_RESORT)
+    static u16 GetSizeXMax() {
+        return sTVModeInfo[sTVMode].width;
+    }
+    static u16 GetSizeYMax() {
+        return sTVModeInfo[sTVMode].height;
+    }
+#endif
 
 private:
     enum {
@@ -113,6 +122,14 @@ private:
         f32 heightRatio; // at 0x4
     };
 
+#if defined(PACK_RESORT)
+    struct TVModeInfo {
+        u16 width;
+        u16 height;
+        nw4r::math::VEC2 ratios;
+    };
+#endif
+
 private:
     void Configure();
 
@@ -128,8 +145,13 @@ private:
 
     static TVMode sTVMode;
     static TVModeRatio sTVModeRatios[Screen::TV_MODE_MAX];
+
+#if defined(PACK_SPORTS) || defined(PACK_PLAY)
     static u16 sTVModeWidths[TV_MODE_MAX];
     static u16 sTVModeHeights[TV_MODE_MAX];
+#elif defined(PACK_RESORT)
+    static TVModeInfo sTVModeInfo[TV_MODE_MAX];
+#endif
 
     static Screen* spRoot;
 

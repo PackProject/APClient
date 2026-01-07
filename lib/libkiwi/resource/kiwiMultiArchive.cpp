@@ -1,3 +1,6 @@
+// TODO(kiwi) Needs changes for WSR
+#if !defined(PACK_RESORT)
+
 // Implementation must be visible to the extension
 #define private protected
 #include <egg/core/eggArchive.h>
@@ -142,3 +145,5 @@ MultiArchive* MultiArchive::FindArchive(const Resource& rResource) {
 }
 
 } // namespace kiwi
+
+#endif

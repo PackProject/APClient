@@ -86,7 +86,6 @@
 #include <libkiwi/test/kiwiUnitTestMgr.h>
 #include <libkiwi/util/kiwiBitUtil.h>
 #include <libkiwi/util/kiwiDynamicSingleton.h>
-#include <libkiwi/util/kiwiEffectUtil.h>
 #include <libkiwi/util/kiwiExtension.h>
 #include <libkiwi/util/kiwiGlobalInstance.h>
 #include <libkiwi/util/kiwiIosDevice.h>

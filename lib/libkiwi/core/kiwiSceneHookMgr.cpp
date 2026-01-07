@@ -88,10 +88,9 @@ void SceneHookMgr::DoConfigure() {
         }
     }
 }
-KOKESHI_BY_PACK(KM_CALL(0x8018532c, SceneHookMgr::DoConfigure), // Wii Sports
-                KM_CALL(0x80184d24, SceneHookMgr::DoConfigure), // Wii Play
-                KM_CALL(0x8022fae4,
-                        SceneHookMgr::DoConfigure)); // Wii Sports Resort
+KOKESHI_BY_PACK(KM_CALL(0x8018532c, SceneHookMgr::DoConfigure),  // Wii Sports
+                KM_CALL(0x80184d24, SceneHookMgr::DoConfigure),  // Wii Play
+                KM_CALL(0x8022fae4, SceneHookMgr::DoConfigure)); // Wii Sports Resort
 
 /**
  * @brief Runs active hooks and scene function(s) for the Reset state
@@ -126,15 +125,13 @@ void SceneHookMgr::DoReset() {
     }
 }
 // RPSysScene::reinit
-KOKESHI_BY_PACK(KM_CALL(0x801852d8, SceneHookMgr::DoReset), // Wii Sports
-                KM_CALL(0x80184cd0, SceneHookMgr::DoReset), // Wii Play
-                KM_CALL(0x8022f9ac,
-                        SceneHookMgr::DoReset)); // Wii Sports Resort
+KOKESHI_BY_PACK(KM_CALL(0x801852d8, SceneHookMgr::DoReset),  // Wii Sports
+                KM_CALL(0x80184cd0, SceneHookMgr::DoReset),  // Wii Play
+                KM_CALL(0x8022f9ac, SceneHookMgr::DoReset)); // Wii Sports Resort
 // RPSysScene::enter
-KOKESHI_BY_PACK(KM_CALL(0x801853d4, SceneHookMgr::DoReset), // Wii Sports
-                KM_CALL(0x80184dcc, SceneHookMgr::DoReset), // Wii Play
-                KM_CALL(0x8022fb54,
-                        SceneHookMgr::DoReset)); // Wii Sports Resort
+KOKESHI_BY_PACK(KM_CALL(0x801853d4, SceneHookMgr::DoReset),  // Wii Sports
+                KM_CALL(0x80184dcc, SceneHookMgr::DoReset),  // Wii Play
+                KM_CALL(0x8022fb54, SceneHookMgr::DoReset)); // Wii Sports Resort
 
 /**
  * @brief Runs active hooks and scene function(s) for the LoadResource state
@@ -194,7 +191,7 @@ void SceneHookMgr::DoCalculate() {
 }
 KOKESHI_BY_PACK(KM_CALL(0x80185110, SceneHookMgr::DoCalculate),  // Wii Sports
                 KM_CALL(0x80184b08, SceneHookMgr::DoCalculate),  // Wii Play
-                KM_CALL(0x8023016c, SceneHookMgr::DoCalculate)); // Wii Sports Resort
+                KM_CALL(0x8022f870, SceneHookMgr::DoCalculate)); // Wii Sports Resort
 
 /**
  * @brief Runs active hooks and scene function(s) for the Exit state

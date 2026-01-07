@@ -48,13 +48,17 @@ public:
         return mModelEx->getScnMdlSimple();
     }
 
+#if !defined(PACK_RESORT)
     RPGrpModelAnm* GetModelAnm() const {
         return mModelAnm;
     }
+#endif
+
     RPGrpModelMaterial* GetMaterial(u32 id) const {
         return mppMaterials[id];
     }
 
+#if !defined(PACK_RESORT)
     void SetDrawScene(u8 scene) {
         mDrawScene = scene;
     }
@@ -66,6 +70,7 @@ public:
         SetShapeVisible(enable);
         SetJointVisible(enable);
     }
+#endif
 
 public:
     virtual UNKTYPE VF_0x8(UNKTYPE) = 0; // at 0x8

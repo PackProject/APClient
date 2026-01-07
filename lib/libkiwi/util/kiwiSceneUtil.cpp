@@ -21,7 +21,7 @@ EGG::Scene* SceneUtil::GetCurrentScene() {
 bool SceneUtil::IsSceneUser(const EGG::Scene* pScene) {
     K_ASSERT_PTR(pScene);
 
-    return pScene->getSceneID() >= SceneCreator::ESceneID_Max;
+    return pScene->getSceneID() >= ESceneID_Max;
 }
 
 /**

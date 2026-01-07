@@ -2,13 +2,19 @@
 #define EGG_CORE_SCENE_H
 #include <egg/types_egg.h>
 
+#include <egg/core/eggDisposer.h>
+
 namespace EGG {
 
 // Forward declarations
 class Heap;
 class SceneManager;
 
-class Scene {
+class Scene
+#if defined(PACK_RESORT)
+    : public Disposer
+#endif
+{
 public:
     Scene();
     virtual ~Scene(); // at 0x8

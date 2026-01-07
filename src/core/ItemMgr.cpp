@@ -349,6 +349,7 @@ const char* ItemMgr::GetItemName(ItemMgr::ItemID id) {
 
     default:
         kiwi::cout << "Unknown ID" << kiwi::endl;
+        return "Unknown ID";
     }
 }
 
@@ -518,7 +519,7 @@ void ItemMgr::Debug() {
     mBwlWalSpinFlag = r.CoinFlip();
 
     // Power Cruising
-    //mJskBoostFlag = r.CoinFlip();
+    // mJskBoostFlag = r.CoinFlip();
     mJskRingTimerFlag.Randomize();
     mJsk2xRingFlag = r.CoinFlip();
     mJskFreeTimerFlag.Randomize();
@@ -540,12 +541,12 @@ void ItemMgr::Debug() {
     // Air Sports
     mPlnTimerFlag.Randomize();
     mPlnStageFlag.Randomize();
-    //mPlnDoubleBlastersFlag = r.CoinFlip();
-    //mPlnNightLightsFlag = r.CoinFlip();
-    //mPlnBalloonsFlag = r.CoinFlip();
-    //mPlnTwoSeaterPlaneFlag = r.CoinFlip();
-    //mPlnBoostFlag = r.CoinFlip();
-    //mPlnBrakeFlag = r.CoinFlip();
+    // mPlnDoubleBlastersFlag = r.CoinFlip();
+    // mPlnNightLightsFlag = r.CoinFlip();
+    // mPlnBalloonsFlag = r.CoinFlip();
+    // mPlnTwoSeaterPlaneFlag = r.CoinFlip();
+    // mPlnBoostFlag = r.CoinFlip();
+    // mPlnBrakeFlag = r.CoinFlip();
 }
 
 } // namespace AP

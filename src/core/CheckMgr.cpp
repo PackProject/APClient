@@ -244,42 +244,76 @@ const char* CheckMgr::GetCheckName(CheckMgr::CheckID id) const {
     case SWORDPLAY_DUEL_FIRST_WIN:
         return "Swordplay Duel - First Win!";
 
-    case GOLF_COMPLTE_HOLE_1: return "Golf - Complete Hole 1!";
-    case GOLF_COMPLTE_HOLE_2: return "Golf - Complete Hole 2!";
-    case GOLF_COMPLTE_HOLE_3: return "Golf - Complete Hole 3!";
-    case GOLF_COMPLTE_HOLE_4: return "Golf - Complete Hole 4!";
-    case GOLF_COMPLTE_HOLE_5: return "Golf - Complete Hole 5!";
-    case GOLF_COMPLTE_HOLE_6: return "Golf - Complete Hole 6!";
-    case GOLF_COMPLTE_HOLE_7: return "Golf - Complete Hole 7!";
-    case GOLF_COMPLTE_HOLE_8: return "Golf - Complete Hole 8!";
-    case GOLF_COMPLTE_HOLE_9: return "Golf - Complete Hole 9!";
-    case GOLF_COMPLTE_HOLE_10: return "Golf - Complete Hole 10!";
-    case GOLF_COMPLTE_HOLE_11: return "Golf - Complete Hole 11!";
-    case GOLF_COMPLTE_HOLE_12: return "Golf - Complete Hole 12!";
-    case GOLF_COMPLTE_HOLE_13: return "Golf - Complete Hole 13!";
-    case GOLF_COMPLTE_HOLE_14: return "Golf - Complete Hole 14!";
-    case GOLF_COMPLTE_HOLE_15: return "Golf - Complete Hole 15!";
-    case GOLF_COMPLTE_HOLE_16: return "Golf - Complete Hole 16!";
-    case GOLF_COMPLTE_HOLE_17: return "Golf - Complete Hole 17!";
-    case GOLF_COMPLTE_HOLE_18: return "Golf - Complete Hole 18!";
-    case GOLF_COMPLTE_HOLE_19: return "Golf - Complete Hole 19!";
-    case GOLF_COMPLTE_HOLE_20: return "Golf - Complete Hole 20!";
-    case GOLF_COMPLTE_HOLE_21: return "Golf - Complete Hole 21!";
+    case GOLF_COMPLTE_HOLE_1:
+        return "Golf - Complete Hole 1!";
+    case GOLF_COMPLTE_HOLE_2:
+        return "Golf - Complete Hole 2!";
+    case GOLF_COMPLTE_HOLE_3:
+        return "Golf - Complete Hole 3!";
+    case GOLF_COMPLTE_HOLE_4:
+        return "Golf - Complete Hole 4!";
+    case GOLF_COMPLTE_HOLE_5:
+        return "Golf - Complete Hole 5!";
+    case GOLF_COMPLTE_HOLE_6:
+        return "Golf - Complete Hole 6!";
+    case GOLF_COMPLTE_HOLE_7:
+        return "Golf - Complete Hole 7!";
+    case GOLF_COMPLTE_HOLE_8:
+        return "Golf - Complete Hole 8!";
+    case GOLF_COMPLTE_HOLE_9:
+        return "Golf - Complete Hole 9!";
+    case GOLF_COMPLTE_HOLE_10:
+        return "Golf - Complete Hole 10!";
+    case GOLF_COMPLTE_HOLE_11:
+        return "Golf - Complete Hole 11!";
+    case GOLF_COMPLTE_HOLE_12:
+        return "Golf - Complete Hole 12!";
+    case GOLF_COMPLTE_HOLE_13:
+        return "Golf - Complete Hole 13!";
+    case GOLF_COMPLTE_HOLE_14:
+        return "Golf - Complete Hole 14!";
+    case GOLF_COMPLTE_HOLE_15:
+        return "Golf - Complete Hole 15!";
+    case GOLF_COMPLTE_HOLE_16:
+        return "Golf - Complete Hole 16!";
+    case GOLF_COMPLTE_HOLE_17:
+        return "Golf - Complete Hole 17!";
+    case GOLF_COMPLTE_HOLE_18:
+        return "Golf - Complete Hole 18!";
+    case GOLF_COMPLTE_HOLE_19:
+        return "Golf - Complete Hole 19!";
+    case GOLF_COMPLTE_HOLE_20:
+        return "Golf - Complete Hole 20!";
+    case GOLF_COMPLTE_HOLE_21:
+        return "Golf - Complete Hole 21!";
 
-    case BOWLING_STANDARD_FIRST_STRIKE: return "Bowling Standard Game - First Strike!";
+    case BOWLING_STANDARD_FIRST_STRIKE:
+        return "Bowling Standard Game - First Strike!";
 
-    case ISLAND_FLYOVER_IPOINT_GROUP_1: return "Progressive Island Flyover I Point Group 1";
-    case ISLAND_FLYOVER_IPOINT_GROUP_2: return "Progressive Island Flyover I Point Group 2";
-    case ISLAND_FLYOVER_IPOINT_GROUP_3: return "Progressive Island Flyover I Point Group 3";
-    case ISLAND_FLYOVER_IPOINT_GROUP_4: return "Progressive Island Flyover I Point Group 4";
-    case ISLAND_FLYOVER_IPOINT_GROUP_5: return "Progressive Island Flyover I Point Group 5";
-    case ISLAND_FLYOVER_IPOINT_GROUP_6: return "Progressive Island Flyover I Point Group 6";
-    case ISLAND_FLYOVER_IPOINT_GROUP_7: return "Progressive Island Flyover I Point Group 7";
-    case ISLAND_FLYOVER_IPOINT_GROUP_8: return "Progressive Island Flyover I Point Group 8";
-    case ISLAND_FLYOVER_IPOINT_GROUP_9: return "Progressive Island Flyover I Point Group 9";
-    case ISLAND_FLYOVER_IPOINT_GROUP_10: return "Progressive Island Flyover I Point Group 10";
-    case ISLAND_FLYOVER_IPOINT_GROUP_11: return "Progressive Island Flyover I Point Group 11";
-    case ISLAND_FLYOVER_IPOINT_GROUP_12: return "Progressive Island Flyover I Point Group 12";
+    case ISLAND_FLYOVER_IPOINT_GROUP_1:
+        return "Progressive Island Flyover I Point Group 1";
+    case ISLAND_FLYOVER_IPOINT_GROUP_2:
+        return "Progressive Island Flyover I Point Group 2";
+    case ISLAND_FLYOVER_IPOINT_GROUP_3:
+        return "Progressive Island Flyover I Point Group 3";
+    case ISLAND_FLYOVER_IPOINT_GROUP_4:
+        return "Progressive Island Flyover I Point Group 4";
+    case ISLAND_FLYOVER_IPOINT_GROUP_5:
+        return "Progressive Island Flyover I Point Group 5";
+    case ISLAND_FLYOVER_IPOINT_GROUP_6:
+        return "Progressive Island Flyover I Point Group 6";
+    case ISLAND_FLYOVER_IPOINT_GROUP_7:
+        return "Progressive Island Flyover I Point Group 7";
+    case ISLAND_FLYOVER_IPOINT_GROUP_8:
+        return "Progressive Island Flyover I Point Group 8";
+    case ISLAND_FLYOVER_IPOINT_GROUP_9:
+        return "Progressive Island Flyover I Point Group 9";
+    case ISLAND_FLYOVER_IPOINT_GROUP_10:
+        return "Progressive Island Flyover I Point Group 10";
+    case ISLAND_FLYOVER_IPOINT_GROUP_11:
+        return "Progressive Island Flyover I Point Group 11";
+    case ISLAND_FLYOVER_IPOINT_GROUP_12:
+        return "Progressive Island Flyover I Point Group 12";
 
     default:
         kiwi::cout << "Bad ID: " << id << kiwi::endl;
@@ -293,7 +327,7 @@ const char* CheckMgr::GetCheckName(CheckMgr::CheckID id) const {
 void CheckMgr::Clear() {
     GenerateCheckIDArray();
 
-    for (int i = 0; i < checkIDArr.Length(); i++) {
+    for (int i = 0; i < checkIDArr.Size(); i++) {
         CheckID currCheckID = checkIDArr[i];
         SetCheckState(currCheckID, false);
     }
