@@ -58,7 +58,7 @@ public:
 
 protected:
     //! Menu page hierarchy
-    TStack<DebugPage> mPageStack;
+    TStack<DebugPage*> mPageStack;
 };
 
 /**

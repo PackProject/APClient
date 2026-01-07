@@ -1,11 +1,9 @@
 #ifndef RVL_SDK_NWC24_FILE_API_H
 #define RVL_SDK_NWC24_FILE_API_H
-#include <types.h>
-
-#include <revolution/NWC24/NWC24Types.h>
-
 #include <revolution/NAND.h>
+#include <revolution/NWC24/NWC24Types.h>
 #include <revolution/VF.h>
+#include <types.h>
 #ifdef __cplusplus
 extern "C" {
 #endif

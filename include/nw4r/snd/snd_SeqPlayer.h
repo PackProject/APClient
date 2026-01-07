@@ -143,6 +143,10 @@ public:
         return mParserParam;
     }
 
+    u32 GetTickCounter() const {
+        return mTickCounter;
+    }
+
 private:
     static const int DEFAULT_TEMPO = 120;
     static const int DEFAULT_TIMEBASE = 48;

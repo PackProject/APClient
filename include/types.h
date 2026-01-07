@@ -14,6 +14,7 @@
 
 #include <decomp.h>
 #include <kamek.hpp>
+#include <lang.h>
 #include <macros.h>
 
 typedef unsigned long long u64;

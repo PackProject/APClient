@@ -12,9 +12,6 @@
 
 /**
  * @brief RP sound manager (BGM, SFX, etc.)
- *
- * @todo The %EGG inheritance is not quite correct. Virtual function calls do
- * not work correctly.
  */
 class RPSndAudioMgr : public EGG::ExpAudioMgr {
     RP_SINGLETON_DECL_EX(RPSndAudioMgr);
@@ -25,10 +22,10 @@ public:
     void setSystemSeFadeInFrame(s16 frame);
 
     bool startSound(u32 id) {
-        return RPSndAudioMgr::startSound(&mSndHandle, id);
+        return RPSndAudioMgr::startSound(&mSndHandleStrm, id);
     }
     bool startSound(const char* name) {
-        return RPSndAudioMgr::startSound(&mSndHandle, name);
+        return RPSndAudioMgr::startSound(&mSndHandleStrm, name);
     }
 
     void stopAllSoud();
@@ -40,9 +37,17 @@ public:
 
     void changeScene();
 
+    nw4r::snd::SoundHandle* getSoundHandleSeq() {
+        return &mSndHandleSeq;
+    }
+    nw4r::snd::SoundHandle* getSoundHandleStrm() {
+        return &mSndHandleStrm;
+    }
+
 private:
-    char UNK_0x898[0x90];
-    nw4r::snd::SoundHandle mSndHandle; // at 0x928
+    char _8A0[0x920 - 0x8A0];
+    nw4r::snd::SoundHandle mSndHandleSeq;  // at 0x920
+    nw4r::snd::SoundHandle mSndHandleStrm; // at 0x924
 };
 
 //! @}

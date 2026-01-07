@@ -4,7 +4,7 @@
 #include <libkiwi/core/kiwiSceneCreator.h>
 #include <libkiwi/k_types.h>
 #include <libkiwi/prim/kiwiArray.h>
-#include <libkiwi/prim/kiwiLinkList.h>
+#include <libkiwi/prim/kiwiList.h>
 #include <libkiwi/util/kiwiStaticSingleton.h>
 
 namespace kiwi {
@@ -32,7 +32,7 @@ public:
      *
      * @param rHook Scene hook
      */
-    void RemoveHook(const ISceneHook& rHook);
+    void RemoveHook(ISceneHook& rHook);
 
 private:
     LIBKIWI_KAMEK_PUBLIC
@@ -71,13 +71,13 @@ private:
     /**
      * @brief Gets the list of active hooks for the current scene
      */
-    TList<ISceneHook>& GetSceneHooks();
+    TList<ISceneHook*>& GetSceneHooks();
 
 private:
     //! Lists of scene hooks
-    TArray<TList<ISceneHook>, ESceneID_Max> mSceneHookLists;
+    TArray<TList<ISceneHook*>, ESceneID_Max> mSceneHookLists;
     //! Global hooks (always active)
-    TList<ISceneHook> mGlobalHooks;
+    TList<ISceneHook*> mGlobalHooks;
 };
 
 /**

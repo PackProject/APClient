@@ -30,9 +30,9 @@
 // clang-format off
 //! Name of the module-related files
 #define KOKESHI_MODULE_PATH                                                    \
-    KOKESHI_BY_PACK("/modules/m_sports", /* Wii Sports */                      \
-                    "/modules/m_play",   /* Wii Play */                        \
-                    "/modules/m_resort") /* Wii Sports Resort */
+    KOKESHI_BY_PACK("/modules/ModuleSports", /* Wii Sports */                  \
+                    "/modules/ModulePlay",   /* Wii Play */                    \
+                    "/modules/ModuleResort") /* Wii Sports Resort */
 // clang-format on
 
 //! @}

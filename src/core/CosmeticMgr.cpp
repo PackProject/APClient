@@ -63,7 +63,7 @@ void CosmeticMgr::Debug() {
     for (int i = 0; i < K_LENGTHOF(mRandomBgmMapping); i++) {
         mRandomBgmMapping[i] = i;
     }
-    kiwi::Shuffle(mRandomBgmMapping, K_LENGTHOF(mRandomBgmMapping));
+    kiwi::Shuffle(mRandomBgmMapping);
 
     mRandomFavoriteColor = true;
 

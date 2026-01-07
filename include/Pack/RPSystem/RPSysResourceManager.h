@@ -164,10 +164,10 @@ public:
     void GetGameSoundLocalPath(char* pBuffer, u32 bufSize, s32 id);
 
 private:
-    //! Resource cache for common archives
-    nw4r::ut::List mCommonCache; // at 0x4
-    //! Resource cache for other files loaded from the DVD
-    nw4r::ut::List mUserCache; // at 0x10
+    //! Resource cache for compressed files
+    nw4r::ut::List mFileCache; // at 0x4
+    //! Resource cache for decompressed files
+    nw4r::ut::List mDecompFileCache; // at 0x10
 
     //! Work buffer for building filepaths
     char* mpPathWork; // at 0x1C

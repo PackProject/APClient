@@ -1,6 +1,5 @@
 #include "core/ItemMgr.h"
 #include "hooks/trampoline.h"
-
 #include <Sports2/Sp2Bic.h>
 
 #include <libkiwi.h>
@@ -65,6 +64,7 @@ f32 BicCalcEnergy(Sp2::Bic::Cyclist* pCyclist, f32 energy) {
     energy = kiwi::Min(energy, energyLimit);
 
     pCyclist->setEnergy(energy);
+    return energy;
 }
 
 /**

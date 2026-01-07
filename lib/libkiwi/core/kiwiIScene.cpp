@@ -12,6 +12,8 @@ void IScene::Configure() {
     // Setup renderer view
     RPGrpScreen* pScreen = new RPGrpScreen();
     K_ASSERT_PTR(pScreen);
+
+    pScreen->SetFarZ(10000.0f);
     pScreen->SetCanvasMode(RPGrpScreen::CANVASMODE_CC);
 
     // Create 2D view for layout draw

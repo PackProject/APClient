@@ -6,8 +6,10 @@
 //
 
 #include <Pack/RPSystem.h>
-#include <cstdio>
+
 #include <egg/core.h>
+
+#include <cstdio>
 #include <kokeshi.hpp>
 
 namespace kokeshi {

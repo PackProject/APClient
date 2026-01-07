@@ -16,12 +16,13 @@ bool DvdStream::Open(const String& rPath) {
     // Need to get the file entry number from the FST
     s32 entryNum = DVDConvertPathToEntrynum(rPath);
     if (entryNum < 0) {
-        K_LOG_EX("Can't find DVD file: %s\n", rPath.CStr());
         return false;
     }
 
-    if (!DVDFastOpen(entryNum, &mFileInfo)) {
-        K_LOG_EX("Can't open DVD file: %s\n", rPath.CStr());
+    bool success = DVDFastOpen(entryNum, &mFileInfo);
+    K_ASSERT(success);
+
+    if (!success) {
         return false;
     }
 
@@ -105,7 +106,7 @@ s32 DvdStream::ReadImpl(void* pDst, u32 size) {
 s32 DvdStream::WriteImpl(const void* pSrc, u32 size) {
     K_ASSERT_PTR(pSrc);
     K_ASSERT_EX(false, "DVD is immutable");
-    return DVD_RESULT_FATAL;
+    return DVD_RESULT_FATAL_ERROR;
 }
 
 /**

@@ -9,9 +9,7 @@
 
 //! @}
 
-namespace rp_Tnk_sound {
-
-enum ESoundID {
+enum {
     /* 0x00 */ RP_TNK_SE_RESULT_OPEN,
     /* 0x01 */ RP_TNK_SE_SHOOT_1P,
     /* 0x02 */ RP_TNK_SE_SHOOT_2P,
@@ -129,7 +127,5 @@ enum ESoundID {
     /* 0x72 */ RP_COMMON_SE_KEY_BACK_01,
     /* 0x73 */ RP_COMMON_SE_KEY_CURSOR_01
 };
-
-} // namespace rp_Tnk_sound
 
 #endif

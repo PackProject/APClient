@@ -2,6 +2,7 @@
 #define LIBKIWI_NET_PACKET_H
 #include <libkiwi/k_types.h>
 #include <libkiwi/math/kiwiAlgorithm.h>
+#include <libkiwi/prim/kiwiMutex.h>
 #include <libkiwi/prim/kiwiOptional.h>
 #include <libkiwi/support/kiwiLibSO.h>
 
@@ -26,7 +27,7 @@ public:
      */
     Packet(u32 size, const SockAddrAny* pAddr = nullptr)
         : mpBuffer(nullptr), mBufferSize(0), mReadOffset(0), mWriteOffset(0) {
-        OSInitMutex(&mBufferMutex);
+
         Alloc(size);
 
         if (pAddr != nullptr) {
@@ -178,9 +179,9 @@ protected:
     void Clear();
 
 protected:
-    u8* mpBuffer;         //!< Message buffer
-    u32 mBufferSize;      //!< Message buffer size
-    OSMutex mBufferMutex; //!< Buffer access mutex
+    u8* mpBuffer;       //!< Message buffer
+    u32 mBufferSize;    //!< Message buffer size
+    Mutex mBufferMutex; //!< Buffer access mutex
 
     s32 mReadOffset;  //!< Buffer read index
     s32 mWriteOffset; //!< Buffer write index

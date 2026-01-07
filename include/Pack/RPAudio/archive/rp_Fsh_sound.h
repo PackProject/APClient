@@ -9,9 +9,7 @@
 
 //! @}
 
-namespace rp_Fsh_sound {
-
-enum ESoundID {
+enum {
     /* 0x00 */ RP_FSH_SE_FISH_ROD_CATCH_01,
     /* 0x01 */ RP_FSH_SE_FISH_ROD_SWING_01,
     /* 0x02 */ RP_FSH_SE_FEED_FLY_01,
@@ -133,7 +131,5 @@ enum ESoundID {
     /* 0x76 */ RP_COM_BGM_RENEW_RECORD2,
     /* 0x77 */ RP_COM_BGM_RENEW_RECORD
 };
-
-} // namespace rp_Fsh_sound
 
 #endif

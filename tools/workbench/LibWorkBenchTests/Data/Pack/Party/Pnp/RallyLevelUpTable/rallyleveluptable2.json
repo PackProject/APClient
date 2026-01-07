@@ -1,0 +1,509 @@
+{
+  "levels": [
+    {
+      "rally": 0,
+      "level_index": 0,
+      "power": 0.65
+    },
+    {
+      "rally": 1,
+      "level_index": 0,
+      "power": 0.69
+    },
+    {
+      "rally": 2,
+      "level_index": 0,
+      "power": 0.72
+    },
+    {
+      "rally": 3,
+      "level_index": 0,
+      "power": 0.76
+    },
+    {
+      "rally": 4,
+      "level_index": 0,
+      "power": 0.79
+    },
+    {
+      "rally": 5,
+      "level_index": 0,
+      "power": 0.83
+    },
+    {
+      "rally": 6,
+      "level_index": 0,
+      "power": 0.86
+    },
+    {
+      "rally": 7,
+      "level_index": 0,
+      "power": 0.9
+    },
+    {
+      "rally": 8,
+      "level_index": 0,
+      "power": 0.93
+    },
+    {
+      "rally": 9,
+      "level_index": 0,
+      "power": 0.97
+    },
+    {
+      "rally": 10,
+      "level_index": 0,
+      "power": 1
+    },
+    {
+      "rally": 11,
+      "level_index": 0,
+      "power": 1.02
+    },
+    {
+      "rally": 12,
+      "level_index": 0,
+      "power": 1.03
+    },
+    {
+      "rally": 13,
+      "level_index": 0,
+      "power": 1.05
+    },
+    {
+      "rally": 14,
+      "level_index": 0,
+      "power": 1.07
+    },
+    {
+      "rally": 15,
+      "level_index": 0,
+      "power": 1.08
+    },
+    {
+      "rally": 16,
+      "level_index": 0,
+      "power": 1.1
+    },
+    {
+      "rally": 17,
+      "level_index": 0,
+      "power": 1.12
+    },
+    {
+      "rally": 18,
+      "level_index": 0,
+      "power": 1.13
+    },
+    {
+      "rally": 19,
+      "level_index": 0,
+      "power": 1.15
+    },
+    {
+      "rally": 20,
+      "level_index": 0,
+      "power": 1.17
+    },
+    {
+      "rally": 21,
+      "level_index": 0,
+      "power": 1.18
+    },
+    {
+      "rally": 22,
+      "level_index": 0,
+      "power": 1.2
+    },
+    {
+      "rally": 23,
+      "level_index": 0,
+      "power": 1.22
+    },
+    {
+      "rally": 24,
+      "level_index": 0,
+      "power": 1.23
+    },
+    {
+      "rally": 25,
+      "level_index": 0,
+      "power": 1.25
+    },
+    {
+      "rally": 26,
+      "level_index": 0,
+      "power": 1.27
+    },
+    {
+      "rally": 27,
+      "level_index": 0,
+      "power": 1.28
+    },
+    {
+      "rally": 28,
+      "level_index": 0,
+      "power": 1.3
+    },
+    {
+      "rally": 29,
+      "level_index": 0,
+      "power": 1.32
+    },
+    {
+      "rally": 30,
+      "level_index": 0,
+      "power": 1.33
+    },
+    {
+      "rally": 31,
+      "level_index": 0,
+      "power": 1.35
+    },
+    {
+      "rally": 32,
+      "level_index": 0,
+      "power": 1.37
+    },
+    {
+      "rally": 33,
+      "level_index": 0,
+      "power": 1.38
+    },
+    {
+      "rally": 34,
+      "level_index": 0,
+      "power": 1.4
+    },
+    {
+      "rally": 35,
+      "level_index": 0,
+      "power": 1.42
+    },
+    {
+      "rally": 36,
+      "level_index": 0,
+      "power": 1.43
+    },
+    {
+      "rally": 37,
+      "level_index": 0,
+      "power": 1.45
+    },
+    {
+      "rally": 38,
+      "level_index": 0,
+      "power": 1.47
+    },
+    {
+      "rally": 39,
+      "level_index": 0,
+      "power": 1.48
+    },
+    {
+      "rally": 40,
+      "level_index": 0,
+      "power": 1.5
+    },
+    {
+      "rally": 41,
+      "level_index": 0,
+      "power": 1.51
+    },
+    {
+      "rally": 42,
+      "level_index": 0,
+      "power": 1.52
+    },
+    {
+      "rally": 43,
+      "level_index": 0,
+      "power": 1.53
+    },
+    {
+      "rally": 44,
+      "level_index": 0,
+      "power": 1.53
+    },
+    {
+      "rally": 45,
+      "level_index": 0,
+      "power": 1.54
+    },
+    {
+      "rally": 46,
+      "level_index": 0,
+      "power": 1.55
+    },
+    {
+      "rally": 47,
+      "level_index": 0,
+      "power": 1.56
+    },
+    {
+      "rally": 48,
+      "level_index": 0,
+      "power": 1.57
+    },
+    {
+      "rally": 49,
+      "level_index": 0,
+      "power": 1.58
+    },
+    {
+      "rally": 50,
+      "level_index": 0,
+      "power": 1.58
+    },
+    {
+      "rally": 51,
+      "level_index": 0,
+      "power": 1.59
+    },
+    {
+      "rally": 52,
+      "level_index": 0,
+      "power": 1.6
+    },
+    {
+      "rally": 53,
+      "level_index": 0,
+      "power": 1.61
+    },
+    {
+      "rally": 54,
+      "level_index": 0,
+      "power": 1.62
+    },
+    {
+      "rally": 55,
+      "level_index": 0,
+      "power": 1.63
+    },
+    {
+      "rally": 56,
+      "level_index": 0,
+      "power": 1.63
+    },
+    {
+      "rally": 57,
+      "level_index": 0,
+      "power": 1.64
+    },
+    {
+      "rally": 58,
+      "level_index": 0,
+      "power": 1.65
+    },
+    {
+      "rally": 59,
+      "level_index": 0,
+      "power": 1.66
+    },
+    {
+      "rally": 60,
+      "level_index": 0,
+      "power": 1.67
+    },
+    {
+      "rally": 61,
+      "level_index": 0,
+      "power": 1.68
+    },
+    {
+      "rally": 62,
+      "level_index": 0,
+      "power": 1.68
+    },
+    {
+      "rally": 63,
+      "level_index": 0,
+      "power": 1.69
+    },
+    {
+      "rally": 64,
+      "level_index": 0,
+      "power": 1.7
+    },
+    {
+      "rally": 65,
+      "level_index": 0,
+      "power": 1.71
+    },
+    {
+      "rally": 66,
+      "level_index": 0,
+      "power": 1.72
+    },
+    {
+      "rally": 67,
+      "level_index": 0,
+      "power": 1.73
+    },
+    {
+      "rally": 68,
+      "level_index": 0,
+      "power": 1.73
+    },
+    {
+      "rally": 69,
+      "level_index": 0,
+      "power": 1.74
+    },
+    {
+      "rally": 70,
+      "level_index": 0,
+      "power": 1.75
+    },
+    {
+      "rally": 71,
+      "level_index": 0,
+      "power": 1.76
+    },
+    {
+      "rally": 72,
+      "level_index": 0,
+      "power": 1.77
+    },
+    {
+      "rally": 73,
+      "level_index": 0,
+      "power": 1.78
+    },
+    {
+      "rally": 74,
+      "level_index": 0,
+      "power": 1.78
+    },
+    {
+      "rally": 75,
+      "level_index": 0,
+      "power": 1.79
+    },
+    {
+      "rally": 76,
+      "level_index": 0,
+      "power": 1.8
+    },
+    {
+      "rally": 77,
+      "level_index": 0,
+      "power": 1.81
+    },
+    {
+      "rally": 78,
+      "level_index": 0,
+      "power": 1.82
+    },
+    {
+      "rally": 79,
+      "level_index": 0,
+      "power": 1.83
+    },
+    {
+      "rally": 80,
+      "level_index": 0,
+      "power": 1.83
+    },
+    {
+      "rally": 81,
+      "level_index": 0,
+      "power": 1.84
+    },
+    {
+      "rally": 82,
+      "level_index": 0,
+      "power": 1.85
+    },
+    {
+      "rally": 83,
+      "level_index": 0,
+      "power": 1.86
+    },
+    {
+      "rally": 84,
+      "level_index": 0,
+      "power": 1.87
+    },
+    {
+      "rally": 85,
+      "level_index": 0,
+      "power": 1.88
+    },
+    {
+      "rally": 86,
+      "level_index": 0,
+      "power": 1.88
+    },
+    {
+      "rally": 87,
+      "level_index": 0,
+      "power": 1.89
+    },
+    {
+      "rally": 88,
+      "level_index": 0,
+      "power": 1.9
+    },
+    {
+      "rally": 89,
+      "level_index": 0,
+      "power": 1.91
+    },
+    {
+      "rally": 90,
+      "level_index": 0,
+      "power": 1.92
+    },
+    {
+      "rally": 91,
+      "level_index": 0,
+      "power": 1.93
+    },
+    {
+      "rally": 92,
+      "level_index": 0,
+      "power": 1.93
+    },
+    {
+      "rally": 93,
+      "level_index": 0,
+      "power": 1.94
+    },
+    {
+      "rally": 94,
+      "level_index": 0,
+      "power": 1.95
+    },
+    {
+      "rally": 95,
+      "level_index": 0,
+      "power": 1.96
+    },
+    {
+      "rally": 96,
+      "level_index": 0,
+      "power": 1.97
+    },
+    {
+      "rally": 97,
+      "level_index": 0,
+      "power": 1.98
+    },
+    {
+      "rally": 98,
+      "level_index": 0,
+      "power": 1.98
+    },
+    {
+      "rally": 99,
+      "level_index": 0,
+      "power": 1.99
+    },
+    {
+      "rally": 100,
+      "level_index": 0,
+      "power": 2
+    }
+  ]
+}

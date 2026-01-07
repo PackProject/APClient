@@ -247,7 +247,7 @@ public:
     // 1. Type aliases (`friend`, `typedef`, `using`)
     friend class BasketMgr;
     
-    typedef TList<FruitBasker> FruitBasketList;
+    typedef TList<FruitBasket> FruitBasketList;
     using IBasket::Foo;
 
     // 2. Nested types
@@ -444,10 +444,10 @@ Macros can be documented like functions, but also a single-line comment will suf
  * @param major Major version number
  * @param minor Minor version number
  */
-#define K_BIN_VERSION(major, minor) ((major << 8) | minor)
+#define K_VERSION(major, minor) ((major << 8) | minor)
 
 //! Helper for creating version numbers
-#define K_BIN_VERSION(major, minor) ((major << 8) | minor)
+#define K_VERSION(major, minor) ((major << 8) | minor)
 ```
 
 ##### Data

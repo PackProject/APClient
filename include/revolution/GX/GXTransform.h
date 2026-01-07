@@ -17,6 +17,10 @@ typedef enum {
     GX_FIELD_ODD,
 } GXInterlaceField;
 
+#if defined(LIBKIWI_PRECOMPILE)
+#define static inline
+#endif
+
 void GXSetProjection(const Mtx44 proj, GXProjectionType type);
 void GXSetProjectionv(const f32 proj[GX_PROJECTION_SZ]);
 void GXGetProjectionv(f32 proj[GX_PROJECTION_SZ]);
@@ -43,6 +47,10 @@ void __GXSetMatrixIndex(GXAttr index);
 static void GXSetViewportv(const f32 view[GX_VIEWPORT_SZ]) {
     GXSetViewport(view[0], view[1], view[2], view[3], view[4], view[5]);
 }
+
+#if defined(LIBKIWI_PRECOMPILE)
+#undef static
+#endif
 
 #ifdef __cplusplus
 }

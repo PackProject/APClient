@@ -148,3 +148,4 @@ BTA_API extern void bta_pan_ci_set_mfilters(UINT16 handle, UINT16 num_mcast_filt
 #endif
 
 #endif /* BTA_PAN_CI_H */
+

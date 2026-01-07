@@ -199,3 +199,4 @@ typedef struct {
 extern const bt_hc_interface_t* bt_hc_get_interface(void);
 
 #endif /* BT_HCI_LIB_H */
+

@@ -363,6 +363,10 @@
 //! @brief Primitives
 
 //! @ingroup libkiwi
+//! @defgroup libkiwi_resource resource
+//! @brief Asset patching system
+
+//! @ingroup libkiwi
 //! @defgroup libkiwi_support support
 //! @brief Compiler runtime/RVL SDK implementation
 
@@ -512,6 +516,32 @@ namespace detail {}
 
 //! @brief libkiwi JSON functionality
 namespace json {}
+
+//! @}
+
+//! @addtogroup libkiwi
+//! @{
+
+//! @brief libkiwi CHIP-8 emulator
+namespace chip8 {}
+
+//! @}
+
+//! @addtogroup libkiwi
+//! @{
+
+//! @brief libkiwi Host I/O
+namespace hostio {
+
+//! @addtogroup libkiwi
+//! @{
+
+//! @brief libkiwi Host I/O internals
+namespace detail {}
+
+//! @}
+
+}
 
 //! @}
 

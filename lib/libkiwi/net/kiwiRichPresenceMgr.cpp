@@ -88,7 +88,7 @@ void RichPresenceMgr::AlarmCallbackFunc(OSAlarm* pAlarm, OSContext* pCtx) {
         return;
     }
 
-    K_ASSERT(r.mpClient != nullptr);
+    K_ASSERT_PTR(r.mpClient);
 
     // Allow user to update activity
     r.mpProfile->AlarmCallback(*r.mpClient);

@@ -103,7 +103,7 @@
 //   Create dummy function to call a member function.
 #define _KM_INJECT_MF(cls, func)                                               \
     UNKWORD CONCAT(KM_TRAMP_##cls##_##func, __LINE__)(void* arg, ...) {        \
-        typedef UNKWORD (cls::*cls##_fun_t)(...);                              \
+        typedef UNKWORD (cls::* cls##_fun_t)(...);                             \
         const cls##_fun_t mem_fun = (cls##_fun_t)(&cls::func);                 \
         cls* self = reinterpret_cast<cls*>(arg);                               \
         return (self->*mem_fun)();                                             \

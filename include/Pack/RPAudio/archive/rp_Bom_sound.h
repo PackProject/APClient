@@ -9,9 +9,7 @@
 
 //! @}
 
-namespace rp_Bom_sound {
-
-enum ESoundID {
+enum {
     /* 0x00 */ RP_BOM_SE_COIN_BREED,
     /* 0x01 */ RP_BOM_SE_NG_01,
     /* 0x02 */ RP_BOM_SE_CHANGE_POSE,
@@ -102,7 +100,5 @@ enum ESoundID {
     /* 0x57 */ RP_COMMON_SE_KEY_BACK_01,
     /* 0x58 */ RP_COMMON_SE_KEY_CURSOR_01
 };
-
-} // namespace rp_Bom_sound
 
 #endif

@@ -7,10 +7,17 @@ class RPGrpLightManager;
 class RPGrpFogManager;
 
 class RPGrpModelManager {
-    RP_SINGLETON_DECL(RPGrpModelManager);
-
 public:
-    void CreateModelScene(u32, u8, u32, RPGrpLightManager*, RPGrpFogManager*);
+    void CreateModelScene(u32 index, u8 drawPathFlag, u32 viewNum,
+                          RPGrpLightManager* pLightMgr,
+                          RPGrpFogManager* pFogMgr);
+
+    static RPGrpModelManager* GetCurrent() {
+        return spCurrent;
+    }
+
+private:
+    static RPGrpModelManager* spCurrent;
 };
 
 #endif

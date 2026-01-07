@@ -17,10 +17,10 @@ protected:
 
 private:
     NonCopyable(const NonCopyable& /* rOther */) {
-        K_ASSERT(false);
+        K_UNREACHABLE();
     }
     NonCopyable& operator=(const NonCopyable& /* rOther */) {
-        K_ASSERT(false);
+        K_UNREACHABLE();
         return *this;
     }
 };

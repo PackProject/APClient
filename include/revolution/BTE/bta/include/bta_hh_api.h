@@ -303,7 +303,11 @@ extern "C"
 ** Returns          void
 **
 *******************************************************************************/
+#ifdef REVOLUTION
+BTA_API extern void BTA_HhEnable(tBTA_SEC sec_mask, tBTA_HH_CBACK *p_cback);
+#else
 BTA_API extern void BTA_HhEnable(tBTA_SEC sec_mask, BOOLEAN ucd_enabled, tBTA_HH_CBACK *p_cback);
+#endif
 
 /*******************************************************************************
 **
@@ -429,7 +433,11 @@ BTA_API extern void BTA_HhGetIdle(UINT8 dev_handle);
 ** Returns          void
 **
 *******************************************************************************/
+#ifdef REVOLUTION
+BTA_API extern void BTA_HhSendData(UINT8 dev_handle, BT_HDR  *p_buf);
+#else
 BTA_API extern void BTA_HhSendData(UINT8 dev_handle, BD_ADDR dev_bda, BT_HDR  *p_buf);
+#endif
 
 /*******************************************************************************
 **

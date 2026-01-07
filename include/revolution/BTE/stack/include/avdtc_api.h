@@ -228,3 +228,4 @@ AVDT_API extern void AVDTC_Rej(UINT8 handle, BD_ADDR bd_addr, UINT8 cmd, UINT8 l
 #endif
 
 #endif /* AVDT_CAPI_H */
+

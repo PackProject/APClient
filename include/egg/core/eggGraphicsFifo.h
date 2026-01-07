@@ -1,29 +1,51 @@
 #ifndef EGG_CORE_GRAPHICS_FIFO_H
 #define EGG_CORE_GRAPHICS_FIFO_H
-#include "types_egg.h"
-#include "ut_algorithm.h"
+#include <egg/types_egg.h>
+
+#include <revolution/GX.h>
 
 namespace EGG {
-struct GraphicsFifo {
+
+// Forward declarations
+class Heap;
+
+class GraphicsFifo {
+public:
     struct GpStatus {
-        u8 b0;
-        u8 b1;
-        u8 b2;
-        u8 b3;
-        u8 b4;
+        GXBool overhi;   // at 0x0
+        GXBool underlow; // at 0x1
+        GXBool readIdle; // at 0x2
+        GXBool cmdIdle;  // at 0x3
+        GXBool brkpt;    // at 0x4
     };
 
-    GraphicsFifo(u32, Heap*);
-    static GraphicsFifo* create(u32, Heap*);
-    virtual ~GraphicsFifo();
+public:
+    static GraphicsFifo* create(u32 size, Heap* pHeap);
 
-    void* PTR_0x4;
-    void* mBufBase; // at 0x8
-    u32 mBufSize;   // at 0xC
+    GraphicsFifo(u32 size, Heap* pHeap);
+    virtual ~GraphicsFifo(); // at 0x8
+
+    static bool isGPActive() {
+        return !getGpStatus().readIdle;
+    }
+
+    static const GpStatus& getGpStatus() {
+        GXGetGPStatus(&sGpStatus.overhi, &sGpStatus.underlow,
+                      &sGpStatus.readIdle, &sGpStatus.cmdIdle,
+                      &sGpStatus.brkpt);
+
+        return sGpStatus;
+    }
+
+private:
+    GXFifoObj* mFifoObj; // at 0x4
+    void* mBufBase;      // at 0x8
+    u32 mBufSize;        // at 0xC
 
     static GraphicsFifo* sGraphicsFifo;
     static GpStatus sGpStatus;
 };
+
 } // namespace EGG
 
 #endif

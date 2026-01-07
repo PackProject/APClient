@@ -67,6 +67,13 @@ public:
      */
     void setLanguage(EArea lang);
 
+    /**
+     * @brief Gets the current Pack Project game ID
+     */
+    RPSysSceneCreator::EPackID getPack() const {
+        return mPack;
+    }
+
 private:
     //! Game region
     ERegion mRegion; // at 0x8

@@ -162,6 +162,13 @@ public:
             *reinterpret_cast<GXColor*>(param);
     }
 
+    static void ModifierTravFunc_SetSimpleLightDiffuse(void* pObject,
+                                                       ForEachParam param) {
+
+        static_cast<ParticleManager*>(pObject)->mModifier.mLight.mDiffuse =
+            *reinterpret_cast<GXColor*>(param);
+    }
+
     static void ModifierTravFunc_SetScale(void* pObject, ForEachParam param) {
         static_cast<ParticleManager*>(pObject)->mModifier.mScale =
             *reinterpret_cast<math::VEC2*>(param);

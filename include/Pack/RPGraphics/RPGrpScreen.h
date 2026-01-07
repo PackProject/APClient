@@ -6,8 +6,13 @@
 class RPGrpScreen : public EGG::Screen {
 public:
     RPGrpScreen() {
-        SetFarZ(10000.0f);
+        SetFarZ(100000.0f);
     }
+
+    RPGrpScreen(f32 x, f32 y, f32 width, f32 height,
+                const Screen* pParent = NULL,
+                CanvasMode canvasMode = CANVASMODE_LU)
+        : EGG::Screen(x, y, width, height, pParent, canvasMode) {}
 
     virtual ~RPGrpScreen();
 

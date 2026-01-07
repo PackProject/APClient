@@ -71,3 +71,4 @@ BTA_API extern void bta_av_ci_setconfig(tBTA_AV_HNDL hndl, UINT8 err_code,
 #endif
 
 #endif /* BTA_AV_CI_H */
+

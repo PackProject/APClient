@@ -2,7 +2,7 @@
 #define LIBKIWI_NET_ASYNC_SOCKET_H
 #include <libkiwi/k_types.h>
 #include <libkiwi/net/kiwiSocketBase.h>
-#include <libkiwi/prim/kiwiLinkList.h>
+#include <libkiwi/prim/kiwiList.h>
 
 #include <revolution/OS.h>
 
@@ -11,7 +11,7 @@ namespace kiwi {
 //! @{
 
 /**
- * @brief Asynchronous (non-blocking) socket
+ * @brief Asynchronous socket
  */
 class AsyncSocket : public SocketBase {
 public:
@@ -137,8 +137,8 @@ private:
     volatile EState mState; //!< Current async task
     SockAddrAny mPeer;      //!< Peer address
 
-    TList<RecvJob> mRecvJobs; //!< Active receive jobs
-    TList<SendJob> mSendJobs; //!< Active send jobs
+    TList<RecvJob*> mRecvJobs; //!< Active receive jobs
+    TList<SendJob*> mSendJobs; //!< Active send jobs
 
     Callback mpConnectCallback; //!< Connect callback
     void* mpConnectCallbackArg; //!< Connect callback user argument
@@ -154,7 +154,7 @@ private:
     static u8 sSocketThreadStack[scThreadStackSize];
 
     //! Open async sockets
-    static TList<AsyncSocket> sSocketList;
+    static TList<AsyncSocket*> sSocketList;
 };
 
 //! @}

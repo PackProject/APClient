@@ -2230,3 +2230,4 @@ Commands of HCI_GRP_VENDOR_SPECIFIC group for WIDCOMM SW LM Simulator
 
 
 #endif
+

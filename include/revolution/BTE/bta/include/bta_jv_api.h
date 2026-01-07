@@ -1119,3 +1119,4 @@ UINT16 BTA_JvRfcommGetPortHdl(UINT32 handle);
 #endif
 
 #endif /* BTA_JV_API_H */
+

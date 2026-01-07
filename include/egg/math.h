@@ -4,6 +4,7 @@
 #include <egg/math/eggMath.h>
 #include <egg/math/eggMatrix.h>
 #include <egg/math/eggQuat.h>
+#include <egg/math/eggRay.h>
 #include <egg/math/eggVector.h>
 
 #endif

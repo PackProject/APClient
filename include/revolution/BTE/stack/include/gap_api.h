@@ -800,3 +800,4 @@ GAP_API extern BOOLEAN GAP_BleUpdateReconnectAddr (BD_ADDR peer_bda,
 #endif
 
 #endif  /* GAP_API_H */
+

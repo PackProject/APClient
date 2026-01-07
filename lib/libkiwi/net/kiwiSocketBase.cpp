@@ -19,6 +19,10 @@ SocketBase::SocketBase(SOProtoFamily family, SOSockType type)
     // By default, enable port reuse
     bool success = SetReuseAddr(true);
     K_ASSERT(success);
+
+    // Always disable IOP blocking
+    success = SetBlockingIOP(false);
+    K_ASSERT(success);
 }
 
 /**
@@ -32,6 +36,10 @@ SocketBase::SocketBase(SOSocket socket, SOProtoFamily family, SOSockType type)
     : mHandle(socket), mFamily(family), mType(type) {
 
     K_ASSERT_EX(IsOpen(), "Invalid socket descriptor provided");
+
+    // Always disable IOP blocking
+    bool success = SetBlockingIOP(false);
+    K_ASSERT(success);
 }
 
 /**
@@ -147,35 +155,6 @@ bool SocketBase::GetPeerAddr(SockAddrAny& rAddr) const {
     K_ASSERT(mFamily == rAddr.in.family);
 
     return LibSO::GetPeerName(mHandle, rAddr) == SO_SUCCESS;
-}
-
-/**
- * @brief Tests whether socket is blocking
- */
-bool SocketBase::IsBlocking() const {
-    K_ASSERT(IsOpen());
-
-    s32 flags = LibSO::Fcntl(mHandle, SO_F_GETFL, 0);
-    return (flags & SO_O_NONBLOCK) == 0;
-}
-
-/**
- * @brief Toggles socket blocking
- *
- * @param enable Whether to enable blocking
- * @return Success
- */
-bool SocketBase::SetBlocking(bool enable) const {
-    K_ASSERT(IsOpen());
-
-    s32 flags = LibSO::Fcntl(mHandle, SO_F_GETFL, 0);
-    if (enable) {
-        flags &= ~SO_O_NONBLOCK;
-    } else {
-        flags |= SO_O_NONBLOCK;
-    }
-
-    return LibSO::Fcntl(mHandle, SO_F_SETFL, flags) >= 0;
 }
 
 /**
@@ -352,6 +331,35 @@ Optional<u32> SocketBase::SendBytesTo(const void* pSrc, u32 len,
     }
 
     return kiwi::nullopt;
+}
+
+/**
+ * @brief Tests whether socket is kernel-blocking (at the IOP level)
+ */
+bool SocketBase::IsBlockingIOP() const {
+    K_ASSERT(IsOpen());
+
+    s32 flags = LibSO::Fcntl(mHandle, SO_F_GETFL, 0);
+    return (flags & SO_O_NONBLOCK) == 0;
+}
+
+/**
+ * @brief Toggles socket kernel-blocking (at the IOP level)
+ *
+ * @param enable Whether to enable blocking
+ * @return Success
+ */
+bool SocketBase::SetBlockingIOP(bool enable) const {
+    K_ASSERT(IsOpen());
+
+    s32 flags = LibSO::Fcntl(mHandle, SO_F_GETFL, 0);
+    if (enable) {
+        flags &= ~SO_O_NONBLOCK;
+    } else {
+        flags |= SO_O_NONBLOCK;
+    }
+
+    return LibSO::Fcntl(mHandle, SO_F_SETFL, flags) >= 0;
 }
 
 } // namespace kiwi

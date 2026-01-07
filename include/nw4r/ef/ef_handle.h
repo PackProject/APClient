@@ -7,6 +7,9 @@
 namespace nw4r {
 namespace ef {
 
+// Forward declarations
+class Effect;
+
 class HandleBase {
 private:
     u32 mObjectID;         // at 0x0
@@ -26,11 +29,13 @@ public:
 
 template <typename T> class Handle : public HandleBase {
 public:
+    Handle() {}
     Handle(const Handle& rOther) : HandleBase(rOther) {}
     Handle(T* pObject) : HandleBase(static_cast<LinkedObject*>(pObject)) {}
 
     Handle& operator=(T* pObject) {
         *this = static_cast<LinkedObject*>(pObject);
+        return *this;
     }
 
     bool IsAlive() const {
@@ -54,6 +59,8 @@ public:
         return pObject->GetLifeStatus();
     }
 };
+
+typedef nw4r::ef::Handle<nw4r::ef::Effect> EffectHandle;
 
 } // namespace ef
 } // namespace nw4r

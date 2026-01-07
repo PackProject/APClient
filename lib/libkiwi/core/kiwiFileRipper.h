@@ -3,6 +3,8 @@
 #include <libkiwi/core/kiwiMemoryMgr.h>
 #include <libkiwi/k_types.h>
 
+#include <egg/core.h>
+
 namespace kiwi {
 //! @addtogroup libkiwi_core
 //! @{
@@ -36,15 +38,33 @@ struct FileRipperArg {
     u32* pSize;
 
     /**
+     * @brief Heap to use for ripper memory allocation
+     * @note Overrides `region` setting.
+     */
+    EGG::Heap* pHeap;
+
+    /**
      * @brief Memory region to use for ripper memory allocation
      * @details Defaults to MEM2.
+     * @note Ignored when heap is specified with `pHeap`.
      */
     EMemory region;
 
     /**
+     * @brief Byte alignment to use for ripper memory allocation
+     * @details Defaults to 4.
+     */
+    s32 align;
+
+    /**
      * @brief Constructor
      */
-    FileRipperArg() : pDst(nullptr), pSize(nullptr), region(EMemory_MEM2) {}
+    FileRipperArg()
+        : pDst(nullptr),
+          pSize(nullptr),
+          pHeap(nullptr),
+          region(EMemory_MEM2),
+          align(4) {}
 };
 
 /**

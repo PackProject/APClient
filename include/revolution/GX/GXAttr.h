@@ -47,10 +47,18 @@ void __GXSetVCD(void);
 void __GXCalculateVLim(void);
 void __GXSetVAT(void);
 
+#if defined(LIBKIWI_PRECOMPILE)
+#define static inline
+#endif
+
 static void GXSetTexCoordGen(GXTexCoordID id, GXTexGenType type,
                              GXTexGenSrc src, u32 texMtxIdx) {
     GXSetTexCoordGen2(id, type, src, texMtxIdx, FALSE, GX_PTIDENTITY);
 }
+
+#if defined(LIBKIWI_PRECOMPILE)
+#undef static
+#endif
 
 #ifdef __cplusplus
 }

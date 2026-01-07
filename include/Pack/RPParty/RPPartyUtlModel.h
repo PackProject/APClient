@@ -5,7 +5,10 @@
 #include <Pack/RPGraphics/IRPGrpDrawObject.h>
 #include <Pack/RPKernel/IRPSysHostIOSocket.h>
 #include <Pack/RPSystem/RP_DEBUG_STUB_1.h>
-#include <egg/math/eggVector.h>
+
+#include <egg/math.h>
+
+#include <nw4r/math.h>
 
 // Forward declarations
 class RPGrpModel;
@@ -45,7 +48,17 @@ public:
     virtual void setModel(RPGrpModel* model);
     virtual void calcModel();
 
-private:
+    void setMtx(const nw4r::math::MTX34& rMtx) {
+        EGG::Vector3f x(rMtx._00, rMtx._10, rMtx._20);
+        EGG::Vector3f y(rMtx._01, rMtx._11, rMtx._21);
+        EGG::Vector3f z(rMtx._02, rMtx._12, rMtx._22);
+
+        setMtxXBase(x);
+        setMtxYBase(y);
+        setMtxZBase(z);
+    }
+
+protected:
     EGG::Vector3f mPosition; // at 0x10
     EGG::Vector3f mVelocity; // at 0x1C
     EGG::Vector3f _28;       // at 0x28

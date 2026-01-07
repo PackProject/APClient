@@ -243,3 +243,4 @@ extern tBTA_GATTS_SRVC_CB * bta_gatts_find_srvc_cb_by_attr_id(tBTA_GATTS_CB *p_c
 
 
 #endif /* BTA_GATTS_INT_H */
+

@@ -57,7 +57,7 @@ Thread::Thread(TRet (*pFunc)(Thread::Param), Thread::Param pArg) {
  */
 template <typename TRet, typename TClass>
 Thread::Thread(TRet (TClass::*pFunc)(), TClass& rObj) {
-    K_ASSERT_PTR(pFunc);
+    K_ASSERT(pFunc);
 
     SetMemberFunction(pFunc, rObj);
     Start();
@@ -73,7 +73,7 @@ Thread::Thread(TRet (TClass::*pFunc)(), TClass& rObj) {
 template <typename TRet, typename TClass>
 Thread::Thread(TRet (TClass::*pFunc)(Thread::Param), TClass& rObj,
                Thread::Param pArg) {
-    K_ASSERT_PTR(pFunc);
+    K_ASSERT(pFunc);
 
     SetMemberFunction(pFunc, rObj);
     SetGPR(4, BitCast<u32>(pArg));
@@ -93,7 +93,7 @@ Thread::Thread(TRet (TClass::*pFunc)(Thread::Param), TClass& rObj,
  */
 template <typename TRet, typename TClass>
 Thread::Thread(TRet (TClass::*pFunc)() const, const TClass& rObj) {
-    K_ASSERT_PTR(pFunc);
+    K_ASSERT(pFunc);
 
     SetMemberFunction(pFunc, rObj);
     Start();
@@ -109,7 +109,7 @@ Thread::Thread(TRet (TClass::*pFunc)() const, const TClass& rObj) {
 template <typename TRet, typename TClass>
 Thread::Thread(TRet (TClass::*pFunc)(Thread::Param) const, const TClass& rObj,
                Thread::Param pArg) {
-    K_ASSERT_PTR(pFunc);
+    K_ASSERT(pFunc);
 
     SetMemberFunction(pFunc, rObj);
     SetGPR(4, BitCast<u32>(pArg));

@@ -1111,3 +1111,4 @@ extern void btm_brcm_arc_init (void);
 #endif
 
 #endif
+

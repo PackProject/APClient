@@ -64,3 +64,4 @@ typedef UINT8 tBTA_OP_FMT;
 typedef UINT8 tBTA_OP_FMT_MASK;
 
 #endif /* BTA_OP_API_H */
+

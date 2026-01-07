@@ -1,0 +1,4075 @@
+{
+  "encoding": "UTF16",
+  "group_id": 0,
+  "form": "MAIN",
+  "form_supplement": "GROUP24",
+  "messages": [
+    {
+      "group": 1000,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x01 0x90 0x64 0x00"
+    },
+    {
+      "group": 1001,
+      "index": 0,
+      "text": "Wii Play",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 1002,
+      "index": 0,
+      "text": "Become a Wii Remote master!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2000,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2001,
+      "index": 0,
+      "text": "Yank it in!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x37 0x00 0x00"
+    },
+    {
+      "group": 2002,
+      "index": 0,
+      "text": "      You\u0027ll be able to move your pole\n      more smoothly if you bring the Wii\n      Remote closer to the Sensor Bar.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2003,
+      "index": 0,
+      "text": "Hold the fishing rod.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2004,
+      "index": 0,
+      "text": "Start fishing!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x72 0x00 0x00"
+    },
+    {
+      "group": 2050,
+      "index": 0,
+      "text": "Touchy Fish",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 2050,
+      "index": 1,
+      "text": "Nibbler",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 2050,
+      "index": 2,
+      "text": "Plain Ol\u0027 Fish",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 2050,
+      "index": 3,
+      "text": "Small Fry",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 2050,
+      "index": 4,
+      "text": "King of the Pond",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3C 0x00 0x00"
+    },
+    {
+      "group": 2050,
+      "index": 5,
+      "text": "Mystery Fish",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 2051,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2052,
+      "index": 0,
+      "text": "Bonus",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2053,
+      "index": 0,
+      "text": "Bonus!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x35 0x00 0x00"
+    },
+    {
+      "group": 2054,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4C 0x00 0x00"
+    },
+    {
+      "group": 2054,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4C 0x00 0x00"
+    },
+    {
+      "group": 2055,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4C 0x00 0x00"
+    },
+    {
+      "group": 2055,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4C 0x00 0x00"
+    },
+    {
+      "group": 2056,
+      "index": 0,
+      "text": "pt.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x24 0x00 0x00"
+    },
+    {
+      "group": 2056,
+      "index": 1,
+      "text": "pts.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x24 0x00 0x00"
+    },
+    {
+      "group": 2057,
+      "index": 0,
+      "text": "point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x24 0x00 0x00"
+    },
+    {
+      "group": 2057,
+      "index": 1,
+      "text": "points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x24 0x00 0x00"
+    },
+    {
+      "group": 2058,
+      "index": 0,
+      "text": "pt",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2058,
+      "index": 1,
+      "text": "pts",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2100,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2101,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2101,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2102,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2102,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2102,
+      "index": 2,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2102,
+      "index": 3,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2103,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2103,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2104,
+      "index": 0,
+      "text": "Hit",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x2B 0x00 0x00"
+    },
+    {
+      "group": 2104,
+      "index": 1,
+      "text": "Hits",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x2B 0x00 0x00"
+    },
+    {
+      "group": 2105,
+      "index": 0,
+      "text": "Bonus",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x24 0x00 0x00"
+    },
+    {
+      "group": 2106,
+      "index": 0,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x39 0xFB 0x00"
+    },
+    {
+      "group": 2106,
+      "index": 1,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x39 0xFB 0x00"
+    },
+    {
+      "group": 2107,
+      "index": 0,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x39 0xFE 0x00"
+    },
+    {
+      "group": 2107,
+      "index": 1,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x39 0xFE 0x00"
+    },
+    {
+      "group": 2108,
+      "index": 0,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0xFA 0x00"
+    },
+    {
+      "group": 2108,
+      "index": 1,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0xFA 0x00"
+    },
+    {
+      "group": 2109,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5E 0x00 0x00"
+    },
+    {
+      "group": 2109,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5E 0x00 0x00"
+    },
+    {
+      "group": 2110,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0xFA 0x00"
+    },
+    {
+      "group": 2110,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0xFA 0x00"
+    },
+    {
+      "group": 2111,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2112,
+      "index": 0,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0xFA 0x00"
+    },
+    {
+      "group": 2150,
+      "index": 0,
+      "text": "Level { VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2150,
+      "index": 1,
+      "text": "Final Level",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2150,
+      "index": 2,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2154,
+      "index": 0,
+      "text": "Finished!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x78 0x00 0x00"
+    },
+    {
+      "group": 2200,
+      "index": 0,
+      "text": "Hold your paddle.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2200,
+      "index": 1,
+      "text": "\uE042: Serve",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2200,
+      "index": 2,
+      "text": "Move into position and serve.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2201,
+      "index": 0,
+      "text": "\uE042: Start",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2201,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2201,
+      "index": 2,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2201,
+      "index": 3,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2202,
+      "index": 0,
+      "text": "Rally 100 times!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2202,
+      "index": 1,
+      "text": "Keep rallying!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2203,
+      "index": 0,
+      "text": "Rally",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2203,
+      "index": 1,
+      "text": "Nice work!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2203,
+      "index": 2,
+      "text": "Incredible!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2204,
+      "index": 0,
+      "text": "time",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2204,
+      "index": 1,
+      "text": "times",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2204,
+      "index": 10,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x78 0xFB 0x00"
+    },
+    {
+      "group": 2205,
+      "index": 0,
+      "text": "11-Point Match",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2206,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2206,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2207,
+      "index": 0,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0xF8 0x00"
+    },
+    {
+      "group": 2207,
+      "index": 1,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0xF8 0x00"
+    },
+    {
+      "group": 2208,
+      "index": 0,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0xFB 0x00"
+    },
+    {
+      "group": 2209,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2209,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2250,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2250,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2250,
+      "index": 2,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2250,
+      "index": 3,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2251,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2251,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2251,
+      "index": 2,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2251,
+      "index": 3,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2251,
+      "index": 4,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2251,
+      "index": 5,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2253,
+      "index": 0,
+      "text": "Net",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5E 0x00 0x00"
+    },
+    {
+      "group": 2253,
+      "index": 1,
+      "text": "Out",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5E 0x00 0x00"
+    },
+    {
+      "group": 2253,
+      "index": 2,
+      "text": "Obstruction",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5E 0x00 0x00"
+    },
+    {
+      "group": 2254,
+      "index": 0,
+      "text": "Change Serve",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5E 0x00 0x00"
+    },
+    {
+      "group": 2260,
+      "index": 0,
+      "text": "P1\u0027s point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5E 0x00 0x00"
+    },
+    {
+      "group": 2260,
+      "index": 1,
+      "text": "P2\u0027s point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5E 0x00 0x00"
+    },
+    {
+      "group": 2260,
+      "index": 4,
+      "text": "CPU\u0027s point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5E 0x00 0x00"
+    },
+    {
+      "group": 2270,
+      "index": 0,
+      "text": "Server",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 2300,
+      "index": 0,
+      "text": "Move the cursor over the\ncue ball and press \uE043.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x54 0x00 0x00"
+    },
+    {
+      "group": 2300,
+      "index": 1,
+      "text": "Hold down \uE043 and move the cursor to change your aim. Press \uE042 to check the table.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2300,
+      "index": 2,
+      "text": "Hold down \uE043 and\npull the Wii Remote\nstraight back.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4D 0x00 0x00"
+    },
+    {
+      "group": 2300,
+      "index": 3,
+      "text": "Release \uE043 as you\npush the Wii Remote\nstraight forward.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4D 0x00 0x00"
+    },
+    {
+      "group": 2300,
+      "index": 4,
+      "text": "Press \uE043 to place the cue ball wherever you want.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2300,
+      "index": 5,
+      "text": "Pull!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 2300,
+      "index": 6,
+      "text": "Push!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 2301,
+      "index": 0,
+      "text": "Foul",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 2301,
+      "index": 1,
+      "text": "The cue ball failed to hit\nthe target ball first.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2301,
+      "index": 2,
+      "text": "The cue ball fell\ninto the pocket.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2301,
+      "index": 3,
+      "text": "The cue ball missed\nthe target ball.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2301,
+      "index": 4,
+      "text": "You shot a ball\noff the table.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2302,
+      "index": 0,
+      "text": "P1\u0027s turn",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2302,
+      "index": 1,
+      "text": "P2\u0027s turn",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2303,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2304,
+      "index": 0,
+      "text": "Ball points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2304,
+      "index": 1,
+      "text": "Shots",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5B 0x00 0x00"
+    },
+    {
+      "group": 2304,
+      "index": 2,
+      "text": "Fouls",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2304,
+      "index": 3,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 2304,
+      "index": 4,
+      "text": "Total",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2304,
+      "index": 5,
+      "text": "Fouls",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5B 0x00 0x00"
+    },
+    {
+      "group": 2304,
+      "index": 6,
+      "text": "Total",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2305,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2306,
+      "index": 0,
+      "text": "Move your Wii Remote closer to the Sensor Bar for better cue control.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2307,
+      "index": 0,
+      "text": "Shot",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0x00 0x00"
+    },
+    {
+      "group": 2308,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0x00 0x00"
+    },
+    {
+      "group": 2308,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0x00 0x00"
+    },
+    {
+      "group": 2309,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2309,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2310,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2310,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2311,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2311,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2312,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x78 0x00 0x00"
+    },
+    {
+      "group": 2312,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x78 0x00 0x00"
+    },
+    {
+      "group": 2314,
+      "index": 0,
+      "text": "{ VAR_0 } foul",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4E 0x00 0x00"
+    },
+    {
+      "group": 2314,
+      "index": 1,
+      "text": "{ VAR_0 } fouls",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4E 0x00 0x00"
+    },
+    {
+      "group": 2316,
+      "index": 0,
+      "text": "{ VAR_0 } foul",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4E 0x00 0x00"
+    },
+    {
+      "group": 2316,
+      "index": 1,
+      "text": "{ VAR_0 } fouls",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4E 0x00 0x00"
+    },
+    {
+      "group": 2317,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x88 0x00 0x00"
+    },
+    {
+      "group": 2319,
+      "index": 0,
+      "text": "{ VAR_0 } shot",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2319,
+      "index": 1,
+      "text": "{ VAR_0 } shots",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2320,
+      "index": 0,
+      "text": "{ VAR_0 } foul",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2320,
+      "index": 1,
+      "text": "{ VAR_0 } fouls",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2321,
+      "index": 0,
+      "text": "Balls Sunk",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 0,
+      "text": "Find this Mii!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 1,
+      "text": "Find 2 look-alikes!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 2,
+      "text": "Find 3 look-alikes!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 3,
+      "text": "Find 4 look-alikes!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 4,
+      "text": "Find 5 look-alikes!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 5,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 6,
+      "text": "Pick a favorite!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 7,
+      "text": "Find your favorite!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 8,
+      "text": "Find this Mii!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 9,
+      "text": "Find the odd Mii out!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 10,
+      "text": "Find 2 odd Miis out!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 11,
+      "text": "Find 3 odd Miis out!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 12,
+      "text": "Find the fastest Mii!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 13,
+      "text": "Find the fastest Mii!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 14,
+      "text": "Find the sleepyhead!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 15,
+      "text": "Find 2 sleepyheads!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 16,
+      "text": "Find 3 sleepyheads!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 17,
+      "text": "Find the insomniac!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 18,
+      "text": "Find 2 insomniacs!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 19,
+      "text": "Find 3 insomniacs!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 20,
+      "text": "Find the odd Mii out!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 21,
+      "text": "Find the Mii you\u0027re using!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2400,
+      "index": 22,
+      "text": "Find the Miis you\u0027re using!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2401,
+      "index": 0,
+      "text": "Move the Wii Remote to zoom!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2401,
+      "index": 1,
+      "text": "Press \uE043 to check the goal.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2402,
+      "index": 0,
+      "text": "Start!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x8C 0x00 0x00"
+    },
+    {
+      "group": 2403,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 2403,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 2404,
+      "index": 0,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x35 0xFD 0x00"
+    },
+    {
+      "group": 2404,
+      "index": 1,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x35 0xFD 0x00"
+    },
+    {
+      "group": 2405,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 2405,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 2406,
+      "index": 0,
+      "text": "Level { VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2406,
+      "index": 1,
+      "text": "Final Level",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2407,
+      "index": 0,
+      "text": "Finished!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x78 0x00 0x00"
+    },
+    {
+      "group": 2408,
+      "index": 0,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x43 0xFC 0x00"
+    },
+    {
+      "group": 2409,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x37 0x00 0x00"
+    },
+    {
+      "group": 2410,
+      "index": 0,
+      "text": "level",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2410,
+      "index": 1,
+      "text": "levels",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2411,
+      "index": 0,
+      "text": "Awesome!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2500,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2501,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2502,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2550,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2551,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2552,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2552,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2552,
+      "index": 4,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2554,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2555,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2600,
+      "index": 0,
+      "text": "Goal!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x81 0x00 0x00"
+    },
+    {
+      "group": 2601,
+      "index": 0,
+      "text": "Game Over",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x81 0x00 0x00"
+    },
+    {
+      "group": 2602,
+      "index": 0,
+      "text": "Start!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x72 0x00 0x00"
+    },
+    {
+      "group": 2603,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2603,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2603,
+      "index": 2,
+      "text": "CPU",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2604,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x52 0x00 0x00"
+    },
+    {
+      "group": 2604,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x52 0x00 0x00"
+    },
+    {
+      "group": 2605,
+      "index": 0,
+      "text": "8-Point Game",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x39 0x00 0x00"
+    },
+    {
+      "group": 2700,
+      "index": 0,
+      "text": "Perfect!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2700,
+      "index": 1,
+      "text": "Perfect!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2701,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0x00 0x00"
+    },
+    {
+      "group": 2701,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0x00 0x00"
+    },
+    {
+      "group": 2702,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0x00 0x00"
+    },
+    {
+      "group": 2702,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0x00 0x00"
+    },
+    {
+      "group": 2703,
+      "index": 0,
+      "text": "Tilt the Wii Remote on its side\nso that \uE041 is on your left.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2703,
+      "index": 1,
+      "text": "Raise the Wii Remote quickly to jump.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2703,
+      "index": 2,
+      "text": "Tilt the Wii Remote forward to run,\nand tilt it back to slow down.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2704,
+      "index": 0,
+      "text": "Perfect!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2705,
+      "index": 0,
+      "text": "Knock down the scarecrows!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 2705,
+      "index": 1,
+      "text": "Knock down those scarecrows!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 2706,
+      "index": 0,
+      "text": "Start!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x82 0x00 0x00"
+    },
+    {
+      "group": 2707,
+      "index": 0,
+      "text": "Goal!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x82 0x00 0x00"
+    },
+    {
+      "group": 2708,
+      "index": 0,
+      "text": "Time Bonus",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2709,
+      "index": 0,
+      "text": ".",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0x00 0x00"
+    },
+    {
+      "group": 2710,
+      "index": 0,
+      "text": "Time\u0027s Up!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 2711,
+      "index": 0,
+      "text": "Finished!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 2712,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2712,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2713,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2713,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2714,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2800,
+      "index": 0,
+      "text": "Match that pose!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x52 0x00 0x00"
+    },
+    {
+      "group": 2801,
+      "index": 0,
+      "text": "Switch poses with \uE042 or \uE043.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2801,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2801,
+      "index": 2,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2801,
+      "index": 3,
+      "text": "Don\u0027t let the bubbles drop!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2802,
+      "index": 0,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0xFD 0x00"
+    },
+    {
+      "group": 2802,
+      "index": 1,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0xFD 0x00"
+    },
+    {
+      "group": 2803,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5B 0x00 0x00"
+    },
+    {
+      "group": 2803,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5B 0x00 0x00"
+    },
+    {
+      "group": 2804,
+      "index": 0,
+      "text": "X2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x2F 0x00 0x00"
+    },
+    {
+      "group": 2805,
+      "index": 0,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0xFD 0x00"
+    },
+    {
+      "group": 2805,
+      "index": 1,
+      "text": "{ VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0xFD 0x00"
+    },
+    {
+      "group": 2806,
+      "index": 0,
+      "text": "Finished!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2807,
+      "index": 0,
+      "text": "Level { VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2807,
+      "index": 1,
+      "text": "Final Level",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 2808,
+      "index": 0,
+      "text": "Ready?",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2810,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2820,
+      "index": 0,
+      "text": "Level cleared!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2821,
+      "index": 0,
+      "text": "Excellent!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2822,
+      "index": 0,
+      "text": "Perfect Bonus",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2823,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2823,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2824,
+      "index": 0,
+      "text": "Awesome!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2825,
+      "index": 0,
+      "text": "Dropped a bubble!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2825,
+      "index": 1,
+      "text": "P1 missed a\nblue bubble!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2825,
+      "index": 2,
+      "text": "P2 missed a\nred bubble!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2830,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2900,
+      "index": 0,
+      "text": "Mission { VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x28 0x00 0x00"
+    },
+    {
+      "group": 2900,
+      "index": 1,
+      "text": "Enemy forces:",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2901,
+      "index": 0,
+      "text": "Mission cleared!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2901,
+      "index": 1,
+      "text": "Mission failed!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2902,
+      "index": 0,
+      "text": "Destroyed",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2903,
+      "index": 0,
+      "text": "Bonus Tank!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 2903,
+      "index": 1,
+      "text": "Restock tanks",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2904,
+      "index": 0,
+      "text": "Mission complete!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2905,
+      "index": 0,
+      "text": "Results",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2905,
+      "index": 1,
+      "text": "Total:",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2906,
+      "index": 0,
+      "text": "Mission:",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2906,
+      "index": 1,
+      "text": "Tanks left: ",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2907,
+      "index": 0,
+      "text": "Start!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x78 0x00 0x00"
+    },
+    {
+      "group": 2908,
+      "index": 0,
+      "text": "Hit!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x78 0x00 0x00"
+    },
+    {
+      "group": 2909,
+      "index": 0,
+      "text": "Mission { VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5F 0x00 0x00"
+    },
+    {
+      "group": 2909,
+      "index": 1,
+      "text": "Final Mission",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5F 0x00 0x00"
+    },
+    {
+      "group": 2910,
+      "index": 0,
+      "text": "Enemy tanks: { VAR_0 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2911,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2911,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 2912,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0x00 0x00"
+    },
+    {
+      "group": 2912,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0x00 0x00"
+    },
+    {
+      "group": 2913,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0x00 0x00"
+    },
+    {
+      "group": 2913,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0x00 0x00"
+    },
+    {
+      "group": 2914,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2914,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2915,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2916,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 2916,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 2917,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2918,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2918,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 2919,
+      "index": 0,
+      "text": "Results",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0x00 0x00"
+    },
+    {
+      "group": 2920,
+      "index": 0,
+      "text": "Results",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x32 0x00 0x00"
+    },
+    {
+      "group": 2930,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2930,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2940,
+      "index": 0,
+      "text": "Move the tank with \u3327 or \uE041.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2940,
+      "index": 1,
+      "text": "Aim at the enemy tank.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2940,
+      "index": 2,
+      "text": "Fire with \uE043.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 2940,
+      "index": 3,
+      "text": "Drop mines with \uE043.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 6000,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 6000,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 6001,
+      "index": 0,
+      "text": "Press \uE042 and \uE043.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 6002,
+      "index": 0,
+      "text": "Wii Play",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 7000,
+      "index": 0,
+      "text": "Shooting Range",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7000,
+      "index": 1,
+      "text": "Find Mii",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7000,
+      "index": 2,
+      "text": "Table Tennis",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7000,
+      "index": 3,
+      "text": "Pose Mii",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7000,
+      "index": 4,
+      "text": "Laser Hockey",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7000,
+      "index": 5,
+      "text": "Billiards",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7000,
+      "index": 6,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7000,
+      "index": 7,
+      "text": "Fishing",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7000,
+      "index": 8,
+      "text": "Charge!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7000,
+      "index": 9,
+      "text": "Tanks!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7001,
+      "index": 0,
+      "text": "Shoot down the\ntargets by aiming the\nWii Remote at the\nscreen. Fire with \uE043.\nCombo 5 or more\nshots for a bonus!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7001,
+      "index": 1,
+      "text": "Pick out the right\nfaces from the\ncrowd. Aim with\nthe Wii Remote,\nand press \uE042 to\nselect.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7001,
+      "index": 2,
+      "text": "Move the paddle to\nreturn the ball. Aim\nthe Wii Remote at\nthe screen to move\nthe paddle. How many\ntimes can you rally?",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7001,
+      "index": 3,
+      "text": "Twist the Wii\nRemote to spin the\nMii left and right.\nSwitch poses by\npressing \uE042 or \uE043.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7001,
+      "index": 4,
+      "text": "Hit the puck into\nyour opponent\u0027s\ngoal with the Wii\nRemote. Twist the\nWii Remote left and\nright to rotate.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7001,
+      "index": 5,
+      "text": "Strike the cue ball\nwith the Wii Remote.\nAim for the ball with\nthe cursor over it.\nHow many shots will it\ntake to sink them all?",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7001,
+      "index": 6,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7001,
+      "index": 7,
+      "text": "Move the Wii Remote\nforward, back, up,\ndown, left, and right\nto move the rod.\nWhen you get a\nnibble, pull back!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7001,
+      "index": 8,
+      "text": "Turn the Wii Remote\nso that \uE041 is on the\nleft. Tilt forward to\nrun, back to slow,\nand sideways to turn.\nRaise it to jump.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7001,
+      "index": 9,
+      "text": "Wii Remote: Aim\n\u3327 or \uE041: Steer tank\n\uE043: Fire\n\uE042: Drop a mine",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7002,
+      "index": 0,
+      "text": "Shoot down the\ntargets by aiming the\nWii Remote at the\nscreen. Fire with \uE043.\nCombo 5 or more\nshots for a bonus!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7002,
+      "index": 1,
+      "text": "Pick the right faces\nfrom the crowd. Aim\nwith the Wii Remote,\nand press \uE042 to\nselect. Press \uE043 for\na reminder.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7002,
+      "index": 2,
+      "text": "Move the paddle to\nreturn the ball.\nThe first player to\n11 wins. Change\nwhere it lands by\nmoving the paddle.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7002,
+      "index": 3,
+      "text": "Twist the Wii\nRemote to spin the\nMii left and right.\nSwitch poses by\npressing \uE042 or \uE043.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7002,
+      "index": 4,
+      "text": "Hit the puck into\nyour opponent\u0027s\ngoal with the Wii\nRemote. Twist the\nWii Remote left and\nright to rotate.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7002,
+      "index": 5,
+      "text": "Strike the cue ball\nwith the Wii Remote.\nAim for the ball with\nthe cursor over it.\nSink a ball to earn\nthat many points.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7002,
+      "index": 6,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7002,
+      "index": 7,
+      "text": "Move the Wii Remote\nforward, back, up,\ndown, left, and right\nto move the rod.\nWhen you get a\nnibble, pull back!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7002,
+      "index": 8,
+      "text": "Turn the Wii Remote\nso that \uE041 is on the\nleft. Tilt forward to\nrun, back to slow,\nand sideways to turn.\nRaise it to jump.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7002,
+      "index": 9,
+      "text": "Wii Remote: Aim\n\u3327 or \uE041: Steer tank\n\uE043: Fire\n\uE042: Drop a mine",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x55 0x00 0x00"
+    },
+    {
+      "group": 7003,
+      "index": 0,
+      "text": "\uE042: Start",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 7004,
+      "index": 0,
+      "text": "Stage 1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7004,
+      "index": 1,
+      "text": "Stage 2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7004,
+      "index": 2,
+      "text": "Stage 3",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7004,
+      "index": 3,
+      "text": "Stage 4",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7004,
+      "index": 4,
+      "text": "Stage 5",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7004,
+      "index": 5,
+      "text": "Stage 6",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7004,
+      "index": 6,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7004,
+      "index": 7,
+      "text": "Stage 7",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7004,
+      "index": 8,
+      "text": "Stage 8",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7004,
+      "index": 9,
+      "text": "Stage 9",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7005,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 7005,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 7010,
+      "index": 0,
+      "text": "Shooting Range",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 7010,
+      "index": 1,
+      "text": "Find Mii",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 7010,
+      "index": 2,
+      "text": "Table Tennis",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 7010,
+      "index": 3,
+      "text": "Pose Mii",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 7010,
+      "index": 4,
+      "text": "Laser Hockey",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 7010,
+      "index": 5,
+      "text": "Billiards",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 7010,
+      "index": 6,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 7010,
+      "index": 7,
+      "text": "Fishing",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 7010,
+      "index": 8,
+      "text": "Charge!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 7010,
+      "index": 9,
+      "text": "Tanks!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 7020,
+      "index": 0,
+      "text": "Return to Select Players screen?{ WINDOW_DEFAULT_CURSOR 01 00 }",
+      "attributes": "0x00000002",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 7020,
+      "index": 1,
+      "text": "Yes",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7020,
+      "index": 2,
+      "text": "No",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7021,
+      "index": 0,
+      "text": "If you go back to the Select\nPlayers screen, your results\nwill be lost. Are you sure?{ WINDOW_DEFAULT_CURSOR 01 00 }",
+      "attributes": "0x00000002",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 7021,
+      "index": 1,
+      "text": "Yes",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7021,
+      "index": 2,
+      "text": "No",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 7030,
+      "index": 0,
+      "text": "   { WINDOW_ALIGN 00 00 }Welcome to Wii Play!\n\n   This game will teach you\n   everything you need to know\n   about the Wii Remote.\n   In stage one, you\u0027ll use the Wii\n   Remote to shoot targets.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 7031,
+      "index": 0,
+      "text": " { WINDOW_ALIGN 00 00 }Stage two is now open!\n\n In stage two, you\u0027ll use the Wii\n Remote to pick the correct Mii out\n of the crowd. You\u0027ll see a lot of\n Miis out there--maybe even a few\n that you\u0027ve created yourself!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x62 0x00 0x00"
+    },
+    {
+      "group": 7032,
+      "index": 0,
+      "text": " { WINDOW_ALIGN 00 00 }Stage three is now open!\n\n So, you\u0027ve gotten used to using\n the Wii Remote as a pointer, have\n you? The next stage will help\n improve your pointing speed and\n accuracy.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 7033,
+      "index": 0,
+      "text": "  { WINDOW_ALIGN 00 00 }Stage four is now open!\n\n  Pointing directly at the screen\n  is only one of the many uses for\n  the Wii Remote. In the next\n  stage, you\u0027ll have to twist the\n  Wii Remote, too!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 7034,
+      "index": 0,
+      "text": "  { WINDOW_ALIGN 00 00 }Stage five is now open!\n\n  Think you\u0027re getting the hang of\n  twisting the Wii Remote? Then\n  show off your new skills in a\n  little match of Laser Hockey!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 7035,
+      "index": 0,
+      "text": " { WINDOW_ALIGN 00 00 }Stage six is now open!\n\n This time, move the Wii Remote\n closer to the TV and then farther\n away for some 3-D movement.\n For the best results, sit so that\n you\u0027re centered with the TV.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 7036,
+      "index": 0,
+      "text": " { WINDOW_ALIGN 00 00 }Stage seven is now open!\n\n Move the Wii Remote forward,\n back, left, and right to move the\n fishing pole. It might seem odd at\n first, but just relax, take your\n time, and enjoy yourself!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 7037,
+      "index": 0,
+      "text": "  { WINDOW_ALIGN 00 00 }Stage eight is now open!\n\n  You\u0027ve come a long way, haven\u0027t\n  you? Let\u0027s change things up a\n  little by holding the Wii Remote\n  sideways for this next game!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 7038,
+      "index": 0,
+      "text": " { WINDOW_ALIGN 00 00 }The final stage is now open!\n\n This might seem complex, but\n you\u0027ve done great so far! You\n can use the Nunchuk to play\n this game (or just use the Wii\n Remote by itself if you like).",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 7039,
+      "index": 0,
+      "text": " { WINDOW_ALIGN 00 00 }Congratulations!\n\n You are now a Wii Remote master!\n You\u0027ve just gotten a small taste\n of what the Wii Remote can do.\n Now, challenge a friend, or try\n to earn all the gold medals!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x62 0x00 0x00"
+    },
+    {
+      "group": 7040,
+      "index": 0,
+      "text": "Bronze Medal Completed",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 7040,
+      "index": 1,
+      "text": "Silver Medal Completed",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 7040,
+      "index": 2,
+      "text": "Gold Medal Completed",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 7040,
+      "index": 3,
+      "text": "Platinum Medal Completed",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 7041,
+      "index": 0,
+      "text": "Congratulations!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 7050,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 7050,
+      "index": 1,
+      "text": "Aim",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 7050,
+      "index": 2,
+      "text": "Point left and right",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 7050,
+      "index": 3,
+      "text": "Twist to rotate",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 7050,
+      "index": 4,
+      "text": "Twist to rotate",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 7050,
+      "index": 5,
+      "text": "Pull back to strike",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 7050,
+      "index": 6,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 7050,
+      "index": 7,
+      "text": "Move in all directions",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 7050,
+      "index": 8,
+      "text": "Tilt sideways",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 7050,
+      "index": 9,
+      "text": "Point to aim",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8000,
+      "index": 0,
+      "text": "My Record",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 8001,
+      "index": 0,
+      "text": "1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 8001,
+      "index": 1,
+      "text": "2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 8001,
+      "index": 2,
+      "text": "3",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 8001,
+      "index": 3,
+      "text": "4",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 8001,
+      "index": 4,
+      "text": "5",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 8004,
+      "index": 0,
+      "text": "New record!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8005,
+      "index": 0,
+      "text": "Personal best!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8010,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8011,
+      "index": 0,
+      "text": "Stage 1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 8011,
+      "index": 1,
+      "text": "Stage 2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 8011,
+      "index": 2,
+      "text": "Stage 3",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 8011,
+      "index": 3,
+      "text": "Stage 4",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 8011,
+      "index": 4,
+      "text": "Stage 5",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 8011,
+      "index": 5,
+      "text": "Stage 6",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 8011,
+      "index": 6,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 8011,
+      "index": 7,
+      "text": "Stage 7",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 8011,
+      "index": 8,
+      "text": "Stage 8",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 8011,
+      "index": 9,
+      "text": "Stage 9",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 8012,
+      "index": 0,
+      "text": "Bronze Medal Earned",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3C 0x00 0x00"
+    },
+    {
+      "group": 8012,
+      "index": 1,
+      "text": "Silver Medal Earned",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3C 0x00 0x00"
+    },
+    {
+      "group": 8012,
+      "index": 2,
+      "text": "Gold Medal Earned",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3C 0x00 0x00"
+    },
+    {
+      "group": 8012,
+      "index": 3,
+      "text": "Platinum Medal Earned",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3C 0x00 0x00"
+    },
+    {
+      "group": 8013,
+      "index": 0,
+      "text": "Congratulations!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 8020,
+      "index": 0,
+      "text": "{ VAR_0 } win",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3C 0x00 0x00"
+    },
+    {
+      "group": 8020,
+      "index": 1,
+      "text": "{ VAR_0 } wins",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3C 0x00 0x00"
+    },
+    {
+      "group": 8021,
+      "index": 0,
+      "text": "Play again",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 8021,
+      "index": 1,
+      "text": "Play a different game",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 8022,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 8022,
+      "index": 1,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 8100,
+      "index": 0,
+      "text": "point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8100,
+      "index": 1,
+      "text": "points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8101,
+      "index": 0,
+      "text": "level",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8101,
+      "index": 1,
+      "text": "levels",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8102,
+      "index": 0,
+      "text": "time",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8102,
+      "index": 1,
+      "text": "times",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8103,
+      "index": 0,
+      "text": "point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8103,
+      "index": 1,
+      "text": "points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8104,
+      "index": 0,
+      "text": "point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8104,
+      "index": 1,
+      "text": "points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8105,
+      "index": 0,
+      "text": "point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8105,
+      "index": 1,
+      "text": "points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8106,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8106,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8107,
+      "index": 0,
+      "text": "point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8107,
+      "index": 1,
+      "text": "points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8108,
+      "index": 0,
+      "text": "point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8108,
+      "index": 1,
+      "text": "points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8109,
+      "index": 0,
+      "text": "tank",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8109,
+      "index": 1,
+      "text": "tanks",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 8200,
+      "index": 0,
+      "text": "{ VAR_0 } point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8200,
+      "index": 1,
+      "text": "{ VAR_0 } points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8201,
+      "index": 0,
+      "text": "{ VAR_0 } level",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8201,
+      "index": 1,
+      "text": "{ VAR_0 } levels",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8202,
+      "index": 0,
+      "text": "{ VAR_0 } time",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8202,
+      "index": 1,
+      "text": "{ VAR_0 } times",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8203,
+      "index": 0,
+      "text": "{ VAR_0 } point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8203,
+      "index": 1,
+      "text": "{ VAR_0 } points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8204,
+      "index": 0,
+      "text": "{ VAR_0 } point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8204,
+      "index": 1,
+      "text": "{ VAR_0 } points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8205,
+      "index": 0,
+      "text": "{ VAR_0 } point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8205,
+      "index": 1,
+      "text": "{ VAR_0 } points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8206,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8206,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8207,
+      "index": 0,
+      "text": "{ VAR_0 } point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8207,
+      "index": 1,
+      "text": "{ VAR_0 } points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8208,
+      "index": 0,
+      "text": "{ VAR_0 } point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8208,
+      "index": 1,
+      "text": "{ VAR_0 } points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8209,
+      "index": 0,
+      "text": "{ VAR_0 } tank",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8209,
+      "index": 1,
+      "text": "{ VAR_0 } tanks",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8300,
+      "index": 0,
+      "text": "Record: { VAR_0 } point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8300,
+      "index": 1,
+      "text": "Record: { VAR_0 } points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8301,
+      "index": 0,
+      "text": "Record: { VAR_0 } level",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8301,
+      "index": 1,
+      "text": "Record: { VAR_0 } levels",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8302,
+      "index": 0,
+      "text": "Record: { VAR_0 } time",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8302,
+      "index": 1,
+      "text": "Record: { VAR_0 } times",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8303,
+      "index": 0,
+      "text": "Record: { VAR_0 } point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8303,
+      "index": 1,
+      "text": "Record: { VAR_0 } points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8304,
+      "index": 0,
+      "text": "Record: { VAR_0 } point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8304,
+      "index": 1,
+      "text": "Record: { VAR_0 } points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8305,
+      "index": 0,
+      "text": "Record: { VAR_0 } point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8305,
+      "index": 1,
+      "text": "Record: { VAR_0 } points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8306,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8306,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8307,
+      "index": 0,
+      "text": "Record: { VAR_0 } point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8307,
+      "index": 1,
+      "text": "Record: { VAR_0 } points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8308,
+      "index": 0,
+      "text": "Record: { VAR_0 } point",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8308,
+      "index": 1,
+      "text": "Record: { VAR_0 } points",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8309,
+      "index": 0,
+      "text": "Record: { VAR_0 } tank",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 8309,
+      "index": 1,
+      "text": "Record: { VAR_0 } tanks",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 9000,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 9000,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 9001,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 9002,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 9002,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 9010,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 9010,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 9020,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 9020,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 9020,
+      "index": 10,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 9020,
+      "index": 11,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 9030,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 9030,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 9030,
+      "index": 10,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 9030,
+      "index": 11,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 9031,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 9040,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 9090,
+      "index": 0,
+      "text": "Aim the Wii Remote at the screen.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x51 0x00 0x00"
+    },
+    {
+      "group": 9090,
+      "index": 1,
+      "text": "P1: Aim the Wii Remote at the screen.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x51 0x00 0x00"
+    },
+    {
+      "group": 9090,
+      "index": 2,
+      "text": "P2: Aim the Wii Remote at the screen.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x51 0x00 0x00"
+    },
+    {
+      "group": 9091,
+      "index": 0,
+      "text": "Pause",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 9091,
+      "index": 1,
+      "text": "Pause",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 10000,
+      "index": 0,
+      "text": "Welcome to Wii Play.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 10001,
+      "index": 0,
+      "text": "Completed all stages!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 10002,
+      "index": 0,
+      "text": "Bronze Medal Earned!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 10003,
+      "index": 0,
+      "text": "Silver Medal Earned!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 10004,
+      "index": 0,
+      "text": "Gold Medal Earned!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 10005,
+      "index": 0,
+      "text": "Platinum Medal Earned!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 10006,
+      "index": 0,
+      "text": "All Bronze Medals Earned!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 10007,
+      "index": 0,
+      "text": "All Silver Medals Earned!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 10008,
+      "index": 0,
+      "text": "All Gold Medals Earned!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 10009,
+      "index": 0,
+      "text": "All Platinum Medals Earned!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11000,
+      "index": 0,
+      "text": "The following player has been\nadded to your Wii Play player\nlist: { VAR_1 }\n\nIf you erase this Mii from the\nMii Channel, it will be also\ndeleted from your Wii Play\nplayer list, so please be\ncareful.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11001,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11002,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11003,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11004,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11005,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11006,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11007,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11008,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11009,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11010,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11011,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11012,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11013,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11014,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11015,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11016,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11017,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11018,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11019,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11020,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11021,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11022,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11023,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11024,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11025,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11026,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11027,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11028,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11029,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11030,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11031,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11032,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11033,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11034,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11035,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11036,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11037,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11038,
+      "index": 0,
+      "text": "Congratulations!\n{ VAR_1 } has earned\na bronze medal in all of the\nminigames.\n\nYou\u0027re getting a hang of the\nWii Remote. Keep it up!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11039,
+      "index": 0,
+      "text": "Congratulations!\n{ VAR_1 } has earned\na silver medal in all of the\nminigames.\n\nYou\u0027ve got a good handle on\nusing the Wii Remote. You\u0027ve\nearned bragging rights, so go\non and tell all your friends!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11040,
+      "index": 0,
+      "text": "Congratulations!\n{ VAR_1 } has earned\na gold medal in all of the\nminigames.\n\nExcellent! You really are a\nWii Remote master now!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11041,
+      "index": 0,
+      "text": "Congratulations!\n{ VAR_1 } has earned\na platinum medal in all of the\nminigames.\n\nYou\u0027ve gone beyond mere master\nnow... It\u0027s like you and your\nWii Remote are one! Impressive!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11100,
+      "index": 0,
+      "text": "{ VAR_1 } has earned\na bronze medal in\nShooting Range. That makes\nyou a novice sharpshooter!\n\nHere\u0027s a tip: Don\u0027t just blast\neverything that moves. Instead,\ntry to chain five or more shots.\nIt\u0027s a great way to improve\nyour score--and your skills!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11100,
+      "index": 1,
+      "text": "{ VAR_1 } has earned\na silver medal in Shooting\nRange. That makes you a\nmaster sharpshooter!\n\nHere\u0027s a tip: The more targets\nyou hit in Level 2, the more\ntargets will fly out! This is\nyour chance to earn a ton of\npoints. Use it wisely.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11100,
+      "index": 2,
+      "text": "{ VAR_1 } has earned\na gold medal in Shooting\nRange. That makes you a\nsharpshooting wiz!\n\nHere\u0027s a tip: Focus on accuracy\ninstead of on peppering targets\nwith shots. You\u0027ll earn more\npoints for shots hit in a row.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11100,
+      "index": 3,
+      "text": "{ VAR_1 } has earned\na platinum medal in Shooting\nRange. That makes you an\nunrivaled sharpshooter!\n\nYou don\u0027t need any more advice.\nHowever, see how well you can\nscore with two Wii Remotes!\nImpress your friends and\nintimidate your enemies!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11101,
+      "index": 0,
+      "text": "{ VAR_1 } has earned\na bronze medal in Find Mii.\nYou\u0027ve got good eyes!\n\nHere\u0027s a tip: The more Miis\nyou make in the Mii Channel,\nthe more familiar the faces\nhere will be. Familiar faces\nmight make things easier...",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11101,
+      "index": 1,
+      "text": "{ VAR_1 } has earned\na silver medal in Find Mii.\nYou\u0027ve got sharp eyes!\n\nHere\u0027s a tip: Use your sharp\neyes in the real world to find\nlost keys and spare change!\nBus fare is never far away!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11101,
+      "index": 2,
+      "text": "{ VAR_1 } has earned\na gold medal in Find Mii.\nYou\u0027ve got eagle eyes!\n\nYou have good observation skills\nand a great memory...or maybe\nyou\u0027re just good at remembering\nfaces.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11101,
+      "index": 3,
+      "text": "{ VAR_1 } has earned\na platinum medal in Find\nMii. Are you...clairvoyant?\n\nWe\u0027ve got nothing but praise\nfor you...but you already knew\nthat, didn\u0027t you?",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11102,
+      "index": 0,
+      "text": "{ VAR_1 } has earned\na bronze medal in Table\nTennis. You\u0027ve got the makings\nof a master player!\n\nHere\u0027s a tip: The trick to\nimproving your game is to\nkeep your paddle movements\nsmall.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11102,
+      "index": 1,
+      "text": "{ VAR_1 } has earned\na silver medal in Table\nTennis. You\u0027re the team captain!\n\nYou\u0027ve improved quite a bit.\nNow, work on your reaction\ntime. With a little focus,\n100 rallies will be no problem\nat all!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11102,
+      "index": 2,
+      "text": "{ VAR_1 } has earned\na gold medal in Table\nTennis. You\u0027re a table-tennis\nterror!\n\nRemember back when 100 rallies\nseemed impossible? Now, you\ncan probably beat that in your\nsleep!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11102,
+      "index": 3,
+      "text": "{ VAR_1 } has earned\na platinum medal in Table\nTennis. You\u0027re a table-tennis\nwizard!\n\nYou need no more advice.\nNow, try to rally 999 times!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11103,
+      "index": 0,
+      "text": "{ VAR_1 } has earned\na bronze medal in Pose Mii.\nYou are now an apprentice Mii\nposer.\n\nJust relax and pop those\nbubbles one at a time.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11103,
+      "index": 1,
+      "text": "{ VAR_1 } has earned\na silver medal in Pose Mii.\nYou are now a true Mii poser.\n\nLearning to switch poses quickly\nis the key to improvement.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11103,
+      "index": 2,
+      "text": "{ VAR_1 } has earned\na gold medal in Pose Mii.\nYou are now a master poser.\n\nThe only way to improve is to\nmaster using both the A and B\nButtons to change your poses.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11103,
+      "index": 3,
+      "text": "{ VAR_1 } has earned\na platinum medal in Pose Mii.\nYou are now a Mii poser par\nexcellence.\n\nShow off your posing skills to\nyour friends, and be the envy\nof all who behold you!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11104,
+      "index": 0,
+      "text": "{ VAR_1 } has earned\na bronze medal in Laser\nHockey. This makes you a\nmember of the team!\n\nHere\u0027s a tip: Try to catch your\nopponent off guard by\nricocheting the puck off\nthe wall.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11104,
+      "index": 1,
+      "text": "{ VAR_1 } has earned\na silver medal in Laser\nHockey. This makes you captain\nof the team!\n\nHere\u0027s a tip: The back of the\npaddle bounces the puck less\nthan the front does. Make the\npuck travel faster by using the\nends of the paddle.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11104,
+      "index": 2,
+      "text": "{ VAR_1 } has earned\na gold medal in Laser\nHockey. This makes you\nmanager of the team!\n\nHere\u0027s a tip: Press the A and B\nButtons together during the\ncountdown to change the\npaddle\u0027s shape!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11104,
+      "index": 3,
+      "text": "{ VAR_1 } has earned\na platinum medal in Laser\nHockey. This makes you the\nowner of the team!\n\nYou have nothing more to learn!\nJust remember to wear your\nmouth guard--hockey can get\nrough...even Laser Hockey!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11105,
+      "index": 0,
+      "text": "{ VAR_1 } has earned\na bronze medal in Billiards.\nYou\u0027re a pool shark in training!\n\nHere\u0027s a tip: Strike near the\nbottom of the cue ball to give\nit backspin. Hit it near the\ntop to give it topspin.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11105,
+      "index": 1,
+      "text": "{ VAR_1 } has earned\na silver medal in Billiards.\nYou\u0027re a pool shark now!\n\nHere\u0027s a tip: Move the cursor\nwhile holding the B Button to\nchange where you aim. You\ncan jump the ball by aiming\nand hitting from the top.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11105,
+      "index": 2,
+      "text": "{ VAR_1 } has earned\na gold medal in Billiards.\nYou\u0027re not just a pool shark!\nYou\u0027re a great white!\n\nHere\u0027s a tip: Strike the cue ball\non its left or right side to\ngive it some spin. Try this\nwhen your target is at a tricky\nangle.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11105,
+      "index": 3,
+      "text": "{ VAR_1 } has earned\na platinum medal in Billiards.\nYou eat pool sharks for\nbreakfast!\n\nYou don\u0027t need any more advice.\nJust go show off for your\nfriends!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11106,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11106,
+      "index": 1,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11106,
+      "index": 2,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11106,
+      "index": 3,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11107,
+      "index": 0,
+      "text": "{ VAR_1 } has earned\na bronze medal in Fishing.\nYou\u0027re a vacation fisher, aren\u0027t\nyou?\n\nHere\u0027s a tip: Small fries will\njust swim away if you don\u0027t\nreel them in. They\u0027ll disappear\nfrom the pond if you ignore\nthem.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11107,
+      "index": 1,
+      "text": "{ VAR_1 } has earned\na silver medal in Fishing.\nYou\u0027re a fishing fanatic!\n\nHere\u0027s a tip: The red touchy\nfish swim away if you move\nthe hook behind them. Move\nthe hook toward their heads.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11107,
+      "index": 2,
+      "text": "{ VAR_1 } has earned\na gold medal in Fishing.\nYou\u0027re a master angler!\n\nIf you want to improve, try\ncatching all the bonus fish.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11107,
+      "index": 3,
+      "text": "{ VAR_1 } has earned\na platinum medal in Fishing.\nWho\u0027s king of the pond now!?\n\nYou don\u0027t need any more advice.\nNo fish can escape your hook!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11108,
+      "index": 0,
+      "text": "{ VAR_1 } has earned\na bronze medal in Charge!\nThat makes you a tenderfoot!\n\nHere\u0027s a tip: The scarecrow\nkings (the ones with the crowns)\nare worth more points. Be sure\nyou don\u0027t leave a single one\nstanding!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11108,
+      "index": 1,
+      "text": "{ VAR_1 } has earned\na silver medal in Charge!\nYou\u0027re a regular rodeo clown!\n\nHere\u0027s a tip: When you see a\ngroup of scarecrows all in a\nrow, knock them all down to\nearn bonus points.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11108,
+      "index": 2,
+      "text": "{ VAR_1 } has earned\na gold medal in Charge!\nYou\u0027re an honest-to-goodness\ncowpoke, aren\u0027t you?\n\nHere\u0027s a tip: Tilt the Wii\nRemote forward right when you\nsee the word Start to get an\nextra boost of speed out of\nthe gate.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11108,
+      "index": 3,
+      "text": "{ VAR_1 } has earned\na platinum medal in Charge!\nI reckon you fancy yourself a\nregular bronco buster, huh?\n\nYou don\u0027t need any more advice.\nNow, it\u0027s time to show off for\nyour friends!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11109,
+      "index": 0,
+      "text": "{ VAR_1 } has earned\na bronze medal in Tanks!\nYou\u0027ve been promoted to private,\nfirst class!\n\nHere\u0027s a tip: You can destroy\ncertain walls with a mine. Use\nthis to create a shortcut or an\nescape route.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11109,
+      "index": 1,
+      "text": "{ VAR_1 } has earned\na silver medal in Tanks!\nYou\u0027ve been promoted to\nsergeant!\n\nHere\u0027s a tip: Some enemies can\u0027t\ndodge your shells very well, and\nsome drive right over mines.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11109,
+      "index": 2,
+      "text": "{ VAR_1 } has earned\na gold medal in Tanks!\nYou\u0027ve been promoted to\ngeneral!\n\nOutstanding battle results!\nYou will, no doubt, receive more\nmissions in the future.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    },
+    {
+      "group": 11109,
+      "index": 3,
+      "text": "{ VAR_1 } has earned\na platinum medal in Tanks!\nYou\u0027ve been promoted to five-\nstar general! Sir! Impressive\nwork, sir!\n\nYou have superior judgment,\nfocus, and fighting skills, sir!\nYou might have what it takes\nto clear Mission 100, sir!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x56 0x00 0x00"
+    }
+  ]
+}

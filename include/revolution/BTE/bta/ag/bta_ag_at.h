@@ -118,3 +118,4 @@ extern void bta_ag_at_reinit(tBTA_AG_AT_CB *p_cb);
 extern void bta_ag_at_parse(tBTA_AG_AT_CB *p_cb, char *p_buf, UINT16 len);
 
 #endif /* BTA_AG_AT_H */
+

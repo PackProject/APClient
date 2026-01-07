@@ -4,6 +4,8 @@
 #include <RPKernel/IRPSysHostIOSocket.h>
 #include <RPKernel/RPSysAvatar.h>
 #include <RPKernel/RPSysCursorDrawMgr.h>
+#include <RPKernel/RPSysEffectBase.h>
+#include <RPKernel/RPSysEffectCreator.h>
 #include <RPKernel/RPSysEffectMgr.h>
 #include <RPKernel/RPSysFile.h>
 #include <RPKernel/RPSysFrameCtrl.h>

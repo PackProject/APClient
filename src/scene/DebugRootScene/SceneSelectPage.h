@@ -34,10 +34,12 @@ public:
     /**
      * @brief Option select callback
      *
+     * @param pInvoker Callback invoker
      * @param pArg Callback user argument
      * @return Result of action
      */
-    static kiwi::EDebugMenuResult SelectProc(void* pArg);
+    static kiwi::EDebugMenuResult SelectProc(kiwi::DebugOptionBase* pInvoker,
+                                             void* pArg);
 
 private:
     //! Number of menu options

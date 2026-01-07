@@ -23,7 +23,7 @@ enum {
  */
 u64 EmuRichPresenceClient::GetTimeNow() const {
     if (!IsConnected()) {
-        return;
+        return 0;
     }
 
     TVector<IosVector> input;

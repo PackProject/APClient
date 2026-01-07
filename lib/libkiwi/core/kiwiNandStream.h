@@ -40,6 +40,14 @@ public:
     }
 
     /**
+     * @brief Gets the current stream position
+     */
+    virtual u32 GetPosition() const {
+        K_NOT_IMPLEMENTED();
+        return 0;
+    }
+
+    /**
      * @brief Opens stream to NAND file
      *
      * @param rPath File path

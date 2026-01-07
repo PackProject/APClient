@@ -10,6 +10,7 @@ namespace kiwi {
 const char* GetBuildDate();
 const char* GetBuildPack();
 const char* GetBuildTarget();
+const char* GetGitCommitHash();
 
 //! @}
 } // namespace kiwi

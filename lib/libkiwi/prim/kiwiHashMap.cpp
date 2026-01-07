@@ -9,7 +9,7 @@ namespace {
  * @param x Initial value
  * @param r Number of bits to rotate
  */
-u32 rotl32(register u32 x, register int r) {
+K_INLINE u32 rotl32(register u32 x, register int r) {
     // clang-format off
     asm {
         rotlw x, x, r
@@ -24,11 +24,11 @@ u32 rotl32(register u32 x, register int r) {
  *
  * @param h Hash block
  */
-u32 fmix32(u32 h) {
+K_INLINE u32 fmix32(u32 h) {
     h ^= h >> 16;
-    h *= 0x85ebca6b;
+    h *= 0x85EBCA6B;
     h ^= h >> 13;
-    h *= 0xc2b2ae35;
+    h *= 0xC2B2AE35;
     h ^= h >> 16;
 
     return h;
@@ -43,12 +43,12 @@ u32 fmix32(u32 h) {
  * @param pKey Key
  * @param len Key length
  */
-hash_t HashImpl(const void* pKey, s32 len) {
-    K_ASSERT(pKey != nullptr);
+hash_t MurmurHash(const void* pKey, s32 len) {
+    K_ASSERT_PTR(pKey);
     K_ASSERT(len > 0);
 
     const u8* pData = static_cast<const u8*>(pKey);
-    int nblocks = len / 4;
+    s32 nblocks = len / 4;
 
     u32 h1 = 0xC70F6907;
     u32 c1 = 0xCC9E2D51;
@@ -71,18 +71,28 @@ hash_t HashImpl(const void* pKey, s32 len) {
     u32 k1 = 0;
 
     switch (len & 3) {
-    case 3: k1 ^= pTail[2] << 16;
-    case 2: k1 ^= pTail[1] << 8;
-    case 1:
+    case 3: {
+        k1 ^= pTail[2] << 16;
+        // fallthrough
+    }
+
+    case 2: {
+        k1 ^= pTail[1] << 8;
+        // fallthrough
+    }
+
+    case 1: {
         k1 ^= pTail[0];
         k1 *= c1;
         k1 = rotl32(k1, 15);
         k1 *= c2;
         h1 ^= k1;
+        // fallthrough
+    }
     };
 
     h1 ^= len;
-    return fmix32(h1);
+    return static_cast<hash_t>(fmix32(h1));
 }
 
 } // namespace kiwi

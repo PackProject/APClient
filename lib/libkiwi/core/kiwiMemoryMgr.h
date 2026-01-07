@@ -34,7 +34,7 @@ public:
      * @param memory Target memory region
      * @return Pointer to allocated block
      */
-    void* Alloc(u32 size, s32 align, EMemory region) const;
+    void* Alloc(u32 size, s32 align, EMemory memory) const;
 
     /**
      * @brief Frees a block of memory
@@ -44,11 +44,18 @@ public:
     void Free(void* pBlock) const;
 
     /**
-     * @brief Gets total size of available heap memory
+     * @brief Gets size of available heap memory
      *
      * @param memory Target memory region
      */
-    u32 GetFreeSize(EMemory region) const;
+    u32 GetFreeSize(EMemory memory) const;
+
+    /**
+     * @brief Gets size of total heap memory
+     *
+     * @param memory Target memory region
+     */
+    u32 GetTotalSize(EMemory memory) const;
 
     /**
      * @brief Tests whether an address points to an allocation from this manager
@@ -147,6 +154,23 @@ void* operator new[](size_t size, kiwi::EMemory memory);
  * @brief Allocates a block of memory
  *
  * @param size Block size
+ * @param pHeap Target heap
+ * @return Pointer to allocated block
+ */
+void* operator new(size_t size, EGG::Heap* pHeap);
+/**
+ * @brief Allocates a block of memory for an array
+ *
+ * @param size Block size
+ * @param pHeap Target heap
+ * @return Pointer to allocated block
+ */
+void* operator new[](size_t size, EGG::Heap* pHeap);
+
+/**
+ * @brief Allocates a block of memory
+ *
+ * @param size Block size
  * @param align Block address alignment
  * @param memory Target memory region
  * @return Pointer to allocated block
@@ -161,6 +185,25 @@ void* operator new(size_t size, s32 align, kiwi::EMemory memory);
  * @return Pointer to allocated block
  */
 void* operator new[](size_t size, s32 align, kiwi::EMemory memory);
+
+/**
+ * @brief Allocates a block of memory
+ *
+ * @param size Block size
+ * @param align Block address alignment
+ * @param pHeap Target heap
+ * @return Pointer to allocated block
+ */
+void* operator new(size_t size, s32 align, EGG::Heap* pHeap);
+/**
+ * @brief Allocates a block of memory for an array
+ *
+ * @param size Block size
+ * @param align Block address alignment
+ * @param pHeap Target heap
+ * @return Pointer to allocated block
+ */
+void* operator new[](size_t size, s32 align, EGG::Heap* pHeap);
 
 /**
  * @brief Frees a block of memory

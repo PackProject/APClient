@@ -8,6 +8,17 @@ namespace kiwi {
 //! @{
 
 /**
+ * @brief Debug menu user data storage type
+ */
+typedef void* DebugUserData;
+
+/******************************************************************************
+ *
+ * DebugOptionBase
+ *
+ ******************************************************************************/
+
+/**
  * @brief Basic debug menu option
  */
 class DebugOptionBase {
@@ -15,10 +26,12 @@ public:
     /**
      * @brief Callback function for option selection
      *
+     * @param pInvoker Callback invoker
      * @param pArg Callback user argument
      * @return Action result
      */
-    typedef EDebugMenuResult (*SelectCallback)(void* pArg);
+    typedef EDebugMenuResult (*SelectCallback)(DebugOptionBase* pInvoker,
+                                               void* pArg);
 
     /**
      * @brief Option type
@@ -118,6 +131,21 @@ public:
      */
     void SetEnabled(bool enable);
 
+    /**
+     * @brief Gets the user's stored data
+     */
+    DebugUserData GetUserData() const {
+        return mUserData;
+    }
+    /**
+     * @brief Sets the user's stored data
+     *
+     * @param userData User data
+     */
+    void SetUserData(DebugUserData userData) {
+        mUserData = userData;
+    }
+
 protected:
     /**
      * @brief Validates the option value
@@ -140,7 +168,16 @@ protected:
     String mName;
     //! Option value
     String mValueText;
+
+    //! User data storage
+    DebugUserData mUserData;
 };
+
+/******************************************************************************
+ *
+ * DebugIntOption
+ *
+ ******************************************************************************/
 
 /**
  * @brief Debug menu option with an integer value
@@ -257,6 +294,12 @@ private:
     int mValue;
 };
 
+/******************************************************************************
+ *
+ * DebugBoolOption
+ *
+ ******************************************************************************/
+
 /**
  * @brief Debug option with a boolean value
  */
@@ -296,6 +339,12 @@ protected:
      */
     virtual void UpdateString();
 };
+
+/******************************************************************************
+ *
+ * DebugEnumOption
+ *
+ ******************************************************************************/
 
 /**
  * @brief Debug option with an enum value
@@ -360,6 +409,12 @@ private:
     const char** mppValues;
 };
 
+/******************************************************************************
+ *
+ * DebugProcOption
+ *
+ ******************************************************************************/
+
 /**
  * @brief Debug option with procedure
  */
@@ -406,6 +461,12 @@ private:
     void* mpCallbackArg;
 };
 
+/******************************************************************************
+ *
+ * DebugOpenPageOption
+ *
+ ******************************************************************************/
+
 /**
  * @brief Debug option which opens a new page
  */
@@ -443,9 +504,10 @@ private:
     /**
      * @brief Opens the specified sub-page
      *
+     * @param pInvoker Callback invoker
      * @param pArg Callback user argument
      */
-    static EDebugMenuResult OpenPageProc(void* pArg);
+    static EDebugMenuResult OpenPageProc(DebugOptionBase* pInvoker, void* pArg);
 
 private:
     //! Sub-page to open

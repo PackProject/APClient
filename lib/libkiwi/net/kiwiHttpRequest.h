@@ -66,11 +66,11 @@ struct HttpResponse {
     HttpResponse()
         : error(EHttpErr_Success), exError(0), status(EHttpStatus_None) {}
 
-    EHttpErr error;              //!< Error code
-    s32 exError;                 //!< Internal error code
-    EHttpStatus status;          //!< Status code
-    TMap<String, String> header; //!< Response header
-    String body;                 //!< Response body/payload
+    EHttpErr error;                  //!< Error code
+    s32 exError;                     //!< Internal error code
+    EHttpStatus status;              //!< Status code
+    THashMap<String, String> header; //!< Response header
+    String body;                     //!< Response body/payload
 };
 
 /**
@@ -227,9 +227,9 @@ private:
     static const int TEMP_BUFFER_SIZE = 512;
 
     //! HTTP request method names
-    static const String METHOD_NAMES[EMethod_Max];
+    static const char* METHOD_NAMES[EMethod_Max];
     //! HTTP protocol version
-    static const String PROTOCOL_VERSION;
+    static const char* PROTOCOL_VERSION;
 
 private:
     String mHost;       //!< Server host name
@@ -241,8 +241,8 @@ private:
     HttpResponse mResponse; //!< Server response
     u32 mTimeOut;           //!< Connection timeout
 
-    TMap<String, String> mParams; //!< URL parameters
-    TMap<String, String> mHeader; //!< Header fields
+    THashMap<String, String> mParams; //!< URL parameters
+    THashMap<String, String> mHeader; //!< Header fields
 
     Callback mpCallback; //!< Response callback
     void* mpCallbackArg; //!< Callback user argument

@@ -36,7 +36,7 @@ bool IsCurrentPackScene() {
 /**
  * @brief Gets the list of active hooks for the current scene
  */
-TList<ISceneHook>& SceneHookMgr::GetSceneHooks() {
+TList<ISceneHook*>& SceneHookMgr::GetSceneHooks() {
     K_ASSERT_EX(IsCurrentPackScene(), "Only game scenes have hooks");
     s32 id = RP_GET_INSTANCE(RPSysSceneMgr)->getCurrentSceneID();
     return mSceneHookLists[id];
@@ -60,7 +60,7 @@ void SceneHookMgr::AddHook(ISceneHook& rHook) {
  *
  * @param rHook Scene hook
  */
-void SceneHookMgr::RemoveHook(const ISceneHook& rHook) {
+void SceneHookMgr::RemoveHook(ISceneHook& rHook) {
     if (rHook.mSceneID == -1) {
         mGlobalHooks.Remove(&rHook);
     } else {
@@ -78,13 +78,13 @@ void SceneHookMgr::DoConfigure() {
 
     // Global hooks
     K_FOREACH (it, r.mGlobalHooks) {
-        it->Configure(GetCurrentScene());
+        (*it)->Configure(GetCurrentScene());
     }
 
     // Hooks for game scene
     if (IsCurrentPackScene()) {
         K_FOREACH (it, r.GetSceneHooks()) {
-            it->Configure(GetCurrentScene());
+            (*it)->Configure(GetCurrentScene());
         }
     }
 }
@@ -100,13 +100,13 @@ void SceneHookMgr::DoReset() {
 
     // Global hooks
     K_FOREACH (it, r.mGlobalHooks) {
-        it->BeforeReset(GetCurrentScene());
+        (*it)->BeforeReset(GetCurrentScene());
     }
 
     // Hooks for game scene
     if (IsCurrentPackScene()) {
         K_FOREACH (it, r.GetSceneHooks()) {
-            it->BeforeReset(GetCurrentScene());
+            (*it)->BeforeReset(GetCurrentScene());
         }
     }
 
@@ -114,13 +114,13 @@ void SceneHookMgr::DoReset() {
 
     // Global hooks
     K_FOREACH (it, r.mGlobalHooks) {
-        it->AfterReset(GetCurrentScene());
+        (*it)->AfterReset(GetCurrentScene());
     }
 
     // Hooks for game scene
     if (IsCurrentPackScene()) {
         K_FOREACH (it, r.GetSceneHooks()) {
-            it->AfterReset(GetCurrentScene());
+            (*it)->AfterReset(GetCurrentScene());
         }
     }
 }
@@ -143,13 +143,13 @@ void SceneHookMgr::DoLoadResource() {
 
     // Global hooks
     K_FOREACH (it, r.mGlobalHooks) {
-        it->LoadResource(GetCurrentScene());
+        (*it)->LoadResource(GetCurrentScene());
     }
 
     // Hooks for game scene
     if (IsCurrentPackScene()) {
         K_FOREACH (it, r.GetSceneHooks()) {
-            it->LoadResource(GetCurrentScene());
+            (*it)->LoadResource(GetCurrentScene());
         }
     }
 }
@@ -165,35 +165,33 @@ void SceneHookMgr::DoCalculate() {
 
     // Global hooks
     K_FOREACH (it, r.mGlobalHooks) {
-        it->BeforeCalculate(GetCurrentScene());
+        (*it)->BeforeCalculate(GetCurrentScene());
     }
 
     // Hooks for game scene
     if (IsCurrentPackScene()) {
         K_FOREACH (it, r.GetSceneHooks()) {
-            it->BeforeCalculate(GetCurrentScene());
+            (*it)->BeforeCalculate(GetCurrentScene());
         }
     }
 
-    // Run scene logic
-    RP_GET_INSTANCE(RPSysSceneMgr)->updateState();
-    RP_GET_INSTANCE(RPSysSceneMgr)->SceneManager::calcCurrentScene();
+    GetCurrentScene()->Calculate();
 
     // Global hooks
     K_FOREACH (it, r.mGlobalHooks) {
-        it->AfterCalculate(GetCurrentScene());
+        (*it)->AfterCalculate(GetCurrentScene());
     }
 
     // Hooks for game scene
     if (IsCurrentPackScene()) {
         K_FOREACH (it, r.GetSceneHooks()) {
-            it->AfterCalculate(GetCurrentScene());
+            (*it)->AfterCalculate(GetCurrentScene());
         }
     }
 }
-KOKESHI_BY_PACK(KM_BRANCH(0x80185868, SceneHookMgr::DoCalculate),  // Wii Sports
-                KM_BRANCH(0x801851f0, SceneHookMgr::DoCalculate),  // Wii Play
-                KM_BRANCH(0x8023016c, SceneHookMgr::DoCalculate)); // Wii Sports Resort
+KOKESHI_BY_PACK(KM_CALL(0x80185110, SceneHookMgr::DoCalculate),  // Wii Sports
+                KM_CALL(0x80184b08, SceneHookMgr::DoCalculate),  // Wii Play
+                KM_CALL(0x8022f870, SceneHookMgr::DoCalculate)); // Wii Sports Resort
 
 /**
  * @brief Runs active hooks and scene function(s) for the Exit state
@@ -205,13 +203,13 @@ void SceneHookMgr::DoExit() {
 
     // Global hooks
     K_FOREACH (it, r.mGlobalHooks) {
-        it->Exit(GetCurrentScene());
+        (*it)->Exit(GetCurrentScene());
     }
 
     // Hooks for game scene
     if (IsCurrentPackScene()) {
         K_FOREACH (it, r.GetSceneHooks()) {
-            it->Exit(GetCurrentScene());
+            (*it)->Exit(GetCurrentScene());
         }
     }
 }
@@ -230,19 +228,20 @@ void SceneHookMgr::DoPause() {
 
     // Global hooks
     K_FOREACH (it, r.mGlobalHooks) {
-        it->Pause(GetCurrentScene(), true);
+        (*it)->Pause(GetCurrentScene(), true);
     }
 
     // Hooks for game scene
     if (IsCurrentPackScene()) {
         K_FOREACH (it, r.GetSceneHooks()) {
-            it->Pause(GetCurrentScene(), true);
+            (*it)->Pause(GetCurrentScene(), true);
         }
     }
 }
-KOKESHI_BY_PACK(KM_CALL(0x8018cec8, SceneHookMgr::DoPause),  // Wii Sports
-                KM_CALL(0x8018b084, SceneHookMgr::DoPause),  // Wii Play
-                KM_CALL(0x8022fc94, SceneHookMgr::DoPause)); // Wii Sports Resort
+KOKESHI_BY_PACK(KM_CALL(0x8018cec8, SceneHookMgr::DoPause), // Wii Sports
+                KM_CALL(0x8018b084, SceneHookMgr::DoPause), // Wii Play
+                KM_CALL(0x8022fc94,
+                        SceneHookMgr::DoPause)); // Wii Sports Resort
 
 /**
  * @brief Runs active hooks and scene function(s) for exiting the pause menu
@@ -254,27 +253,28 @@ void SceneHookMgr::DoUnPause() {
 
     // Global hooks
     K_FOREACH (it, r.mGlobalHooks) {
-        it->Pause(GetCurrentScene(), false);
+        (*it)->Pause(GetCurrentScene(), false);
     }
 
     // Hooks for game scene
     if (IsCurrentPackScene()) {
         K_FOREACH (it, r.GetSceneHooks()) {
-            it->Pause(GetCurrentScene(), false);
+            (*it)->Pause(GetCurrentScene(), false);
         }
     }
 }
 // 'Continue'
-KOKESHI_BY_PACK(KM_CALL(0x8018d118, SceneHookMgr::DoUnPause),  // Wii Sports
-                KM_CALL(0x8018b174, SceneHookMgr::DoUnPause),  // Wii Play
-                KM_CALL(0x8022fc38, SceneHookMgr::DoUnPause)); // Wii Sports Resort
+KOKESHI_BY_PACK(KM_CALL(0x8018d118, SceneHookMgr::DoUnPause), // Wii Sports
+                KM_CALL(0x8018b174, SceneHookMgr::DoUnPause), // Wii Play
+                KM_CALL(0x8022fc38,
+                        SceneHookMgr::DoUnPause)); // Wii Sports Resort
 // 'Start over'
-KOKESHI_BY_PACK(KM_CALL(0x8018d14c, SceneHookMgr::DoUnPause),  // Wii Sports
-                KM_CALL(0x8018b1a8, SceneHookMgr::DoUnPause),  // Wii Play
+KOKESHI_BY_PACK(KM_CALL(0x8018d14c, SceneHookMgr::DoUnPause), // Wii Sports
+                KM_CALL(0x8018b1a8, SceneHookMgr::DoUnPause), // Wii Play
                 /* WS2 only needs one patch */); // Wii Sports Resort
 // 'Quit'
-KOKESHI_BY_PACK(KM_CALL(0x8018d1b8, SceneHookMgr::DoUnPause),  // Wii Sports
-                KM_CALL(0x8018b20c, SceneHookMgr::DoUnPause),  // Wii Play
+KOKESHI_BY_PACK(KM_CALL(0x8018d1b8, SceneHookMgr::DoUnPause), // Wii Sports
+                KM_CALL(0x8018b20c, SceneHookMgr::DoUnPause), // Wii Play
                 /* WS2 only needs one patch */); // Wii Sports Resort
 
 } // namespace kiwi

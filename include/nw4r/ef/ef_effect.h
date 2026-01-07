@@ -115,6 +115,13 @@ public:
             reinterpret_cast<u32>(&rColor), ignoreLifeStatus);
     }
 
+    void Modifier_SetSimpleLightDiffuse(const GXColor& rColor,
+                                        bool ignoreLifeStatus) {
+        ForeachParticleManager(
+            ParticleManager::ModifierTravFunc_SetSimpleLightDiffuse,
+            reinterpret_cast<u32>(&rColor), ignoreLifeStatus);
+    }
+
     // @bug Surely meant to be a const reference...
     void Modifier_SetScale(math::VEC2& rScale, bool ignoreLifeStatus) {
         ForeachParticleManager(ParticleManager::ModifierTravFunc_SetScale,

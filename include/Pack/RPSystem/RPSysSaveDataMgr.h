@@ -12,6 +12,9 @@
 //! @addtogroup rp_system
 //! @{
 
+// Forward declarations
+class RPSysSaveData;
+
 /**
  * @brief Save data manager
  * @wfuname
@@ -55,12 +58,14 @@ public:
      * @return Copy of the system data
      */
     RPSportsSystemData getSportsSystemData() const;
+#if defined(PACK_SPORTS)
     /**
      * @brief Sets the Sports Pack system data
      *
      * @param rData System data
      */
     void setSportsSystemData(const RPSportsSystemData& rData);
+#endif
 
     /**
      * @brief Gets the Party Pack player data corresponding to the player index
@@ -83,6 +88,14 @@ public:
      * @return Copy of the system data
      */
     RPPartySystemData getPartySystemData() const;
+#if defined(PACK_PLAY)
+    /**
+     * @brief Sets the Party Pack system data
+     *
+     * @param rData System data
+     */
+    void setPartySystemData(const RPPartySystemData& rData);
+#endif
     /**@}*/
 
     /**
@@ -142,6 +155,16 @@ public:
      * @return Success
      */
     bool saveAsync();
+
+    /**
+     * @brief Saves the save file to the NAND
+     * @details If saving is disabled, this function does nothing.
+     */
+    void saveSync();
+    /**
+     * @brief Loads the save file from the NAND
+     */
+    void loadSync();
     /**@}*/
 
     /**
@@ -252,10 +275,15 @@ private:
                               //!< currently displayed
         EFlag_11,
         EFlag_NandError, //!< Unrecoverable NAND error
-        EFlag_12,
+        EFlag_13,
     };
 
 private:
+    /**
+     * @brief Constructor
+     */
+    RPSysSaveDataMgr();
+
     /**
      * @brief Prompts the user to continue without saving
      */
@@ -273,16 +301,6 @@ private:
      * temporary directory, before being moved out.
      */
     void createBannerFile();
-
-    /**
-     * @brief Saves the save file to the NAND
-     * @details If saving is disabled, this function does nothing.
-     */
-    void saveSync();
-    /**
-     * @brief Loads the save file from the NAND
-     */
-    void loadSync();
 
     /**
      * @brief Saves the banner file to the NAND

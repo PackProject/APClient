@@ -42,7 +42,7 @@ public:
      * @param calc State update function
      * @param id State ID
      */
-    void RegistState(StateFunc enter, StateFunc calc, u32 id) {
+    void RegistState(StateFunc enter, StateFunc calc, int id) {
         mEnterFns[id] = enter;
         mCalcFns[id] = calc;
     }
@@ -50,7 +50,7 @@ public:
     /**
      * @brief Change to new state
      */
-    void ChangeState(u32 id) {
+    void ChangeState(int id) {
         mNextState = id;
         mDoEnter = true;
         mDoExit = true;
@@ -82,9 +82,16 @@ public:
     }
 
     /**
+     * @brief Check for entering a new state
+     */
+    bool IsChangingState() const {
+        return mDoEnter;
+    }
+
+    /**
      * @brief Check for a specific state
      */
-    bool IsState(u32 id) const {
+    bool IsState(int id) const {
         // Currently in the state
         if (mState == id) {
             return true;
@@ -96,6 +103,13 @@ public:
         }
 
         return false;
+    }
+
+    /**
+     * @brief Check for a specific state on this tick only
+     */
+    bool IsStateNow(int id) const {
+        return mState == id;
     }
 
 private:

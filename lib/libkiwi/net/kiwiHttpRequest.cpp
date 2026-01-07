@@ -7,12 +7,12 @@ namespace kiwi {
 /**
  * @brief HTTP request method names
  */
-const String HttpRequest::METHOD_NAMES[EMethod_Max] = {"GET", "POST"};
+const char* HttpRequest::METHOD_NAMES[EMethod_Max] = {"GET", "POST"};
 
 /**
  * @brief HTTP protocol version
  */
-const String HttpRequest::PROTOCOL_VERSION = "HTTP/1.1";
+const char* HttpRequest::PROTOCOL_VERSION = "HTTP/1.1";
 
 /**
  * @brief Constructor
@@ -173,16 +173,16 @@ bool HttpRequest::Request() {
     K_FOREACH (it, mParams) {
         // Parameters delimited by ampersand
         String fmt = it == mParams.Begin() ? "?%s=%s" : "&%s=%s";
-        request += Format(fmt, it.Key().CStr(), it.Value().CStr());
+        request += Format(fmt, it->key.CStr(), it->value.CStr());
     }
 
     // Finish request line
-    request = Format("%s %s %s\n", METHOD_NAMES[mMethod].CStr(), request.CStr(),
-                     PROTOCOL_VERSION.CStr());
+    request = Format("%s %s %s\n", METHOD_NAMES[mMethod], request.CStr(),
+                     PROTOCOL_VERSION);
 
     // Build header fields
     K_FOREACH (it, mHeader) {
-        request += Format("%s: %s\n", it.Key().CStr(), it.Value().CStr());
+        request += Format("%s: %s\n", it->key.CStr(), it->value.CStr());
     }
 
     // Request ends with extra newline
@@ -289,8 +289,8 @@ bool HttpRequest::Receive() {
     }
 
     // Extract status code
-    int num =
-        std::sscanf(lines[0], PROTOCOL_VERSION + " %d", &mResponse.status);
+    int num = std::sscanf(lines[0], Format("%s %%d", PROTOCOL_VERSION).CStr(),
+                          &mResponse.status);
     if (num != 1) {
         mResponse.error = EHttpErr_BadResponse;
         mResponse.exError = LibSO::GetLastError();

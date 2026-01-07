@@ -1,12 +1,13 @@
 #ifndef LIBKIWI_UTIL_GLOBAL_INSTANCE_H
 #define LIBKIWI_UTIL_GLOBAL_INSTANCE_H
 #include <libkiwi/k_types.h>
-#include <libkiwi/util/kiwiAutoLock.h>
+#include <libkiwi/prim/kiwiMutex.h>
+
 #include <revolution/OS.h>
 
 #define K_GLOBAL_INSTANCE_IMPL(T)                                              \
     T* kiwi::GlobalInstance<T>::sInstance = nullptr;                           \
-    OSMutex kiwi::GlobalInstance<T>::sMutex;
+    Mutex kiwi::GlobalInstance<T>::sMutex;
 
 namespace kiwi {
 //! @addtogroup libkiwi_util
@@ -23,7 +24,7 @@ public:
      * @param force Overwrite the current instance
      */
     GlobalInstance(bool force = false) {
-        AutoLock<OSMutex> lock(sMutex);
+        AutoMutexLock lock(sMutex);
 
         // Without 'force' we cannot re-register
         if (sInstance != nullptr && !force) {
@@ -39,7 +40,7 @@ public:
      * @brief Destructor
      */
     ~GlobalInstance() {
-        AutoLock<OSMutex> lock(sMutex);
+        AutoMutexLock lock(sMutex);
 
         // Only unregister if this object is the global instance
         if (sInstance == (T*)this) {
@@ -51,8 +52,8 @@ public:
      * @brief Gets reference to global instance
      */
     static T& Get() {
-        AutoLock<OSMutex> lock(sMutex);
-        K_ASSERT(sInstance != nullptr);
+        AutoMutexLock lock(sMutex);
+        K_ASSERT_PTR(sInstance);
         return *sInstance;
     }
 
@@ -62,7 +63,7 @@ public:
      * @param instance New instance
      */
     static void Set(T& instance) {
-        AutoLock<OSMutex> lock(sMutex);
+        AutoMutexLock lock(sMutex);
         sInstance = &instance;
     }
 
@@ -70,13 +71,13 @@ public:
      * @brief Tests whether a global instance is registered
      */
     static bool Exists() {
-        AutoLock<OSMutex> lock(sMutex);
+        AutoMutexLock lock(sMutex);
         return sInstance != nullptr;
     }
 
 private:
-    static T* sInstance;   // Global instance
-    static OSMutex sMutex; // Mutex lock for safe access
+    static T* sInstance; // Global instance
+    static Mutex sMutex; // Mutex lock for safe access
 };
 
 //! @}

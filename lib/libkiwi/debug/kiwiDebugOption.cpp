@@ -216,7 +216,7 @@ EDebugMenuResult DebugProcOption::Select() {
     }
 
     if (mpCallback != nullptr) {
-        return mpCallback(mpCallbackArg);
+        return mpCallback(this, mpCallbackArg);
     }
 
     return EDebugMenuResult_None;
@@ -231,9 +231,11 @@ EDebugMenuResult DebugProcOption::Select() {
 /**
  * @brief Opens the specified sub-page
  *
+ * @param pInvoker Callback invoker
  * @param pArg Callback user argument
  */
-EDebugMenuResult DebugOpenPageOption::OpenPageProc(void* pArg) {
+EDebugMenuResult DebugOpenPageOption::OpenPageProc(DebugOptionBase* pInvoker,
+                                                   void* pArg) {
     K_ASSERT_PTR(pArg);
 
     DebugOpenPageOption* p = static_cast<DebugOpenPageOption*>(pArg);

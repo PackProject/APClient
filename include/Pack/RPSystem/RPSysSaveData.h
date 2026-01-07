@@ -5,9 +5,9 @@
 #include "RPTypes.h"
 
 // Forward declarations
-class RPPartyCommonData;
+class RPPartySystemData;
 class RPPartyPlayerData;
-class RPSportsCommonData;
+class RPSportsSystemData;
 class RPSportsPlayerData;
 
 /**
@@ -50,7 +50,7 @@ public:
     void read(EGG::RamStream* stream, const void* rawSave);
 
     // @address 8018c32c
-    RPPartyCommonData* getPartyCommonData() const;
+    RPPartySystemData* getPartySystemData() const;
 
     // @address 8018c334
     void setPartyPlayerData(const RPPartyPlayerData* playerData, u32 id);
@@ -58,9 +58,9 @@ public:
     RPPartyPlayerData* getPartyPlayerData(u32 id) const;
 
     // @address 8018c41c
-    void setSportsCommonData(const RPSportsCommonData* cmnData);
+    void setSportsSystemData(const RPSportsSystemData* cmnData);
     // @address 8018c684
-    RPSportsCommonData* getSportsCommonData() const;
+    RPSportsSystemData* getSportsSystemData() const;
 
     // @address 8018c68c
     void setSportsPlayerData(const RPSportsPlayerData* playerData, u32 id);
@@ -77,12 +77,12 @@ public:
 private:
     // @brief Flags regarding the status of the data
     u32 mErrors; // at 0x0
-    // @brief Wii Sports common save data
-    RPSportsCommonData* mSportsCmnData; // at 0x4
+    // @brief Wii Sports System save data
+    RPSportsSystemData* mSportsCmnData; // at 0x4
     // @brief Wii Sports player list (100 entries)
     RPSportsPlayerData* mSportsPlayerList; // at 0x8
-    // @brief Wii Play common save data
-    RPPartyCommonData* mPartyCmnData; // at 0xC
+    // @brief Wii Play System save data
+    RPPartySystemData* mPartyCmnData; // at 0xC
     // @brief Wii Play player list (100 entries)
     RPPartyPlayerData* mPartyPlayerList; // at 0x10
 

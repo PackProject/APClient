@@ -1,7 +1,7 @@
 #ifndef LIBKIWI_CORE_SCENE_CREATOR_H
 #define LIBKIWI_CORE_SCENE_CREATOR_H
 
-#include <RPSystem/RPSysSceneCreator.h>
+#include <Pack/RPSystem.h>
 #include <libkiwi/core/kiwiController.h>
 #include <libkiwi/k_types.h>
 #include <libkiwi/util/kiwiExtension.h>
@@ -46,7 +46,7 @@ enum ESceneID {
 #endif
 
     // RPParty
-    ESceneID_Unknown09,
+    ESceneID_RPOchScene, //!< THEORY ONLY
     ESceneID_RPFshScene,
     ESceneID_RPHkyScene,
     ESceneID_RPDucScene,
@@ -186,13 +186,22 @@ public:
                                 u16 buttons = EButton_B | EButton_Minus);
 
     /**
-     * @brief Gets the scene ID of the main menu scene
-     */
-    static s32 GetMenuScene();
-    /**
      * @brief Gets the scene ID of the bootup scene
      */
     static s32 GetBootScene();
+    /**
+     * @brief Gets the scene ID of the title scene
+     */
+    static s32 GetTitleScene();
+    /**
+     * @brief Gets the scene ID of the main menu scene
+     */
+    static s32 GetMenuScene();
+
+    /**
+     * @brief Gets the scene ID of the previous scene
+     */
+    static s32 GetPrevSceneID();
 
 #if defined(PACK_SPORTS) || defined(PACK_PLAY)
     /**
@@ -215,20 +224,28 @@ public:
 #endif
 
     /**
-     * @brief Changes to the menu scene
-     *
-     * @return Success
-     */
-    bool ChangeMenuScene() {
-        return ChangeSceneAfterFade(GetMenuScene());
-    }
-    /**
      * @brief Changes to the bootup scene
      *
      * @return Success
      */
     bool ChangeBootScene() {
         return ChangeSceneAfterFade(GetBootScene());
+    }
+    /**
+     * @brief Changes to the title scene
+     *
+     * @return Success
+     */
+    bool ChangeTitleScene() {
+        return ChangeSceneAfterFade(GetTitleScene());
+    }
+    /**
+     * @brief Changes to the menu scene
+     *
+     * @return Success
+     */
+    bool ChangeMenuScene() {
+        return ChangeSceneAfterFade(GetMenuScene());
     }
 
     /**
@@ -367,7 +384,10 @@ private:
     //! Pack Project scenes
     static const Info scPackScenes[];
     //! User-registered scenes
-    static TMap<s32, Info> sUserScenes;
+    static THashMap<s32, Info> sUserScenes;
+
+    //! Previous scene ID
+    static s32 sPrevSceneID;
 
     //! Root debug menu scene ID
     static s32 sDebugRootID;

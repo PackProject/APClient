@@ -235,3 +235,5 @@ extern const tL2CAP_APPL_INFO avct_l2c_br_appl;
 #endif
 
 #endif /* AVCT_INT_H */
+
+

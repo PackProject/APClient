@@ -1229,10 +1229,10 @@ void PrintVisitor::Visit(const Element& rElement) {
 
             for (Object::ConstIterator it = rElement.Get<Object>().Begin();
                  it != rElement.Get<Object>().End(); ++it, i++) {
-                Print('\"' + (it.Key() + "\": "));
+                Print('\"' + (it->key + "\": "));
 
                 // TODO: Fix this somehow?
-                Visit(it.Value());
+                Visit(it->value);
 
                 // Values are comma separated
                 if (i != size - 1) {

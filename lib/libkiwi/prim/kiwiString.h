@@ -239,11 +239,11 @@ public:
 
     // clang-format off
     StringImpl& operator=(const StringImpl& rStr) { Assign(rStr); return *this; }
-    StringImpl& operator=(const T* pStr)          { K_ASSERT(pStr != nullptr); Assign(pStr); return *this; }
+    StringImpl& operator=(const T* pStr)          { K_ASSERT_PTR(pStr); Assign(pStr); return *this; }
     StringImpl& operator=(T c)                    { Assign(c); return *this; }
 
     StringImpl& operator+=(const StringImpl& rStr) { Append(rStr); return *this; }
-    StringImpl& operator+=(const T* pStr)          { K_ASSERT(pStr != nullptr); Append(pStr); return *this; }
+    StringImpl& operator+=(const T* pStr)          { K_ASSERT_PTR(pStr); Append(pStr); return *this; }
     StringImpl& operator+=(T c)                    { Append(c); return *this; }
 
     bool operator==(const StringImpl& rStr) const;
@@ -366,7 +366,7 @@ template <typename T> StringImpl<T> Format(const T* pFmt, ...);
  * @param rKey Key
  */
 template <typename T> K_INLINE hash_t Hash(const StringImpl<T>& rKey) {
-    return HashImpl(rKey.CStr(), rKey.Length() * sizeof(T));
+    return MurmurHash(rKey.CStr(), rKey.Length() * sizeof(T));
 }
 
 #define TO_STRING_PRIM(T, pFmt, val)                                           \

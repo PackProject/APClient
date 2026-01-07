@@ -1,25 +1,30 @@
 #ifndef EGG_GFX_FRUSTUM_H
 #define EGG_GFX_FRUSTUM_H
-#include "eggAssert.h"
-#include "eggMatrix.h"
-#include "eggVector.h"
-#include "g3d_camera.h"
-#include "g3d_resanmscn.h"
-#include "math_triangular.h"
-#include "types_egg.h"
+#include <egg/types_egg.h>
+
+#include <egg/math.h>
+#include <egg/prim.h>
+
+#include <nw4r/g3d.h>
+#include <nw4r/math.h>
 
 #include <revolution/GX.h>
 
 namespace EGG {
+
 class Frustum {
 public:
-    enum Flag { FLAG_DIRTY = (1 << 0) };
-
-    enum ProjectionType { PROJ_ORTHO, PROJ_PERSP };
+    enum ProjectionType { PROJTYPE_ORTHO, PROJTYPE_PERSP };
 
     enum CanvasMode {
-        CANVASMODE_CC,
-        CANVASMODE_LU,
+        CANVASMODE_CC, // Center-canvas origin
+        CANVASMODE_LU, // Left-upper origin
+    };
+
+    enum LoadScnFlag {
+        LOADSCN_KEEP_FOVY = 1 << 0,
+        LOADSCN_KEEP_CANVAS = 1 << 1,
+        LOADSCN_KEEP_Z = 1 << 2,
     };
 
 protected:
@@ -35,73 +40,87 @@ protected:
     mutable u16 mFlags;       // at 0x34
 
 public:
-    static void GetGlobalScaleOffset(f32* sx, f32* sy, f32* ox, f32* oy) {
-        *sx = sGlobalScale.x;
-        *sy = sGlobalScale.y;
-        *ox = sGlobalOffset.x;
-        *oy = sGlobalOffset.y;
-    }
+    Frustum(ProjectionType projType, const nw4r::math::VEC2& rSize, f32 nearZ,
+            f32 farZ, CanvasMode canvasMode);
+    Frustum(const Frustum& rOther);
 
-    static void SetGlobalScaleOffset(f32 sx, f32 sy, f32 ox, f32 oy) {
-        sGlobalScale.x = sx;
-        sGlobalScale.y = sy;
-        sGlobalOffset.x = ox;
-        sGlobalOffset.y = oy;
-    }
+    virtual ~Frustum() {}                                   // at 0x8
+    virtual void SetProjectionGX() const;                   // at 0xC
+    virtual void CopyToG3D(nw4r::g3d::Camera camera) const; // at 0x10
 
-    Frustum(ProjectionType, const nw4r::math::VEC2&, f32, f32, CanvasMode);
-    Frustum(const Frustum&);
+    void LoadScnCamera(const nw4r::g3d::ResAnmScn anmScn, u8 refNumber,
+                       f32 frame, u32 flags);
 
-    virtual ~Frustum() {}                            // at 0x8
-    virtual void SetProjectionGX() const;            // at 0xC
-    virtual void CopyToG3D(nw4r::g3d::Camera) const; // at 0x10
+    void CopyFromAnother(const Frustum& rOther);
 
-    void CopyFromAnother(const Frustum&);
+    void GetViewToScreen(nw4r::math::VEC3* pScreenPos,
+                         const nw4r::math::VEC3& rViewPos) const;
+    void GetScreenToView(nw4r::math::VEC3* pViewPos,
+                         const nw4r::math::VEC3& rScreenPos) const;
+    void GetScreenToView(nw4r::math::VEC3* pPosView,
+                         const nw4r::math::VEC2& rPosScreen) const;
 
-    void GetViewToScreen(nw4r::math::VEC3*, const nw4r::math::VEC3&) const;
-    void GetScreenToView(nw4r::math::VEC3*, const nw4r::math::VEC3&) const;
-    void GetScreenToView(nw4r::math::VEC3*, const nw4r::math::VEC2&) const;
-
-    void LoadScnCamera(nw4r::g3d::ResAnmScn, u8, f32, u32);
-
-    void SetDirty(bool dirty) const {
-        if (dirty)
-            mFlags |= FLAG_DIRTY;
-        else
-            mFlags &= ~FLAG_DIRTY;
-    }
-
-    void ConvertToCanvasLU(f32 ix, f32 iy, f32* ox, f32* oy) const {
+    void ConvertToCanvasLU(f32 x, f32 y, f32* pX, f32* pY) const {
         if (mCanvasMode == CANVASMODE_LU) {
-            *ox = ix;
-            *oy = iy;
+            *pX = x;
+            *pY = y;
         } else if (mCanvasMode == CANVASMODE_CC) {
-            ConvertToCanvasLU_Inline_0(ix, iy, ox, oy);
+            ConvertFromCanvasCC(x, y, pX, pY);
+        }
+    }
+    void ConvertToCanvasCC(f32 x, f32 y, f32* pX, f32* pY) const {
+        if (mCanvasMode == CANVASMODE_LU) {
+            ConvertFromCanvasLU(x, y, pX, pY);
+        } else if (mCanvasMode == CANVASMODE_CC) {
+            *pX = x;
+            *pY = y;
         }
     }
 
-    void ConvertToCanvasLU_Inline_0(f32 ix, f32 iy, f32* ox, f32* oy) const {
-        const f32 sx = GetSize().x;
-        *ox = ix + (sx / 2.0f);
+    void ConvertToNormalLU(f32 x, f32 y, f32* pX, f32* pY) const {
+        if (mCanvasMode == CANVASMODE_LU) {
+            *pX = x / (GetSize().x / 2.0f);
+            *pY = y / (GetSize().y / 2.0f);
+        } else if (mCanvasMode == CANVASMODE_CC) {
+            ConvertFromCanvasCC(x, y, pX, pY);
+            *pX /= GetSize().x / 2.0f;
+            *pY /= GetSize().y / 2.0f;
+        }
+    }
+    void ConvertToNormalCC(f32 x, f32 y, f32* pX, f32* pY) const {
+        if (mCanvasMode == CANVASMODE_LU) {
+            ConvertFromCanvasLU(x, y, pX, pY);
+            *pX /= GetSize().x / 2.0f;
+            *pY /= GetSize().y / 2.0f;
+        } else if (mCanvasMode == CANVASMODE_CC) {
+            *pX = x / (GetSize().x / 2.0f);
+            *pY = y / (GetSize().y / 2.0f);
+        }
+    }
 
-        const f32 sy = GetSize().y;
-        *oy = -(iy - (sy / 2.0f));
+    void ConvertFromCanvasLU(f32 x, f32 y, f32* pX, f32* pY) const {
+        *pX = -(GetSize().x / 2.0f - x);
+        *pY = -(-(GetSize().y / 2.0f - y));
+    }
+    void ConvertFromCanvasCC(f32 x, f32 y, f32* pX, f32* pY) const {
+        *pX = x + GetSize().x / 2.0f;
+        *pY = -(y - GetSize().y / 2.0f);
     }
 
     ProjectionType GetProjectionType() const {
         return mProjType;
     }
-    void SetProjectionType(ProjectionType type) {
-        mProjType = type;
+    void SetProjectionType(ProjectionType projType) {
+        mProjType = projType;
     }
 
     CanvasMode GetCanvasMode() const {
         return mCanvasMode;
     }
-    void SetCanvasMode(CanvasMode mode) {
-        if (mCanvasMode != mode) {
-            SetDirty(true);
-            mCanvasMode = mode;
+    void SetCanvasMode(CanvasMode canvasMode) {
+        if (mCanvasMode != canvasMode) {
+            mFlags |= FLAG_DIRTY;
+            mCanvasMode = canvasMode;
         }
     }
 
@@ -110,32 +129,33 @@ public:
     }
 
     u16 GetWidth() const {
-        return mSize.x;
-    }
-    f32 GetSizeX() const {
-        return mSize.x;
+        return static_cast<u16>(GetSize().x);
     }
     void SetSizeX(f32 sizeX) {
 #line 117
         EGG_ASSERT(sizeX >= 0.f);
-        SetDirty(true);
+        mFlags |= FLAG_DIRTY;
         mSize.x = sizeX;
     }
 
     u16 GetHeight() const {
-        return mSize.y;
-    }
-    f32 GetSizeY() const {
-        return mSize.y;
+        return static_cast<u16>(GetSize().y);
     }
     void SetSizeY(f32 sizeY) {
 #line 123
         EGG_ASSERT(sizeY >= 0.f);
-        SetDirty(true);
+        mFlags |= FLAG_DIRTY;
         mSize.y = sizeY;
     }
 
-    void SetFovY(f32 fovy) {
+    f32 GetAspect() const {
+        return GetSize().x / GetSize().y;
+    }
+
+    f32 GetFovy() const {
+        return mFovY;
+    }
+    void SetFovy(f32 fovy) {
         if (mFovY == fovy)
             return;
 
@@ -148,49 +168,70 @@ public:
         mTanFovY = sin / cos;
     }
 
-    void SetNearZ(f32 nearZ) {
-        mNearZ = nearZ;
-    }
     f32 GetNearZ() const {
         return mNearZ;
     }
-
-    void SetFarZ(f32 farZ) {
-        mFarZ = farZ;
+    void SetNearZ(f32 nearZ) {
+        mNearZ = nearZ;
     }
+
     f32 GetFarZ() const {
         return mFarZ;
     }
-
-    void SetScale(const nw4r::math::VEC3& scale) {
-        mScale = scale;
-    }
-    void SetOffset(const nw4r::math::VEC2& offset) {
-        mOffset = offset;
+    void SetFarZ(f32 farZ) {
+        mFarZ = farZ;
     }
 
-    void SetFlag(u32 flag) {
-        mFlags |= flag;
+    const nw4r::math::VEC2& GetOffset() const {
+        return mOffset;
     }
+    void SetOffset(const nw4r::math::VEC2& rOffset) {
+        mOffset = rOffset;
+    }
+
+    const nw4r::math::VEC3& GetScale() const {
+        return mScale;
+    }
+    void SetScale(const nw4r::math::VEC3& rScale) {
+        mScale = rScale;
+    }
+
+    static void GetGlobalScaleOffset(f32* pSX, f32* pSY, f32* pOX, f32* pOY) {
+        *pSX = sGlobalScale.x;
+        *pSY = sGlobalScale.y;
+        *pOX = sGlobalOffset.x;
+        *pOY = sGlobalOffset.y;
+    }
+    static void SetGlobalScaleOffset(f32 sx, f32 sy, f32 ox, f32 oy) {
+        sGlobalScale.x = sx;
+        sGlobalScale.y = sy;
+        sGlobalOffset.x = ox;
+        sGlobalOffset.y = oy;
+    }
+
+protected:
+    enum {
+        FLAG_DIRTY = 1 << 0,
+    };
 
 private:
     void SetProjectionPerspectiveGX_() const;
     void SetProjectionOrthographicGX_() const;
 
-    void CopyToG3D_Perspective_(nw4r::g3d::Camera) const;
-    void CopyToG3D_Orthographic_(nw4r::g3d::Camera) const;
+    void CopyToG3D_Perspective_(nw4r::g3d::Camera camera) const;
+    void CopyToG3D_Orthographic_(nw4r::g3d::Camera camera) const;
 
-    void CalcMtxPerspective_(nw4r::math::MTX44*) const;
+    void CalcMtxPerspective_(nw4r::math::MTX44* pMtx) const;
 
-    void GetOrthographicParam_(nw4r::math::MTX44*) const;
-    void GetOrthographicParam_(f32*) const;
-    void GetPerspectiveParam_(f32*) const;
-    void GetOrthographicParam_(f32*, f32*, f32*, f32*) const;
+    void GetOrthographicParam_(nw4r::math::MTX44* pMtx) const;
+    void GetPerspectiveParam_(f32* p) const;
+    void GetOrthographicParam_(f32* pT, f32* pB, f32* pL, f32* pR) const;
 
 private:
     static nw4r::math::VEC2 sGlobalScale;
     static nw4r::math::VEC2 sGlobalOffset;
 };
+
 } // namespace EGG
 
 #endif

@@ -16,7 +16,7 @@
 public:                                                                        \
     static void CreateInstance();                                              \
     static void DestroyInstance();                                             \
-    static T* getInstance() {                                                  \
+    static T* instance() {                                                     \
         return spInstance;                                                     \
     };                                                                         \
                                                                                \
@@ -48,7 +48,7 @@ private:                                                                       \
 public:                                                                        \
     static T* CreateInstance(EGG::Heap* pHeap);                                \
     static void DestroyInstance();                                             \
-    static T* getInstance() {                                                  \
+    static T* instance() {                                                     \
         return spInstance;                                                     \
     }                                                                          \
                                                                                \
@@ -85,7 +85,7 @@ private:                                                                       \
 
 //! Accesses RP singleton instance by typename
 #ifndef RP_GET_INSTANCE
-#define RP_GET_INSTANCE(T) T::getInstance()
+#define RP_GET_INSTANCE(T) T::instance()
 #endif
 
 //! @brief Holds year, month, month day

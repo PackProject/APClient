@@ -9,9 +9,7 @@
 
 //! @}
 
-namespace rp_Box_sound {
-
-enum ESoundID {
+enum {
     /* 0x000 */ SE_TR_punch_jab,
     /* 0x001 */ SE_TR_punch_jab_TVSP,
     /* 0x002 */ SE_TR_punch_straight,
@@ -279,7 +277,5 @@ enum ESoundID {
     /* 0x108 */ RP_COM_GAME_SE_PAUSE_KEY_A_01_TVSP,
     /* 0x109 */ RP_COM_GAME_SE_PAUSE_KEY_A_01
 };
-
-} // namespace rp_Box_sound
 
 #endif

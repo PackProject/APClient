@@ -52,6 +52,13 @@ public:
     }
 
     /**
+     * @brief Gets the current stream position
+     */
+    virtual u32 GetPosition() const {
+        return mPosition;
+    }
+
+    /**
      * @brief Tests whether this stream type supports seeking
      */
     virtual bool CanSeek() const = 0;

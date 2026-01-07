@@ -9,9 +9,7 @@
 
 //! @}
 
-namespace rp_Duc_sound {
-
-enum ESoundID {
+enum {
     /* 0x00 */ RP_DUC_AMB_01,
     /* 0x01 */ RP_DUC_SE_TARGET_BOUND_GRASS,
     /* 0x02 */ RP_DUC_SE_TARGET_GRASS_01,
@@ -126,7 +124,5 @@ enum ESoundID {
     /* 0x6F */ RP_COM_BGM_RENEW_RECORD2,
     /* 0x70 */ RP_COM_BGM_RENEW_RECORD
 };
-
-} // namespace rp_Duc_sound
 
 #endif

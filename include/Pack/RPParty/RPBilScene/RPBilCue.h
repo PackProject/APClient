@@ -14,14 +14,16 @@
 class RPBilCue : public RPPartyUtlModel {
 public:
     enum EState {
-        EState_Null,
+        EState_None,
         EState_PlaceFoul,
         EState_Wait,
         EState_Hold,
         EState_Pull,
         EState_FastTurn,
         EState_Hit,
-        EState_Dummy
+        EState_Dummy,
+
+        EState_Max
     };
 
     enum EDotState {
@@ -39,19 +41,56 @@ public:
     };
 
 public:
+    RPBilCue(u32 index);
+    virtual ~RPBilCue();
+
+    virtual void Configure(); // at 0x78
+    virtual void Reset();     // at 0x7C
+    virtual void Calculate(); // at 0x80
+    virtual void Exit();      // at 0x84
+    virtual void UserDraw();  // at 0x88
+
     void CalcPosition();
     void CalcForce();
+    void FUN_802bd450();
+
+    void CalcMove(bool forward);
+    void CalcMtx();
+    void CalcDpd();
+
+    bool IsState(EState state) const {
+        return mpStateMachine->IsState(state);
+    }
+    void ChangeState(EState state) {
+        mpStateMachine->ChangeState(state);
+    }
 
     void SetAimPosition(const EGG::Vector2f& pos) {
         mAimPosition = pos;
         mValidAim = true;
     }
 
+    const EGG::Vector3f& GetHitForce() const {
+        return mHitForce;
+    }
+
+public:
+    RP_UTL_FSM_STATE_DECL(PLACEFOUL);
+    RP_UTL_FSM_STATE_DECL(WAIT);
+    RP_UTL_FSM_STATE_DECL(HOLD);
+    RP_UTL_FSM_STATE_DECL(PULL);
+    RP_UTL_FSM_STATE_DECL(FASTTURN);
+    RP_UTL_FSM_STATE_DECL(HIT);
+    RP_UTL_FSM_STATE_DECL(DUMMY);
+
 private:
     char _60[0x8];
     RPUtlBaseFsm<RPBilCue>* mpStateMachine; // at 0x68
     EDotState mDotState;                    // at 0x6C
-    char _70[0xA4 - 0x70];
+    char _70[0x88 - 0x70];
+
+    EGG::Vector3f mHitForce; // at 0x88
+    char _94[0xA4 - 0x94];
 
     bool mValidAim;             // at 0xA4
     EGG::Vector2f mAimPosition; // at 0xA8
@@ -66,6 +105,8 @@ private:
 
     char _6880[0x68AC - 0x6880];
     ECursor mCursor; // at 0x68AC
+
+    char _0x68B0[0x68CC - 0x68B0];
 };
 
 #endif

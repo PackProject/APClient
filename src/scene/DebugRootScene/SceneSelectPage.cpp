@@ -42,10 +42,12 @@ SceneSelectPage::~SceneSelectPage() {
 /**
  * @brief Option select callback
  *
+ * @param pInvoker Callback invoker
  * @param pArg Callback user argument
  * @return Result of action
  */
-kiwi::EDebugMenuResult SceneSelectPage::SelectProc(void* pArg) {
+kiwi::EDebugMenuResult
+SceneSelectPage::SelectProc(kiwi::DebugOptionBase* pInvoker, void* pArg) {
     ASSERT_PTR(pArg);
     SceneSelectPage* p = static_cast<SceneSelectPage*>(pArg);
 

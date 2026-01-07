@@ -8,7 +8,7 @@ namespace kiwi {
 //! @{
 
 /**
- * @brief Synchronous (blocking) socket
+ * @brief Synchronous socket
  */
 class SyncSocket : public SocketBase {
 public:
@@ -19,7 +19,7 @@ public:
      * @param type Socket type
      */
     SyncSocket(SOProtoFamily family, SOSockType type)
-        : SocketBase(family, type) {}
+        : SocketBase(family, type), mIsBlocking(true) {}
 
     /**
      * @brief Connects to a peer
@@ -41,6 +41,21 @@ public:
      */
     virtual SyncSocket* Accept(AcceptCallback pCallback = nullptr,
                                void* pArg = nullptr);
+
+    /**
+     * @brief Tests whether the socket is thread-blocking (at the PPC level)
+     */
+    bool IsBlocking() const {
+        return mIsBlocking;
+    }
+    /**
+     * @brief Toggles socket thread-blocking (at the PPC level)
+     *
+     * @param enable Whether to enable blocking
+     */
+    void SetBlocking(bool enable) {
+        mIsBlocking = enable;
+    }
 
 private:
     /**
@@ -82,6 +97,10 @@ private:
     virtual SOResult SendImpl(const void* pSrc, u32 len, u32& rSend,
                               const SockAddrAny* pAddr, Callback pCallback,
                               void* pArg);
+
+private:
+    //! Whether socket operations are thread-blocking (at the PPC level)
+    bool mIsBlocking;
 };
 
 //! @}

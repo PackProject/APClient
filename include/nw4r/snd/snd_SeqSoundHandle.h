@@ -43,6 +43,14 @@ public:
         }
     }
 
+    u32 GetTick() const {
+        if (IsAttachedSound()) {
+            return mSound->GetTick();
+        }
+
+        return 0;
+    }
+
 private:
     detail::SeqSound* mSound; // at 0x0
 };

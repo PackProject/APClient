@@ -81,6 +81,10 @@ public:
         return sizeof(mFileStreamBuffer);
     }
 
+    u32 GetTick() const {
+        return !GetStartedFlag() ? 0 : mSeqPlayer.GetTickCounter();
+    }
+
 private:
     typedef void (*SeqLoadCallback)(bool success, const void* pBase,
                                     void* pCallbackArg);

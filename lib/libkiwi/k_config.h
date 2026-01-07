@@ -18,6 +18,11 @@
 #error Please define a build target!
 #endif
 
+// Precompiled header
+#if defined(LIBKIWI_TARGET_RVL)
+#define LIBKIWI_PRECOMPILE
+#endif
+
 // Inline assembly macros
 #if defined(LIBKIWI_TARGET_RVL)
 // Hide from VSCode
@@ -56,11 +61,36 @@
 
 // 'typeof'
 #define K_TYPEOF(x) __typeof__(x)
+
 // 'decltype'
+#ifndef __INTELLISENSE__
 #define K_DECLTYPE(x) __decltype__(x)
+#else
+#define K_DECLTYPE(x) decltype(x)
+#endif
 
 // Primitive array length
 #define K_LENGTHOF(x) static_cast<size_t>(sizeof((x)) / sizeof((x)[0]))
+#define K_ARRAY_SIZE(x) K_LENGTHOF(x)
+
+// Stringitize
+#define K_STRINGITIZE(x) __K_STRINGITIZE(x)
+#define __K_STRINGITIZE(x) #x
+
+// CodeWarrior fun :)
+#if defined(LIBKIWI_TARGET_RVL)
+#pragma warning off(10548)
+#pragma warning off(10580)
+#endif
+
+// Memory conversion
+#define K_MEM_KB_TO_B(X) ((X) * 1024)
+#define K_MEM_B_TO_KB(X) ((X) / 1024)
+#define K_MEM_B_TO_MB(X) ((X) / 1024 / 1024)
+
+#define K_MEM_KB_TO_B(X) ((X) * 1024)
+#define K_MEM_MB_TO_B(X) ((X) * 1024 * 1024)
+#define K_MEM_B_TO_MB(X) ((X) / 1024 / 1024)
 
 // C++ exclusive options
 #if defined(__cplusplus)
@@ -75,6 +105,7 @@
 // nullptr evalutes to NULL when not supported
 #if !defined(LIBKIWI_CPP1X)
 #define nullptr NULL
+#define noexcept throw()
 #endif
 
 #endif // __cplusplus

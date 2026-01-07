@@ -4,7 +4,6 @@
 #include "core/ItemMgr.h"
 #include "hooks/Swf/items_Swf.h"
 #include "hooks/trampoline.h"
-
 #include <Pack/RPKernel.h>
 #include <Pack/RPSystem.h>
 #include <Sports2/Sp2Cmn.h>
@@ -52,7 +51,7 @@ bool TryHomeButton() {
     // Home menu is disabled in Speed Slice while objects are falling
     if (isSwfPrc && !ItemMgr::GetInstance().IsSwfPrcPause() &&
         Swf::PrcIsObjFalling()) {
-        return;
+        return false;
     }
 
     return true;

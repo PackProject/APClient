@@ -9,9 +9,7 @@
 
 //! @}
 
-namespace rp_Bsb_sound {
-
-enum ESoundID {
+enum {
     /* 0x00 */ SE_TR_BallFall,
     /* 0x01 */ SE_TR_ScoreDispChange,
     /* 0x02 */ SE_TR_Furikaburi,
@@ -191,7 +189,5 @@ enum ESoundID {
     /* 0xB0 */ RP_COM_GAME_SE_PAUSE_KEY_A_01_TVSP,
     /* 0xB1 */ RP_COM_GAME_SE_PAUSE_KEY_A_01
 };
-
-} // namespace rp_Bsb_sound
 
 #endif

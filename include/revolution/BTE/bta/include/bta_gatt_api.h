@@ -1216,3 +1216,4 @@ BTA_API extern void BTA_GATTC_ReadMultiple(UINT16 conn_id, tBTA_GATTC_MULTI *p_r
 
 
 #endif /* BTA_GATT_API_H */
+

@@ -8,7 +8,7 @@ class RPSysAvatar {
 public:
     RPSysAvatar(const RPSysKokeshiGenInfo*);
     virtual ~RPSysAvatar();
-    virtual void LoadResource(const RPSysKokeshiOverloadInfo*);
+    virtual void LoadResource(const RPSysKokeshiOverloadInfo* = NULL);
     virtual void ApplyLightTexture(u8) = 0;
 
 private:

@@ -1328,3 +1328,4 @@ HCI_API extern BOOLEAN btsnd_hcic_ble_read_supported_states (void);
 #endif
 
 #endif
+

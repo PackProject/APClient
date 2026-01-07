@@ -164,24 +164,6 @@ private:
  */
 extern Random RNG;
 
-/**
- * @brief Performs the Fisher-Yates shuffle algorithm to generate a random
- * permutation
- *
- * @tparam T Element type
- * @param pArray Input array
- * @param size Array size
- */
-template <typename T> K_INLINE void Shuffle(T pArray, int size) {
-    K_ASSERT(pArray != nullptr);
-
-    Random r;
-    for (int i = size - 1; i >= 1; i--) {
-        int j = r.NextS32(i + 1);
-        std::swap(pArray[j], pArray[i]);
-    }
-}
-
 //! @}
 } // namespace kiwi
 

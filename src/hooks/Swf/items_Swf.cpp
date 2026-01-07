@@ -1,6 +1,5 @@
 #include "core/ItemMgr.h"
 #include "hooks/trampoline.h"
-
 #include <Sports2/Sp2Cmn.h>
 #include <Sports2/Sp2Snd.h>
 #include <Sports2/Sp2Swf.h>
@@ -23,12 +22,12 @@ namespace Swf {
  * @param pController Remote controller
  */
 void TryBlock(Sp2::Swf::UserCtrl* pUserCtrl,
-              const Sp2::Cmn::Controller* pController) {
+              Sp2::Cmn::Controller* pController) {
     ASSERT(pUserCtrl != nullptr);
     ASSERT(pController != nullptr);
 
-    bool pressed = pController->getCoreStatus()->trig & EGG::cCORE_FSSTICK_B;
-    bool held = pController->getCoreStatus()->hold & EGG::cCORE_FSSTICK_B;
+    bool pressed = pController->getCoreStatus()->trig & EGG::cCORE_BUTTON_B;
+    bool held = pController->getCoreStatus()->hold & EGG::cCORE_BUTTON_B;
 
     // Blocking is controlled by the B Button
     if (!held) {

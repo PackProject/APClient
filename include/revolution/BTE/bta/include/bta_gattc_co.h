@@ -98,3 +98,4 @@ BTA_API extern void bta_gattc_co_cache_load(BD_ADDR server_bda, UINT16 evt,
                                             UINT16 start_index, UINT16 conn_id);
 
 #endif /* BTA_GATT_CO_H */
+

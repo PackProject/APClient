@@ -510,3 +510,5 @@ BTA_API void BTA_AgSetCodec(UINT16 handle, tBTA_AG_PEER_CODEC codec);
 #endif
 
 #endif /* BTA_AG_API_H */
+
+

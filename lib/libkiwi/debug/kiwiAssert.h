@@ -30,11 +30,16 @@
 
 //! Assert that the pointer falls into a valid memory region
 #define ASSERT_PTR(exp) K_ASSERT_PTR(exp)
+//! Assert that the pointer falls into a valid memory region
+#define ASSERT_PTR_EX(exp, ...) K_ASSERT_PTR_EX(exp, __VA_ARGS__)
+
 //! Assert that the floating-point value is a finite, non-NaN value
 #define ASSERT_FP(exp) K_ASSERT_FP(exp)
 
 //! Assert that a code path is unreachable
 #define UNREACHABLE() K_UNREACHABLE()
+//! Denote a function as not implemented
+#define NOT_IMPLEMENTED() K_NOT_IMPLEMENTED()
 
 //! Compile-time assertion
 #define STATIC_ASSERT(exp) K_STATIC_ASSERT(exp)
@@ -70,11 +75,14 @@
 //! Assert that the pointer falls into a valid memory region
 #define K_ASSERT_PTR(exp)                                                      \
     K_ASSERT_EX(kiwi::PtrUtil::IsPointer(exp),                                 \
-                "%s is not a valid pointer (=0x%08X)", #exp, exp)
+                #exp " is not a valid pointer (=0x%08X)", exp)
+//! Assert that the pointer falls into a valid memory region
+#define K_ASSERT_PTR_EX(exp, ...)                                              \
+    K_ASSERT_EX(kiwi::PtrUtil::IsPointer(exp), __VA_ARGS__)
 
 //! Assert that the floating-point value is a finite, non-NaN value
 #define K_ASSERT_FP(exp)                                                       \
-    K_ASSERT_EX(isfinite(exp) && !isnan(exp), "%s is infinite or nan", #exp)
+    K_ASSERT_EX(isfinite(exp) && !isnan(exp), #exp " is infinite or nan")
 
 //! Assert that a code path is unreachable
 #define K_UNREACHABLE() K_ASSERT_EX(false, "Unreachable code")
