@@ -1,0 +1,939 @@
+{
+  "encoding": "UTF16",
+  "group_id": 0,
+  "form": "MAIN",
+  "form_supplement": "GROUP24",
+  "messages": [
+    {
+      "group": 0,
+      "index": 0,
+      "text": "Yes",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 1,
+      "index": 0,
+      "text": "No",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 2,
+      "index": 0,
+      "text": "Back",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 3,
+      "index": 0,
+      "text": "Wii Menu",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 10,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 11,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 12,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 13,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 14,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 15,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 20,
+      "index": 0,
+      "text": "Wii Sports",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 21,
+      "index": 0,
+      "text": "Wii Play",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 40,
+      "index": 0,
+      "text": "An error has occurred.\nPress the Eject Button\uFF0C\nremove the Game Disc\uFF0C\nand turn the power off.\nPlease read the\nWii Operations Manual\nfor help troubleshooting.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 41,
+      "index": 0,
+      "text": "The Game Disc could not be read.\nPlease read the Wii operations\nmanual for more information.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 42,
+      "index": 0,
+      "text": "Please insert the { VAR_0 }\nGame Disc.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 43,
+      "index": 0,
+      "text": "Press a button on the Wii Remote\nif you want to continue playing.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 50,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 51,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 52,
+      "index": 0,
+      "text": "The game could not be saved.\nContinue without saving?{ WINDOW_DEFAULT_CURSOR 01 00 }",
+      "attributes": "0x000003E7",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 53,
+      "index": 0,
+      "text": "The Wii System Memory is\ncorrupted. Please refer to the\nWii Operations Manual for help\ntroubleshooting. Continue without\nsaving?{ WINDOW_DEFAULT_CURSOR 01 00 }",
+      "attributes": "0x000003E7",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 100,
+      "index": 0,
+      "text": "This game\u0027s save data is\ncorrupted and must be formatted.\nFormat the data now?{ WINDOW_DEFAULT_CURSOR 01 00 }",
+      "attributes": "0x000003E7",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 101,
+      "index": 0,
+      "text": "Continue without saving?{ WINDOW_DEFAULT_CURSOR 01 00 }",
+      "attributes": "0x000003E7",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 102,
+      "index": 0,
+      "text": "",
+      "attributes": "0x000003E7",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 103,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 104,
+      "index": 0,
+      "text": "The Wii System Memory does not\nhave enough free space. Either\nmove files to an SD Card or erase\nfiles to save. This game requires\n{ VAR_0 } empty blocks.\nOpen the Data Management\nscreen now?{ WINDOW_DEFAULT_CURSOR 01 00 }",
+      "attributes": "0x000003E7",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 105,
+      "index": 0,
+      "text": "Create a save file for { VAR_0 }?{ WINDOW_DEFAULT_CURSOR 00 00 }",
+      "attributes": "0x000003E7",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 106,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 107,
+      "index": 0,
+      "text": "A save file has been created.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 108,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 110,
+      "index": 0,
+      "text": "The Wii System Memory does not\nhave enough empty files. Either\nmove files to an SD Card or erase\nfiles to save. Open the Data\nManagement screen now?{ WINDOW_DEFAULT_CURSOR 01 00 }",
+      "attributes": "0x000003E7",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 150,
+      "index": 0,
+      "text": "The batteries in the Wii Remote\nare running low. Please check the\nbattery level on the HOME Menu.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 160,
+      "index": 0,
+      "text": "Unable to load Mii Channel data.\nPlease access the Mii Channel\nand check Mii Channel data.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 161,
+      "index": 0,
+      "text": "Unable to load Mii data stored\nin the Wii Remote.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 170,
+      "index": 0,
+      "text": "Unable to load saved data.\nPlease try again later.\nIf this problem continues, see\nthe Wii Operations Manual for\nhelp troubleshooting.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 171,
+      "index": 0,
+      "text": "Unable to save.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 200,
+      "index": 0,
+      "text": "To play with this many players,\nyou need { VAR_0 } Wii Remotes.\nPlease connect more Wii Remotes.{ WINDOW_DELAY 00 3C }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 210,
+      "index": 0,
+      "text": "Use { VAR_0 } Wii Remote with { VAR_0 } players.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 211,
+      "index": 0,
+      "text": "Use { VAR_0 } Wii Remotes with { VAR_0 } players.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 250,
+      "index": 0,
+      "text": "You can\u0027t select this until you\u0027ve\ncreated a Mii in the Mii Channel.{ WINDOW_CANCEL_SE 00 00 }{ WINDOW_DEFAULT_CURSOR 00 00 }",
+      "attributes": "0x00000002",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 250,
+      "index": 1,
+      "text": "Back",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 250,
+      "index": 2,
+      "text": "To Wii Menu",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 251,
+      "index": 0,
+      "text": "There are no Miis stored on this\nWii Remote. Please add a Mii in\nthe Mii Channel.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 260,
+      "index": 0,
+      "text": "You can\u0027t save your records\nwith this Mii. Continue?{ WINDOW_CANCEL_SE 01 00 }{ WINDOW_DEFAULT_CURSOR 01 00 }",
+      "attributes": "0x000003E7",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 261,
+      "index": 0,
+      "text": "You can\u0027t save My Record data\nwith this Mii. Continue?{ WINDOW_DEFAULT_CURSOR 01 00 }{ WINDOW_CANCEL_SE 01 00 }",
+      "attributes": "0x000003E7",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 270,
+      "index": 0,
+      "text": "You can\u0027t select this Mii today\nbecause it has taken the Wii\nFitness test. Try again tomorrow.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 271,
+      "index": 0,
+      "text": "The connection between the\nWii Remote and Wii console has\nbeen lost. Press \uE047 and \uE048\nsimultaneously to reconnect...",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 280,
+      "index": 0,
+      "text": "Added { VAR_1 } to\nthe player list. If you erase\nthis Mii from the Mii Channel, it\nwill be deleted from your player\nlist, so be careful!{ WINDOW_DELAY 00 B4 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 281,
+      "index": 0,
+      "text": "Added { VAR_1 } to\nthe player list. If you erase\nthis Mii from the Mii Channel, it\nwill be deleted from your player\nlist, so be careful!{ WINDOW_DELAY 00 B4 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 290,
+      "index": 0,
+      "text": "One or more Miis have been\nerased from the Mii Channel\nand will be removed from your\nplayer list.{ WINDOW_DELAY 00 B4 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 291,
+      "index": 0,
+      "text": "One or more Miis have been\nerased from the Mii Channel\nand will be removed from your\nplayer list.{ WINDOW_DELAY 00 B4 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 300,
+      "index": 0,
+      "text": "Which hand do you want to use?",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 301,
+      "index": 0,
+      "text": "Tennis",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 302,
+      "index": 0,
+      "text": "Baseball",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 303,
+      "index": 0,
+      "text": "Bowling",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 304,
+      "index": 0,
+      "text": "Golf",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 305,
+      "index": 0,
+      "text": "Boxing",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 310,
+      "index": 0,
+      "text": "Swing",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 311,
+      "index": 0,
+      "text": "Pitch",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 312,
+      "index": 0,
+      "text": "Bat",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 313,
+      "index": 0,
+      "text": "Bowl",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 314,
+      "index": 0,
+      "text": "Swing",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 315,
+      "index": 0,
+      "text": "Stance",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 320,
+      "index": 0,
+      "text": "L",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 321,
+      "index": 0,
+      "text": "R",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 330,
+      "index": 0,
+      "text": "OK",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 400,
+      "index": 0,
+      "text": "Select Mii",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 401,
+      "index": 0,
+      "text": "Select Players",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 402,
+      "index": 0,
+      "text": "Tennis",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 403,
+      "index": 0,
+      "text": "Baseball",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 404,
+      "index": 0,
+      "text": "Bowling",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 405,
+      "index": 0,
+      "text": "Golf",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 406,
+      "index": 0,
+      "text": "Boxing",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 407,
+      "index": 0,
+      "text": "Training",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 408,
+      "index": 0,
+      "text": "Wii Fitness",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 409,
+      "index": 0,
+      "text": "Main Menu",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 450,
+      "index": 0,
+      "text": "Back",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4B 0x00 0x00"
+    },
+    {
+      "group": 450,
+      "index": 1,
+      "text": "Main Menu",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 451,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 452,
+      "index": 0,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 453,
+      "index": 0,
+      "text": "P3",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 454,
+      "index": 0,
+      "text": "P4",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x46 0x00 0x00"
+    },
+    {
+      "group": 455,
+      "index": 0,
+      "text": "{ VAR_1 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x41 0x00 0x00"
+    },
+    {
+      "group": 470,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 500,
+      "index": 0,
+      "text": "Select the number of players.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 510,
+      "index": 0,
+      "text": "1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x82 0x00 0x00"
+    },
+    {
+      "group": 511,
+      "index": 0,
+      "text": "2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x82 0x00 0x00"
+    },
+    {
+      "group": 520,
+      "index": 0,
+      "text": "1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x82 0x00 0x00"
+    },
+    {
+      "group": 521,
+      "index": 0,
+      "text": "2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x82 0x00 0x00"
+    },
+    {
+      "group": 522,
+      "index": 0,
+      "text": "3",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x82 0x00 0x00"
+    },
+    {
+      "group": 523,
+      "index": 0,
+      "text": "4",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x82 0x00 0x00"
+    },
+    {
+      "group": 530,
+      "index": 0,
+      "text": "More",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 531,
+      "index": 0,
+      "text": "OK",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 540,
+      "index": 0,
+      "text": "Wii Remotes",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x4C 0x00 0x00"
+    },
+    {
+      "group": 541,
+      "index": 0,
+      "text": "Press \uE047 and \uE048 at the same time on\neach Wii Remote you want to add.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x53 0x00 0x00"
+    },
+    {
+      "group": 600,
+      "index": 0,
+      "text": "Select a Mii for Player { VAR_0 }.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 600,
+      "index": 1,
+      "text": "Select a Mii.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 610,
+      "index": 0,
+      "text": "Wii Console",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 611,
+      "index": 0,
+      "text": "Guest",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 612,
+      "index": 0,
+      "text": "Wii Remote",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 613,
+      "index": 0,
+      "text": "Reading Mii data...\nDo not unplug the extension controller.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 620,
+      "index": 0,
+      "text": "Play with this Mii.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 620,
+      "index": 1,
+      "text": "Play with these Miis.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 630,
+      "index": 0,
+      "text": "P1",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3C 0x00 0x00"
+    },
+    {
+      "group": 631,
+      "index": 0,
+      "text": "P2",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3C 0x00 0x00"
+    },
+    {
+      "group": 632,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3C 0x00 0x00"
+    },
+    {
+      "group": 633,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3C 0x00 0x00"
+    },
+    {
+      "group": 640,
+      "index": 0,
+      "text": "{ VAR_1 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3A 0x00 0x00"
+    },
+    {
+      "group": 650,
+      "index": 0,
+      "text": "Change",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 651,
+      "index": 0,
+      "text": "OK",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 660,
+      "index": 0,
+      "text": "Guest A",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3A 0x00 0x00"
+    },
+    {
+      "group": 661,
+      "index": 0,
+      "text": "Guest B",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3A 0x00 0x00"
+    },
+    {
+      "group": 662,
+      "index": 0,
+      "text": "Guest C",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3A 0x00 0x00"
+    },
+    {
+      "group": 663,
+      "index": 0,
+      "text": "Guest D",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3A 0x00 0x00"
+    },
+    {
+      "group": 664,
+      "index": 0,
+      "text": "Guest E",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3A 0x00 0x00"
+    },
+    {
+      "group": 665,
+      "index": 0,
+      "text": "Guest F",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x3A 0x00 0x00"
+    },
+    {
+      "group": 700,
+      "index": 0,
+      "text": "Yes",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 700,
+      "index": 1,
+      "text": "Back",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 701,
+      "index": 0,
+      "text": "No",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 701,
+      "index": 1,
+      "text": "Wii Menu",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 702,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 750,
+      "index": 0,
+      "text": "Continue",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 751,
+      "index": 0,
+      "text": "Start over",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 752,
+      "index": 0,
+      "text": "Quit",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x6E 0x00 0x00"
+    },
+    {
+      "group": 800,
+      "index": 0,
+      "text": "Attach the Wii Remote wrist strap.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 850,
+      "index": 0,
+      "text": "Slip the Wii Remote strap\nthrough the connector\nhook of the Nunchuk plug,\nthen connect the Nunchuk.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 851,
+      "index": 0,
+      "text": "Unplug the extension controller\nconnected to this Wii Remote.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 860,
+      "index": 0,
+      "text": "Put the Wii Remote strap through\nthe Nunchuk\u0027s connector hook.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    },
+    {
+      "group": 870,
+      "index": 0,
+      "text": "{ VAR_1 }",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 871,
+      "index": 0,
+      "text": "OK!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 880,
+      "index": 0,
+      "text": "Starting the game...\n\nHold the Wii Remote\nsecurely in your hand and\npress \uE042 and \uE043.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x50 0x00 0x00"
+    },
+    {
+      "group": 900,
+      "index": 0,
+      "text": "Are you using your Wii Remote\nJacket? Make sure there are\nno people or objects around\nthat you might bump into!",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 901,
+      "index": 0,
+      "text": "Why not take a break?\nYou can pause the game\nby pressing \uE045.",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x5A 0x00 0x00"
+    },
+    {
+      "group": 999,
+      "index": 0,
+      "text": "",
+      "attributes": "0x00000000",
+      "ex_attributes": "0x00 0x64 0x00 0x00"
+    }
+  ]
+}

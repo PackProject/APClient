@@ -1,0 +1,70 @@
+{
+  "version": 0,
+  "levels": [
+    {
+      "easy_chance": 1,
+      "medium_chance": 0,
+      "hard_chance": 0
+    },
+    {
+      "easy_chance": 0,
+      "medium_chance": 1,
+      "hard_chance": 0
+    },
+    {
+      "easy_chance": 5,
+      "medium_chance": 4,
+      "hard_chance": 1
+    },
+    {
+      "easy_chance": 4,
+      "medium_chance": 5,
+      "hard_chance": 1
+    },
+    {
+      "easy_chance": 3,
+      "medium_chance": 6,
+      "hard_chance": 1
+    },
+    {
+      "easy_chance": 3,
+      "medium_chance": 5,
+      "hard_chance": 2
+    },
+    {
+      "easy_chance": 2,
+      "medium_chance": 5,
+      "hard_chance": 3
+    },
+    {
+      "easy_chance": 2,
+      "medium_chance": 4,
+      "hard_chance": 4
+    },
+    {
+      "easy_chance": 2,
+      "medium_chance": 3,
+      "hard_chance": 5
+    },
+    {
+      "easy_chance": 1,
+      "medium_chance": 3,
+      "hard_chance": 6
+    },
+    {
+      "easy_chance": 3,
+      "medium_chance": 0,
+      "hard_chance": 7
+    },
+    {
+      "easy_chance": 1,
+      "medium_chance": 0,
+      "hard_chance": 9
+    },
+    {
+      "easy_chance": 0,
+      "medium_chance": 0,
+      "hard_chance": 1
+    }
+  ]
+}
