@@ -1,7 +1,6 @@
 #include "scene/DebugRootScene/SeqSelectPage.h"
 
 #include "scene/DebugRootScene/SceneSelectPage.h"
-
 #include <Sports2/Sp2Cmn.h>
 #include <Sports2/Sp2Snd.h>
 

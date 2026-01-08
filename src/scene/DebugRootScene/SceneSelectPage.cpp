@@ -11,11 +11,11 @@ namespace DebugRoot {
  * @param rMenu Parent menu
  */
 SceneSelectPage::SceneSelectPage(kiwi::DebugMenu& rMenu)
-    : kiwi::DebugPage(rMenu, scOptionNum), mSeqSelectPage(rMenu) {
+    : kiwi::DebugPage(rMenu, SCENE_NUM), mSeqSelectPage(rMenu) {
 
-    for (int i = 0; i < scOptionNum; i++) {
+    for (int i = 0; i < SCENE_NUM; i++) {
         const char* pSceneName =
-            kiwi::SceneCreator::GetInstance().GetSceneName(FIRST_SCENE_ID + i);
+            kiwi::SceneCreator::GetInstance().GetSceneName(i);
 
         ASSERT_PTR(pSceneName);
 
@@ -24,8 +24,21 @@ SceneSelectPage::SceneSelectPage(kiwi::DebugMenu& rMenu)
 
         ASSERT_PTR(pOption);
 
-        mOptions.PushBack(pOption);
+        // Store scene ID to recall later
+        pOption->SetUserData(reinterpret_cast<kiwi::DebugUserData>(i));
+
         mpSceneOptions[i] = pOption;
+        mOptions.PushBack(pOption);
+    }
+
+    // Disable scenes that would cause problems
+    static const u32 badScenes[] = {
+        kiwi::ESceneID_Sp2StrapScene,
+        kiwi::ESceneID_Sp2SaveDataLoadScene,
+    };
+
+    for (int i = 0; i < LENGTHOF(badScenes); i++) {
+        mpSceneOptions[badScenes[i]]->SetEnabled(false);
     }
 }
 
@@ -33,7 +46,7 @@ SceneSelectPage::SceneSelectPage(kiwi::DebugMenu& rMenu)
  * @brief Destructor
  */
 SceneSelectPage::~SceneSelectPage() {
-    for (int i = 0; i < scOptionNum; i++) {
+    for (int i = 0; i < SCENE_NUM; i++) {
         delete mpSceneOptions[i];
         mpSceneOptions[i] = nullptr;
     }
@@ -51,11 +64,11 @@ SceneSelectPage::SelectProc(kiwi::DebugOptionBase* pInvoker, void* pArg) {
     ASSERT_PTR(pArg);
     SceneSelectPage* p = static_cast<SceneSelectPage*>(pArg);
 
-    // Pass on the selected scene ID
-    s32 scene = p->mCursor + SceneSelectPage::FIRST_SCENE_ID;
-    p->mSeqSelectPage.SetNextScene(scene);
+    // Scene ID is stored as user data
+    ASSERT_PTR(pInvoker);
+    u32 scene = reinterpret_cast<u32>(pInvoker->GetUserData());
 
-    // Open sequence select
+    p->mSeqSelectPage.SetNextScene(scene);
     p->GetMenu().OpenPage(p->mSeqSelectPage);
 
     return kiwi::EDebugMenuResult_Select;

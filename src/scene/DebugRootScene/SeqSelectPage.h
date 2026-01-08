@@ -17,7 +17,7 @@ public:
      *
      * @param rMenu Parent menu
      */
-    SeqSelectPage(kiwi::DebugMenu& rMenu);
+    explicit SeqSelectPage(kiwi::DebugMenu& rMenu);
 
     /**
      * @brief Sets the next scene ID

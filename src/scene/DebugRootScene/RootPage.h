@@ -18,9 +18,32 @@ public:
      *
      * @param rMenu Parent menu
      */
-    RootPage(kiwi::DebugMenu& rMenu);
+    explicit RootPage(kiwi::DebugMenu& rMenu);
+
+    /**
+     * @brief Go to main menu option callback
+     *
+     * @param pInvoker Callback invoker
+     * @param pArg Callback user argument
+     * @return Result of action
+     */
+    static kiwi::EDebugMenuResult GotoMenuProc(kiwi::DebugOptionBase* pInvoker,
+                                               void* pArg);
+
+    /**
+     * @brief Unit test manager option callback
+     *
+     * @param pInvoker Callback invoker
+     * @param pArg Callback user argument
+     * @return Result of action
+     */
+    static kiwi::EDebugMenuResult UnitTestProc(kiwi::DebugOptionBase* pInvoker,
+                                               void* pArg);
 
 private:
+    //! Go to main menu
+    kiwi::DebugProcOption mGotoMenu;
+
     //! Debug scene select
     kiwi::DebugOpenPageOption mSceneSelect;
     SceneSelectPage mSceneSelectPage;
@@ -36,6 +59,9 @@ private:
     //! AP cosmetic debug
     kiwi::DebugOpenPageOption mCosmeticDebug;
     // ItemDebugPage mItemDebugPage;
+
+    //! Unit test manager
+    kiwi::DebugProcOption mUnitTest;
 };
 
 } // namespace DebugRoot

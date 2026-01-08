@@ -93,18 +93,24 @@ void Scene::OnCalculate() {
  */
 void Scene::OnUserDraw() {
     kiwi::Text(kiwi::GetBuildPack())
-        .SetPosition(0.75, 0.85)
+        .SetPosition(0.75, 0.82)
         .SetScale(0.7)
         .SetTextColor(kiwi::Color::YELLOW)
         .SetStrokeType(kiwi::ETextStroke_Outline);
 
     kiwi::Text(kiwi::GetBuildTarget())
-        .SetPosition(0.75, 0.88)
+        .SetPosition(0.75, 0.85)
         .SetScale(0.7)
         .SetTextColor(kiwi::Color::YELLOW)
         .SetStrokeType(kiwi::ETextStroke_Outline);
 
     kiwi::Text(kiwi::GetBuildDate())
+        .SetPosition(0.75, 0.88)
+        .SetScale(0.7)
+        .SetTextColor(kiwi::Color::YELLOW)
+        .SetStrokeType(kiwi::ETextStroke_Outline);
+
+    kiwi::Text("Git %s", kiwi::GetGitCommitHash())
         .SetPosition(0.75, 0.91)
         .SetScale(0.7)
         .SetTextColor(kiwi::Color::YELLOW)

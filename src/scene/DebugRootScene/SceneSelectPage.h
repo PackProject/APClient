@@ -14,18 +14,12 @@ namespace DebugRoot {
  */
 class SceneSelectPage : public kiwi::DebugPage {
 public:
-    //! First scene ID (inclusive)
-    static const u32 FIRST_SCENE_ID = kiwi::ESceneID_Sp2TitleScene;
-    //! Last scene ID (exclusive)
-    static const u32 LAST_SCENE_ID = kiwi::ESceneID_Sp2OmkScene + 1;
-
-public:
     /**
      * @brief Constructor
      *
      * @param rMenu Parent menu
      */
-    SceneSelectPage(kiwi::DebugMenu& rMenu);
+    explicit SceneSelectPage(kiwi::DebugMenu& rMenu);
     /**
      * @brief Destructor
      */
@@ -42,12 +36,12 @@ public:
                                              void* pArg);
 
 private:
-    //! Number of menu options
-    static const u32 scOptionNum = LAST_SCENE_ID - FIRST_SCENE_ID;
+    // TODO(kiwi) Implement debug menu scrolling
+    static const u32 SCENE_NUM = kiwi::ESceneID_Sp2DebugRootScene;
 
 private:
     //! Scene selection options
-    kiwi::DebugProcOption* mpSceneOptions[scOptionNum];
+    kiwi::DebugProcOption* mpSceneOptions[SCENE_NUM];
 
     //! Sequence select
     SeqSelectPage mSeqSelectPage;

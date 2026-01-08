@@ -98,6 +98,8 @@ enum EChamp {
 enum ESceneID {
     ESceneID_DebugRootScene = kiwi::ESceneID_Max,
     // . . .
+
+    ESceneID_Max
 };
 
 } // namespace AP
