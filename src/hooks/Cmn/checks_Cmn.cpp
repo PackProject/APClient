@@ -19,7 +19,7 @@ void SetStampCheckIfNew(int playerDataPtr, int sportID, int stampIdx) {
     bool hasCheck = CheckMgr::GetInstance().GetCheckState(CheckID(stampID));
 
     if (!hasCheck) {
-        CheckMgr::GetInstance().GiveItemFromCheck(CheckID(stampID));
+        CheckMgr::GetInstance().GiveCheckItem(CheckID(stampID));
 
         hasCheck = CheckMgr::GetInstance().GetCheckState(CheckID(stampID));
 

@@ -7,33 +7,10 @@ K_DYNAMIC_SINGLETON_IMPL(AP::CosmeticMgr);
 namespace AP {
 
 /**
- * @brief Binary file path
- */
-const char* CosmeticMgr::PATH = "cosmetic.bin";
-
-/**
  * @brief Constructor
  */
 CosmeticMgr::CosmeticMgr() {
     Clear();
-}
-
-/**
- * @brief Deserializes binary contents (internal implementation)
- *
- * @param rBin Binary file contents
- */
-void CosmeticMgr::DeserializeImpl(const Bin& rBin) {
-    ;
-}
-
-/**
- * @brief Serializes binary contents (internal implementation)
- *
- * @param rBin Binary file contents
- */
-void CosmeticMgr::SerializeImpl(Bin& rBin) const {
-    ;
 }
 
 /**
@@ -76,10 +53,12 @@ void CosmeticMgr::Debug() {
             i == Sp2::Cmn::EGroupID_Pln + 1 ||
             i == Sp2::Cmn::EGroupID_Glf + 1 ||
             i == Sp2::Cmn::EGroupID_Dgl + 1) {
+
             mRandomTimeMapping[i] = RPSysScene::ETime_Auto;
         } else {
-            mRandomTimeMapping[i] = static_cast<RPSysScene::ETime>(
-                r.NextU32(RPSysScene::ETime_Night + 1));
+            mRandomTimeMapping[i] = //
+                static_cast<RPSysScene::ETime>(
+                    r.NextU32(RPSysScene::ETime_Night + 1));
         }
     }
 }

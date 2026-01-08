@@ -20,7 +20,7 @@ void SetGolfHoleComplete(int holeIdx) {
     if (hasCheck)
         return;
 
-    CheckMgr::GetInstance().GiveItemFromCheck(
+    CheckMgr::GetInstance().GiveCheckItem(
         CheckID(CHECK_GOLF_COMPLETE_HOLE_1 + holeIdx));
 }
 

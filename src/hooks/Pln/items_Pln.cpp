@@ -1,6 +1,5 @@
 #include "core/ItemMgr.h"
 #include "hooks/trampoline.h"
-
 #include <Sports2/Sp2Pln.h>
 
 #include <libkiwi.h>
@@ -46,13 +45,13 @@ TRAMPOLINE_DEF(0x80428898, 0x8042889C) {
  * @brief Unlocks balloons in Island Flyover
  */
 bool PlnSetBalloons() {
-    return ItemMgr::GetInstance().IsPlnBalloonsUnlock();
+    return ItemMgr::GetInstance().IsPlnBalloons();
 }
 
 /**
  * @brief PlnSetBalloons trampoline
  */
-TRAMPOLINE_DEF(0x8042aff0, 0x8042b010) {
+TRAMPOLINE_DEF(0x8042aff0, 0x8042b010){
     // clang-format off
     TRAMPOLINE_BEGIN
 
@@ -75,30 +74,31 @@ End:
 }
 
 /**
- * @brief Unlocks double blasters, night lights, two-seater plane in Island Flyover
+ * @brief Unlocks double blasters, night lights, two-seater plane in Island
+ * Flyover
  */
 u32 PlnSetMisc(u32 currentField) {
 
     kiwi::TBitFlag<u32> plnUnlocks = currentField;
 
-    if (ItemMgr::GetInstance().IsPlnDoubleBlastersUnlock()) {
+    if (ItemMgr::GetInstance().IsPlnDoubleBlasters()) {
         plnUnlocks.SetBit(2);
     } else {
         plnUnlocks.ResetBit(2);
     }
 
-    if (ItemMgr::GetInstance().IsPlnNightLightsUnlock()) {
+    if (ItemMgr::GetInstance().IsPlnNightLights()) {
         plnUnlocks.SetBit(4);
     } else {
         plnUnlocks.ResetBit(4);
     }
-    
-    if (ItemMgr::GetInstance().IsPlnTwoSeaterUnlock()) {
+
+    if (ItemMgr::GetInstance().IsPlnTwoSeater()) {
         plnUnlocks.SetBit(5);
     } else {
         plnUnlocks.ResetBit(5);
     }
-    
+
     return plnUnlocks;
 }
 
@@ -125,12 +125,12 @@ TRAMPOLINE_DEF(0x804455e0, 0x804455e4) {
  * @brief Unlocks braking in Island Flyover
  */
 bool PlnSetBrake() {
-    return ItemMgr::GetInstance().IsPlnBrakeUnlock();
+    return ItemMgr::GetInstance().IsPlnBrake();
 }
 
 /**
  * @brief PlnSetBrake trampoline
-*/
+ */
 TRAMPOLINE_DEF(0x80433858, 0x8043385c) {
     // clang-format off
     TRAMPOLINE_BEGIN
@@ -158,13 +158,13 @@ Exit:
  * @brief Unlocks boosting in Island Flyover
  */
 bool PlnSetBoost() {
-    return ItemMgr::GetInstance().IsPlnBoostUnlock();
+    return ItemMgr::GetInstance().IsPlnBoost();
 }
 
 /**
  * @brief PlnSetBoost trampolines
-*/
-TRAMPOLINE_DEF(0x80433f70, 0x80433f74) {
+ */
+TRAMPOLINE_DEF(0x80433f70, 0x80433f74){
     // clang-format off
     TRAMPOLINE_BEGIN
 

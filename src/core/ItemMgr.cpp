@@ -1,5 +1,7 @@
 #include "core/ItemMgr.h"
 
+#include "core/items.h"
+
 #include <libkiwi.h>
 
 K_DYNAMIC_SINGLETON_IMPL(AP::ItemMgr);
@@ -7,9 +9,28 @@ K_DYNAMIC_SINGLETON_IMPL(AP::ItemMgr);
 namespace AP {
 
 /**
- * @brief Binary file path
+ * @brief Gets the readable name of the specified item ID
+ *
+ * @param id Item ID
  */
-const char* ItemMgr::PATH = "item.bin";
+kiwi::String ItemMgr::GetItemName(ItemID id) {
+#define X(ID, IDENT, STR)                                                      \
+    case ITEM_##IDENT: {                                                       \
+        return STR;                                                            \
+    }
+
+    switch (id) {
+        // Generate switch cases for each item
+        AP_ITEMS_X_MACRO;
+
+    default: {
+        ASSERT_EX(false, "Unknown ItemID: %d", id);
+        return "Unknown ItemID";
+    }
+    }
+
+#undef X
+}
 
 /**
  * @brief Constructor
@@ -19,342 +40,7 @@ ItemMgr::ItemMgr() {
 }
 
 /**
- * @brief Deserializes binary contents (internal implementation)
- *
- * @param rBin Binary file contents
- */
-void ItemMgr::DeserializeImpl(const Bin& rBin) {
-    ;
-}
-
-/**
- * @brief Serializes binary contents (internal implementation)
- *
- * @param rBin Binary file contents
- */
-void ItemMgr::SerializeImpl(Bin& rBin) const {
-    ;
-}
-
-const char* ItemMgr::GetItemName(ItemMgr::ItemID id) {
-    switch (id) {
-    case SWORDPLAY_DUEL_SPORT_UNLOCK:
-        return "Swordplay Duel Sport Unlock";
-    case SWORDPLAY_SPEED_SLICE_SPORT_UNLOCK:
-        return "Swordplay Speed Slice Sport Unlock";
-    case SWORDPLAY_SHOWDOWN_SPORT_UNLOCK:
-        return "Swordplay Showdown Sport Unlock";
-    case WAKEBOARDING_SPORT_UNLOCK:
-        return "Wakeboarding Sport Unlock";
-    case FRISBEE_DOG_SPORT_UNLOCK:
-        return "Frisbee Dog Sport Unlock";
-    case FRISBEE_GOLF_SPORT_UNLOCK:
-        return "Frisbee Golf Sport Unlock";
-    case ARCHERY_SPORT_UNLOCK:
-        return "Archery Sport Unlock";
-    case BASKETBALL_3POINT_CONTEST_SPORT_UNLOCK:
-        return "Basketball 3 Point Contest Sport Unlock";
-    case BASKETBALL_PICKUP_GAME_SPORT_UNLOCK:
-        return "Basketball Pickup Game Sport Unlock";
-    case TABLE_TENNIS_MATCH_SPORT_UNLOCK:
-        return "Table Tennis Match Sport Unlock";
-    case TABLE_TENNIS_RETURN_CHALLENGE_SPORT_UNLOCK:
-        return "Table Tennis Return Challenge Sport Unlock";
-    case GOLF_SPORT_UNLOCK:
-        return "Golf Sport Unlock";
-    case BOWLING_STANDARD_GAME_SPORT_UNLOCK:
-        return "Bowling Standard Game Sport Unlock";
-    case BOWLING_100_PIN_GAME_SPORT_UNLOCK:
-        return "Bowling 100 Pin Game Sport Unlock";
-    case BOWLING_SPIN_CONTROL_SPORT_UNLOCK:
-        return "Bowling Spin Control Sport Unlock";
-    case POWER_CRUISING_SPORT_UNLOCK:
-        return "Power Cruising Sport Unlock";
-    case CANOEING_SPEED_CHALLENGE_SPORT_UNLOCK:
-        return "Canoeing Speed Challenge Sport Unlock";
-    case CYCLING_SINGLE_RACE_UNLOCK:
-        return "Cycling Single Race Unlock";
-    case AIRSPORTS_SKYDIVING_UNLOCK:
-        return "Air Sports Skydiving Unlock";
-    case AIRSPORTS_ISLAND_FLYOVER_UNLOCK:
-        return "Air Sports Island Flyover Unlock";
-    case SWORDPLAY_CATEGORY_UNLOCK:
-        return "Swordplay Category Unlock";
-    case WAKEBOARD_CATEGORY_UNLOCK:
-        return "Wakeboard Category Unlock";
-    case FRISBEE_CATEGORY_UNLOCK:
-        return "Frisbee Category Unlock";
-    case ARCHERY_CATEGORY_UNLOCK:
-        return "Archery Category Unlock";
-    case BASKETBALL_CATEGORY_UNLOCK:
-        return "Basketball Category Unlock";
-    case TABLE_TENNIS_CATEGORY_UNLOCK:
-        return "Table Tennis Category Unlock";
-    case GOLF_CATEGORY_UNLOCK:
-        return "Golf Category Unlock";
-    case BOWLING_CATEGORY_UNLOCK:
-        return "Bowling Category Unlock";
-    case POWER_CRUISING_CATEGORY_UNLOCK:
-        return "Power Cruising Category Unlock";
-    case CANOEING_CATEGORY_UNLOCK:
-        return "Canoeing Category Unlock";
-    case CYCLING_CATEGORY_UNLOCK:
-        return "Cycling Category Unlock";
-    case AIRSPORTS_CATEGORY_UNLOCK:
-        return "Air Sports Category Unlock";
-    case SWORDPLAY_DUEL_BLOCK:
-        return "Swordplay Duel Block";
-    case SWORDPLAY_SPEED_SLICE_PAUSE:
-        return "Swordplay Speed Slice Pause";
-    case SWORDPLAY_SHOWDOWN_BLOCK:
-        return "Swordplay Showdown Block";
-    case SWORDPLAY_SHOWDOWN_HEART:
-        return "Swordplay Showdown Heart";
-    case SWORDPLAY_SHOWDOWN_STAGE_1:
-        return "Swordplay Showdown Stage 1";
-    case SWORDPLAY_SHOWDOWN_STAGE_2:
-        return "Swordplay Showdown Stage 2";
-    case SWORDPLAY_SHOWDOWN_STAGE_3:
-        return "Swordplay Showdown Stage 3";
-    case SWORDPLAY_SHOWDOWN_STAGE_4:
-        return "Swordplay Showdown Stage 4";
-    case SWORDPLAY_SHOWDOWN_STAGE_5:
-        return "Swordplay Showdown Stage 5";
-    case SWORDPLAY_SHOWDOWN_STAGE_6:
-        return "Swordplay Showdown Stage 6";
-    case SWORDPLAY_SHOWDOWN_STAGE_7:
-        return "Swordplay Showdown Stage 7";
-    case SWORDPLAY_SHOWDOWN_STAGE_8:
-        return "Swordplay Showdown Stage 8";
-    case SWORDPLAY_SHOWDOWN_STAGE_9:
-        return "Swordplay Showdown Stage 9";
-    case SWORDPLAY_SHOWDOWN_STAGE_10:
-        return "Swordplay Showdown Stage 10";
-    case SWORDPLAY_SHOWDOWN_STAGE_11:
-        return "Swordplay Showdown Stage 11";
-    case SWORDPLAY_SHOWDOWN_STAGE_12:
-        return "Swordplay Showdown Stage 12";
-    case SWORDPLAY_SHOWDOWN_STAGE_13:
-        return "Swordplay Showdown Stage 13";
-    case SWORDPLAY_SHOWDOWN_STAGE_14:
-        return "Swordplay Showdown Stage 14";
-    case SWORDPLAY_SHOWDOWN_STAGE_15:
-        return "Swordplay Showdown Stage 15";
-    case SWORDPLAY_SHOWDOWN_STAGE_16:
-        return "Swordplay Showdown Stage 16";
-    case SWORDPLAY_SHOWDOWN_STAGE_17:
-        return "Swordplay Showdown Stage 17";
-    case SWORDPLAY_SHOWDOWN_STAGE_18:
-        return "Swordplay Showdown Stage 18";
-    case SWORDPLAY_SHOWDOWN_STAGE_19:
-        return "Swordplay Showdown Stage 19";
-    case SWORDPLAY_SHOWDOWN_STAGE_20:
-        return "Swordplay Showdown Stage 20";
-    case WAKEBOARDING_TIMER:
-        return "Wakeboarding Timer";
-    case WAKEBOARDING_BEGINNER:
-        return "Wakeboarding Beginner";
-    case WAKEBOARDING_INTERMEDIATE:
-        return "Wakeboarding Intermediate";
-    case WAKEBOARDING_EXPERT:
-        return "Wakeboarding Expert";
-    case FRISBEE_DOG_FRISBEES:
-        return "Frisbee Dog Frisbees";
-    case FRISBEE_DOG_SECRET_POP:
-        return "Frisbee Dog Secret Pop";
-    case FRISBEE_GOLF_HUD:
-        return "Frisbee Golf Hud";
-    case FRISBEE_GOLF_DRIVER:
-        return "Frisbee Golf Driver";
-    case FRISBEE_GOLF_MIDRANGE:
-        return "Frisbee Golf Midrange";
-    case FRISBEE_GOLF_PUTTER:
-        return "Frisbee Golf Putter";
-    case FRISBEE_GOLF_COURSE_0:
-        return "Frisbee Golf Course 0";
-    case FRISBEE_GOLF_COURSE_1:
-        return "Frisbee Golf Course 1";
-    case FRISBEE_GOLF_COURSE_2:
-        return "Frisbee Golf Course 2";
-    case FRISBEE_GOLF_COURSE_3:
-        return "Frisbee Golf Course 3";
-    case FRISBEE_GOLF_COURSE_4:
-        return "Frisbee Golf Course 4";
-    case FRISBEE_GOLF_COURSE_5:
-        return "Frisbee Golf Course 5";
-    case FRISBEE_GOLF_COURSE_6:
-        return "Frisbee Golf Course 6";
-    case FRISBEE_GOLF_COURSE_7:
-        return "Frisbee Golf Course 7";
-    case FRISBEE_GOLF_COURSE_8:
-        return "Frisbee Golf Course 8";
-    case FRISBEE_GOLF_COURSE_9:
-        return "Frisbee Golf Course 9";
-    case ARCHERY_AIM_CIRCLE:
-        return "Archery Aim Circle";
-    case ARCHERY_ARROW:
-        return "Archery Arrow";
-    case ARCHERY_FRUIT_BEGINNER:
-        return "Archery Fruit Beginner";
-    case ARCHERY_FRUIT_INTERMEDIATE:
-        return "Archery Fruit Intermediate";
-    case ARCHERY_FRUIT_EXPERT:
-        return "Archery Fruit Expert";
-    case ARCHERY_BEGINNER:
-        return "Archery Beginner";
-    case ARCHERY_INTERMEDIATE:
-        return "Archery Intermediate";
-    case ARCHERY_EXPERT:
-        return "Archery Expert";
-    case BASKETBALL_3PT_TIMER:
-        return "Basketball 3PT Timer";
-    case BASKETBALL_BONUS_BALLS:
-        return "Basketball Bonus Balls";
-    case BASKETBALL_PICKUP_TIMER:
-        return "Basketball Pickup Timer";
-    case BASKETBALL_PASS:
-        return "Basketball Pass";
-    case BASKETBALL_3PTS:
-        return "Basketball 3PTS";
-    case BASKETBALL_DUNK:
-        return "Basketball Dunk";
-    case TABLE_TENNIS_SPIN:
-        return "Table Tennis Spin";
-    case TABLE_TENNIS_SMASH:
-        return "Table Tennis Smash";
-    case TABLE_TENNIS_CANS:
-        return "Table Tennis Cans";
-    case GOLF_HUD:
-        return "Golf Hud";
-    case GOLF_DRIVER:
-        return "Golf Driver";
-    case GOLF_3_WOOD:
-        return "Golf 3 Wood";
-    case GOLF_3_IRON:
-        return "Golf 3 Iron";
-    case GOLF_5_IRON:
-        return "Golf 5 Iron";
-    case GOLF_7_IRON:
-        return "Golf 7 Iron";
-    case GOLF_9_IRON:
-        return "Golf 9 Iron";
-    case GOLF_WEDGE:
-        return "Golf Wedge";
-    case GOLF_PUTTER:
-        return "Golf Putter";
-    case GOLF_TURN:
-        return "Golf Turn";
-    case GOLF_BACKSPIN:
-        return "Golf Backspin";
-    case GOLF_COURSE_0:
-        return "Golf Course 0";
-    case GOLF_COURSE_1:
-        return "Golf Course 1";
-    case GOLF_COURSE_2:
-        return "Golf Course 2";
-    case GOLF_COURSE_3:
-        return "Golf Course 3";
-    case GOLF_COURSE_4:
-        return "Golf Course 4";
-    case GOLF_COURSE_5:
-        return "Golf Course 5";
-    case GOLF_COURSE_6:
-        return "Golf Course 6";
-    case GOLF_COURSE_7:
-        return "Golf Course 7";
-    case GOLF_COURSE_8:
-        return "Golf Course 8";
-    case GOLF_COURSE_9:
-        return "Golf Course 9";
-    case GOLF_VIEW_LOW:
-        return "Golf View Low";
-    case GOLF_VIEW_SLOPE:
-        return "Golf View Slope";
-    case BOWLING_10_PIN_MOVE:
-        return "Bowling 10 Pin Move";
-    case BOWLING_10_PIN_TURN:
-        return "Bowling 10 Pin Turn";
-    case BOWLING_10_PIN_SPIN:
-        return "Bowling 10 Pin Spin";
-    case BOWLING_100_PIN_MOVE:
-        return "Bowling 100 Pin Move";
-    case BOWLING_100_PIN_TURN:
-        return "Bowling 100 Pin Turn";
-    case BOWLING_100_PIN_SPIN:
-        return "Bowling 100 Pin Spin";
-    case BOWLING_100_PIN_SECRET_STRIKE:
-        return "Bowling 100 Pin Secret Strike";
-    case BOWLING_SPIN_CONTROL_MOVE:
-        return "Bowling Spin Control Move";
-    case BOWLING_SPIN_CONTROL_TURN:
-        return "Bowling Spin Control Turn";
-    case BOWLING_SPIN_CONTROL_SPIN:
-        return "Bowling Spin Control Spin";
-    case POWER_CRUISING_BOOST:
-        return "Power Cruising Boost";
-    case POWER_CRUISING_RING_TIMER:
-        return "Power Cruising Ring Timer";
-    case POWER_CRUISING_DOUBLE_RING:
-        return "Power Cruising Double Ring";
-    case POWER_CRUISING_FREE_CRUISING_TIMER:
-        return "Power Cruising Free Cruising Timer";
-    case CANOEING_TIMER:
-        return "Canoeing Timer";
-    case CANOEING_BEGINNER:
-        return "Canoeing Beginner";
-    case CANOEING_INTERMEDIATE:
-        return "Canoeing Intermediate";
-    case CANOEING_EXPERT:
-        return "Canoeing Expert";
-    case CYCLING_HEART:
-        return "Cycling Heart";
-    case CYCLING_STAGE_0:
-        return "Cycling Stage 0";
-    case CYCLING_STAGE_1:
-        return "Cycling Stage 1";
-    case CYCLING_STAGE_2:
-        return "Cycling Stage 2";
-    case CYCLING_STAGE_3:
-        return "Cycling Stage 3";
-    case CYCLING_STAGE_4:
-        return "Cycling Stage 4";
-    case CYCLING_STAGE_5:
-        return "Cycling Stage 5";
-    case CYCLING_STAGE_6:
-        return "Cycling Stage 6";
-    case CYCLING_STAGE_7:
-        return "Cycling Stage 7";
-    case SKYDIVING_MII:
-        return "Skydiving Mii";
-    case ISLAND_FLYOVER_TIMER:
-        return "Island Flyover Timer";
-    case ISLAND_FLYOVER_DAY:
-        return "Island Flyover Day";
-    case ISLAND_FLYOVER_EVENING:
-        return "Island Flyover Evening";
-    case ISLAND_FLYOVER_NIGHT:
-        return "Island Flyover Night";
-    case ISLAND_FLYOVER_DOUBLE_BLASTERS:
-        return "Island Flyover Double Blasters";
-    case ISLAND_FLYOVER_NIGHT_LIGHTS:
-        return "Island Flyover Night Lights";
-    case ISLAND_FLYOVER_UNLOCK_BALLOONS:
-        return "Island Flyover Unlock Balloons";
-    case ISLAND_FLYOVER_UNLOCK_TWO_SEATER:
-        return "Island Flyover Unlock Two Seater";
-    case ISLAND_FLYOVER_UNLOCK_BOOST:
-        return "Island Flyover Unlock Boosting";
-    case ISLAND_FLYOVER_UNLOCK_BRAKE:
-        return "Island Flyover Unlock Braking";
-
-    default:
-        kiwi::cout << "Unknown ID" << kiwi::endl;
-        return "Unknown ID";
-    }
-}
-
-/**
- * @brief Clears item state
+ * @brief Resets the item state to the default settings
  */
 void ItemMgr::Clear() {
     // Common
@@ -450,7 +136,7 @@ void ItemMgr::Clear() {
 }
 
 /**
- * @brief Sets debug state
+ * @brief Randomizes the item state for debugging purposes
  */
 void ItemMgr::Debug() {
     kiwi::Random r;
@@ -471,7 +157,7 @@ void ItemMgr::Debug() {
     mWkbStageFlag.Randomize();
 
     // Frisbee Dog
-    mFldThrowFlag.SetDirect(0b111111);
+    mFldThrowFlag.Randomize();
     mFldSecretPopFlag = r.CoinFlip();
 
     // Frisbee Golf
@@ -519,7 +205,7 @@ void ItemMgr::Debug() {
     mBwlWalSpinFlag = r.CoinFlip();
 
     // Power Cruising
-    // mJskBoostFlag = r.CoinFlip();
+    mJskBoostFlag = r.CoinFlip();
     mJskRingTimerFlag.Randomize();
     mJsk2xRingFlag = r.CoinFlip();
     mJskFreeTimerFlag.Randomize();
@@ -528,8 +214,6 @@ void ItemMgr::Debug() {
     // Canoeing
     mCanTimerFlag.Randomize();
     mCanStageFlag.Randomize();
-
-    mCanTimerFlag.SetAll();
 
     // Cycling
     mBicHeartFlag.Randomize();
@@ -541,12 +225,724 @@ void ItemMgr::Debug() {
     // Air Sports
     mPlnTimerFlag.Randomize();
     mPlnStageFlag.Randomize();
-    // mPlnDoubleBlastersFlag = r.CoinFlip();
-    // mPlnNightLightsFlag = r.CoinFlip();
-    // mPlnBalloonsFlag = r.CoinFlip();
-    // mPlnTwoSeaterPlaneFlag = r.CoinFlip();
-    // mPlnBoostFlag = r.CoinFlip();
-    // mPlnBrakeFlag = r.CoinFlip();
+    mPlnDoubleBlastersFlag = r.CoinFlip();
+    mPlnNightLightsFlag = r.CoinFlip();
+    mPlnBalloonsFlag = r.CoinFlip();
+    mPlnTwoSeaterPlaneFlag = r.CoinFlip();
+    mPlnBoostFlag = r.CoinFlip();
+    mPlnBrakeFlag = r.CoinFlip();
+}
+
+/**
+ * @brief Gets the current state of the specified item
+ *
+ * @param id Item ID
+ * @return Whether the item has been obtained
+ */
+bool ItemMgr::GetItemState(ItemID id) const {
+    switch (id) {
+    // Sport unlocks
+    case ITEM_SWORDPLAY_DUEL_SPORT_UNLOCK:
+    case ITEM_SWORDPLAY_SPEED_SLICE_SPORT_UNLOCK:
+    case ITEM_SWORDPLAY_SHOWDOWN_SPORT_UNLOCK:
+    case ITEM_WAKEBOARDING_SPORT_UNLOCK:
+    case ITEM_FRISBEE_DOG_SPORT_UNLOCK:
+    case ITEM_FRISBEE_GOLF_SPORT_UNLOCK:
+    case ITEM_ARCHERY_SPORT_UNLOCK:
+    case ITEM_BASKETBALL_3POINT_CONTEST_SPORT_UNLOCK:
+    case ITEM_BASKETBALL_PICKUP_GAME_SPORT_UNLOCK:
+    case ITEM_TABLE_TENNIS_MATCH_SPORT_UNLOCK:
+    case ITEM_TABLE_TENNIS_RETURN_CHALLENGE_SPORT_UNLOCK:
+    case ITEM_GOLF_SPORT_UNLOCK:
+    case ITEM_BOWLING_STANDARD_GAME_SPORT_UNLOCK:
+    case ITEM_BOWLING_100_PIN_GAME_SPORT_UNLOCK:
+    case ITEM_BOWLING_SPIN_CONTROL_SPORT_UNLOCK:
+    case ITEM_POWER_CRUISING_SPORT_UNLOCK:
+    case ITEM_CANOEING_SPEED_CHALLENGE_SPORT_UNLOCK:
+    case ITEM_CYCLING_SINGLE_RACE_UNLOCK:
+    case ITEM_AIRSPORTS_SKYDIVING_UNLOCK:
+    case ITEM_AIRSPORTS_ISLAND_FLYOVER_UNLOCK: {
+        return mSportFlag.GetBit(id - ITEM_SWORDPLAY_DUEL_SPORT_UNLOCK);
+    }
+
+    // Category unlocks
+    case ITEM_SWORDPLAY_CATEGORY_UNLOCK:
+    case ITEM_WAKEBOARD_CATEGORY_UNLOCK:
+    case ITEM_FRISBEE_CATEGORY_UNLOCK:
+    case ITEM_ARCHERY_CATEGORY_UNLOCK:
+    case ITEM_BASKETBALL_CATEGORY_UNLOCK:
+    case ITEM_TABLE_TENNIS_CATEGORY_UNLOCK:
+    case ITEM_GOLF_CATEGORY_UNLOCK:
+    case ITEM_BOWLING_CATEGORY_UNLOCK:
+    case ITEM_POWER_CRUISING_CATEGORY_UNLOCK:
+    case ITEM_CANOEING_CATEGORY_UNLOCK:
+    case ITEM_CYCLING_CATEGORY_UNLOCK:
+    case ITEM_AIRSPORTS_CATEGORY_UNLOCK: {
+        return mCategoryFlag.GetBit(id - ITEM_SWORDPLAY_CATEGORY_UNLOCK);
+    }
+
+    // Swordplay
+    case ITEM_SWORDPLAY_DUEL_BLOCK: {
+        return mSwfVsBlockFlag;
+    }
+    case ITEM_SWORDPLAY_SPEED_SLICE_PAUSE: {
+        return mSwfPrcPauseFlag;
+    }
+    case ITEM_SWORDPLAY_SHOWDOWN_BLOCK: {
+        return mSwfVsBlockFlag;
+    }
+
+    case ITEM_SWORDPLAY_SHOWDOWN_HEART: {
+        return mSwfSglHeartFlag.Count();
+    }
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_1:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_2:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_3:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_4:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_5:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_6:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_7:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_8:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_9:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_10:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_11:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_12:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_13:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_14:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_15:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_16:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_17:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_18:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_19:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_20: {
+        return mSwfSglStageFlag.GetBit(id - ITEM_SWORDPLAY_SHOWDOWN_STAGE_1);
+    }
+
+    // Wakeboarding
+    case ITEM_WAKEBOARDING_TIMER: {
+        return mWkbTimerFlag.Count();
+    }
+    case ITEM_WAKEBOARDING_BEGINNER:
+    case ITEM_WAKEBOARDING_INTERMEDIATE:
+    case ITEM_WAKEBOARDING_EXPERT: {
+        return mWkbStageFlag.GetBit(id - ITEM_WAKEBOARDING_BEGINNER);
+    }
+
+    // Frisbee Dog
+    case ITEM_FRISBEE_DOG_FRISBEES: {
+        return mFldThrowFlag.Count();
+    }
+    case ITEM_FRISBEE_DOG_SECRET_POP: {
+        return mFldSecretPopFlag;
+    }
+
+    // Frisbee Golf
+    case ITEM_FRISBEE_GOLF_HUD: {
+        return mDglHUDFlag;
+    }
+    case ITEM_FRISBEE_GOLF_DRIVER: {
+    case ITEM_FRISBEE_GOLF_MIDRANGE:
+    case ITEM_FRISBEE_GOLF_PUTTER:
+        return mDglDiscFlag.GetBit(id - ITEM_FRISBEE_GOLF_DRIVER);
+    }
+    case ITEM_FRISBEE_GOLF_COURSE_0: {
+    case ITEM_FRISBEE_GOLF_COURSE_1:
+    case ITEM_FRISBEE_GOLF_COURSE_2:
+    case ITEM_FRISBEE_GOLF_COURSE_3:
+    case ITEM_FRISBEE_GOLF_COURSE_4:
+    case ITEM_FRISBEE_GOLF_COURSE_5:
+    case ITEM_FRISBEE_GOLF_COURSE_6:
+    case ITEM_FRISBEE_GOLF_COURSE_7:
+    case ITEM_FRISBEE_GOLF_COURSE_8:
+    case ITEM_FRISBEE_GOLF_COURSE_9:
+        return mDglStageFlag.GetBit(id - ITEM_FRISBEE_GOLF_COURSE_0);
+    }
+
+    // Archery
+    case ITEM_ARCHERY_AIM_CIRCLE: {
+        return mArcAimFlag;
+    }
+    case ITEM_ARCHERY_ARROW: {
+        return mArcArrowFlag.Count();
+    }
+    case ITEM_ARCHERY_FRUIT_BEGINNER: {
+    case ITEM_ARCHERY_FRUIT_INTERMEDIATE:
+    case ITEM_ARCHERY_FRUIT_EXPERT:
+        return mArcFruitFlag.GetBit(id - ITEM_ARCHERY_FRUIT_BEGINNER);
+    }
+    case ITEM_ARCHERY_BEGINNER:
+    case ITEM_ARCHERY_INTERMEDIATE:
+    case ITEM_ARCHERY_EXPERT: {
+        return mArcStageFlag.GetBit(id - ITEM_ARCHERY_BEGINNER);
+    }
+
+    // Basketball
+    case ITEM_BASKETBALL_3PT_TIMER: {
+        return mBsk3ptTimerFlag.Count();
+    }
+    case ITEM_BASKETBALL_BONUS_BALLS: {
+        return mBsk3ptBonusFlag;
+    }
+    case ITEM_BASKETBALL_PICKUP_TIMER: {
+        return mBskVsTimerFlag.Count();
+    }
+    case ITEM_BASKETBALL_PASS: {
+        return mBskVsPassFlag;
+    }
+    case ITEM_BASKETBALL_3PTS: {
+        return mBskVs3ptFlag;
+    }
+    case ITEM_BASKETBALL_DUNK: {
+        return mBskVsDunkFlag;
+    }
+
+    // Table Tennis
+    case ITEM_TABLE_TENNIS_SPIN: {
+        return mPngSpinFlag;
+    }
+    case ITEM_TABLE_TENNIS_SMASH: {
+        return mPngSmashFlag;
+    }
+    case ITEM_TABLE_TENNIS_CANS: {
+        return mPngCansFlag;
+    }
+
+    // Golf
+    case ITEM_GOLF_HUD: {
+        return mGlfHUDFlag;
+    }
+    case ITEM_GOLF_DRIVER: {
+    case ITEM_GOLF_3_WOOD:
+    case ITEM_GOLF_3_IRON:
+    case ITEM_GOLF_5_IRON:
+    case ITEM_GOLF_7_IRON:
+    case ITEM_GOLF_9_IRON:
+    case ITEM_GOLF_WEDGE:
+    case ITEM_GOLF_PUTTER:
+        return mGlfClubFlag.GetBit(id - ITEM_GOLF_DRIVER);
+    }
+    case ITEM_GOLF_TURN: {
+        return mGlfTurnFlag;
+    }
+    case ITEM_GOLF_BACKSPIN: {
+        return mGlfSpinFlag;
+    }
+    case ITEM_GOLF_COURSE_0: {
+    case ITEM_GOLF_COURSE_1:
+    case ITEM_GOLF_COURSE_2:
+    case ITEM_GOLF_COURSE_3:
+    case ITEM_GOLF_COURSE_4:
+    case ITEM_GOLF_COURSE_5:
+    case ITEM_GOLF_COURSE_6:
+    case ITEM_GOLF_COURSE_7:
+    case ITEM_GOLF_COURSE_8:
+    case ITEM_GOLF_COURSE_9:
+        return mGlfStageFlag.GetBit(id - ITEM_GOLF_COURSE_0);
+    }
+    case ITEM_GOLF_VIEW_LOW: {
+        return mGlfViewLowFlag;
+    }
+    case ITEM_GOLF_VIEW_SLOPE: {
+        return mGlfViewSlopeFlag;
+    }
+
+    // Bowling
+    case ITEM_BOWLING_10_PIN_MOVE: {
+        return mBwlStdMoveFlag;
+    }
+    case ITEM_BOWLING_10_PIN_TURN: {
+        return mBwlStdTurnFlag;
+    }
+    case ITEM_BOWLING_10_PIN_SPIN: {
+        return mBwlStdSpinFlag;
+    }
+    case ITEM_BOWLING_100_PIN_MOVE: {
+        return mBwl100MoveFlag;
+    }
+    case ITEM_BOWLING_100_PIN_TURN: {
+        return mBwl100TurnFlag;
+    }
+    case ITEM_BOWLING_100_PIN_SPIN: {
+        return mBwl100SpinFlag;
+    }
+    case ITEM_BOWLING_100_PIN_SECRET_STRIKE: {
+        return mBwl100SecretBtnFlag;
+    }
+    case ITEM_BOWLING_SPIN_CONTROL_MOVE: {
+        return mBwlWalMoveFlag;
+    }
+    case ITEM_BOWLING_SPIN_CONTROL_TURN: {
+        return mBwlWalTurnFlag;
+    }
+    case ITEM_BOWLING_SPIN_CONTROL_SPIN: {
+        return mBwlWalSpinFlag;
+    }
+
+    // Power Cruising
+    case ITEM_POWER_CRUISING_BOOST: {
+        return mJskBoostFlag;
+    }
+    case ITEM_POWER_CRUISING_RING_TIMER: {
+        return mJskRingTimerFlag.Count();
+    }
+    case ITEM_POWER_CRUISING_DOUBLE_RING: {
+        return mJsk2xRingFlag;
+    }
+    case ITEM_POWER_CRUISING_FREE_CRUISING_TIMER: {
+        return mJskFreeTimerFlag.Count();
+    }
+
+    // Canoeing
+    case ITEM_CANOEING_TIMER: {
+        return mCanTimerFlag.Count();
+    }
+    case ITEM_CANOEING_BEGINNER: {
+    case ITEM_CANOEING_INTERMEDIATE:
+    case ITEM_CANOEING_EXPERT:
+        return mCanStageFlag.GetBit(id - ITEM_CANOEING_BEGINNER);
+    }
+
+    // Cycling
+    case ITEM_CYCLING_HEART: {
+        return mBicHeartFlag.Count();
+    }
+    case ITEM_CYCLING_STAGE_0: {
+    case ITEM_CYCLING_STAGE_1:
+    case ITEM_CYCLING_STAGE_2:
+    case ITEM_CYCLING_STAGE_3:
+    case ITEM_CYCLING_STAGE_4:
+    case ITEM_CYCLING_STAGE_5:
+    case ITEM_CYCLING_STAGE_6:
+    case ITEM_CYCLING_STAGE_7:
+        return mBicStageFlag.GetBit(id - ITEM_CYCLING_STAGE_0);
+    }
+
+    // Skydiving
+    case ITEM_SKYDIVING_MII: {
+        return mOmkMiiFlag.Count();
+    }
+
+    // Air Sports
+    case ITEM_ISLAND_FLYOVER_TIMER: {
+        return mPlnTimerFlag.Count();
+    }
+    case ITEM_ISLAND_FLYOVER_DAY: {
+    case ITEM_ISLAND_FLYOVER_EVENING:
+    case ITEM_ISLAND_FLYOVER_NIGHT:
+        return mPlnStageFlag.GetBit(id - ITEM_ISLAND_FLYOVER_DAY);
+    }
+    case ITEM_ISLAND_FLYOVER_DOUBLE_BLASTERS: {
+        return mPlnDoubleBlastersFlag;
+    }
+    case ITEM_ISLAND_FLYOVER_NIGHT_LIGHTS: {
+        return mPlnNightLightsFlag;
+    }
+    case ITEM_ISLAND_FLYOVER_UNLOCK_BALLOONS: {
+        return mPlnBalloonsFlag;
+    }
+    case ITEM_ISLAND_FLYOVER_UNLOCK_TWO_SEATER: {
+        return mPlnTwoSeaterPlaneFlag;
+    }
+    case ITEM_ISLAND_FLYOVER_UNLOCK_BOOST: {
+        return mPlnBoostFlag;
+    }
+    case ITEM_ISLAND_FLYOVER_UNLOCK_BRAKE: {
+        return mPlnBrakeFlag;
+    }
+
+    default: {
+        ASSERT_EX(false, "Unknown ItemID: %d", id);
+        return false;
+    }
+    }
+}
+
+/**
+ * @brief Sets the current state of the specified item
+ *
+ * @param id Item ID
+ * @param state Whether the item has been obtained
+ */
+void ItemMgr::SetItemState(ItemID id, bool state) {
+    kiwi::cout << "Item: " << GetItemName(id) << " has been set to " << state
+               << kiwi::endl;
+
+    switch (id) {
+    // Sport unlocks
+    case ITEM_SWORDPLAY_DUEL_SPORT_UNLOCK:
+    case ITEM_SWORDPLAY_SPEED_SLICE_SPORT_UNLOCK:
+    case ITEM_SWORDPLAY_SHOWDOWN_SPORT_UNLOCK:
+    case ITEM_WAKEBOARDING_SPORT_UNLOCK:
+    case ITEM_FRISBEE_DOG_SPORT_UNLOCK:
+    case ITEM_FRISBEE_GOLF_SPORT_UNLOCK:
+    case ITEM_ARCHERY_SPORT_UNLOCK:
+    case ITEM_BASKETBALL_3POINT_CONTEST_SPORT_UNLOCK:
+    case ITEM_BASKETBALL_PICKUP_GAME_SPORT_UNLOCK:
+    case ITEM_TABLE_TENNIS_MATCH_SPORT_UNLOCK:
+    case ITEM_TABLE_TENNIS_RETURN_CHALLENGE_SPORT_UNLOCK:
+    case ITEM_GOLF_SPORT_UNLOCK:
+    case ITEM_BOWLING_STANDARD_GAME_SPORT_UNLOCK:
+    case ITEM_BOWLING_100_PIN_GAME_SPORT_UNLOCK:
+    case ITEM_BOWLING_SPIN_CONTROL_SPORT_UNLOCK:
+    case ITEM_POWER_CRUISING_SPORT_UNLOCK:
+    case ITEM_CANOEING_SPEED_CHALLENGE_SPORT_UNLOCK:
+    case ITEM_CYCLING_SINGLE_RACE_UNLOCK:
+    case ITEM_AIRSPORTS_SKYDIVING_UNLOCK:
+    case ITEM_AIRSPORTS_ISLAND_FLYOVER_UNLOCK: {
+        mSportFlag.SetBit(id - ITEM_SWORDPLAY_DUEL_SPORT_UNLOCK);
+        break;
+    }
+
+    // Category unlocks
+    case ITEM_SWORDPLAY_CATEGORY_UNLOCK:
+    case ITEM_WAKEBOARD_CATEGORY_UNLOCK:
+    case ITEM_FRISBEE_CATEGORY_UNLOCK:
+    case ITEM_ARCHERY_CATEGORY_UNLOCK:
+    case ITEM_BASKETBALL_CATEGORY_UNLOCK:
+    case ITEM_TABLE_TENNIS_CATEGORY_UNLOCK:
+    case ITEM_GOLF_CATEGORY_UNLOCK:
+    case ITEM_BOWLING_CATEGORY_UNLOCK:
+    case ITEM_POWER_CRUISING_CATEGORY_UNLOCK:
+    case ITEM_CANOEING_CATEGORY_UNLOCK:
+    case ITEM_CYCLING_CATEGORY_UNLOCK:
+    case ITEM_AIRSPORTS_CATEGORY_UNLOCK: {
+        mCategoryFlag.SetBit(id - ITEM_SWORDPLAY_CATEGORY_UNLOCK);
+        break;
+    }
+
+    // Swordplay
+    case ITEM_SWORDPLAY_DUEL_BLOCK: {
+        mSwfVsBlockFlag = true;
+        break;
+    }
+    case ITEM_SWORDPLAY_SPEED_SLICE_PAUSE: {
+        mSwfPrcPauseFlag = true;
+        break;
+    }
+    case ITEM_SWORDPLAY_SHOWDOWN_BLOCK: {
+        mSwfVsBlockFlag = true;
+        break;
+    }
+
+    case ITEM_SWORDPLAY_SHOWDOWN_HEART: {
+        mSwfSglHeartFlag.SetFirstUnset();
+        break;
+    }
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_1:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_2:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_3:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_4:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_5:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_6:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_7:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_8:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_9:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_10:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_11:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_12:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_13:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_14:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_15:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_16:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_17:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_18:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_19:
+    case ITEM_SWORDPLAY_SHOWDOWN_STAGE_20: {
+        mSwfSglStageFlag.SetBit(id - ITEM_SWORDPLAY_SHOWDOWN_STAGE_1);
+        break;
+    }
+
+    // Wakeboarding
+    case ITEM_WAKEBOARDING_TIMER: {
+        mWkbTimerFlag.SetFirstUnset();
+        break;
+    }
+    case ITEM_WAKEBOARDING_BEGINNER:
+    case ITEM_WAKEBOARDING_INTERMEDIATE:
+    case ITEM_WAKEBOARDING_EXPERT: {
+        mWkbStageFlag.SetBit(id - ITEM_WAKEBOARDING_BEGINNER);
+        break;
+    }
+
+    // Frisbee Dog
+    case ITEM_FRISBEE_DOG_FRISBEES: {
+        mFldThrowFlag.SetFirstUnset();
+        break;
+    }
+    case ITEM_FRISBEE_DOG_SECRET_POP: {
+        mFldSecretPopFlag = true;
+        break;
+    }
+
+    // Frisbee Golf
+    case ITEM_FRISBEE_GOLF_HUD: {
+        mDglHUDFlag = true;
+        break;
+    }
+    case ITEM_FRISBEE_GOLF_DRIVER: {
+    case ITEM_FRISBEE_GOLF_MIDRANGE:
+    case ITEM_FRISBEE_GOLF_PUTTER:
+        mDglDiscFlag.SetBit(id - ITEM_FRISBEE_GOLF_DRIVER);
+        break;
+    }
+    case ITEM_FRISBEE_GOLF_COURSE_0: {
+    case ITEM_FRISBEE_GOLF_COURSE_1:
+    case ITEM_FRISBEE_GOLF_COURSE_2:
+    case ITEM_FRISBEE_GOLF_COURSE_3:
+    case ITEM_FRISBEE_GOLF_COURSE_4:
+    case ITEM_FRISBEE_GOLF_COURSE_5:
+    case ITEM_FRISBEE_GOLF_COURSE_6:
+    case ITEM_FRISBEE_GOLF_COURSE_7:
+    case ITEM_FRISBEE_GOLF_COURSE_8:
+    case ITEM_FRISBEE_GOLF_COURSE_9:
+        mDglStageFlag.SetBit(id - ITEM_FRISBEE_GOLF_COURSE_0);
+        break;
+    }
+
+    // Archery
+    case ITEM_ARCHERY_AIM_CIRCLE: {
+        mArcAimFlag = true;
+        break;
+    }
+    case ITEM_ARCHERY_ARROW: {
+        mArcArrowFlag.SetFirstUnset();
+        break;
+    }
+    case ITEM_ARCHERY_FRUIT_BEGINNER: {
+    case ITEM_ARCHERY_FRUIT_INTERMEDIATE:
+    case ITEM_ARCHERY_FRUIT_EXPERT:
+        mArcFruitFlag.SetBit(id - ITEM_ARCHERY_FRUIT_BEGINNER);
+        break;
+    }
+    case ITEM_ARCHERY_BEGINNER:
+    case ITEM_ARCHERY_INTERMEDIATE:
+    case ITEM_ARCHERY_EXPERT: {
+        mArcStageFlag.SetBit(id - ITEM_ARCHERY_BEGINNER);
+        break;
+    }
+
+    // Basketball
+    case ITEM_BASKETBALL_3PT_TIMER: {
+        mBsk3ptTimerFlag.SetFirstUnset();
+        break;
+    }
+    case ITEM_BASKETBALL_BONUS_BALLS: {
+        mBsk3ptBonusFlag = true;
+        break;
+    }
+    case ITEM_BASKETBALL_PICKUP_TIMER: {
+        mBskVsTimerFlag.SetFirstUnset();
+        break;
+    }
+    case ITEM_BASKETBALL_PASS: {
+        mBskVsPassFlag = true;
+        break;
+    }
+    case ITEM_BASKETBALL_3PTS: {
+        mBskVs3ptFlag = true;
+        break;
+    }
+    case ITEM_BASKETBALL_DUNK: {
+        mBskVsDunkFlag = true;
+        break;
+    }
+
+    // Table Tennis
+    case ITEM_TABLE_TENNIS_SPIN: {
+        mPngSpinFlag = true;
+        break;
+    }
+    case ITEM_TABLE_TENNIS_SMASH: {
+        mPngSmashFlag = true;
+        break;
+    }
+    case ITEM_TABLE_TENNIS_CANS: {
+        mPngCansFlag = true;
+        break;
+    }
+
+    // Golf
+    case ITEM_GOLF_HUD: {
+        mGlfHUDFlag = true;
+        break;
+    }
+    case ITEM_GOLF_DRIVER: {
+    case ITEM_GOLF_3_WOOD:
+    case ITEM_GOLF_3_IRON:
+    case ITEM_GOLF_5_IRON:
+    case ITEM_GOLF_7_IRON:
+    case ITEM_GOLF_9_IRON:
+    case ITEM_GOLF_WEDGE:
+    case ITEM_GOLF_PUTTER:
+        mGlfClubFlag.SetBit(id - ITEM_GOLF_DRIVER);
+        break;
+    }
+    case ITEM_GOLF_TURN: {
+        mGlfTurnFlag = true;
+        break;
+    }
+    case ITEM_GOLF_BACKSPIN: {
+        mGlfSpinFlag = true;
+        break;
+    }
+    case ITEM_GOLF_COURSE_0: {
+    case ITEM_GOLF_COURSE_1:
+    case ITEM_GOLF_COURSE_2:
+    case ITEM_GOLF_COURSE_3:
+    case ITEM_GOLF_COURSE_4:
+    case ITEM_GOLF_COURSE_5:
+    case ITEM_GOLF_COURSE_6:
+    case ITEM_GOLF_COURSE_7:
+    case ITEM_GOLF_COURSE_8:
+    case ITEM_GOLF_COURSE_9:
+        mGlfStageFlag.SetBit(id - ITEM_GOLF_COURSE_0);
+        break;
+    }
+    case ITEM_GOLF_VIEW_LOW: {
+        mGlfViewLowFlag = true;
+        break;
+    }
+    case ITEM_GOLF_VIEW_SLOPE: {
+        mGlfViewSlopeFlag = true;
+        break;
+    }
+
+    // Bowling
+    case ITEM_BOWLING_10_PIN_MOVE: {
+        mBwlStdMoveFlag = true;
+        break;
+    }
+    case ITEM_BOWLING_10_PIN_TURN: {
+        mBwlStdTurnFlag = true;
+        break;
+    }
+    case ITEM_BOWLING_10_PIN_SPIN: {
+        mBwlStdSpinFlag = true;
+        break;
+    }
+    case ITEM_BOWLING_100_PIN_MOVE: {
+        mBwl100MoveFlag = true;
+        break;
+    }
+    case ITEM_BOWLING_100_PIN_TURN: {
+        mBwl100TurnFlag = true;
+        break;
+    }
+    case ITEM_BOWLING_100_PIN_SPIN: {
+        mBwl100SpinFlag = true;
+        break;
+    }
+    case ITEM_BOWLING_100_PIN_SECRET_STRIKE: {
+        mBwl100SecretBtnFlag = true;
+        break;
+    }
+    case ITEM_BOWLING_SPIN_CONTROL_MOVE: {
+        mBwlWalMoveFlag = true;
+        break;
+    }
+    case ITEM_BOWLING_SPIN_CONTROL_TURN: {
+        mBwlWalTurnFlag = true;
+        break;
+    }
+    case ITEM_BOWLING_SPIN_CONTROL_SPIN: {
+        mBwlWalSpinFlag = true;
+        break;
+    }
+
+    // Power Cruising
+    case ITEM_POWER_CRUISING_BOOST: {
+        mJskBoostFlag = true;
+        break;
+    }
+    case ITEM_POWER_CRUISING_RING_TIMER: {
+        mJskRingTimerFlag.SetFirstUnset();
+        break;
+    }
+    case ITEM_POWER_CRUISING_DOUBLE_RING: {
+        mJsk2xRingFlag = true;
+        break;
+    }
+    case ITEM_POWER_CRUISING_FREE_CRUISING_TIMER: {
+        mJskFreeTimerFlag.SetFirstUnset();
+        break;
+    }
+
+    // Canoeing
+    case ITEM_CANOEING_TIMER: {
+        mCanTimerFlag.SetFirstUnset();
+        break;
+    }
+    case ITEM_CANOEING_BEGINNER: {
+    case ITEM_CANOEING_INTERMEDIATE:
+    case ITEM_CANOEING_EXPERT:
+        mCanStageFlag.SetBit(id - ITEM_CANOEING_BEGINNER);
+        break;
+    }
+
+    // Cycling
+    case ITEM_CYCLING_HEART: {
+        mBicHeartFlag.SetFirstUnset();
+        break;
+    }
+    case ITEM_CYCLING_STAGE_0: {
+    case ITEM_CYCLING_STAGE_1:
+    case ITEM_CYCLING_STAGE_2:
+    case ITEM_CYCLING_STAGE_3:
+    case ITEM_CYCLING_STAGE_4:
+    case ITEM_CYCLING_STAGE_5:
+    case ITEM_CYCLING_STAGE_6:
+    case ITEM_CYCLING_STAGE_7:
+        mBicStageFlag.SetBit(id - ITEM_CYCLING_STAGE_0);
+        break;
+    }
+
+    // Skydiving
+    case ITEM_SKYDIVING_MII: {
+        mOmkMiiFlag.SetFirstUnset();
+        break;
+    }
+
+    // Air Sports
+    case ITEM_ISLAND_FLYOVER_TIMER: {
+        mPlnTimerFlag.SetFirstUnset();
+        break;
+    }
+    case ITEM_ISLAND_FLYOVER_DAY: {
+    case ITEM_ISLAND_FLYOVER_EVENING:
+    case ITEM_ISLAND_FLYOVER_NIGHT:
+        mPlnStageFlag.SetBit(id - ITEM_ISLAND_FLYOVER_DAY);
+        break;
+    }
+    case ITEM_ISLAND_FLYOVER_DOUBLE_BLASTERS: {
+        mPlnDoubleBlastersFlag = true;
+        break;
+    }
+    case ITEM_ISLAND_FLYOVER_NIGHT_LIGHTS: {
+        mPlnNightLightsFlag = true;
+        break;
+    }
+    case ITEM_ISLAND_FLYOVER_UNLOCK_BALLOONS: {
+        mPlnBalloonsFlag = true;
+        break;
+    }
+    case ITEM_ISLAND_FLYOVER_UNLOCK_TWO_SEATER: {
+        mPlnTwoSeaterPlaneFlag = true;
+        break;
+    }
+    case ITEM_ISLAND_FLYOVER_UNLOCK_BOOST: {
+        mPlnBoostFlag = true;
+        break;
+    }
+    case ITEM_ISLAND_FLYOVER_UNLOCK_BRAKE: {
+        mPlnBrakeFlag = true;
+        break;
+    }
+
+    default: {
+        ASSERT_EX(false, "Unknown ItemID: %d", id);
+        break;
+    }
+    }
 }
 
 } // namespace AP

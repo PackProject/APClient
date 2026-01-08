@@ -11,6 +11,8 @@ namespace AP {
 
 /**
  * @brief Gets the readable name of the specified check ID
+ *
+ * @param id Item ID
  */
 kiwi::String CheckMgr::GetCheckName(CheckID id) {
 #define X(ID, IDENT, STR)                                                      \
@@ -19,7 +21,7 @@ kiwi::String CheckMgr::GetCheckName(CheckID id) {
 
     switch (id) {
         // Generate switch cases for each check
-        AP_CHECKS_LIST;
+        AP_CHECKS_X_MACRO;
 
     default:
         ASSERT_EX(false, "Unknown CheckID: %d", id);
@@ -37,46 +39,78 @@ CheckMgr::CheckMgr() {
 }
 
 /**
- * @brief Clears check state
+ * @brief Resets the check state to the default settings
  */
 void CheckMgr::Clear() {
 #define X(ID, IDENT, STR) SetCheckState(CHECK_##IDENT, false);
     // Clear each check
-    AP_CHECKS_LIST;
+    AP_CHECKS_X_MACRO;
 #undef X
 }
 
 /**
- * @brief Sets debug state
+ * @brief Randomizes the check state for debugging purposes
  */
-void CheckMgr::Debug() {}
+void CheckMgr::Debug() {
+    // TODO(kiwi) Implement this
+}
 
+/**
+ * @brief Gets the current state of the specified check
+ *
+ * @param id Check ID
+ * @return Whether the check has been completed
+ */
 bool CheckMgr::GetCheckState(CheckID id) const {
+    ASSERT_EX(mCheckState.Contains(id), "Check not initialized: %d", id);
     return mCheckState.Get(id, false);
 }
 
+/**
+ * @brief Sets the current state of the specified check
+ *
+ * @param id Check ID
+ * @param state Whether the check has been completed
+ */
 void CheckMgr::SetCheckState(CheckID id, bool state) {
     kiwi::cout << "Check: " << GetCheckName(id) << " has been set to " << state
                << kiwi::endl;
+
     mCheckState.Insert(id, state);
 }
 
-u16 CheckMgr::GetItemID(CheckID id) const {
-    u16 itemIDResult = mCheckToItemID.Get(id, 0xFFFF);
-    ASSERT(itemIDResult != 0xFFFF);
-    return itemIDResult;
+/**
+ * @brief Gets the item mapped to the specified check
+ *
+ * @param id Check ID
+ * @return Item obtained from the check
+ */
+ItemID CheckMgr::GetCheckItem(CheckID id) const {
+    ASSERT_EX(mCheckToItemID.Contains(id), "Check has no item set: %d", id);
+    return mCheckToItemID.Get(id, ITEM_INVALID);
 }
 
-void CheckMgr::SetItemID(CheckID id, u16 itemID) {
-    mCheckToItemID.Insert(id, itemID);
+/**
+ * @brief Maps an item to the specified check
+ *
+ * @param id Check ID
+ * @param item Item ID
+ */
+void CheckMgr::SetCheckItem(CheckID id, ItemID item) {
+    ASSERT_EX(!mCheckToItemID.Contains(id), "Check mapped twice: %d", id);
+    mCheckToItemID.Insert(id, item);
 }
 
-void CheckMgr::GiveItemFromCheck(CheckID id) {
-    // u16 itemID = GetItemID(id);
-    // ItemMgr::GetInstance().GiveItemToPlayer(ItemMgr::ItemID(itemID)); // this
-    // should be what's actually ran
-    ItemMgr::GetInstance().GiveItemToPlayer(ItemMgr::BASKETBALL_3PT_TIMER);
-    SetCheckState(id, true);
+/**
+ * @brief Awards the item mapped to the specified check
+ *
+ * @param id Check ID
+ */
+void CheckMgr::GiveCheckItem(CheckID id) const {
+    ItemID item = GetCheckItem(id);
+    ASSERT(item != ITEM_INVALID);
+
+    ItemMgr::GetInstance().SetItemState(item, true);
 }
 
 } // namespace AP

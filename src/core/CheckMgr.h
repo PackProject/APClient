@@ -2,17 +2,12 @@
 #define APCLIENT_CORE_CHECK_MGR_H
 #include <types.h>
 
-#include "core/checks.h"
 #include "core/const.h"
 #include <Sports2/Sp2Cmn.h>
 
 #include <libkiwi.h>
 
 namespace AP {
-
-#define X(ID, IDENT, STR) CHECK_##IDENT = ID,
-enum CheckID { AP_CHECKS_LIST COUNT };
-#undef X
 
 /**
  * @brief Archipelago check manager
@@ -21,60 +16,74 @@ class CheckMgr : public kiwi::DynamicSingleton<CheckMgr> {
     friend class kiwi::DynamicSingleton<CheckMgr>;
 
 public:
+    //! @brief Number of i-points needed for each i-point group check
+    static const u32 PLN_POINT_GROUP_NUM = 5;
+
+public:
     /**
      * @brief Gets the readable name of the specified check ID
+     *
+     * @param id Item ID
      */
     static kiwi::String GetCheckName(CheckID id);
 
     /**
-     * @brief Sets debug state
+     * @brief Calculates the number of i-point checks that should be awarded
+     *
+     * @param iPointNum Total number of i-points collected
      */
-    void Debug();
+    static u32 GetIPointGroupCheckNum(u32 iPointNum) {
+        return iPointNum / PLN_POINT_GROUP_NUM;
+    }
 
     /**
-     * @brief Clears check state
+     * @brief Resets the check state to the default settings
      */
     void Clear();
 
     /**
-     * @brief Gets the check state
+     * @brief Randomizes the check state for debugging purposes
+     */
+    void Debug();
+
+    /**
+     * @brief Gets the current state of the specified check
      *
      * @param id Check ID
-     * @return Check state
+     * @return Whether the check has been completed
      */
     bool GetCheckState(CheckID id) const;
 
     /**
-     * @brief Sets the check state
+     * @brief Sets the current state of the specified check
      *
      * @param id Check ID
-     * @param state Check state
+     * @param state Whether the check has been completed
      */
     void SetCheckState(CheckID id, bool state);
 
     /**
-     * @brief Gets the item ID for a check
+     * @brief Gets the item mapped to the specified check
      *
      * @param id Check ID
-     * @return Item ID
+     * @return Item obtained from the check
      */
-    u16 GetItemID(CheckID id) const;
+    ItemID GetCheckItem(CheckID id) const;
 
     /**
-     * @brief Sets the item ID for a check
+     * @brief Maps an item to the specified check
      *
      * @param id Check ID
-     * @param itemID Item ID
+     * @param item Item ID
      */
-    void SetItemID(CheckID id, u16 itemID);
+    void SetCheckItem(CheckID id, ItemID item);
 
     /**
-     *
-     * @brief gives proper item from check ID
+     * @brief Awards the item mapped to the specified check
      *
      * @param id Check ID
      */
-    void GiveItemFromCheck(CheckID id);
+    void GiveCheckItem(CheckID id) const;
 
 private:
     /**
@@ -82,20 +91,11 @@ private:
      */
     CheckMgr();
 
-public:
-    /**
-     * @brief returns number of groups of i point checks obtained
-     */
-    int GetNumGroupIPointObtained(int numIPoints) {
-        if (numIPoints >= 5)
-            return numIPoints / 5;
-        else
-            return 99;
-    }
-
 private:
-    kiwi::THashMap<CheckID, bool> mCheckState;   //!< Check state
-    kiwi::THashMap<CheckID, u16> mCheckToItemID; //!< Check to item mapping
+    //! Check state
+    kiwi::THashMap<CheckID, bool> mCheckState;
+    //! Check to item mapping
+    kiwi::THashMap<CheckID, ItemID> mCheckToItemID;
 };
 
 } // namespace AP

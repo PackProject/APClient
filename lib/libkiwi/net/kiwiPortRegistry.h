@@ -12,6 +12,9 @@ namespace port {
 //! Port reserved for host I/O communications
 static const u32 HOST_IO = 50000;
 
+//! Port reserved for Archipelago communications
+static const u32 AP_COMM = 51234;
+
 //! @}
 } // namespace port
 //! @}

@@ -21,8 +21,7 @@ void SetBowlingStrikeCheck() {
     if (hasCheck)
         return;
 
-    CheckMgr::GetInstance().GiveItemFromCheck(
-        CHECK_BOWLING_STANDARD_FIRST_STRIKE);
+    CheckMgr::GetInstance().GiveCheckItem(CHECK_BOWLING_STANDARD_FIRST_STRIKE);
 }
 
 TRAMPOLINE_DEF(0x804ece1c, 0x804ece20) {

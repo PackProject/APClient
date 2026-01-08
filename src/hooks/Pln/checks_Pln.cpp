@@ -16,9 +16,9 @@ namespace {
 
 void SetIPointGrabbed(int totalIPoints) {
     kiwi::cout << "I Points Grabbed: " << totalIPoints << kiwi::endl;
-    int iGroup =
-        CheckMgr::GetInstance().GetNumGroupIPointObtained(totalIPoints);
-    if (iGroup == 99)
+
+    u32 iGroup = CheckMgr::GetIPointGroupCheckNum(totalIPoints);
+    if (iGroup == 0)
         return;
 
     bool hasCheck = CheckMgr::GetInstance().GetCheckState(
@@ -26,7 +26,7 @@ void SetIPointGrabbed(int totalIPoints) {
     if (hasCheck)
         return;
 
-    CheckMgr::GetInstance().GiveItemFromCheck(
+    CheckMgr::GetInstance().GiveCheckItem(
         CheckID(CHECK_ISLAND_FLYOVER_IPOINT_GROUP_1 + iGroup - 1));
 }
 

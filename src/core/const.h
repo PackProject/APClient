@@ -2,9 +2,26 @@
 #define APCLIENT_CORE_CONST_H
 #include <types.h>
 
+#include "core/checks.h"
+#include "core/items.h"
+
 #include <libkiwi.h>
 
 namespace AP {
+
+#define X(ID, IDENT, STR) CHECK_##IDENT = ID,
+/**
+ * @brief Archipelago world check ID
+ */
+enum CheckID { AP_CHECKS_X_MACRO CHECK_COUNT };
+#undef X
+
+#define X(ID, IDENT, STR) ITEM_##IDENT = ID,
+/**
+ * @brief Archipelago world item ID
+ */
+enum ItemID { AP_ITEMS_X_MACRO ITEM_COUNT, ITEM_INVALID = -1 };
+#undef X
 
 /**
  * @brief Sport ID

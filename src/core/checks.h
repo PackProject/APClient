@@ -6,7 +6,7 @@
 
 // X-macro for all Archipelago checks
 // X(ID, Code name identifier, Readable name string)
-#define AP_CHECKS_LIST \
+#define AP_CHECKS_X_MACRO \
     X(0x0000, SWORDPLAY_SHOWDOWN_STAMP_1, "Swordplay Showdown (Stamp) - Not a Scratch") \
     X(0x0001, SWORDPLAY_SHOWDOWN_STAMP_2, "Swordplay Showdown (Stamp) - Sword Fighter") \
     X(0x0002, SWORDPLAY_SHOWDOWN_STAMP_3, "Swordplay Showdown (Stamp) - Perfect 10") \
