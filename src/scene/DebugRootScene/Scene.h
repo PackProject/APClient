@@ -26,7 +26,7 @@ public:
      * @brief Gets the scene's ID
      */
     virtual s32 GetID() const {
-        return EAPScene_DebugRootScene;
+        return ESceneID_DebugRootScene;
     }
     /**
      * @brief Gets the scene's target pack

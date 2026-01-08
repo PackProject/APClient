@@ -1,6 +1,5 @@
 #include "core/CheckMgr.h"
 #include "hooks/trampoline.h"
-
 #include <Sports2/Sp2Cmn.h>
 
 #include <libkiwi.h>
@@ -17,18 +16,15 @@ namespace Check {
 
 void SetStampCheckIfNew(int playerDataPtr, int sportID, int stampIdx) {
     int stampID = (sportID * 5) + stampIdx;
-    bool hasCheck =
-        CheckMgr::GetInstance().GetCheckState(CheckMgr::CheckID(stampID));
+    bool hasCheck = CheckMgr::GetInstance().GetCheckState(CheckID(stampID));
 
     if (!hasCheck) {
-        CheckMgr::GetInstance().GiveItemFromCheck(CheckMgr::CheckID(stampID));
+        CheckMgr::GetInstance().GiveItemFromCheck(CheckID(stampID));
 
-        hasCheck =
-            CheckMgr::GetInstance().GetCheckState(CheckMgr::CheckID(stampID));
+        hasCheck = CheckMgr::GetInstance().GetCheckState(CheckID(stampID));
 
         kiwi::cout << "Stamp Check: "
-                   << CheckMgr::GetInstance().GetCheckName(
-                          CheckMgr::CheckID(stampID))
+                   << CheckMgr::GetCheckName(CheckID(stampID))
                    << " has been set to " << hasCheck << kiwi::endl;
     } else {
         kiwi::cout << "Already has check..." << kiwi::endl;

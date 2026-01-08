@@ -1,5 +1,5 @@
-#ifndef APCLIENT_CONST_H
-#define APCLIENT_CONST_H
+#ifndef APCLIENT_CORE_CONST_H
+#define APCLIENT_CORE_CONST_H
 #include <types.h>
 
 #include <libkiwi.h>
@@ -78,8 +78,8 @@ enum EChamp {
 /**
  * @brief Archipelago scene ID
  */
-enum EAPScene {
-    EAPScene_DebugRootScene = kiwi::ESceneID_Max,
+enum ESceneID {
+    ESceneID_DebugRootScene = kiwi::ESceneID_Max,
     // . . .
 };
 

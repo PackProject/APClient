@@ -1,6 +1,5 @@
 #include "core/CheckMgr.h"
 #include "hooks/trampoline.h"
-
 #include <Sports2/Sp2Glf.h>
 
 #include <libkiwi.h>
@@ -16,13 +15,17 @@ namespace {
  ******************************************************************************/
 
 void SetGolfHoleComplete(int holeIdx) {
-    bool hasCheck = CheckMgr::GetInstance().GetCheckState(CheckMgr::CheckID(CheckMgr::GOLF_COMPLTE_HOLE_1 + holeIdx));
-    if(hasCheck) return;
+    bool hasCheck = CheckMgr::GetInstance().GetCheckState(
+        CheckID(CHECK_GOLF_COMPLETE_HOLE_1 + holeIdx));
+    if (hasCheck)
+        return;
 
-    CheckMgr::GetInstance().GiveItemFromCheck(CheckMgr::CheckID(CheckMgr::GOLF_COMPLTE_HOLE_1 + holeIdx));
+    CheckMgr::GetInstance().GiveItemFromCheck(
+        CheckID(CHECK_GOLF_COMPLETE_HOLE_1 + holeIdx));
 }
 
-TRAMPOLINE_DEF(0x803f76b0, 0x803f76b4) {
+TRAMPOLINE_DEF(0x803f76b0, 0x803f76b4){
+    // clang-format off
     TRAMPOLINE_BEGIN
 
     stb r0, 0x19(r3)
@@ -33,9 +36,11 @@ TRAMPOLINE_DEF(0x803f76b0, 0x803f76b4) {
 
     TRAMPOLINE_END
     blr
+    // clang-format on
 }
 
 TRAMPOLINE_DEF(0x804069f8, 0x804069fc) {
+    // clang-format off
     TRAMPOLINE_BEGIN
 
     stw r0, 0x8(r29)
@@ -47,6 +52,7 @@ TRAMPOLINE_DEF(0x804069f8, 0x804069fc) {
     
     TRAMPOLINE_END
     blr
+    // clang-format on
 }
 
 } // namespace

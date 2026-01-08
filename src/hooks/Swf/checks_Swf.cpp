@@ -1,6 +1,5 @@
 #include "core/CheckMgr.h"
 #include "hooks/trampoline.h"
-
 #include <Sports2/Sp2Swf.h>
 
 #include <libkiwi.h>
@@ -16,18 +15,23 @@ namespace {
  ******************************************************************************/
 
 void GetSwordplayFirstWinCheck() {
-    bool hasCheck = CheckMgr::GetInstance().GetCheckState(CheckMgr::CheckID(CheckMgr::SWORDPLAY_DUEL_FIRST_WIN));
-    if(!hasCheck) {
-        CheckMgr::GetInstance().GiveItemFromCheck(CheckMgr::CheckID(CheckMgr::SWORDPLAY_DUEL_FIRST_WIN));
-        hasCheck = CheckMgr::GetInstance().GetCheckState(CheckMgr::CheckID(CheckMgr::SWORDPLAY_DUEL_FIRST_WIN));
-        kiwi::cout << "Check: " << CheckMgr::GetInstance().GetCheckName(CheckMgr::CheckID(CheckMgr::SWORDPLAY_DUEL_FIRST_WIN)) << " has been set to " << hasCheck << kiwi::endl;
-    }
-    else
+    bool hasCheck = CheckMgr::GetInstance().GetCheckState(
+        CheckID(CHECK_SWORDPLAY_DUEL_FIRST_WIN));
+    if (!hasCheck) {
+        CheckMgr::GetInstance().GiveItemFromCheck(
+            CheckID(CHECK_SWORDPLAY_DUEL_FIRST_WIN));
+        hasCheck = CheckMgr::GetInstance().GetCheckState(
+            CheckID(CHECK_SWORDPLAY_DUEL_FIRST_WIN));
+        kiwi::cout << "Check: "
+                   << CheckMgr::GetCheckName(
+                          CheckID(CHECK_SWORDPLAY_DUEL_FIRST_WIN))
+                   << " has been set to " << hasCheck << kiwi::endl;
+    } else
         kiwi::cout << "Already has check..." << kiwi::endl;
 }
 
-
 TRAMPOLINE_DEF(0x802b1e34, 0x802b1e38) {
+    // clang-format off
     TRAMPOLINE_BEGIN
 
     bl GetSwordplayFirstWinCheck
@@ -37,6 +41,7 @@ TRAMPOLINE_DEF(0x802b1e34, 0x802b1e38) {
     TRAMPOLINE_END
     mtcr r0
     blr
+    // clang-format on
 }
 
 } // namespace

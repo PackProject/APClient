@@ -2,7 +2,6 @@
 #include "core/CosmeticMgr.h"
 #include "core/ItemMgr.h"
 #include "core/const.h"
-
 #include <Pack/RPSystem.h>
 
 #include <libkiwi.h>
@@ -38,7 +37,7 @@ void KokeshiMain() {
 
     // Register debug menu
     kiwi::SceneCreator::GetInstance().RegistDebugRoot(
-        AP::EAPScene_DebugRootScene);
+        AP::ESceneID_DebugRootScene);
 
     // Enter first scene
     kiwi::SceneCreator::GetInstance().ChangeBootScene();
