@@ -473,16 +473,16 @@ s32 LibSO::RecvImpl(SOSocket socket, void* dst, u32 len, u32 flags,
 
     // Output vector 2: Source address
     IosObject<SockAddrAny> from;
-    IosVector dummy;
-    if (addr != nullptr) {
-        *from = *addr;
-        output.PushBack(from);
-    } else {
-        output.PushBack(dummy);
-    }
+    output.PushBack(from);
 
     s32 result = sDevNetIpTop.IoctlV(Ioctl_SORecvFrom, input, output);
     sLastError = result >= 0 ? SO_SUCCESS : static_cast<SOResult>(result);
+
+    if (sLastError == SO_SUCCESS) {
+        if (addr != NULL) {
+            *addr = *from;
+        }
+    }
 
     return result;
 }

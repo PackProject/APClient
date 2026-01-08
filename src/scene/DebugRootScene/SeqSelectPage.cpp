@@ -12,7 +12,7 @@ namespace {
 // clang-format off
 
 // List of all scenes/sequences/stages
-#define USE_GAME_DATA()                                                                \
+#define USE_GAME_DATA                                                                  \
     X(Swf,                                                                             \
         Y(Swf_Vs,  Z(Main))                                                            \
         Y(Swf_Prc, Z(Main))                                                            \
@@ -60,14 +60,14 @@ namespace {
 // Generate gamemode keys
 #define X(S, QT) namespace S { const char* GAMEMODE_KEYS[] = { QT }; }
 #define Y(Q, T) #Q,
-USE_GAME_DATA();
+USE_GAME_DATA;
 #undef X
 #undef Y
 
 // Generate gamemode values
 #define X(S, QT) namespace S { const Sp2::Cmn::ESeq GAMEMODE_VALUES[] = { QT }; }
 #define Y(Q, T) Sp2::Cmn::ESeq_##Q,
-USE_GAME_DATA();
+USE_GAME_DATA;
 #undef X
 #undef Y
 
@@ -75,7 +75,7 @@ USE_GAME_DATA();
 #define X(S, QT) QT
 #define Y(Q, T) namespace Q { const char* STAGENO_KEYS[] = { T }; }
 #define Z(T) #T,
-USE_GAME_DATA();
+USE_GAME_DATA;
 #undef X
 #undef Y
 #undef Z
@@ -84,7 +84,7 @@ USE_GAME_DATA();
 #define X(S, QT) QT
 #define Y(Q, T) namespace Q { enum STAGENO_ENUM { T }; const u32 STAGENO_VALUES[] = { T }; }
 #define Z(T) T,
-USE_GAME_DATA();
+USE_GAME_DATA;
 #undef X
 #undef Y
 #undef Z
@@ -221,7 +221,7 @@ void SeqSelectPage::CalcOption() {
         break;                                                                 \
     }
 
-    switch (mNextScene) { USE_GAME_DATA(); }
+    switch (mNextScene) { USE_GAME_DATA; }
 #undef X
 
     // Setup StageNo option by the selected sequence
@@ -239,7 +239,7 @@ void SeqSelectPage::CalcOption() {
         break;                                                                 \
     }
 
-    switch (mNextScene) { USE_GAME_DATA(); }
+    switch (mNextScene) { USE_GAME_DATA; }
 #undef X
 #undef Y
 }
@@ -259,7 +259,7 @@ void SeqSelectPage::SetupGame() {
         seq = S::GAMEMODE_VALUES[mGameMode.GetValue()];                        \
         break;                                                                 \
     }
-    switch (mNextScene) { USE_GAME_DATA(); }
+    switch (mNextScene) { USE_GAME_DATA; }
 #undef X
 #undef Y
 
@@ -276,7 +276,7 @@ void SeqSelectPage::SetupGame() {
         break;                                                                 \
     }
 
-    switch (mNextScene) { USE_GAME_DATA(); }
+    switch (mNextScene) { USE_GAME_DATA; }
 #undef X
 #undef Y
 

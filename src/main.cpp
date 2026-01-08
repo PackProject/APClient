@@ -1,5 +1,6 @@
 #include "core/CheckMgr.h"
 #include "core/CosmeticMgr.h"
+#include "core/EchoSocket.h"
 #include "core/ItemMgr.h"
 #include "core/const.h"
 #include <Pack/RPSystem.h>
@@ -41,6 +42,8 @@ void KokeshiMain() {
 
     // Enter first scene
     kiwi::SceneCreator::GetInstance().ChangeBootScene();
+
+    AP::EchoSocket::CreateInstance();
 
     // Enter game loop
     RP_GET_INSTANCE(RPSysSystem)->mainLoop();
