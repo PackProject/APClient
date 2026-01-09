@@ -50,13 +50,16 @@
 #include <libkiwi/net/kiwiAsyncSocket.h>
 #include <libkiwi/net/kiwiEmuRichPresenceClient.h>
 #include <libkiwi/net/kiwiHttpRequest.h>
+#include <libkiwi/net/kiwiIPacket.h>
 #include <libkiwi/net/kiwiIRichPresenceClient.h>
-#include <libkiwi/net/kiwiPacket.h>
+#include <libkiwi/net/kiwiNetClient.h>
+#include <libkiwi/net/kiwiNetServer.h>
 #include <libkiwi/net/kiwiPortRegistry.h>
 #include <libkiwi/net/kiwiReliableClient.h>
 #include <libkiwi/net/kiwiReliablePacket.h>
 #include <libkiwi/net/kiwiReliableSocket.h>
 #include <libkiwi/net/kiwiRichPresenceMgr.h>
+#include <libkiwi/net/kiwiSizedPacket.h>
 #include <libkiwi/net/kiwiSocketBase.h>
 #include <libkiwi/net/kiwiSyncSocket.h>
 #include <libkiwi/net/kiwiWebSocket.h>

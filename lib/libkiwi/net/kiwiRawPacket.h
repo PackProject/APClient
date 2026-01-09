@@ -45,6 +45,13 @@ public:
     }
 
     /**
+     * @brief Allocates message buffer of the specified size
+     *
+     * @param size Packet size
+     */
+    virtual void Alloc(u32 size);
+
+    /**
      * @brief Gets the current size of the message buffer
      */
     virtual u32 GetBufferSize() const {
@@ -123,13 +130,6 @@ public:
     const SockAddrAny& GetPeer() const {
         return mAddress;
     }
-
-    /**
-     * @brief Allocates message buffer of the specified size
-     *
-     * @param size Packet size
-     */
-    void Alloc(u32 size);
 
     /**
      * @brief Reads data from message buffer

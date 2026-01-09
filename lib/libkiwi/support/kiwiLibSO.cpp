@@ -478,6 +478,7 @@ s32 LibSO::RecvImpl(SOSocket socket, void* dst, u32 len, u32 flags,
     s32 result = sDevNetIpTop.IoctlV(Ioctl_SORecvFrom, input, output);
     sLastError = result >= 0 ? SO_SUCCESS : static_cast<SOResult>(result);
 
+    // Peer address
     if (sLastError == SO_SUCCESS) {
         if (addr != NULL) {
             *addr = *from;

@@ -406,6 +406,7 @@ SOResult AsyncSocket::RecvImpl(void* pDst, u32 len, u32& rRecv,
                                void* pArg) {
     K_ASSERT(IsOpen());
     K_ASSERT_PTR(pDst);
+    K_ASSERT_PTR(pCallback);
     K_ASSERT(OSIsMEM2Region(pDst));
 
     // Packet to hold incoming data
@@ -438,6 +439,7 @@ SOResult AsyncSocket::SendImpl(const void* pSrc, u32 len, u32& rSend,
                                void* pArg) {
     K_ASSERT(IsOpen());
     K_ASSERT_PTR(pSrc);
+    K_ASSERT_PTR(pCallback);
     K_ASSERT(OSIsMEM2Region(pSrc));
 
     // Packet to hold incoming data
