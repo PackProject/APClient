@@ -48,7 +48,9 @@ EchoSocket::EchoSocket() {
             kiwi::cout << "Received data from " << kiwi::ToString(mPeerAddr)
                        << "(" << *nrecv << " bytes)" << kiwi::endl;
 
-            mpSocket->SendBytesTo(mpDataBuffer, *nrecv, mPeerAddr);
+            kiwi::IosObject<u8> acceptanceByte = 1;
+
+            mpSocket->SendTo(acceptanceByte.Ref(), mPeerAddr);
         }
     }
 }
