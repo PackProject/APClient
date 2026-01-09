@@ -10,7 +10,7 @@ namespace kiwi {
  * @param pArg Callback user argument
  * @return Success
  */
-bool SyncSocket::Connect(const SockAddrAny& rAddr, Callback pCallback,
+bool SyncSocket::Connect(const SockAddrAny& rAddr, ConnectCallback pCallback,
                          void* pArg) {
     K_ASSERT(IsOpen());
 
@@ -41,7 +41,7 @@ SyncSocket* SyncSocket::Accept(AcceptCallback pCallback, void* pArg) {
     K_ASSERT(IsOpen());
 
     while (true) {
-        // TODO: Will forcing ipv4 cause problems?
+        // TODO(kiwi) Will forcing ipv4 cause problems?
         SyncSocket* pPeer = nullptr;
         SockAddr4 addr;
 
@@ -77,7 +77,7 @@ SyncSocket* SyncSocket::Accept(AcceptCallback pCallback, void* pArg) {
  * @return Socket library result
  */
 SOResult SyncSocket::RecvImpl(void* pDst, u32 len, u32& rRecv,
-                              SockAddrAny* pAddr, Callback pCallback,
+                              SockAddrAny* pAddr, XferCallback pCallback,
                               void* pArg) {
     K_ASSERT(IsOpen());
     K_ASSERT_PTR(pDst);
@@ -103,7 +103,7 @@ SOResult SyncSocket::RecvImpl(void* pDst, u32 len, u32& rRecv,
         }
 
         if (pCallback != nullptr) {
-            pCallback(LibSO::GetLastError(), pArg);
+            pCallback(LibSO::GetLastError(), rRecv, pArg);
         }
 
         // Successful if some amount of bytes read
@@ -123,7 +123,7 @@ SOResult SyncSocket::RecvImpl(void* pDst, u32 len, u32& rRecv,
  * @return Socket library result
  */
 SOResult SyncSocket::SendImpl(const void* pSrc, u32 len, u32& rSend,
-                              const SockAddrAny* pAddr, Callback pCallback,
+                              const SockAddrAny* pAddr, XferCallback pCallback,
                               void* pArg) {
     K_ASSERT(IsOpen());
     K_ASSERT_PTR(pSrc);
@@ -151,7 +151,7 @@ SOResult SyncSocket::SendImpl(const void* pSrc, u32 len, u32& rSend,
         }
 
         if (pCallback != nullptr) {
-            pCallback(LibSO::GetLastError(), pArg);
+            pCallback(LibSO::GetLastError(), rSend, pArg);
         }
 
         // Successful if some amount of bytes sent

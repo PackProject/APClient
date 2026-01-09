@@ -139,7 +139,7 @@ template <> K_INLINE void Element::Set<Object>(const Object& rValue) {
 /**@{*/
 template <> K_INLINE Null_t& Element::Get<Null_t>() {
     K_ASSERT(mType == EType_Null);
-    // TODO: Better way to solve this problem?
+    // TODO(kiwi) Better way to solve this problem?
     return const_cast<Null_t&>(json::null);
 }
 template <> K_INLINE const Null_t& Element::Get<Null_t>() const {

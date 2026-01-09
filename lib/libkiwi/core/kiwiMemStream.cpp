@@ -157,11 +157,11 @@ s32 MemStream::PeekImpl(void* pDst, u32 size) {
 
 /**
  * @brief Reads a C-style string from this stream
- * @note String size limited to 0x400 (1024) bytes
+ * @note String size limited to 0x400 (1024) characters
  */
 String MemStream::Read_string() {
     static int sTextBufferPos = 0;
-    static char sTextBuffer[0x400];
+    static char sTextBuffer[1024 / sizeof(char)];
 
     // Form string in work buffer
     while (sTextBufferPos < K_LENGTHOF(sTextBuffer)) {
@@ -201,6 +201,55 @@ void MemStream::Write_string(const String& rStr) {
 String MemStream::Peek_string() {
     String str = Read_string();
     Seek(ESeekDir_Current, -(str.Length() + 1));
+    return str;
+}
+
+/**
+ * @brief Reads a C-style widechar string from this stream
+ * @note String size limited to 0x200 (512) characters
+ */
+WString MemStream::Read_wstring() {
+    static int sTextBufferPos = 0;
+    static wchar_t sTextBuffer[1024 / sizeof(wchar_t)];
+
+    // Form string in work buffer
+    while (sTextBufferPos < K_LENGTHOF(sTextBuffer)) {
+        wchar_t ch = Read_u16();
+        sTextBuffer[sTextBufferPos++] = ch;
+
+        // Null terminator
+        if (ch == L'\0') {
+            break;
+        }
+
+        // End-of-file
+        if (IsEOF()) {
+            break;
+        }
+    }
+
+    // No matter what happened, null terminator should be at the end
+    sTextBuffer[sTextBufferPos] = L'\0';
+    return WString(sTextBuffer);
+}
+
+/**
+ * @brief Writes a C-style widechar string to this stream
+ *
+ * @param rStr String
+ */
+void MemStream::Write_wstring(const WString& rStr) {
+    Write(rStr.CStr(), rStr.Length() * sizeof(wchar_t));
+    Write_u16(0x0000);
+}
+
+/**
+ * @brief Reads a C-style widechar string from this stream without advancing
+ * the stream's position
+ */
+WString MemStream::Peek_wstring() {
+    WString str = Read_wstring();
+    Seek(ESeekDir_Current, -((str.Length() + 1) * sizeof(wchar_t)));
     return str;
 }
 

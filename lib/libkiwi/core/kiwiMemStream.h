@@ -160,7 +160,7 @@ public:
 
     /**
      * @brief Reads a C-style string from this stream
-     * @note String size limited to 0x400 (1024) bytes
+     * @note String size limited to 0x400 (1024) characters
      */
     String Read_string();
     /**
@@ -174,6 +174,23 @@ public:
      * stream's position
      */
     String Peek_string();
+
+    /**
+     * @brief Reads a C-style widechar string from this stream
+     * @note String size limited to 0x200 (512) characters
+     */
+    WString Read_wstring();
+    /**
+     * @brief Writes a C-style widechar string to this stream
+     *
+     * @param rStr String
+     */
+    void Write_wstring(const WString& rStr);
+    /**
+     * @brief Reads a C-style widechar string from this stream without advancing
+     * the stream's position
+     */
+    WString Peek_wstring();
 
 private:
     /**

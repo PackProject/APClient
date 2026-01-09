@@ -105,6 +105,13 @@ public:
     }
 
     /**
+     * @brief Gets the current state ID
+     */
+    s32 GetState() const {
+        return mState;
+    }
+
+    /**
      * @brief Tests whether the machine is in the specified state
      *
      * @param state State ID

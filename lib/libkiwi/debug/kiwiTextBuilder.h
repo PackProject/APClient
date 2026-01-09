@@ -105,6 +105,14 @@ public:
     TextImpl& SetStroke(Color color, ETextStroke stroke);
 
     /**
+     * @brief Sets the text transparency
+     *
+     * @param alpha New text alpha
+     * @return Self-reference for method chaining
+     */
+    TextImpl& SetAlpha(u8 alpha);
+
+    /**
      * @brief Sets the text position
      * @details XY coordinates are normalized so they appear the same across
      * aspect ratios.
