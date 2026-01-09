@@ -89,13 +89,13 @@
     X(0x060E, FRISBEE_GOLF_COURSE_9, "Unlock Frisbee Golf - 18 Hole") \
     X(0x0700, ARCHERY_AIM_CIRCLE, "Archery - Aiming Circle") \
     X(0x0701, ARCHERY_ARROW, "Progressive Arrow (Archery)") \
-    X(0x702, ARCHERY_FRUIT_PROG, "Progressive Fruit (Archery)") \
-    X(0x702, ARCHERY_FRUIT_BEGINNER, "Archery Fruit Beginner") \
-    X(0x703, ARCHERY_FRUIT_INTERMEDIATE, "Archery Fruit Intermediate") \
-    X(0x704, ARCHERY_FRUIT_EXPERT, "Archery Fruit Expert") \
-    X(0x705, ARCHERY_BEGINNER, "Unlock Archery - Beginner") \
-    X(0x706, ARCHERY_INTERMEDIATE, "Unlock Archery - Intermediate") \
-    X(0x707, ARCHERY_EXPERT, "Unlock Archery - Expert") \
+    X(0x0702, ARCHERY_FRUIT_PROG, "Progressive Fruit (Archery)") \
+    X(0x0702, ARCHERY_FRUIT_BEGINNER, "Archery Fruit Beginner") \
+    X(0x0703, ARCHERY_FRUIT_INTERMEDIATE, "Archery Fruit Intermediate") \
+    X(0x0704, ARCHERY_FRUIT_EXPERT, "Archery Fruit Expert") \
+    X(0x0705, ARCHERY_BEGINNER, "Unlock Archery - Beginner") \
+    X(0x0706, ARCHERY_INTERMEDIATE, "Unlock Archery - Intermediate") \
+    X(0x0707, ARCHERY_EXPERT, "Unlock Archery - Expert") \
     X(0x0800, BASKETBALL_3PT_TIMER, "Basketball (3-Point Contest) Timer") \
     X(0x0801, BASKETBALL_BONUS_BALLS, "Basketball (3-Point Contest) - Golden Balls") \
     X(0x0900, BASKETBALL_PICKUP_TIMER, "Basketball (Pickup) Timer") \
