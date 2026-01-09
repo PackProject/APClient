@@ -24,7 +24,7 @@
     X(0x000E, BOWLING_SPIN_CONTROL_SPORT_UNLOCK, "Unlock Bowling - Spin Control") \
     X(0x000F, POWER_CRUISING_SPORT_UNLOCK, "Unlock Power Cruising") \
     X(0x0010, CANOEING_SPEED_CHALLENGE_SPORT_UNLOCK, "Unlock Canoeing") \
-    X(0x0011, CYCLING_SINGLE_RACE_UNLOCK, "Unlock Cyclingk") \
+    X(0x0011, CYCLING_SINGLE_RACE_UNLOCK, "Unlock Cycling") \
     X(0x0012, AIRSPORTS_SKYDIVING_UNLOCK, "Unlock Air Sports - Skydiving") \
     X(0x0013, AIRSPORTS_ISLAND_FLYOVER_UNLOCK, "Unlock Air Sports - Island Flyover") \
     X(0x0014, SWORDPLAY_CATEGORY_UNLOCK, "Unlock Swordplay") \
@@ -164,7 +164,7 @@
     X(0x1108, CYCLING_STAGE_7, "Unlock Cycling - 3-Stage Race B") \
     X(0x1108, CYCLING_STAGE_8, "Unlock Cycling - 6 Stage") \
     X(0x1109, CYCLING_DRAFT, "Cycling - Drafting") \
-    X(0x1200, SKYDIVING_MII, "Skydiving Mii") \
+    X(0x1200, SKYDIVING_MII, "Skydiving - Mii") \
     X(0x1300, ISLAND_FLYOVER_TIMER, "Island Flyover Timer") \
     X(0x1301, ISLAND_FLYOVER_DAY, "Unlock Island Flyover - Daytime") \
     X(0x1302, ISLAND_FLYOVER_EVENING, "Unlock Island Flyover - Evening") \
@@ -197,8 +197,6 @@
     X(0xFF13, SWORDPLAY_SHOWDOWN_EXTRA_HEART, "Extra Max Heart (Swordplay Showdown)") \
     X(0xFF14, CYCLING_EXTRA_HEART, "Extra Max Heart (Cycling)") \
     X(0xFF15, RANDOM_COSMETIC, "Random Cosmetic")
-
-    
 
 // clang-format on
 
