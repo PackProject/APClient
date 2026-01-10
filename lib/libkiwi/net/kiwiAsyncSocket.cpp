@@ -2,253 +2,417 @@
 
 namespace kiwi {
 
-/**
- * @brief Socket manager thread
- */
-OSThread AsyncSocket::sSocketThread;
+/******************************************************************************
+ *
+ * IJob
+ *
+ ******************************************************************************/
 
 /**
- * @brief Thread guard
+ * @brief Asynchronous job interface
  */
-bool AsyncSocket::sSocketThreadCreated = false;
+class AsyncSocket::IJob {
+public:
+    /**
+     * @brief Destructor
+     */
+    virtual ~IJob() {}
+
+    /**
+     * @brief Updates the job state
+     *
+     * @return Whether the job has completed
+     */
+    virtual bool Calc() = 0;
+};
+
+/******************************************************************************
+ *
+ * ConnectJob
+ *
+ ******************************************************************************/
 
 /**
- * @brief Thread stack
+ * @brief Asynchronous connect job
  */
-u8 AsyncSocket::sSocketThreadStack[scThreadStackSize];
-
-/**
- * @brief Open async sockets
- */
-TList<AsyncSocket*> AsyncSocket::sSocketList;
-
-/**
- * @brief Async receive operation
- */
-class AsyncSocket::RecvJob {
+class AsyncSocket::ConnectJob : public IJob {
 public:
     /**
      * @brief Constructor
      *
-     * @param pPacket Packet for this job
-     * @param pDst Destination address
-     * @param[out] pPeer Peer address
-     * @param pCallback Completion callback
+     * @param pAsyncSocket Parent socket
+     * @param pPeerAddr Peer address
+     * @param pCallback Connect callback
      * @param pArg Callback user argument
      */
-    RecvJob(Packet* pPacket, void* pDst, SockAddrAny* pPeer,
-            Callback pCallback = nullptr, void* pArg = nullptr)
-        : mpPacket(pPacket),
-          mpDst(pDst),
-          mpPeer(pPeer),
+    ConnectJob(AsyncSocket* pAsyncSocket, const SockAddrAny& rPeerAddr,
+               ConnectCallback pCallback, void* pArg)
+        : mpSocket(nullptr),
+          mPeerAddr(rPeerAddr),
           mpCallback(pCallback),
           mpArg(pArg) {
 
-        K_ASSERT_PTR(mpPacket);
-        K_ASSERT_PTR(mpDst);
-        K_ASSERT(OSIsMEM2Region(mpDst));
+        K_ASSERT_PTR(pAsyncSocket);
+        K_ASSERT_PTR(mpCallback);
+        K_ASSERT(mPeerAddr.IsValid());
+
+        // Need synchronous socket for internal communication
+        mpSocket = new SyncSocket(pAsyncSocket->mHandle, pAsyncSocket->mFamily,
+                                  pAsyncSocket->mType);
+        K_ASSERT_PTR(mpSocket);
+
+        mpSocket->SetBlocking(false);
     }
 
     /**
      * @brief Destructor
      */
-    ~RecvJob() {
-        delete mpPacket;
+    virtual ~ConnectJob() {
+        delete mpSocket;
+        mpSocket = nullptr;
     }
 
     /**
-     * @brief Tests whether the receive operation is complete
-     */
-    bool IsComplete() const {
-        K_ASSERT_PTR(mpPacket);
-        return mpPacket->IsWriteComplete();
-    }
-
-    /**
-     * @brief Updates job using the specified socket
+     * @brief Updates the job state
      *
-     * @param socket Socket descriptor
-     * @return Whether the job is complete
+     * @return Whether the job has completed
      */
-    bool Calc(SOSocket socket) {
-        K_ASSERT_PTR(mpPacket);
-        K_ASSERT(socket >= 0);
+    virtual bool Calc() {
+        K_ASSERT_PTR(mpSocket);
+        K_ASSERT(mPeerAddr.IsValid());
 
-        // Nothing left to do
-        if (IsComplete()) {
-            return true;
+        bool success = mpSocket->Connect(mPeerAddr);
+        SOResult result = LibSO::GetLastError();
+
+        // Blocking, try again later
+        if (result == SO_EWOULDBLOCK) {
+            return false;
         }
 
-        // Update
-        mpPacket->Recv(socket);
-        bool done = IsComplete();
+        K_ASSERT_PTR(mpCallback);
+        mpCallback(result, mpArg);
 
-        // Write out data
-        if (done) {
-            K_ASSERT_PTR(mpDst);
-            K_ASSERT(OSIsMEM2Region(mpDst));
-
-            std::memcpy(mpDst, mpPacket->GetContent(),
-                        mpPacket->GetContentSize());
-
-            // Write peer information
-            if (mpPeer != nullptr) {
-                *mpPeer = mpPacket->GetPeer();
-            }
-
-            // Notify user
-            if (mpCallback != nullptr) {
-                mpCallback(LibSO::GetLastError(), mpArg);
-            }
-        }
-
-        return done;
+        // Terminate job regardless of success
+        return true;
     }
 
 private:
-    Packet* mpPacket;   // Packet to complete
-    void* mpDst;        // Where to store packet data
-    SOSockAddr* mpPeer; // Where to store peer address
+    //! Temporary socket for synchronous communication
+    SyncSocket* mpSocket;
+    //! Target peer address
+    SockAddrAny mPeerAddr;
 
-    Callback mpCallback; // Completion callback
-    void* mpArg;         // Completion callback user argument
+    //! Connect callback
+    ConnectCallback mpCallback;
+    //! Callback user argument
+    void* mpArg;
 };
 
+/******************************************************************************
+ *
+ * AcceptJob
+ *
+ ******************************************************************************/
+
 /**
- * @brief Async send operation
+ * @brief Asynchronous accept job
  */
-class AsyncSocket::SendJob {
+class AsyncSocket::AcceptJob : public IJob {
 public:
     /**
      * @brief Constructor
      *
-     * @param pPacket Packet for this job
-     * @param pCallback Completion callback
+     * @param pAsyncSocket Parent socket
+     * @param pSrc Source buffer
+     * @param len Buffer size
+     * @param pCallback Transfer callback
      * @param pArg Callback user argument
      */
-    SendJob(Packet* pPacket, Callback pCallback = nullptr, void* pArg = nullptr)
-        : mpPacket(pPacket), mpCallback(pCallback), mpArg(pArg) {
+    AcceptJob(AsyncSocket* pAsyncSocket, AcceptCallback pCallback, void* pArg)
+        : mpSocket(nullptr), mpCallback(pCallback), mpArg(pArg) {
 
-        K_ASSERT_PTR(mpPacket);
+        K_ASSERT_PTR(pAsyncSocket);
+        K_ASSERT_PTR(mpCallback);
+
+        // Need synchronous socket for internal communication
+        mpSocket = new SyncSocket(pAsyncSocket->mHandle, pAsyncSocket->mFamily,
+                                  pAsyncSocket->mType);
+        K_ASSERT_PTR(mpSocket);
     }
 
     /**
      * @brief Destructor
      */
-    ~SendJob() {
-        delete mpPacket;
+    virtual ~AcceptJob() {
+        delete mpSocket;
+        mpSocket = nullptr;
     }
 
     /**
-     * @brief Tests whether the send operation is complete
-     */
-    bool IsComplete() const {
-        K_ASSERT_PTR(mpPacket);
-        return mpPacket->IsReadComplete();
-    }
-
-    /**
-     * @brief Updates job using the specified socket
+     * @brief Updates the job state
      *
-     * @param socket Socket descriptor
-     * @return Whether the job is complete
+     * @return Whether the job has completed
      */
-    bool Calc(SOSocket socket) {
-        K_ASSERT_PTR(mpPacket);
-        K_ASSERT(socket >= 0);
+    virtual bool Calc() {
+        K_ASSERT_PTR(mpSocket);
 
-        // Nothing left to do
-        if (IsComplete()) {
-            return true;
+        SocketBase* pPeerSocket = mpSocket->Accept();
+        SOResult result = LibSO::GetLastError();
+
+        // Blocking, try again later
+        if (result == SO_EWOULDBLOCK) {
+            return false;
         }
 
-        // Update
-        mpPacket->Send(socket);
-        bool done = IsComplete();
-
-        // Fire callback
-        if (done && mpCallback != nullptr) {
-            mpCallback(LibSO::GetLastError(), mpArg);
+        // TODO(kiwi) Can we get this through the callback?
+        SockAddrAny addr;
+        if (pPeerSocket != nullptr) {
+            bool success = mpSocket->GetPeerAddr(addr);
+            K_ASSERT(success);
         }
 
-        return done;
+        K_ASSERT_PTR(mpCallback);
+        mpCallback(result, pPeerSocket, addr, mpArg);
+
+        // Terminate job regardless of success
+        return true;
     }
 
 private:
-    Packet* mpPacket; // Packet to complete
+    //! Temporary socket for synchronous communication
+    SyncSocket* mpSocket;
 
-    Callback mpCallback; // Completion callback
-    void* mpArg;         // Completion callback user argument
+    //! Accept callback
+    AcceptCallback mpCallback;
+    //! Callback user argument
+    void* mpArg;
 };
 
-/**
- * @brief Socket thread function
+/******************************************************************************
  *
- * @param pArg Thread function argument
- */
-void* AsyncSocket::ThreadFunc(void* pArg) {
-#pragma unused(pArg)
+ * RecvJob
+ *
+ ******************************************************************************/
 
-    // Update all open sockets
-    while (true) {
-        K_FOREACH (it, sSocketList) {
-            K_ASSERT((*it)->IsOpen());
-            (*it)->Calc();
+/**
+ * @brief Asynchronous receive job
+ */
+class AsyncSocket::RecvJob : public IJob {
+public:
+    /**
+     * @brief Constructor
+     *
+     * @param pAsyncSocket Parent socket
+     * @param pDst Destination buffer
+     * @param len Buffer size
+     * @param[out] pPeerAddr Peer address
+     * @param pCallback Transfer callback
+     * @param pArg Callback user argument
+     */
+    RecvJob(AsyncSocket* pAsyncSocket, void* pDst, u32 len,
+            SockAddrAny* pPeerAddr, XferCallback pCallback, void* pArg)
+        : mpSocket(nullptr),
+          mpPacket(nullptr),
+          mpDst(pDst),
+          mpPeerAddr(pPeerAddr),
+          mpCallback(pCallback),
+          mpArg(pArg) {
+
+        K_ASSERT_PTR(pAsyncSocket);
+        K_ASSERT_PTR(mpDst);
+        K_ASSERT(!PtrUtil::IsStack(mpDst));
+        K_ASSERT(mpPeerAddr == nullptr || !PtrUtil::IsStack(mpPeerAddr));
+        K_ASSERT_PTR(mpCallback);
+
+        // Need synchronous socket for internal communication
+        mpSocket = new SyncSocket(pAsyncSocket->mHandle, pAsyncSocket->mFamily,
+                                  pAsyncSocket->mType);
+        K_ASSERT_PTR(mpSocket);
+
+        mpPacket = new RawPacket();
+        mpPacket->Alloc(len);
+        mpPacket->Recv(mpSocket);
+    }
+
+    /**
+     * @brief Destructor
+     */
+    virtual ~RecvJob() {
+        delete mpSocket;
+        mpSocket = nullptr;
+
+        delete mpPacket;
+        mpPacket = nullptr;
+    }
+
+    /**
+     * @brief Updates the job state
+     *
+     * @return Whether the job has completed
+     */
+    virtual bool Calc() {
+        K_ASSERT_PTR(mpPacket);
+
+        bool finish = mpPacket->Calc();
+        SOResult result = LibSO::GetLastError();
+
+        if (finish) {
+            std::memcpy(mpDst, mpPacket->GetContent(),
+                        mpPacket->GetContentSize());
+
+            if (mpPeerAddr != nullptr) {
+                *mpPeerAddr = mpPacket->GetPeerAddr();
+            }
+
+            K_ASSERT_PTR(mpCallback);
+            mpCallback(result, mpPacket->GetContentSize(), mpArg);
         }
+
+        return finish;
     }
 
-    return nullptr;
-}
+private:
+    //! Temporary socket for synchronous communication
+    SyncSocket* mpSocket;
+    //! Raw data packet
+    RawPacket* mpPacket;
 
-/**
- * @brief Constructor
+    //! Destination buffer
+    void* mpDst;
+    //! Destination for peer address
+    SockAddrAny* mpPeerAddr;
+
+    //! Transfer callback
+    XferCallback mpCallback;
+    //! Callback user argument
+    void* mpArg;
+};
+
+/******************************************************************************
  *
- * @param family Socket protocol family
- * @param type Socket type
- */
-AsyncSocket::AsyncSocket(SOProtoFamily family, SOSockType type)
-    : SocketBase(family, type),
-      mState(EState_Thinking),
-      mpConnectCallback(nullptr),
-      mpConnectCallbackArg(nullptr),
-      mpAcceptCallback(nullptr),
-      mpAcceptCallbackArg(nullptr) {
-    Initialize();
-}
-
-/**
- * @brief Constructor
+ * SendJob
  *
- * @param socket Socket file descriptor
- * @param type Socket protocol family
- * @param type Socket type
- */
-AsyncSocket::AsyncSocket(SOSocket socket, SOProtoFamily family, SOSockType type)
-    : SocketBase(socket, family, type),
-      mState(EState_Thinking),
-      mpConnectCallback(nullptr),
-      mpConnectCallbackArg(nullptr),
-      mpAcceptCallback(nullptr),
-      mpAcceptCallbackArg(nullptr) {
-    Initialize();
-}
+ ******************************************************************************/
 
 /**
- * @brief Prepares socket for async operation
+ * @brief Asynchronous send job
  */
-void AsyncSocket::Initialize() {
-    // Thread needs to see this socket
-    sSocketList.PushBack(this);
+class AsyncSocket::SendJob : public IJob {
+public:
+    /**
+     * @brief Constructor
+     *
+     * @param pAsyncSocket Parent socket
+     * @param pSrc Source buffer
+     * @param len Buffer size
+     * @param pPeerAddr Peer address
+     * @param pCallback Transfer callback
+     * @param pArg Callback user argument
+     */
+    SendJob(AsyncSocket* pAsyncSocket, const void* pSrc, u32 len,
+            const SockAddrAny* pPeerAddr, XferCallback pCallback = nullptr,
+            void* pArg = nullptr)
+        : mpSocket(nullptr),
+          mpPacket(nullptr),
+          mpCallback(pCallback),
+          mpArg(pArg) {
 
-    // Thread must exist if there is an open socket
-    if (!sSocketThreadCreated) {
-        OSCreateThread(&sSocketThread, ThreadFunc, nullptr,
-                       sSocketThreadStack + sizeof(sSocketThreadStack),
-                       sizeof(sSocketThreadStack), OS_PRIORITY_MAX, 0);
+        K_ASSERT_PTR(pAsyncSocket);
+        K_ASSERT_PTR(pSrc);
+        K_ASSERT(!PtrUtil::IsStack(pSrc));
+        K_ASSERT_PTR(mpCallback);
 
-        sSocketThreadCreated = true;
-        OSResumeThread(&sSocketThread);
+        // Need synchronous socket for internal communication
+        mpSocket = new SyncSocket(pAsyncSocket->mHandle, pAsyncSocket->mFamily,
+                                  pAsyncSocket->mType);
+        K_ASSERT_PTR(mpSocket);
+
+        mpPacket = new RawPacket(pPeerAddr);
+        mpPacket->Alloc(len);
+        mpPacket->SetContent(pSrc, len);
+        mpPacket->Send(mpSocket);
     }
+
+    /**
+     * @brief Destructor
+     */
+    virtual ~SendJob() {
+        delete mpSocket;
+        mpSocket = nullptr;
+
+        delete mpPacket;
+        mpPacket = nullptr;
+    }
+
+    /**
+     * @brief Updates the job state
+     *
+     * @return Whether the job has completed
+     */
+    virtual bool Calc() {
+        K_ASSERT_PTR(mpPacket);
+
+        bool finish = mpPacket->Calc();
+        SOResult result = LibSO::GetLastError();
+
+        if (finish) {
+            K_ASSERT_PTR(mpCallback);
+            mpCallback(result, mpPacket->GetContentSize(), mpArg);
+        }
+
+        return finish;
+    }
+
+private:
+    //! Temporary socket for synchronous communication
+    SyncSocket* mpSocket;
+    //! Raw data packet
+    RawPacket* mpPacket;
+
+    //! Transfer callback
+    XferCallback mpCallback;
+    //! Callback user argument
+    void* mpArg;
+};
+
+/******************************************************************************
+ *
+ * AsyncSocket
+ *
+ ******************************************************************************/
+
+/**
+ * @brief Destructor
+ */
+AsyncSocket::~AsyncSocket() {
+    detail::AsyncSocketMgr::GetInstance().RemoveSocket(this);
+
+    // Release memory for receive jobs
+    for (TList<IJob*>::Iterator it = mRecvJobs.Begin();
+         it != mRecvJobs.End();) {
+
+        TList<IJob*>::Iterator curr = it++;
+        delete &*curr;
+    }
+
+    // Release memory for send jobs
+    for (TList<IJob*>::Iterator it = mSendJobs.Begin();
+         it != mSendJobs.End();) {
+
+        TList<IJob*>::Iterator curr = it++;
+        delete &*curr;
+    }
+}
+
+/**
+ * @brief Initializes socket state
+ */
+void AsyncSocket::Init() {
+    mStateMachine.RegistState(EState_Idle, &AsyncSocket::State_Idle_calc);
+    mStateMachine.RegistState(EState_Accept, &AsyncSocket::State_Accept_calc);
+    mStateMachine.RegistState(EState_Connect, &AsyncSocket::State_Connect_calc);
+
+    detail::AsyncSocketMgr::GetInstance().AddSocket(this);
 }
 
 /**
@@ -259,15 +423,15 @@ void AsyncSocket::Initialize() {
  * @param pArg Callback user argument
  * @return Success
  */
-bool AsyncSocket::Connect(const SockAddrAny& rAddr, Callback pCallback,
+bool AsyncSocket::Connect(const SockAddrAny& rAddr, ConnectCallback pCallback,
                           void* pArg) {
     K_ASSERT(IsOpen());
 
-    mState = EState_Connecting;
-    mPeer = rAddr;
+    ConnectJob* pJob = new ConnectJob(this, rAddr, pCallback, pArg);
+    K_ASSERT_PTR(pJob);
 
-    mpConnectCallback = pCallback;
-    mpConnectCallbackArg = pArg;
+    mpConnectJob = pJob;
+    mStateMachine.ChangeState(EState_Connect);
 
     // Connect doesn't actually happen on this thread
     return false;
@@ -283,110 +447,68 @@ bool AsyncSocket::Connect(const SockAddrAny& rAddr, Callback pCallback,
 AsyncSocket* AsyncSocket::Accept(AcceptCallback pCallback, void* pArg) {
     K_ASSERT(IsOpen());
 
-    mState = EState_Accepting;
+    AcceptJob* pJob = new AcceptJob(this, pCallback, pArg);
+    K_ASSERT_PTR(pJob);
 
-    mpAcceptCallback = pCallback;
-    mpAcceptCallbackArg = pArg;
+    mpAcceptJob = pJob;
+    mStateMachine.ChangeState(EState_Accept);
 
     // Accept doesn't actually happen on this thread
     return nullptr;
 }
 
 /**
- * @brief Processes pending socket tasks
+ * @brief Updates the packet in the Idle state
  */
-void AsyncSocket::Calc() {
-    s32 result;
-
+void AsyncSocket::State_Idle_calc() {
     K_ASSERT(IsOpen());
 
-    switch (mState) {
-    case EState_Thinking:
-        CalcRecv();
-        CalcSend();
-        break;
+    // Update the oldest receive job
+    if (!mRecvJobs.Empty()) {
+        RecvJob& rJob = *static_cast<RecvJob*>(mRecvJobs.Front());
 
-    case EState_Connecting:
-        result = LibSO::Connect(mHandle, mPeer);
-
-        // Blocking, try again
-        if (result == SO_EINPROGRESS || result == SO_EALREADY) {
-            break;
+        if (rJob.Calc()) {
+            mRecvJobs.PopFront();
+            delete &rJob;
         }
+    }
 
-        // Connection complete (looking for EISCONN here)
-        mState = EState_Thinking;
-        mpConnectCallback(result == SO_EISCONN ? SO_SUCCESS
-                                               : LibSO::GetLastError(),
-                          mpConnectCallbackArg);
+    // Update the oldest send job
+    if (!mSendJobs.Empty()) {
+        SendJob& rJob = *static_cast<SendJob*>(mSendJobs.Front());
 
-        break;
-
-    case EState_Accepting:
-        result = LibSO::Accept(mHandle, mPeer);
-
-        // Report non-blocking results
-        if (result != SO_EWOULDBLOCK) {
-            // Peer connection
-            AsyncSocket* pSocket = nullptr;
-
-            // Result code is the peer descriptor
-            if (result >= 0) {
-                pSocket = new AsyncSocket(result, mFamily, mType);
-                K_ASSERT_PTR(pSocket);
-            }
-
-            mState = EState_Thinking;
-            mpAcceptCallback(LibSO::GetLastError(), pSocket, mPeer,
-                             mpAcceptCallbackArg);
+        if (rJob.Calc()) {
+            mSendJobs.PopFront();
+            delete &rJob;
         }
-        break;
     }
 }
 
 /**
- * @brief Receives packet data over socket
+ * @brief Updates the packet in the Connect state
  */
-void AsyncSocket::CalcRecv() {
+void AsyncSocket::State_Connect_calc() {
     K_ASSERT(IsOpen());
 
-    // Nothing to do
-    if (mRecvJobs.Empty()) {
-        return;
-    }
+    if (mpConnectJob != nullptr && mpConnectJob->Calc()) {
+        delete mpConnectJob;
+        mpConnectJob = nullptr;
 
-    // Find next incomplete job (FIFO)
-    RecvJob& rJob = *mRecvJobs.Front();
-    K_ASSERT_EX(!rJob.IsComplete(), "Completed job should be removed");
-
-    // Attempt to complete job
-    if (rJob.Calc(mHandle)) {
-        // Remove from queue
-        mRecvJobs.PopFront();
-        delete &rJob;
+        mStateMachine.ChangeState(EState_Idle);
     }
 }
 
 /**
- * @brief Sends packet data over socket
+ * @brief Updates the packet in the Accept state
  */
-void AsyncSocket::CalcSend() {
+void AsyncSocket::State_Accept_calc() {
     K_ASSERT(IsOpen());
 
-    // Nothing to do
-    if (mSendJobs.Empty()) {
-        return;
-    }
+    if (mpAcceptJob != nullptr && mpAcceptJob->Calc()) {
+        delete mpAcceptJob;
+        mpAcceptJob = nullptr;
 
-    // Find next incomplete job (FIFO)
-    SendJob& rJob = *mSendJobs.Front();
-    K_ASSERT_EX(!rJob.IsComplete(), "Completed job should be removed");
-
-    // Attempt to complete job
-    if (rJob.Calc(mHandle)) {
-        // Remove from queue
-        mSendJobs.PopFront();
-        delete &rJob;
+        mStateMachine.ChangeState(EState_Idle);
     }
 }
 
@@ -402,19 +524,17 @@ void AsyncSocket::CalcSend() {
  * @return Socket library result
  */
 SOResult AsyncSocket::RecvImpl(void* pDst, u32 len, u32& rRecv,
-                               SockAddrAny* pAddr, Callback pCallback,
+                               SockAddrAny* pAddr, XferCallback pCallback,
                                void* pArg) {
     K_ASSERT(IsOpen());
     K_ASSERT_PTR(pDst);
     K_ASSERT_PTR(pCallback);
+
+    // Not actually required but enforced for consistency with other sockets
     K_ASSERT(OSIsMEM2Region(pDst));
 
-    // Packet to hold incoming data
-    Packet* pPacket = new Packet(len);
-    K_ASSERT_PTR(pPacket);
-
     // Asynchronous job
-    RecvJob* pJob = new RecvJob(pPacket, pDst, pAddr, pCallback, pArg);
+    RecvJob* pJob = new RecvJob(this, pDst, len, pAddr, pCallback, pArg);
     K_ASSERT_PTR(pJob);
     mRecvJobs.PushBack(pJob);
 
@@ -435,22 +555,17 @@ SOResult AsyncSocket::RecvImpl(void* pDst, u32 len, u32& rRecv,
  * @return Socket library result
  */
 SOResult AsyncSocket::SendImpl(const void* pSrc, u32 len, u32& rSend,
-                               const SockAddrAny* pAddr, Callback pCallback,
+                               const SockAddrAny* pAddr, XferCallback pCallback,
                                void* pArg) {
     K_ASSERT(IsOpen());
     K_ASSERT_PTR(pSrc);
     K_ASSERT_PTR(pCallback);
+
+    // Not actually required but enforced for consistency with other sockets
     K_ASSERT(OSIsMEM2Region(pSrc));
 
-    // Packet to hold incoming data
-    Packet* pPacket = new Packet(len, pAddr);
-    K_ASSERT_PTR(pPacket);
-
-    // Store data inside packet
-    pPacket->Write(pSrc, len);
-
     // Asynchronous job
-    SendJob* pJob = new SendJob(pPacket, pCallback, pArg);
+    SendJob* pJob = new SendJob(this, pSrc, len, pAddr, pCallback, pArg);
     K_ASSERT_PTR(pJob);
     mSendJobs.PushBack(pJob);
 

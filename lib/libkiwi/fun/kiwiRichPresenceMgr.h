@@ -1,5 +1,5 @@
-#ifndef LIBKIWI_NET_RICH_PRESENCE_MGR_H
-#define LIBKIWI_NET_RICH_PRESENCE_MGR_H
+#ifndef LIBKIWI_FUN_RICH_PRESENCE_MGR_H
+#define LIBKIWI_FUN_RICH_PRESENCE_MGR_H
 #include <libkiwi/core/kiwiSceneHookMgr.h>
 #include <libkiwi/k_types.h>
 #include <libkiwi/prim/kiwiString.h>
@@ -8,6 +8,8 @@
 #include <revolution/OS.h>
 
 namespace kiwi {
+//! @addtogroup libkiwi_fun
+//! @{
 
 // Forward declarations
 class IRichPresenceClient;
@@ -105,6 +107,7 @@ private:
     OSAlarm mAlarm;
 };
 
+//! @}
 } // namespace kiwi
 
 #endif

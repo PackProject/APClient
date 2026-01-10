@@ -7,7 +7,7 @@ namespace kiwi {
 //! @{
 
 // Forward declarations
-class IPacket;
+class PacketBase;
 
 /**
  * @brief Packet factory interface
@@ -20,9 +20,11 @@ public:
     virtual ~IPacketFactory() {}
 
     /**
-     * @brief Creates a new packet object
+     * @brief Creates a new network packet
+     *
+     * @param pPeerAddr Peer socket address
      */
-    virtual IPacket* Create() = 0;
+    virtual PacketBase* Create(const SockAddrAny* pPeerAddr = nullptr) = 0;
 };
 
 //! @}

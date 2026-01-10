@@ -10,7 +10,7 @@ namespace kiwi {
 RichPresenceMgr::RichPresenceMgr()
     : ISceneHook(-1), mpClient(nullptr), mpProfile(nullptr) {
 
-    // TODO: Only Dolphin Emulator is supported for now
+    // TODO(kiwi) Only Dolphin Emulator is supported for now
     mpClient = new EmuRichPresenceClient();
     K_ASSERT_PTR(mpClient);
 

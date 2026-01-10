@@ -22,6 +22,16 @@ public:
         : SocketBase(family, type), mIsBlocking(true) {}
 
     /**
+     * @brief Constructor
+     *
+     * @param socket Socket descriptor
+     * @param family Socket protocol family
+     * @param type Socket type
+     */
+    SyncSocket(SOSocket socket, SOProtoFamily family, SOSockType type)
+        : SocketBase(socket, family, type) {}
+
+    /**
      * @brief Connects to a peer
      *
      * @param rAddr Remote address
@@ -29,7 +39,8 @@ public:
      * @param pArg Callback user argument
      * @return Success
      */
-    virtual bool Connect(const SockAddrAny& rAddr, Callback pCallback = nullptr,
+    virtual bool Connect(const SockAddrAny& rAddr,
+                         ConnectCallback pCallback = nullptr,
                          void* pArg = nullptr);
 
     /**
@@ -59,16 +70,6 @@ public:
 
 private:
     /**
-     * @brief Constructor
-     *
-     * @param socket Socket descriptor
-     * @param family Socket protocol family
-     * @param type Socket type
-     */
-    SyncSocket(SOSocket socket, SOProtoFamily family, SOSockType type)
-        : SocketBase(socket, family, type) {}
-
-    /**
      * @brief Receives data and records sender address (internal implementation)
      *
      * @param pDst Destination buffer
@@ -80,7 +81,7 @@ private:
      * @return Socket library result
      */
     virtual SOResult RecvImpl(void* pDst, u32 len, u32& rRecv,
-                              SockAddrAny* pAddr, Callback pCallback,
+                              SockAddrAny* pAddr, XferCallback pCallback,
                               void* pArg);
 
     /**
@@ -95,7 +96,7 @@ private:
      * @return Socket library result
      */
     virtual SOResult SendImpl(const void* pSrc, u32 len, u32& rSend,
-                              const SockAddrAny* pAddr, Callback pCallback,
+                              const SockAddrAny* pAddr, XferCallback pCallback,
                               void* pArg);
 
 private:

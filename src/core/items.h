@@ -90,12 +90,12 @@
     X(0x0700, ARCHERY_AIM_CIRCLE, "Archery - Aiming Circle") \
     X(0x0701, ARCHERY_ARROW, "Progressive Arrow (Archery)") \
     X(0x0702, ARCHERY_FRUIT_PROG, "Progressive Fruit (Archery)") \
-    X(0x0702, ARCHERY_FRUIT_BEGINNER, "Archery Fruit Beginner") \
-    X(0x0703, ARCHERY_FRUIT_INTERMEDIATE, "Archery Fruit Intermediate") \
-    X(0x0704, ARCHERY_FRUIT_EXPERT, "Archery Fruit Expert") \
-    X(0x0705, ARCHERY_BEGINNER, "Unlock Archery - Beginner") \
-    X(0x0706, ARCHERY_INTERMEDIATE, "Unlock Archery - Intermediate") \
-    X(0x0707, ARCHERY_EXPERT, "Unlock Archery - Expert") \
+    X(0x0703, ARCHERY_FRUIT_BEGINNER, "Archery Fruit Beginner") \
+    X(0x0704, ARCHERY_FRUIT_INTERMEDIATE, "Archery Fruit Intermediate") \
+    X(0x0705, ARCHERY_FRUIT_EXPERT, "Archery Fruit Expert") \
+    X(0x0706, ARCHERY_BEGINNER, "Unlock Archery - Beginner") \
+    X(0x0707, ARCHERY_INTERMEDIATE, "Unlock Archery - Intermediate") \
+    X(0x0708, ARCHERY_EXPERT, "Unlock Archery - Expert") \
     X(0x0800, BASKETBALL_3PT_TIMER, "Basketball (3-Point Contest) Timer") \
     X(0x0801, BASKETBALL_BONUS_BALLS, "Basketball (3-Point Contest) - Golden Balls") \
     X(0x0900, BASKETBALL_PICKUP_TIMER, "Basketball (Pickup) Timer") \
@@ -162,8 +162,8 @@
     X(0x1106, CYCLING_STAGE_5, "Unlock Cycling - Into Maka Wuhu") \
     X(0x1107, CYCLING_STAGE_6, "Unlock Cycling - 3-Stage Race A") \
     X(0x1108, CYCLING_STAGE_7, "Unlock Cycling - 3-Stage Race B") \
-    X(0x1108, CYCLING_STAGE_8, "Unlock Cycling - 6 Stage") \
-    X(0x1109, CYCLING_DRAFT, "Cycling - Drafting") \
+    X(0x1109, CYCLING_STAGE_8, "Unlock Cycling - 6 Stage") \
+    X(0x1110, CYCLING_DRAFT, "Cycling - Drafting") \
     X(0x1200, SKYDIVING_MII, "Skydiving - Mii") \
     X(0x1300, ISLAND_FLYOVER_TIMER, "Island Flyover Timer") \
     X(0x1301, ISLAND_FLYOVER_DAY, "Unlock Island Flyover - Daytime") \

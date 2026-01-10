@@ -153,7 +153,7 @@ public:
         K_ASSERT(mType == EType_Object);
         const Element* pElement = Get<Object>().Find(rKey);
 
-        // TODO: Better way to return a dummy element?
+        // TODO(kiwi) Better way to return a dummy element?
         if (pElement == nullptr) {
             static const Element undefined;
             return undefined;

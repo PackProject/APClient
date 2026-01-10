@@ -310,7 +310,7 @@ void ResourceMgr::LoadCacheArchives() {
 
         K_ASSERT_PTR(pCommonResource);
 
-        // TODO: Why only Wii Play? Are the local archives just that small?
+        // TODO(kiwi) Why only Wii Play? Are the local archives just that small?
 #if defined(PACK_PLAY)
         // Not enough memory to decompress these all ahead of time
         const Resource* pLocalResource =

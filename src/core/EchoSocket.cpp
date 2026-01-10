@@ -6,53 +6,62 @@ K_DYNAMIC_SINGLETON_IMPL(AP::EchoSocket);
 
 namespace AP {
 
+/**
+ * @brief Constructor
+ */
 EchoSocket::EchoSocket() {
     bool success;
 
-    mpSocket = new kiwi::SyncSocket( //
-        SO_PF_INET,                  /* ipv4 */
-        SO_SOCK_DGRAM                /* udp = datagram*/
+    // Create server socket
+    mpServerSocket = new kiwi::SyncSocket( //
+        SO_PF_INET,                        /* ipv4 */
+        SO_SOCK_DGRAM                      /* udp = datagram */
     );
-
-    ASSERT_PTR(mpSocket);
-    mpSocket->SetBlocking(false);
-
-    // Packet data buffer
-    mpDataBuffer = new (kiwi::EMemory_MEM2) u8[MAX_PACKET_SIZE];
-    ASSERT_PTR(mpDataBuffer);
+    ASSERT_PTR(mpServerSocket);
 
     // Bind to any available local address
     kiwi::SockAddr4 addr(kiwi::port::AP_COMM);
-    success = mpSocket->Bind(addr);
+    success = mpServerSocket->Bind(addr);
     ASSERT_EX(success, "Can't bind socket");
 
-    // Host address now has the correct IP
+    // Create server connection
+    mpServer = new kiwi::NetServer(mpServerSocket,
+                                   new kiwi::TPacketFactory<kiwi::RawPacket>());
+    ASSERT_PTR(mpServer);
+
+    mpServer->SetRecvCallback(PacketCallback, this);
+
+    // Show IP address in the console
     u16 port = addr.port;
-    mpSocket->GetHostAddr(addr);
+    mpServerSocket->GetHostAddr(addr);
     addr.port = port;
 
     kiwi::cout << "Echo socket listening on: " << kiwi::ToString(addr)
                << kiwi::endl;
+}
 
-    for (;;) {
-        // Receive packet from the peer
-        kiwi::Optional<u32> nrecv =
-            mpSocket->RecvBytesFrom(mpDataBuffer, MAX_PACKET_SIZE, mPeerAddr);
+/**
+ * @brief Destructor
+ */
+EchoSocket::~EchoSocket() {
+    delete mpServer;
+    mpServer = nullptr;
 
-        if (!nrecv) {
-            ASSERT_EX(false, "Socket error (errcode %d)",
-                      kiwi::LibSO::GetLastError());
-        }
+    delete mpServerSocket;
+    mpServerSocket = nullptr;
+}
 
-        if (*nrecv > 0) {
-            kiwi::cout << "Received data from " << kiwi::ToString(mPeerAddr)
-                       << "(" << *nrecv << " bytes)" << kiwi::endl;
+/**
+ * @brief Packet receive callback
+ *
+ * @param pPacket Incoming packet
+ * @param pArg Callback user argument
+ */
+void EchoSocket::PacketCallback(kiwi::PacketBase* pPacket, void* /* pArg */) {
+    K_ASSERT_PTR(pPacket);
 
-            kiwi::IosObject<u8> acceptanceByte = 1;
-
-            mpSocket->SendTo(acceptanceByte.Ref(), mPeerAddr);
-        }
-    }
+    kiwi::cout << "Received " << pPacket->GetContentSize() << " bytes from "
+               << kiwi::ToString(pPacket->GetPeerAddr()) << kiwi::endl;
 }
 
 } // namespace AP

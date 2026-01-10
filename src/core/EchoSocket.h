@@ -6,21 +6,36 @@
 
 namespace AP {
 
+/**
+ * @brief Data mirrorer for network testing
+ */
 class EchoSocket : public kiwi::DynamicSingleton<EchoSocket> {
     friend class kiwi::DynamicSingleton<EchoSocket>;
 
 private:
-    static const u32 MAX_PACKET_SIZE = 256;
-
-private:
-    static void SocketCallbackFunc(SOResult result, void* pArg);
-
+    /**
+     * @brief Constructor
+     */
     EchoSocket();
 
+    /**
+     * @brief Destructor
+     */
+    ~EchoSocket();
+
+    /**
+     * @brief Packet receive callback
+     *
+     * @param pPacket Incoming packet
+     * @param pArg Callback user argument
+     */
+    static void PacketCallback(kiwi::PacketBase* pPacket, void* pArg);
+
 private:
-    kiwi::SyncSocket* mpSocket;
-    u8* mpDataBuffer;
-    kiwi::SockAddr4 mPeerAddr;
+    //! Server socket
+    kiwi::SyncSocket* mpServerSocket;
+    //! Socket connection wrapper
+    kiwi::NetServer* mpServer;
 };
 
 } // namespace AP

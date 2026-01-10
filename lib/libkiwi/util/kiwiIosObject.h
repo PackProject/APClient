@@ -91,7 +91,7 @@ public:
     /**
      * @brief Access data length
      */
-    // TODO: Hack to make this function specializable by template...
+    // TODO(kiwi) Hack to make this function specializable by template...
     virtual u32 Length() const {
         return IosVector::Length();
     }

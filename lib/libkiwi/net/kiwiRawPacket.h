@@ -1,192 +1,103 @@
-#ifndef LIBKIWI_NET_PACKET_H
-#define LIBKIWI_NET_PACKET_H
+#ifndef LIBKIWI_NET_RAW_PACKET_H
+#define LIBKIWI_NET_RAW_PACKET_H
 #include <libkiwi/k_types.h>
-#include <libkiwi/math/kiwiAlgorithm.h>
-#include <libkiwi/prim/kiwiMutex.h>
-#include <libkiwi/prim/kiwiOptional.h>
-#include <libkiwi/support/kiwiLibSO.h>
-
-#include <revolution/OS.h>
-
-#include <climits>
+#include <libkiwi/net/kiwiPacketBase.h>
+#include <libkiwi/util/kiwiStateMachine.h>
 
 namespace kiwi {
 //! @addtogroup libkiwi_net
 //! @{
 
 /**
- * @brief Network packet wrapper
+ * @brief Network packet without any header
  */
-class Packet {
+class RawPacket : public PacketBase {
 public:
     /**
      * @brief Constructor
      *
-     * @param size Packet buffer size
-     * @param pAddr Packet recipient
+     * @param pPeerAddr Peer socket address
      */
-    Packet(u32 size, const SockAddrAny* pAddr = nullptr)
-        : mpBuffer(nullptr), mBufferSize(0), mReadOffset(0), mWriteOffset(0) {
-
-        Alloc(size);
-
-        if (pAddr != nullptr) {
-            mAddress = *pAddr;
-        } else {
-            mAddress = SockAddr4();
-        }
-    }
+    explicit RawPacket(const SockAddrAny* pPeerAddr = nullptr);
 
     /**
-     * @brief Destructor
-     */
-    ~Packet() {
-        Free();
-    }
-
-    /**
-     * @brief Allocates message buffer of the specified size
-     *
-     * @param size Packet size
-     */
-    virtual void Alloc(u32 size);
-
-    /**
-     * @brief Gets the current size of the message buffer
-     */
-    virtual u32 GetBufferSize() const {
-        return mBufferSize;
-    }
-    /**
-     * @brief Gets the maximum size of the message buffer
-     */
-    virtual u32 GetMaxBuffer() const {
-        return ULONG_MAX;
-    }
-
-    /**
-     * @brief Gets the current size of the message payload
-     */
-    virtual u32 GetContentSize() const {
-        return GetBufferSize() - GetOverhead();
-    }
-    /**
-     * @brief Gets the maximum size of the message payload
-     */
-    virtual u32 GetMaxContent() const {
-        return GetMaxBuffer() - GetOverhead();
-    }
-    /**
-     * @brief Accesses the message payload
-     */
-    const void* GetContent() const {
-        return mpBuffer + GetOverhead();
-    }
-
-    /**
-     * @brief Gets the size of the message buffer overhead
+     * @brief Gets the size of the overhead needed for the packet header
      */
     virtual u32 GetOverhead() const {
+        // Raw packets have no header structure
         return 0;
     }
 
     /**
-     * @brief Tests whether the packet contains no data
-     */
-    bool IsEmpty() const {
-        return mpBuffer == nullptr || GetContentSize() == 0;
-    }
-
-    /**
-     * @brief Gets the number of bytes that must be read to complete the packet
-     */
-    u32 ReadRemain() const {
-        return Max<s64>(GetContentSize() - mReadOffset, 0);
-    }
-    /**
-     * @brief Gets the number of bytes that must be written to complete the
-     * packet
-     */
-    u32 WriteRemain() const {
-        return Max<s64>(GetContentSize() - mWriteOffset, 0);
-    }
-
-    /**
-     * @brief Tests whether read operation has been completed
-     */
-    bool IsReadComplete() const {
-        return ReadRemain() == 0;
-    }
-    /**
-     * @brief Tests whether write operation has been completed
-     */
-    bool IsWriteComplete() const {
-        return WriteRemain() == 0;
-    }
-
-    /**
-     * @brief Accesses peer socket address (read-only)
-     */
-    const SockAddrAny& GetPeer() const {
-        return mAddress;
-    }
-
-    /**
-     * @brief Reads data from message buffer
+     * @brief Sets the packet content
      *
-     * @param pDst Data destination
-     * @param size Data size
-     *
-     * @return Number of bytes read
+     * @param pContent Packet content
+     * @param size Content size
      */
-    u32 Read(void* pDst, u32 size);
-    /**
-     * @brief Writes data to message buffer
-     *
-     * @param pSrc Data source
-     * @param size Data size
-     *
-     * @return Number of bytes written
-     */
-    u32 Write(const void* pSrc, u32 size);
+    virtual void SetContent(const void* pContent, u32 size);
 
     /**
-     * @brief Receives message data from socket
+     * @brief Receives the packet over the specified socket
      *
-     * @param socket Socket descriptor
-     *
-     * @return Number of bytes received
+     * @param pSocket Network socket
      */
-    Optional<u32> Send(SOSocket socket);
-    /**
-     * @brief Writes message data to socket
-     *
-     * @param socket Socket descriptor
-     *
-     * @return Number of bytes sent
-     */
-    Optional<u32> Recv(SOSocket socket);
-
-protected:
-    /**
-     * @brief Releases message buffer
-     */
-    void Free();
+    virtual void Recv(SocketBase* pSocket);
 
     /**
-     * @brief Clears existing state
+     * @brief Sends the packet over the specified socket
+     *
+     * @param pSocket Network socket
      */
-    void Clear();
+    virtual void Send(SocketBase* pSocket);
 
-protected:
-    u8* mpBuffer;       //!< Message buffer
-    u32 mBufferSize;    //!< Message buffer size
-    Mutex mBufferMutex; //!< Buffer access mutex
+    /**
+     * @brief Updates the packet state
+     *
+     * @return Whether the previous operation has just completed
+     */
+    virtual bool Calc();
 
-    s32 mReadOffset;  //!< Buffer read index
-    s32 mWriteOffset; //!< Buffer write index
+    /**
+     * @brief Updates the packet in the Idle state
+     */
+    K_STATE_DECL(Idle);
 
-    SockAddrAny mAddress; //!< Sender (recv) or recipient (send)
+    /**
+     * @brief Updates the packet in the Recv state
+     */
+    K_STATE_DECL(Recv);
+
+    /**
+     * @brief Updates the packet in the Send state
+     */
+    K_STATE_DECL(Send);
+
+private:
+    /**
+     * @brief State machine state
+     */
+    enum EState {
+        EState_Idle, //!< Waiting for request
+        EState_Recv, //!< Trying to receive packet
+        EState_Send, //!< Trying to send packet
+
+        EState_Max
+    };
+
+private:
+    /**
+     * @brief Buffer transfer callback
+     *
+     * @param size Transfer size
+     * @param pArg Callback user argument
+     */
+    static void BufferCallback(u32 size, void* pArg);
+
+private:
+    //! Network socket
+    SocketBase* mpSocket;
+    //! Logic state machine
+    StateMachine<RawPacket> mStateMachine;
 };
 
 //! @}

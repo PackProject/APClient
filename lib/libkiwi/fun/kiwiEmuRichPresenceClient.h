@@ -1,11 +1,11 @@
-#ifndef LIBKIWI_NET_EMU_RICH_PRESENCE_CLIENT_H
-#define LIBKIWI_NET_EMU_RICH_PRESENCE_CLIENT_H
+#ifndef LIBKIWI_FUN_EMU_RICH_PRESENCE_CLIENT_H
+#define LIBKIWI_FUN_EMU_RICH_PRESENCE_CLIENT_H
+#include <libkiwi/fun/kiwiIRichPresenceClient.h>
 #include <libkiwi/k_types.h>
-#include <libkiwi/net/kiwiIRichPresenceClient.h>
 #include <libkiwi/util/kiwiIosDevice.h>
 
 namespace kiwi {
-//! @addtogroup libkiwi_net
+//! @addtogroup libkiwi_fun
 //! @{
 
 /**

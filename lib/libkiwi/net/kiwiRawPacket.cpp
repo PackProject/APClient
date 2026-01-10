@@ -3,159 +3,143 @@
 namespace kiwi {
 
 /**
- * @brief Allocates message buffer of the specified size
+ * @brief Constructor
  *
- * @param size Packet size
+ * @param pPeerAddr Peer socket address
  */
-void Packet::Alloc(u32 size) {
+RawPacket::RawPacket(const SockAddrAny* pPeerAddr)
+    : PacketBase(pPeerAddr),
+      mpSocket(nullptr),
+      mStateMachine(this, EState_Max, EState_Idle) {
+
+    mStateMachine.RegistState(EState_Idle, &RawPacket::State_Idle_calc);
+    mStateMachine.RegistState(EState_Recv, &RawPacket::State_Recv_calc);
+    mStateMachine.RegistState(EState_Send, &RawPacket::State_Send_calc);
+}
+
+/**
+ * @brief Sets the packet content
+ *
+ * @param pContent Packet content
+ * @param size Content size
+ */
+void RawPacket::SetContent(const void* pContent, u32 size) {
+    K_ASSERT_PTR(pContent);
     K_ASSERT(size > 0);
-    K_ASSERT_EX(size < GetMaxContent(), "Must be fragmented!");
 
-    // Free existing message
-    if (mpBuffer != nullptr) {
-        Free();
+    // May need to reallocate the buffer
+    if (size > mBuffer.Capacity()) {
+        Alloc(size);
     }
 
-    // Protocol may have memory overhead
-    mBufferSize = size + GetOverhead();
-
-    mpBuffer = new (32, EMemory_MEM2) u8[mBufferSize];
-    K_ASSERT_PTR(mpBuffer);
-    K_ASSERT(OSIsMEM2Region(mpBuffer));
-
-    Clear();
+    u32 bytesWritten = mBuffer.Write(pContent, size);
+    K_ASSERT(bytesWritten == size);
 }
 
 /**
- * @brief Releases message buffer
+ * @brief Receives the packet over the specified socket
+ *
+ * @param pSocket Network socket
  */
-void Packet::Free() {
-    AutoMutexLock lock(mBufferMutex);
+void RawPacket::Recv(SocketBase* pSocket) {
+    K_ASSERT_PTR(pSocket);
 
-    delete mpBuffer;
-    mpBuffer = nullptr;
-
-    Clear();
+    mpSocket = pSocket;
+    mStateMachine.ChangeState(EState_Recv);
 }
 
 /**
- * @brief Clears existing state
+ * @brief Sends the packet over the specified socket
+ *
+ * @param pSocket Network socket
  */
-void Packet::Clear() {
-    AutoMutexLock lock(mBufferMutex);
+void RawPacket::Send(SocketBase* pSocket) {
+    K_ASSERT_PTR(pSocket);
 
-    mReadOffset = 0;
-    mWriteOffset = 0;
+    mpSocket = pSocket;
+    mStateMachine.ChangeState(EState_Send);
 }
 
 /**
- * @brief Reads data from message buffer
+ * @brief Updates the packet state
  *
- * @param pDst Data destination
- * @param size Data size
- *
- * @return Number of bytes read
+ * @return Whether the previous operation has just completed
  */
-u32 Packet::Read(void* pDst, u32 size) {
-    K_ASSERT_PTR(mpBuffer);
-    K_ASSERT(size <= GetMaxContent());
-
-    AutoMutexLock lock(mBufferMutex);
-
-    // Clamp size to avoid overflow
-    size = Min(size, ReadRemain());
-
-    // Copy data from buffer
-    std::memcpy(pDst, mpBuffer + mReadOffset, size);
-    mReadOffset += size;
-
-    return size;
+bool RawPacket::Calc() {
+    mStateMachine.Calculate();
+    return mStateMachine.IsState(EState_Idle);
 }
 
 /**
- * @brief Writes data to message buffer
- *
- * @param pSrc Data source
- * @param size Data size
- *
- * @return Number of bytes written
+ * @brief Updates the packet in the Idle state
  */
-u32 Packet::Write(const void* pSrc, u32 size) {
-    K_ASSERT_PTR(mpBuffer);
-    K_ASSERT(size <= GetMaxContent());
-
-    AutoMutexLock lock(mBufferMutex);
-
-    // Clamp size to avoid overflow
-    size = Min(size, WriteRemain());
-
-    // Copy data to buffer
-    std::memcpy(mpBuffer + mWriteOffset, pSrc, size);
-    mWriteOffset += size;
-
-    return size;
+void RawPacket::State_Idle_calc() {
+    // Unlink socket when operations finish
+    mpSocket = nullptr;
 }
 
 /**
- * @brief Receives message data from socket
- *
- * @param socket Socket descriptor
- *
- * @return Number of bytes received
+ * @brief Updates the packet in the Recv state
  */
-Optional<u32> Packet::Recv(SOSocket socket) {
-    K_ASSERT(socket >= 0);
-    K_ASSERT_PTR(mpBuffer);
+void RawPacket::State_Recv_calc() {
+    K_ASSERT_PTR(mpSocket);
 
     AutoMutexLock lock(mBufferMutex);
 
-    // Read from socket (try to complete packet)
-    s32 result = LibSO::RecvFrom(socket, mpBuffer + mWriteOffset, WriteRemain(),
-                                 0, mAddress);
+    if (mPeerAddr.IsValid()) {
+        mBuffer.Recv(mpSocket, &mPeerAddr, BufferCallback, this);
+    } else {
+        mBuffer.Recv(mpSocket, nullptr, BufferCallback, this);
+    }
+}
 
-    // Blocking, just say zero
-    if (result == SO_EWOULDBLOCK) {
-        return 0;
+/**
+ * @brief Updates the packet in the Send state
+ */
+void RawPacket::State_Send_calc() {
+    K_ASSERT_PTR(mpSocket);
+
+    AutoMutexLock lock(mBufferMutex);
+
+    if (mPeerAddr.IsValid()) {
+        mBuffer.Send(mpSocket, &mPeerAddr, BufferCallback, this);
+    } else {
+        mBuffer.Send(mpSocket, nullptr, BufferCallback, this);
+    }
+}
+
+/**
+ * @brief Buffer transfer callback
+ *
+ * @param size Transfer size
+ * @param pArg Callback user argument
+ */
+void RawPacket::BufferCallback(u32 size, void* pArg) {
+    K_ASSERT_PTR(pArg);
+    RawPacket* p = static_cast<RawPacket*>(pArg);
+
+    switch (p->mStateMachine.GetState()) {
+    case EState_Recv: {
+        // Receive is complete when the ring buffer is full
+        if (p->mBuffer.Size() == p->mBuffer.Capacity()) {
+            p->mStateMachine.ChangeState(EState_Idle);
+        }
+        break;
     }
 
-    // > 0 means bytes read from socket
-    if (result >= 0) {
-        mWriteOffset += result;
-        return result;
+    case EState_Send: {
+        // Send is complete when the ring buffer has been exhausted
+        if (p->mBuffer.Size() == 0) {
+            p->mStateMachine.ChangeState(EState_Idle);
+        }
+        break;
     }
 
-    return kiwi::nullopt;
-}
-
-/**
- * @brief Writes message data to socket
- *
- * @param socket Socket descriptor
- *
- * @return Number of bytes sent
- */
-Optional<u32> Packet::Send(SOSocket socket) {
-    K_ASSERT(socket >= 0);
-    K_ASSERT_PTR(mpBuffer);
-
-    AutoMutexLock lock(mBufferMutex);
-
-    // Send through socket (try to complete packet)
-    s32 result = LibSO::SendTo(socket, mpBuffer + mReadOffset, ReadRemain(), 0,
-                               mAddress);
-
-    // Blocking, just say zero
-    if (result == SO_EWOULDBLOCK) {
-        return 0;
+    default: {
+        K_UNREACHABLE();
+        break;
     }
-
-    // > 0 means bytes written to socket
-    if (result >= 0) {
-        mReadOffset += result;
-        return result;
     }
-
-    return kiwi::nullopt;
 }
 
 } // namespace kiwi

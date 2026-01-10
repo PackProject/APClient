@@ -1,10 +1,10 @@
-#ifndef LIBKIWI_NET_I_RICH_PRESENCE_CLIENT_H
-#define LIBKIWI_NET_I_RICH_PRESENCE_CLIENT_H
+#ifndef LIBKIWI_FUN_I_RICH_PRESENCE_CLIENT_H
+#define LIBKIWI_FUN_I_RICH_PRESENCE_CLIENT_H
 #include <libkiwi/k_types.h>
 #include <libkiwi/prim/kiwiString.h>
 
 namespace kiwi {
-//! @addtogroup libkiwi_net
+//! @addtogroup libkiwi_fun
 //! @{
 
 /**

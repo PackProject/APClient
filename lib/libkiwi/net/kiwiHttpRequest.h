@@ -30,7 +30,7 @@ enum EHttpErr {
  * @brief HTTP status code
  */
 enum EHttpStatus {
-    // TODO: Determine which additional codes are useful here
+    // TODO(kiwi) Determine which additional codes are useful here
     EHttpStatus_None = -1,
 
     // Informational
@@ -77,7 +77,7 @@ struct HttpResponse {
  * @brief HTTP (1.1) request wrapper
  */
 class HttpRequest {
-    // TODO: How to fix this... bad relationship
+    // TODO(kiwi) How to fix this... bad relationship
     friend class WebSocket;
 
 public:

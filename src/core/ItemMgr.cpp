@@ -329,7 +329,7 @@ bool ItemMgr::GetItemState(ItemID id) const {
     }
 
     // Frisbee Dog
-    case ITEM_FRISBEE_DOG_FRISBEES: {
+    case ITEM_FRISBEE_DOG_PROG_FRISBEES: {
         return mFldThrowFlag.Count();
     }
     case ITEM_FRISBEE_DOG_SECRET_POP: {
@@ -665,7 +665,7 @@ void ItemMgr::SetItemState(ItemID id, bool state) {
     }
 
     // Frisbee Dog
-    case ITEM_FRISBEE_DOG_FRISBEES: {
+    case ITEM_FRISBEE_DOG_PROG_FRISBEES: {
         mFldThrowFlag.SetFirstUnset();
         break;
     }

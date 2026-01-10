@@ -7,17 +7,22 @@ namespace kiwi {
 //! @addtogroup libkiwi_net
 //! @{
 
+// Forward declarations
+class SockAddrAny;
+
 /**
- * @brief Generic packet factory implementation
+ * @brief Generic packet factory
  *
  * @tparam T Packet class type
  */
-template <typename T = Packet> class TPacketFactory : public IPacketFactory {
+template <typename T> class TPacketFactory : public IPacketFactory {
     /**
      * @brief Creates a new network packet
+     *
+     * @param pPeerAddr Peer socket address
      */
-    virtual Packet* Create() {
-        return new T();
+    virtual PacketBase* Create(const SockAddrAny* pPeerAddr = nullptr) {
+        return new T(pPeerAddr);
     }
 };
 
