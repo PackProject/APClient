@@ -9,7 +9,7 @@ namespace kiwi {
 //! @{
 
 // Forward declarations
-class Thread;
+class StdThread;
 
 namespace detail {
 //! @addtogroup libkiwi_net
@@ -62,7 +62,7 @@ private:
 
 private:
     //! Manager thread
-    Thread* mpThread;
+    StdThread* mpThread;
     //! Open connections
     TList<NetConnection*> mConnectionList;
 };

@@ -23,6 +23,11 @@ SocketBase::SocketBase(SOProtoFamily family, SOSockType type)
     // Always disable IOP blocking
     success = SetBlockingIOP(false);
     K_ASSERT(success);
+
+    success = SetSendBufferSize(0xFFFF);
+    K_ASSERT(success);
+    success = SetRecvBufferSize(0xFFFF);
+    K_ASSERT(success);
 }
 
 /**

@@ -72,8 +72,8 @@ typedef enum {
 
 typedef enum {
     SO_SO_REUSEADDR = 0x0004,
-    SO_SO_SNDBUF = 0x1002,
-    SO_SO_RCVBUF = 0x1003,
+    SO_SO_SNDBUF = 0x1001,
+    SO_SO_RCVBUF = 0x1002,
 } SOSockOpt;
 
 typedef enum { SO_SHUT_RD, SO_SHUT_WR, SO_SHUT_RDWR } SOShutdownType;

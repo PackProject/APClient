@@ -89,6 +89,33 @@ void NetBuffer::Free() {
 }
 
 /**
+ * @brief Expands the existing buffer to at least the specified size
+ *
+ * @param size Buffer size
+ */
+void NetBuffer::Reserve(u32 size) {
+    K_ASSERT(size > 0);
+
+    if (size < mBufferSize) {
+        return;
+    }
+
+    // Buffer needs to be in MEM2 so IOS can access it
+    u8* pNewBuffer = new (32, EMemory_MEM2) u8[size];
+    K_ASSERT_PTR(pNewBuffer);
+    K_ASSERT(OSIsMEM2Region(pNewBuffer));
+
+    // Copy existing contents
+    if (mpBuffer != nullptr) {
+        std::memcpy(pNewBuffer, mpBuffer, mBufferSize);
+        delete[] mpBuffer;
+    }
+
+    mpBuffer = pNewBuffer;
+    mBufferSize = size;
+}
+
+/**
  * @brief Reads data from the network buffer
  *
  * @param pDst Data destination
@@ -143,9 +170,12 @@ u32 NetBuffer::Write(const void* pSrc, u32 size) {
 void NetBuffer::Recv(SocketBase* pSocket, SockAddrAny* pPeerAddr,
                      Callback pCallback, void* pArg) {
     K_ASSERT_PTR(pSocket);
+    K_ASSERT_PTR(mpBuffer);
 
     // Context structure to help unwind the callback chain
     CommandBlock* pCmdBlock = new CommandBlock();
+    K_ASSERT_PTR(pCmdBlock);
+
     pCmdBlock->type = CommandBlock::EType_Recv;
     pCmdBlock->pBuffer = this;
     pCmdBlock->pCallback = pCallback;
@@ -175,9 +205,12 @@ void NetBuffer::Recv(SocketBase* pSocket, SockAddrAny* pPeerAddr,
 void NetBuffer::Send(SocketBase* pSocket, const SockAddrAny* pPeerAddr,
                      Callback pCallback, void* pArg) {
     K_ASSERT_PTR(pSocket);
+    K_ASSERT_PTR(mpBuffer);
 
     // Context structure to help unwind the callback chain
     CommandBlock* pCmdBlock = new CommandBlock();
+    K_ASSERT_PTR(pCmdBlock);
+
     pCmdBlock->type = CommandBlock::EType_Send;
     pCmdBlock->pBuffer = this;
     pCmdBlock->pCallback = pCallback;
@@ -211,8 +244,7 @@ void NetBuffer::Init() {
  * @param size Number of bytes transferred
  * @param pArg User callback argument
  */
-void NetBuffer::SocketXferCallback(SOResult /* result */, u32 size,
-                                   void* pArg) {
+void NetBuffer::SocketXferCallback(SOResult result, u32 size, void* pArg) {
     K_ASSERT_PTR(pArg);
 
     // Context structure to help unwind the callback chain
@@ -241,7 +273,7 @@ void NetBuffer::SocketXferCallback(SOResult /* result */, u32 size,
 
     // Unwind the callback chain
     if (pCmdBlock->pCallback != nullptr) {
-        pCmdBlock->pCallback(size, pCmdBlock->pArg);
+        pCmdBlock->pCallback(result, size, pCmdBlock->pArg);
     }
 
     // Release context memory

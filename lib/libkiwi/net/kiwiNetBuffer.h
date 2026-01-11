@@ -4,6 +4,8 @@
 #include <libkiwi/k_types.h>
 #include <libkiwi/prim/kiwiOptional.h>
 
+#include <revolution/SO.h>
+
 namespace kiwi {
 //! @addtogroup libkiwi_net
 //! @{
@@ -19,10 +21,11 @@ public:
     /**
      * @brief Socket transfer callback
      *
+     * @param result Socket library result
      * @param size Transfer size
      * @param pArg Callback user argument
      */
-    typedef void (*Callback)(u32 size, void* pArg);
+    typedef void (*Callback)(SOResult result, u32 size, void* pArg);
 
 public:
     /**
@@ -57,6 +60,13 @@ public:
      * @brief Releases the network buffer
      */
     void Free();
+
+    /**
+     * @brief Expands the existing buffer to at least the specified size
+     *
+     * @param size Buffer size
+     */
+    void Reserve(u32 size);
 
     /**
      * @brief Reads data from the network buffer
@@ -101,7 +111,20 @@ public:
               Callback pCallback = nullptr, void* pArg = nullptr);
 
     /**
+     * @brief Tests whether the underlying buffer is valid
+     */
+    bool IsValid() const {
+        return mpBuffer != nullptr;
+    }
+
+    /**
      * @brief Accesses the underlying buffer data
+     */
+    u8* Data() {
+        return mpBuffer;
+    }
+    /**
+     * @brief Accesses the underlying buffer data (const-view)
      */
     const u8* Data() const {
         return mpBuffer;
@@ -139,7 +162,7 @@ private:
      * @param size Number of bytes transferred
      * @param pArg User callback argument
      */
-    static void SocketXferCallback(SOResult /* result */, u32 size, void* pArg);
+    static void SocketXferCallback(SOResult result, u32 size, void* pArg);
 
 private:
     //! Buffer data

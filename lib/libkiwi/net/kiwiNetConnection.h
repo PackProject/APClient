@@ -51,6 +51,18 @@ public:
     virtual ~NetConnection();
 
     /**
+     * @brief Binds socket to local address
+     * @note Bind to port zero for a random port (written out)
+     *
+     * @param rAddr[in,out] Local address
+     * @return Success
+     */
+    bool Bind(SockAddrAny& rAddr) {
+        K_ASSERT_PTR(mpSocket);
+        return mpSocket->Bind(rAddr);
+    }
+
+    /**
      * @brief Sends bytes over the connection
      *
      * @param pSrc Source buffer

@@ -7,7 +7,7 @@ namespace detail {
  * @brief Constructor
  */
 NetConnectionMgr::NetConnectionMgr() {
-    mpThread = new Thread(&NetConnectionMgr::ThreadFunc, *this);
+    mpThread = new StdThread(&NetConnectionMgr::ThreadFunc, *this);
 }
 
 /**

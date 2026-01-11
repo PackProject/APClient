@@ -16,7 +16,7 @@ Server::Server()
       mpServerSocket(nullptr),
       mpClientSocket(nullptr) {
 
-    mpMainThread = new Thread(ThreadFunc, *this);
+    mpMainThread = new StdThread(ThreadFunc, *this);
     K_ASSERT_PTR(mpMainThread);
 }
 

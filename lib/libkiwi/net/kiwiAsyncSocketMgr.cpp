@@ -7,7 +7,7 @@ namespace detail {
  * @brief Constructor
  */
 AsyncSocketMgr::AsyncSocketMgr() {
-    mpThread = new Thread(&AsyncSocketMgr::ThreadFunc, *this);
+    mpThread = new StdThread(&AsyncSocketMgr::ThreadFunc, *this);
 }
 
 /**

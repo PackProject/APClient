@@ -229,7 +229,7 @@ public:
                                   pAsyncSocket->mType);
         K_ASSERT_PTR(mpSocket);
 
-        mpPacket = new RawPacket();
+        mpPacket = new FixedPacket();
         mpPacket->Alloc(len);
         mpPacket->Recv(mpSocket);
     }
@@ -275,7 +275,7 @@ private:
     //! Temporary socket for synchronous communication
     SyncSocket* mpSocket;
     //! Raw data packet
-    RawPacket* mpPacket;
+    FixedPacket* mpPacket;
 
     //! Destination buffer
     void* mpDst;
@@ -327,7 +327,7 @@ public:
                                   pAsyncSocket->mType);
         K_ASSERT_PTR(mpSocket);
 
-        mpPacket = new RawPacket(pPeerAddr);
+        mpPacket = new FixedPacket(pPeerAddr);
         mpPacket->Alloc(len);
         mpPacket->SetContent(pSrc, len);
         mpPacket->Send(mpSocket);
@@ -367,7 +367,7 @@ private:
     //! Temporary socket for synchronous communication
     SyncSocket* mpSocket;
     //! Raw data packet
-    RawPacket* mpPacket;
+    FixedPacket* mpPacket;
 
     //! Transfer callback
     XferCallback mpCallback;

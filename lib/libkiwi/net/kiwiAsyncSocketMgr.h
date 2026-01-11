@@ -11,6 +11,7 @@ namespace kiwi {
 
 // Forward declarations
 class AsyncSocket;
+class StdThread;
 
 namespace detail {
 //! @addtogroup libkiwi_net
@@ -60,7 +61,7 @@ private:
 
 private:
     //! Manager thread
-    Thread* mpThread;
+    StdThread* mpThread;
     //! Open sockets
     TList<AsyncSocket*> mSocketList;
 };
