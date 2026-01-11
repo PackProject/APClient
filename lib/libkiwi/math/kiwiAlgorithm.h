@@ -226,7 +226,7 @@ K_INLINE void UnShuffle(const TKey (&rKeys)[KeyNum], TElem (&rArray)[ElemNum]) {
                 continue;
             }
 
-            // TODO: Binary search through the keys?
+            // TODO(kiwi) Binary search through the keys?
             for (u32 j = 0; j < KeyNum; j++) {
                 if (rArray[i] == rKeys[j]) {
                     std::swap(rArray[i], rArray[rArray[i]]);

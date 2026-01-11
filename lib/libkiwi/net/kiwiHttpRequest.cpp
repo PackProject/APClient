@@ -99,7 +99,7 @@ void HttpRequest::SendAsync(Callback pCallback, void* pArg, EMethod method) {
     mpCallback = pCallback;
     mpCallbackArg = pArg;
 
-    // TODO: Need state machine for request/receive (can reuse for synchronous)
+    // TODO(kiwi) Need state machine for request/receive
     K_NOT_IMPLEMENTED();
     // Thread t(SendImpl, *this);
 }

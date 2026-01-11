@@ -16,7 +16,7 @@ Server::Server()
       mpServerSocket(nullptr),
       mpClientSocket(nullptr) {
 
-    mpMainThread = new Thread(ThreadFunc, *this);
+    mpMainThread = new StdThread(ThreadFunc, *this);
     K_ASSERT_PTR(mpMainThread);
 }
 
@@ -115,63 +115,63 @@ void Server::ThreadFunc() {
 void Server::EventLoop() {
     K_ASSERT_PTR(mpClientSocket);
 
-    while (true) {
-        // First four bytes specify the event data size
-        u32 eventSize = 0;
-        Optional<u32> nrecv = mpClientSocket->Recv(eventSize);
+    // while (true) {
+    //     // First four bytes specify the event data size
+    //     u32 eventSize = 0;
+    //     Optional<u32> nrecv = mpClientSocket->Recv(eventSize);
 
-        // Connection failure
-        if (!nrecv) {
-            return;
-        }
+    //     // Connection failure
+    //     if (!nrecv) {
+    //         return;
+    //     }
 
-        // Socket is blocking
-        if (*nrecv == 0) {
-            continue;
-        }
+    //     // Socket is blocking
+    //     if (*nrecv == 0) {
+    //         continue;
+    //     }
 
-        // Sanity check packet size for corruption
-        K_ASSERT(eventSize < MAX_EVENT_BUFFER_SIZE);
-        Packet packet(eventSize);
+    //     // Sanity check packet size for corruption
+    //     K_ASSERT(eventSize < MAX_EVENT_BUFFER_SIZE);
+    //     Packet packet(eventSize);
 
-        // Fill event packet data
-        while (!packet.IsWriteComplete()) {
-            // Optional<u32> nrecv = packet.Recv(*mpClientSocket);
+    //     // Fill event packet data
+    //     while (!packet.IsWriteComplete()) {
+    //         // Optional<u32> nrecv = packet.Recv(*mpClientSocket);
 
-            // if (!nrecv) {
-            //     return;
-            // }
-        }
+    //         // if (!nrecv) {
+    //         //     return;
+    //         // }
+    //     }
 
-        // Can't process events without a node tree
-        if (mpRootNode == nullptr) {
-            continue;
-        }
+    //     // Can't process events without a node tree
+    //     if (mpRootNode == nullptr) {
+    //         continue;
+    //     }
 
-        // Dispatch event to root node so it can propogate
-        const Event* pEvent = static_cast<const Event*>(packet.GetContent());
-        mpRootNode->OnEvent(pEvent);
+    //     // Dispatch event to root node so it can propogate
+    //     const Event* pEvent = static_cast<const Event*>(packet.GetContent());
+    //     mpRootNode->OnEvent(pEvent);
 
-        // Root node may have generated a message in response
-        const MemStream& rStrm = mMessageContext.GetMessageStream();
-        u32 msgSize = rStrm.GetSize();
+    //     // Root node may have generated a message in response
+    //     const MemStream& rStrm = mMessageContext.GetMessageStream();
+    //     u32 msgSize = rStrm.GetSize();
 
-        // Send it off to the host client
-        if (msgSize > 0) {
-            Packet packet(msgSize);
+    //     // Send it off to the host client
+    //     if (msgSize > 0) {
+    //         Packet packet(msgSize);
 
-            u32 written = packet.Write(rStrm.GetBuffer(), msgSize);
-            K_ASSERT(written == msgSize);
+    //         u32 written = packet.Write(rStrm.GetBuffer(), msgSize);
+    //         K_ASSERT(written == msgSize);
 
-            while (!packet.IsReadComplete()) {
-                // Optional<u32> nsend = packet.Send(*mpClientSocket);
+    //         while (!packet.IsReadComplete()) {
+    //             // Optional<u32> nsend = packet.Send(*mpClientSocket);
 
-                // if (!nsend) {
-                //     K_ASSERT_EX(false, "Send message error");
-                // }
-            }
-        }
-    }
+    //             // if (!nsend) {
+    //             //     K_ASSERT_EX(false, "Send message error");
+    //             // }
+    //         }
+    //     }
+    // }
 }
 
 } // namespace hostio

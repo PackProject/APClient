@@ -1,6 +1,5 @@
 #ifndef LIBKIWI_HOSTIO_HOST_IO_SERVER_H
 #define LIBKIWI_HOSTIO_HOST_IO_SERVER_H
-#include <libkiwi/core/kiwiThread.h>
 #include <libkiwi/hostio/kiwiHostIOContext.h>
 #include <libkiwi/k_types.h>
 #include <libkiwi/net/kiwiSyncSocket.h>
@@ -12,6 +11,10 @@
 namespace kiwi {
 //! @addtogroup libkiwi_hostio
 //! @{
+
+// Forward declarations
+class StdThread;
+
 namespace hostio {
 //! @addtogroup libkiwi_hostio
 //! @{
@@ -89,7 +92,7 @@ private:
     Reflexible* mpRootNode;
 
     //! Main loop thread
-    Thread* mpMainThread;
+    StdThread* mpMainThread;
 
     //! Server socket
     SyncSocket* mpServerSocket;

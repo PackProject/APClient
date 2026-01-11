@@ -14,15 +14,7 @@ namespace kiwi {
 class SocketBase : private NonCopyable {
 public:
     /**
-     * @brief Generic socket operation callback
-     *
-     * @param result Socket library result
-     * @param pArg User callback argument
-     */
-    typedef void (*Callback)(SOResult result, void* pArg);
-
-    /**
-     * @brief Connection accept callback
+     * @brief Acceptance completion callback
      *
      * @param result Socket library result
      * @param pPeer Peer socket object
@@ -31,6 +23,23 @@ public:
      */
     typedef void (*AcceptCallback)(SOResult result, SocketBase* pPeer,
                                    const SockAddrAny& rAddr, void* pArg);
+
+    /**
+     * @brief Connection completion callback
+     *
+     * @param result Socket library result
+     * @param pArg User callback argument
+     */
+    typedef void (*ConnectCallback)(SOResult result, void* pArg);
+
+    /**
+     * @brief Socket transfer (send/recv) completion callback
+     *
+     * @param result Socket library result
+     * @param size Number of bytes transferred
+     * @param pArg User callback argument
+     */
+    typedef void (*XferCallback)(SOResult result, u32 size, void* pArg);
 
 public:
     /**
@@ -68,7 +77,8 @@ public:
      * @param pArg Callback user argument
      * @return Success
      */
-    virtual bool Connect(const SockAddrAny& rAddr, Callback pCallback = nullptr,
+    virtual bool Connect(const SockAddrAny& rAddr,
+                         ConnectCallback pCallback = nullptr,
                          void* pArg = nullptr) = 0;
 
     /**
@@ -173,7 +183,8 @@ public:
      * @param pArg Callback user argument
      * @return Number of bytes received
      */
-    Optional<u32> RecvBytes(void* pDst, u32 len, Callback pCallback = nullptr,
+    Optional<u32> RecvBytes(void* pDst, u32 len,
+                            XferCallback pCallback = nullptr,
                             void* pArg = nullptr);
     /**
      * @brief Receives bytes and records sender address
@@ -186,7 +197,7 @@ public:
      * @return Number of bytes received
      */
     Optional<u32> RecvBytesFrom(void* pDst, u32 len, SockAddrAny& rAddr,
-                                Callback pCallback = nullptr,
+                                XferCallback pCallback = nullptr,
                                 void* pArg = nullptr);
 
     /**
@@ -198,7 +209,7 @@ public:
      * @return Number of bytes received
      */
     template <typename T>
-    Optional<u32> Recv(T& rDst, Callback pCallback = nullptr,
+    Optional<u32> Recv(T& rDst, XferCallback pCallback = nullptr,
                        void* pArg = nullptr) {
         return RecvBytes(&rDst, sizeof(T), pCallback, pArg);
     }
@@ -213,7 +224,8 @@ public:
      */
     template <typename T>
     Optional<u32> RecvFrom(T& rDst, SockAddrAny& rAddr,
-                           Callback pCallback = nullptr, void* pArg = nullptr) {
+                           XferCallback pCallback = nullptr,
+                           void* pArg = nullptr) {
         return RecvBytesFrom(&rDst, sizeof(T), rAddr, pCallback, pArg);
     }
     /**@}*/
@@ -232,7 +244,8 @@ public:
      * @return Number of bytes sent
      */
     Optional<u32> SendBytes(const void* pSrc, u32 len,
-                            Callback pCallback = nullptr, void* pArg = nullptr);
+                            XferCallback pCallback = nullptr,
+                            void* pArg = nullptr);
     /**
      * @brief Sends bytes to specified connection
      *
@@ -245,7 +258,7 @@ public:
      */
     Optional<u32> SendBytesTo(const void* pSrc, u32 len,
                               const SockAddrAny& rAddr,
-                              Callback pCallback = nullptr,
+                              XferCallback pCallback = nullptr,
                               void* pArg = nullptr);
 
     /**
@@ -257,7 +270,7 @@ public:
      * @return Number of bytes sent
      */
     template <typename T>
-    Optional<u32> Send(const T& rSrc, Callback pCallback = nullptr,
+    Optional<u32> Send(const T& rSrc, XferCallback pCallback = nullptr,
                        void* pArg = nullptr) {
         return SendBytes(&rSrc, sizeof(T), pCallback, pArg);
     }
@@ -272,7 +285,8 @@ public:
      */
     template <typename T>
     Optional<u32> SendTo(const T& rSrc, const SockAddrAny& rAddr,
-                         Callback pCallback = nullptr, void* pArg = nullptr) {
+                         XferCallback pCallback = nullptr,
+                         void* pArg = nullptr) {
         return SendBytesTo(&rSrc, sizeof(T), rAddr, pCallback, pArg);
     }
 
@@ -285,8 +299,8 @@ public:
      * @return Number of bytes sent
      */
     template <typename T>
-    Optional<u32> Send(const StringImpl<T>& rSrc, Callback pCallback = nullptr,
-                       void* pArg = nullptr) {
+    Optional<u32> Send(const StringImpl<T>& rSrc,
+                       XferCallback pCallback = nullptr, void* pArg = nullptr) {
         return SendBytes(rSrc.CStr(), rSrc.Length() * sizeof(T), pCallback,
                          pArg);
     }
@@ -301,7 +315,8 @@ public:
      */
     template <typename T>
     Optional<u32> SendTo(const StringImpl<T>& rSrc, const SockAddrAny& rAddr,
-                         Callback pCallback = nullptr, void* pArg = nullptr) {
+                         XferCallback pCallback = nullptr,
+                         void* pArg = nullptr) {
         return SendBytesTo(rSrc.CStr(), rSrc.Length() * sizeof(T), rAddr,
                            pCallback, pArg);
     }
@@ -342,7 +357,7 @@ private:
      * @return Socket library result
      */
     virtual SOResult RecvImpl(void* pDst, u32 len, u32& rRecv,
-                              SockAddrAny* pAddr, Callback pCallback,
+                              SockAddrAny* pAddr, XferCallback pCallback,
                               void* pArg) = 0;
 
     /**
@@ -357,7 +372,7 @@ private:
      * @return Socket library result
      */
     virtual SOResult SendImpl(const void* pSrc, u32 len, u32& rSend,
-                              const SockAddrAny* pAddr, Callback pCallback,
+                              const SockAddrAny* pAddr, XferCallback pCallback,
                               void* pArg) = 0;
 
 protected:

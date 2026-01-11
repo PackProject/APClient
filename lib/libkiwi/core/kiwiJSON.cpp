@@ -143,7 +143,7 @@ void Reader::DecodeImpl() {
         ParseEncoding(pos);
     }
 
-    // TODO: Implement UTF-16 parsing
+    // TODO(kiwi) Implement UTF-16 parsing
     K_ASSERT_EX(mEncoding == EEncoding_UTF8,
                 "UTF-16 encoding is not yet supported");
 
@@ -1231,7 +1231,7 @@ void PrintVisitor::Visit(const Element& rElement) {
                  it != rElement.Get<Object>().End(); ++it, i++) {
                 Print('\"' + (it->key + "\": "));
 
-                // TODO: Fix this somehow?
+                // TODO(kiwi) Fix this somehow?
                 Visit(it->value);
 
                 // Values are comma separated

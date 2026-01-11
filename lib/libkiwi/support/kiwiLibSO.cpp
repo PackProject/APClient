@@ -478,6 +478,7 @@ s32 LibSO::RecvImpl(SOSocket socket, void* dst, u32 len, u32 flags,
     s32 result = sDevNetIpTop.IoctlV(Ioctl_SORecvFrom, input, output);
     sLastError = result >= 0 ? SO_SUCCESS : static_cast<SOResult>(result);
 
+    // Peer address
     if (sLastError == SO_SUCCESS) {
         if (addr != NULL) {
             *addr = *from;
@@ -766,7 +767,7 @@ bool LibSO::ResolveHostName(SockAddrAny& addr, const String& name,
     IosString<char> iService(service);
     input.PushBack(iService);
 
-    // TODO: Would other hints be useful?
+    // TODO(kiwi) Would other hints be useful?
     IosObject<SOAddrInfo> iHints;
     std::memset(iHints.Base(), 0, iHints.Length());
     iHints->type = type;
@@ -804,7 +805,7 @@ bool LibSO::ResolveHostName(SockAddrAny& addr, const String& name,
             continue;
         }
 
-        // TODO: Why does Dolphin provide bad length values?
+        // TODO(kiwi) Why does Dolphin provide bad length values?
         // // IP version doesn't match
         // if (addr.len != 0 && rInfo.len != addr.len) {
         //     continue;
@@ -818,7 +819,7 @@ bool LibSO::ResolveHostName(SockAddrAny& addr, const String& name,
         return false;
     }
 
-    // TODO: Dolphin seems to give bad length, so we fix it after the copy
+    // TODO(kiwi) Dolphin seems to give bad length, so we fix it after the copy
     u32 len = addr.len;
     addr = *pFoundAddr;
     addr.len = len;
@@ -840,7 +841,7 @@ SOResult LibSO::GetSockOpt(SOSocket socket, SOSockOptLevel level, SOSockOpt opt,
                            void* val, u32 len) {
     K_ASSERT_EX(sDevNetIpTop.IsOpen(), "Please call LibSO::Initialize");
 
-    // TODO: Implement
+    // TODO(kiwi) Implement
     K_ASSERT_EX(false, "Not implemented.");
 
     sLastError = SO_SUCCESS;

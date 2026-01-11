@@ -1,8 +1,5 @@
-#include "core/CheckMgr.h"
-#include "core/CosmeticMgr.h"
-#include "core/EchoSocket.h"
-#include "core/ItemMgr.h"
-#include "core/const.h"
+#include "Cmn/System.h"
+#include "const.h"
 #include <Pack/RPSystem.h>
 
 #include <libkiwi.h>
@@ -25,16 +22,7 @@ void KokeshiMain() {
     kiwi::LibSO::Initialize();
 
     // Archipelago initialization
-    AP::ItemMgr::CreateInstance();
-    AP::CosmeticMgr::CreateInstance();
-    AP::CheckMgr::CreateInstance();
-
-    // TODO: Move to debug menu eventually
-#ifndef NDEBUG
-    AP::ItemMgr::GetInstance().Debug();
-    AP::CosmeticMgr::GetInstance().Debug();
-    AP::CheckMgr::GetInstance().Debug();
-#endif
+    AP::Cmn::System::Initialize();
 
     // Register debug menu
     kiwi::SceneCreator::GetInstance().RegistDebugRoot(
@@ -42,8 +30,6 @@ void KokeshiMain() {
 
     // Enter first scene
     kiwi::SceneCreator::GetInstance().ChangeBootScene();
-
-    AP::EchoSocket::CreateInstance();
 
     // Enter game loop
     RP_GET_INSTANCE(RPSysSystem)->mainLoop();

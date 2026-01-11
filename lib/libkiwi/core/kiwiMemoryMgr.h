@@ -82,7 +82,7 @@ private:
     EGG::Heap* GetHeap(EMemory memory) const;
 
 private:
-// TODO: How to get more MEM1 memory from WS2?
+// TODO(kiwi) How to get more MEM1 memory from WS2?
 #if defined(PACK_SPORTS) || defined(PACK_PLAY)
     //! Initial size for each heap
     static const u32 HEAP_SIZE = OS_MEM_KB_TO_B(1024);

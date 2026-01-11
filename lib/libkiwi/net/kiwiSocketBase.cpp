@@ -23,6 +23,11 @@ SocketBase::SocketBase(SOProtoFamily family, SOSockType type)
     // Always disable IOP blocking
     success = SetBlockingIOP(false);
     K_ASSERT(success);
+
+    success = SetSendBufferSize(0xFFFF);
+    K_ASSERT(success);
+    success = SetRecvBufferSize(0xFFFF);
+    K_ASSERT(success);
 }
 
 /**
@@ -231,7 +236,7 @@ bool SocketBase::CanSend() const {
  * @param pArg Callback user argument
  * @return Number of bytes received
  */
-Optional<u32> SocketBase::RecvBytes(void* pDst, u32 len, Callback pCallback,
+Optional<u32> SocketBase::RecvBytes(void* pDst, u32 len, XferCallback pCallback,
                                     void* pArg) {
     K_ASSERT(IsOpen());
     K_ASSERT_PTR(pDst);
@@ -260,7 +265,7 @@ Optional<u32> SocketBase::RecvBytes(void* pDst, u32 len, Callback pCallback,
  * @return Number of bytes received
  */
 Optional<u32> SocketBase::RecvBytesFrom(void* pDst, u32 len, SockAddrAny& rAddr,
-                                        Callback pCallback, void* pArg) {
+                                        XferCallback pCallback, void* pArg) {
     K_ASSERT(IsOpen());
     K_ASSERT_PTR(pDst);
     K_ASSERT(OSIsMEM2Region(pDst));
@@ -287,7 +292,7 @@ Optional<u32> SocketBase::RecvBytesFrom(void* pDst, u32 len, SockAddrAny& rAddr,
  * @return Number of bytes sent
  */
 Optional<u32> SocketBase::SendBytes(const void* pSrc, u32 len,
-                                    Callback pCallback, void* pArg) {
+                                    XferCallback pCallback, void* pArg) {
     K_ASSERT(IsOpen());
     K_ASSERT_PTR(pSrc);
     K_ASSERT(OSIsMEM2Region(pSrc));
@@ -316,7 +321,7 @@ Optional<u32> SocketBase::SendBytes(const void* pSrc, u32 len,
  */
 Optional<u32> SocketBase::SendBytesTo(const void* pSrc, u32 len,
                                       const SockAddrAny& rAddr,
-                                      Callback pCallback, void* pArg) {
+                                      XferCallback pCallback, void* pArg) {
     K_ASSERT(IsOpen());
     K_ASSERT_PTR(pSrc);
     K_ASSERT(OSIsMEM2Region(pSrc));

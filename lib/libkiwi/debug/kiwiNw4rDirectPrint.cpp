@@ -77,7 +77,7 @@ void Nw4rDirectPrint::SetupXfb() {
     // Initialize direct print
     SetColor(Color::WHITE);
 
-// TODO: WS2 framebuffer is 608x456. Why?
+// TODO(kiwi) WS2 framebuffer is 608x456. Why?
 #if defined(PACK_SPORTS) || defined(PACK_PLAY)
     // Try to repurpose current framebuffer
     void* pXfb = VIGetCurrentFrameBuffer();

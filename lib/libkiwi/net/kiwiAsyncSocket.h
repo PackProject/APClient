@@ -1,8 +1,10 @@
 #ifndef LIBKIWI_NET_ASYNC_SOCKET_H
 #define LIBKIWI_NET_ASYNC_SOCKET_H
 #include <libkiwi/k_types.h>
+#include <libkiwi/net/kiwiAsyncSocketMgr.h>
 #include <libkiwi/net/kiwiSocketBase.h>
 #include <libkiwi/prim/kiwiList.h>
+#include <libkiwi/util/kiwiStateMachine.h>
 
 #include <revolution/OS.h>
 
@@ -10,13 +12,17 @@ namespace kiwi {
 //! @addtogroup libkiwi_net
 //! @{
 
+// Forward declarations
+namespace detail {
+class AsyncSocketMgr;
+} // namespace detail
+
 /**
  * @brief Asynchronous socket
  */
 class AsyncSocket : public SocketBase {
-public:
-    using SocketBase::AcceptCallback;
-    using SocketBase::Callback;
+    // Expose Calc only to the manager
+    friend class detail::AsyncSocketMgr;
 
 public:
     /**
@@ -25,14 +31,31 @@ public:
      * @param family Socket protocol family
      * @param type Socket type
      */
-    AsyncSocket(SOProtoFamily family, SOSockType type);
+    AsyncSocket(SOProtoFamily family, SOSockType type)
+        : SocketBase(family, type),
+          mStateMachine(this, EState_Max, EState_Idle) {
+
+        Init();
+    }
+
+    /**
+     * @brief Constructor
+     *
+     * @param socket Socket file descriptor
+     * @param type Socket protocol family
+     * @param type Socket type
+     */
+    AsyncSocket(SOSocket socket, SOProtoFamily family, SOSockType type)
+        : SocketBase(socket, family, type),
+          mStateMachine(this, EState_Max, EState_Idle) {
+
+        Init();
+    }
 
     /**
      * @brief Destructor
      */
-    virtual ~AsyncSocket() {
-        sSocketList.Remove(this);
-    }
+    virtual ~AsyncSocket();
 
     /**
      * @brief Connects to a peer
@@ -42,7 +65,7 @@ public:
      * @param pArg Callback user argument
      * @return Success
      */
-    virtual bool Connect(const SockAddrAny& rAddr, Callback pCallback,
+    virtual bool Connect(const SockAddrAny& rAddr, ConnectCallback pCallback,
                          void* pArg);
 
     /**
@@ -56,49 +79,62 @@ public:
 
 private:
     /**
-     * @brief Async state
+     * @brief State machine state
      */
-    enum EState { EState_Thinking, EState_Connecting, EState_Accepting };
+    enum EState {
+        EState_Idle,    //!< Process send/recv jobs
+        EState_Connect, //!< Trying to connect to peer
+        EState_Accept,  //!< Trying to accept peer
 
-    //! Async receive operation
+        EState_Max
+    };
+
+    //! Asynchronous job interface
+    class IJob;
+
+    //! Asynchronous connect job
+    class ConnectJob;
+    friend class ConnectJob;
+
+    //! Asynchronous accept job
+    class AcceptJob;
+    friend class AcceptJob;
+
+    //! Asynchronous receive job
     class RecvJob;
-    //! Async send operation
+    friend class RecvJob;
+
+    //! Asynchronous send job
     class SendJob;
+    friend class SendJob;
 
 private:
     /**
-     * @brief Socket thread function
-     *
-     * @param pArg Thread function argument
+     * @brief Initializes socket state
      */
-    static void* ThreadFunc(void* pArg);
+    void Init();
 
     /**
-     * @brief Constructor
-     *
-     * @param socket Socket file descriptor
-     * @param type Socket protocol family
-     * @param type Socket type
+     * @brief Updates the socket state
      */
-    AsyncSocket(SOSocket socket, SOProtoFamily family, SOSockType type);
+    void Calc() {
+        mStateMachine.Calculate();
+    }
 
     /**
-     * @brief Prepares socket for async operation
+     * @brief Updates the packet in the Idle state
      */
-    void Initialize();
-    /**
-     * @brief Processes pending socket tasks
-     */
-    void Calc();
+    K_STATE_DECL(Idle);
 
     /**
-     * @brief Receives packet data over socket
+     * @brief Updates the packet in the Connect state
      */
-    void CalcRecv();
+    K_STATE_DECL(Connect);
+
     /**
-     * @brief Sends packet data over socket
+     * @brief Updates the packet in the Accept state
      */
-    void CalcSend();
+    K_STATE_DECL(Accept);
 
     /**
      * @brief Receives data and records sender address (internal implementation)
@@ -112,7 +148,7 @@ private:
      * @return Socket library result
      */
     virtual SOResult RecvImpl(void* pDst, u32 len, u32& rRecv,
-                              SockAddrAny* pAddr, Callback pCallback,
+                              SockAddrAny* pAddr, XferCallback pCallback,
                               void* pArg);
 
     /**
@@ -127,34 +163,22 @@ private:
      * @return Socket library result
      */
     virtual SOResult SendImpl(const void* pSrc, u32 len, u32& rSend,
-                              const SockAddrAny* pAddr, Callback pCallback,
+                              const SockAddrAny* pAddr, XferCallback pCallback,
                               void* pArg);
 
 private:
-    //! Socket manager thread stack size
-    static const u32 scThreadStackSize = 0x4000;
+    //! Logic state machine
+    StateMachine<AsyncSocket> mStateMachine;
 
-    volatile EState mState; //!< Current async task
-    SockAddrAny mPeer;      //!< Peer address
+    //! Active connect job
+    IJob* mpConnectJob;
+    //! Active accept job
+    IJob* mpAcceptJob;
 
-    TList<RecvJob*> mRecvJobs; //!< Active receive jobs
-    TList<SendJob*> mSendJobs; //!< Active send jobs
-
-    Callback mpConnectCallback; //!< Connect callback
-    void* mpConnectCallbackArg; //!< Connect callback user argument
-
-    AcceptCallback mpAcceptCallback; //!< Accept callback
-    void* mpAcceptCallbackArg;       //!< Accept callback user argument
-
-    //! Socket manager thread
-    static OSThread sSocketThread;
-    //! Thread guard
-    static bool sSocketThreadCreated;
-    //! Thread stack
-    static u8 sSocketThreadStack[scThreadStackSize];
-
-    //! Open async sockets
-    static TList<AsyncSocket*> sSocketList;
+    //! Active receive jobs
+    TList<IJob*> mRecvJobs;
+    //! Active send jobs
+    TList<IJob*> mSendJobs;
 };
 
 //! @}
