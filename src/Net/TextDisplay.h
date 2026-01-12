@@ -55,7 +55,7 @@ private:
      *
      * @param pScene Current scene
      */
-    virtual void OnConfigure(RPSysScene* pScene);
+    virtual void Configure(RPSysScene* pScene);
 
     /**
      * @brief Handles scene Calculate event

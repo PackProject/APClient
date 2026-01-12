@@ -50,7 +50,7 @@ void TextDisplay::OnMessage(IMessage* pMessage) {
  *
  * @param pScene Current scene
  */
-void TextDisplay::OnConfigure(RPSysScene* /* pScene */) {
+void TextDisplay::Configure(RPSysScene* /* pScene */) {
     RPGrpRenderer* pRenderer = RPGrpRenderer::GetCurrent();
 
     K_ASSERT_PTR(pRenderer);
@@ -74,7 +74,6 @@ void TextDisplay::UserDraw() {
 
     kiwi::Text(mTextQueue.Front())
         .SetPosition(0.10, 0.90)
-        .SetScale(0.7)
         .SetTextColor(kiwi::Color::WHITE)
         .SetStrokeType(kiwi::ETextStroke_Outline)
         .SetAlpha(alpha);
