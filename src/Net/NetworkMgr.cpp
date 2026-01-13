@@ -6,6 +6,7 @@
 #include "Net/msg/DisconnectMsg.h"
 #include "Net/msg/ItemMsg.h"
 #include "Net/msg/PrintMsg.h"
+#include "Net/msg/LocationMsg.h"
 
 #include <libkiwi.h>
 
@@ -90,6 +91,7 @@ void NetworkMgr::PacketCallback(kiwi::PacketBase* pPacket, void* pArg) {
         HANDLE_PACKET(Disconnect);
         HANDLE_PACKET(Print);
         HANDLE_PACKET(Item);
+        HANDLE_PACKET(Location);
 
     default: {
         ASSERT_EX(false, "Unknown packet type: %d", kind);
@@ -114,13 +116,19 @@ void NetworkMgr::PacketCallback(kiwi::PacketBase* pPacket, void* pArg) {
         (*it)->OnMessage(pMessage);
     }
 
-    delete pMessage;
-
     // TODO(kiwi) Move this somewhere else
     if (r.mPeerAddr.IsValid()) {
-        u8 ack = 0xAA;
-        r.mpServer->Send(ack, &r.mPeerAddr);
+        if (pMessage->GetKind() == IMessage::EKind_Location) {
+            LocationMsg locMsg(contentStrm);
+            kiwi::TVector<u32> command = locMsg.GetLocationMsg();
+            r.mpServer->Send(command.Data(), command.Size() * sizeof(u32), &r.mPeerAddr);
+        } else {
+            u8 ack = 0xAA;
+            r.mpServer->Send(ack, &r.mPeerAddr);
+        }
     }
+
+    delete pMessage;
 }
 
 } // namespace Net

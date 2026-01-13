@@ -36,6 +36,11 @@ struct DisconnectPacket : CommonPacket {};
  */
 struct ItemPacket : CommonPacket {};
 
+/**
+ * @brief Location packet (LocationMsg)
+ */
+struct LocationPacket : CommonPacket {};
+
 } // namespace AP
 
 #pragma pack(pop)
