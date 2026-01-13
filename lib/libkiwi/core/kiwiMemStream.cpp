@@ -126,7 +126,7 @@ void MemStream::SeekImpl(ESeekDir dir, s32 offset) {
 s32 MemStream::ReadImpl(void* pDst, u32 size) {
     K_ASSERT_PTR(pDst);
 
-    K_ASSERT_EX(GetPosition() + size < GetSize(),
+    K_ASSERT_EX(GetPosition() + size <= GetSize(),
                 "Read past the end of the stream");
 
     std::memcpy(pDst, mpBuffer + mPosition, size);
@@ -143,7 +143,7 @@ s32 MemStream::ReadImpl(void* pDst, u32 size) {
 s32 MemStream::WriteImpl(const void* pSrc, u32 size) {
     K_ASSERT_PTR(pSrc);
 
-    K_ASSERT_EX(GetPosition() + size < GetSize(),
+    K_ASSERT_EX(GetPosition() + size <= GetSize(),
                 "Write past the end of the stream");
 
     std::memcpy(mpBuffer + mPosition, pSrc, size);
