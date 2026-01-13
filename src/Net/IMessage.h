@@ -14,11 +14,11 @@ public:
      * @brief Command type
      */
     enum EKind {
-        EKind_Connect,          // 0
-        EKind_Disconnect,       // 1
-        EKind_Print,            // 2
-        EKind_Item,             // 3
-        EKind_Location,         // 4
+        EKind_Connect,    // 0
+        EKind_Disconnect, // 1
+        EKind_Print,      // 2
+        EKind_Item,       // 3
+        EKind_Location,   // 4
     };
 
 public:

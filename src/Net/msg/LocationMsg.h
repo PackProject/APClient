@@ -25,7 +25,7 @@ public:
     /**
      * @brief returns MemStream of all location data
      */
-    kiwi::TVector<u32> GetLocationMsg();
+    kiwi::TVector<u32> GetChecks();
 
     /**
      * @brief Gets the type of this command
@@ -33,6 +33,7 @@ public:
     virtual EKind GetKind() const {
         return EKind_Location;
     }
+
 private:
     kiwi::TVector<u32> mData;
 };

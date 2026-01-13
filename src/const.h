@@ -13,7 +13,7 @@ namespace AP {
 /**
  * @brief Archipelago world check ID
  */
-enum CheckID { AP_CHECKS_X_MACRO CHECK_COUNT };
+enum CheckID { AP_CHECKS_X_MACRO CHECK_COUNT, CHECK_INVALID = -1 };
 #undef X
 
 #define X(ID, IDENT, STR) ITEM_##IDENT = ID,

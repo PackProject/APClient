@@ -5,8 +5,9 @@
 #include "Net/msg/ConnectMsg.h"
 #include "Net/msg/DisconnectMsg.h"
 #include "Net/msg/ItemMsg.h"
-#include "Net/msg/PrintMsg.h"
 #include "Net/msg/LocationMsg.h"
+#include "Net/msg/PrintMsg.h"
+#include "const.h"
 
 #include <libkiwi.h>
 
@@ -118,11 +119,20 @@ void NetworkMgr::PacketCallback(kiwi::PacketBase* pPacket, void* pArg) {
 
     // TODO(kiwi) Move this somewhere else
     if (r.mPeerAddr.IsValid()) {
+        // Location message response
         if (pMessage->GetKind() == IMessage::EKind_Location) {
-            LocationMsg locMsg(contentStrm);
-            kiwi::TVector<u32> command = locMsg.GetLocationMsg();
-            r.mpServer->Send(command.Data(), command.Size() * sizeof(u32), &r.mPeerAddr);
-        } else {
+            kiwi::TVector<u32> checks =
+                static_cast<LocationMsg*>(pMessage)->GetChecks();
+
+            if (checks.Empty()) {
+                checks.PushBack(CHECK_INVALID);
+            }
+
+            r.mpServer->Send(checks.Data(), checks.Size() * sizeof(u32),
+                             &r.mPeerAddr);
+        }
+        // Generic acknowledgement
+        else {
             u8 ack = 0xAA;
             r.mpServer->Send(ack, &r.mPeerAddr);
         }

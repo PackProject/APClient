@@ -1,6 +1,7 @@
 #include "Net/msg/LocationMsg.h"
-#include "Net/NetworkMgr.h"
+
 #include "Cmn/CheckMgr.h"
+#include "Net/NetworkMgr.h"
 #include "checks.h"
 
 #include <libkiwi.h>
@@ -10,25 +11,26 @@ namespace Net {
 
 /**
  * @brief Constructor
- * 
+ *
  * @param rStrm Stream to packet content
  */
 LocationMsg::LocationMsg(kiwi::MemStream& rStrm) {
     // mData.Clear();
 }
 
-kiwi::TVector<u32> LocationMsg::GetLocationMsg() {
+kiwi::TVector<u32> LocationMsg::GetChecks() {
+    mData.Clear();
 
-    #define X(ID, IDENTIFIER, STR) \
-        if (Cmn::CheckMgr::GetInstance().GetCheckState((CheckID) ID)) { \
-            mData.PushBack(static_cast<u32>(ID)); \
-        }
+#define X(ID, IDENTIFIER, STR)                                                 \
+    if (Cmn::CheckMgr::GetInstance().GetCheckState((CheckID)ID)) {             \
+        mData.PushBack(static_cast<u32>(ID));                                  \
+    }
 
     AP_CHECKS_X_MACRO
 
-    #undef X
+#undef X
 
-    for (int i = 0; i < mData.Size(); i++) { 
+    for (int i = 0; i < mData.Size(); i++) {
         kiwi::cout << mData[i];
     }
 
@@ -37,5 +39,5 @@ kiwi::TVector<u32> LocationMsg::GetLocationMsg() {
     return mData;
 }
 
-}
-}
+} // namespace Net
+} // namespace AP
