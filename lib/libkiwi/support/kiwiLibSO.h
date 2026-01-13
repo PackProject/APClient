@@ -1,11 +1,13 @@
 #ifndef LIBKIWI_SUPPORT_LIBSO_H
 #define LIBKIWI_SUPPORT_LIBSO_H
-#include <cstring>
 #include <libkiwi/k_types.h>
 #include <libkiwi/prim/kiwiString.h>
 #include <libkiwi/util/kiwiIosDevice.h>
 #include <libkiwi/util/kiwiIosObject.h>
+
 #include <revolution/SO.h>
+
+#include <cstring>
 
 namespace kiwi {
 //! @addtogroup libkiwi_support

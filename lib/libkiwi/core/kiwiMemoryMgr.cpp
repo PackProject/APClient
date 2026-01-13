@@ -29,7 +29,7 @@ void LogHeap(const char* pName, EGG::Heap* pHeap) {
  * @param pBlock Target of delete operation
  */
 void CheckDoubleFree(const void* pBlock) {
-#ifndef NDEBUG
+#if !defined(NDEBUG)
     // nullptr delete is OK
     if (pBlock == nullptr) {
         return;
@@ -63,29 +63,21 @@ void CheckDoubleFree(const void* pBlock) {
  * @brief Constructor
  */
 MemoryMgr::MemoryMgr() {
-#if defined(PACK_SPORTS) || defined(PACK_PLAY)
-    EGG::Heap* pMem1HeapRP = RP_GET_INSTANCE(RPSysSystem)->getSystemHeap();
-    EGG::Heap* pMem2HeapRP = RP_GET_INSTANCE(RPSysSystem)->getResourceHeap();
-#elif defined(PACK_RESORT)
-    EGG::Heap* pMem1HeapRP = RP_GET_INSTANCE(RPSysSystem)->getRootHeapMem1();
-    EGG::Heap* pMem2HeapRP = RP_GET_INSTANCE(RPSysSystem)->getResourceHeap();
-#endif
+    EGG::Heap* pRootHeapMEM1 = RPSysSystem::getRootHeapMem1();
+    K_ASSERT_PTR(pRootHeapMEM1);
 
-    K_ASSERT_PTR(pMem1HeapRP);
-    LogHeap("RPSysSystem:System", pMem1HeapRP);
+    EGG::Heap* pRootHeapMEM2 = RPSysSystem::getRootHeapMem2();
+    K_ASSERT_PTR(pRootHeapMEM2);
 
-    K_ASSERT_PTR(pMem2HeapRP);
-    LogHeap("RPSysSystem:Resource", pMem2HeapRP);
-
-    mpHeapMEM1 = EGG::ExpHeap::create(HEAP_SIZE, pMem1HeapRP);
+    mpHeapMEM1 = EGG::ExpHeap::create(HEAP_SIZE_MEM1, pRootHeapMEM1);
     K_ASSERT_PTR(mpHeapMEM1);
     K_ASSERT(OSIsMEM1Region(mpHeapMEM1));
-    LogHeap("libkiwi:MEM1", mpHeapMEM1);
 
-    mpHeapMEM2 = EGG::ExpHeap::create(HEAP_SIZE, pMem2HeapRP);
+    mpHeapMEM2 = EGG::ExpHeap::create(HEAP_SIZE_MEM2, pRootHeapMEM2);
     K_ASSERT_PTR(mpHeapMEM2);
     K_ASSERT(OSIsMEM2Region(mpHeapMEM2));
-    LogHeap("libkiwi:MEM2", mpHeapMEM2);
+
+    Dump();
 }
 
 /**
@@ -93,31 +85,10 @@ MemoryMgr::MemoryMgr() {
  */
 MemoryMgr::~MemoryMgr() {
     delete mpHeapMEM1;
+    mpHeapMEM1 = nullptr;
+
     delete mpHeapMEM2;
-}
-
-/**
- * @brief Gets the heap corresponding to the specified memory region
- *
- * @param memory Target memory region
- */
-EGG::Heap* MemoryMgr::GetHeap(EMemory memory) const {
-    switch (memory) {
-    case EMemory_MEM1: {
-        K_ASSERT_PTR(mpHeapMEM1);
-        return mpHeapMEM1;
-    }
-
-    case EMemory_MEM2: {
-        K_ASSERT_PTR(mpHeapMEM2);
-        return mpHeapMEM2;
-    }
-
-    default: {
-        K_UNREACHABLE();
-        return nullptr;
-    }
-    }
+    mpHeapMEM2 = nullptr;
 }
 
 /**
@@ -146,6 +117,30 @@ void* MemoryMgr::Alloc(u32 size, s32 align, EMemory memory) const {
 void MemoryMgr::Free(void* pBlock) const {
     CheckDoubleFree(pBlock);
     EGG::Heap::free(pBlock, nullptr);
+}
+
+/**
+ * @brief Gets the heap corresponding to the specified memory region
+ *
+ * @param memory Target memory region
+ */
+EGG::Heap* MemoryMgr::GetHeap(EMemory memory) const {
+    switch (memory) {
+    case EMemory_MEM1: {
+        K_ASSERT_PTR(mpHeapMEM1);
+        return mpHeapMEM1;
+    }
+
+    case EMemory_MEM2: {
+        K_ASSERT_PTR(mpHeapMEM2);
+        return mpHeapMEM2;
+    }
+
+    default: {
+        K_UNREACHABLE();
+        return nullptr;
+    }
+    }
 }
 
 /**
@@ -188,6 +183,28 @@ bool MemoryMgr::IsHeapMemory(const void* pAddr) const {
     }
 
     return false;
+}
+
+/**
+ * @brief Dumps heap information for debugging purposes
+ */
+void MemoryMgr::Dump() {
+    LogHeap("libkiwi:MEM1", mpHeapMEM1);
+    LogHeap("libkiwi:MEM2", mpHeapMEM2);
+
+    LogHeap("EGG:MEM1", RPSysSystem::getRootHeapMem1());
+    LogHeap("EGG:MEM2", RPSysSystem::getRootHeapMem2());
+    LogHeap("EGG:System", RPSysSystem::getSystemHeap());
+
+    LogHeap("RPSysSystem:System",
+            RP_GET_INSTANCE(RPSysSystem)->getSystemHeapRP());
+    LogHeap("RPSysSystem:Resource",
+            RP_GET_INSTANCE(RPSysSystem)->getResourceHeap());
+
+#if defined(PACK_RESORT)
+    LogHeap("RPSysSystem:RootScene",
+            RP_GET_INSTANCE(RPSysSystem)->getRootSceneHeap());
+#endif
 }
 
 } // namespace kiwi

@@ -56,6 +56,9 @@ private:
     //! Server connection
     kiwi::NetServer* mpServer;
 
+    //! PC client socket address
+    kiwi::SockAddrAny mPeerAddr;
+
     //! Registered message listeners
     kiwi::TList<IMessageListener*> mListenerList;
 };

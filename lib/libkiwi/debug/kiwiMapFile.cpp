@@ -56,7 +56,7 @@ void MapFile::Close() {
         delete *next;
     }
 
-    delete mpMapBuffer;
+    delete[] mpMapBuffer;
     mpMapBuffer = nullptr;
 
     mIsUnpacked = false;

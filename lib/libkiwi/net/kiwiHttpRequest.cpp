@@ -152,7 +152,7 @@ void HttpRequest::SendImpl() {
     }
 
     // Signal to destructor
-#ifndef NDEBUG
+#if !defined(NDEBUG)
     mpCallback = nullptr;
 #endif
 }

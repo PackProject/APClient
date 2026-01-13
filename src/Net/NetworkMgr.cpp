@@ -39,7 +39,7 @@ NetworkMgr::NetworkMgr() {
     ASSERT_EX(success, "Can't bind socket");
 
     // Register callback to handle PC client packets
-    mpServer->SetRecvCallback(PacketCallback, this);
+    mpServer->SetRecvCallback(PacketCallback);
 
     // Show IP address in the console
     u16 port = addr.port;
@@ -68,12 +68,9 @@ NetworkMgr::~NetworkMgr() {
  */
 void NetworkMgr::PacketCallback(kiwi::PacketBase* pPacket, void* pArg) {
     ASSERT_PTR(pPacket);
-    ASSERT_PTR(pArg);
 
     IMessage* pMessage = nullptr;
-
-    // Callback argument is this object
-    NetworkMgr* p = static_cast<NetworkMgr*>(pArg);
+    NetworkMgr& r = GetInstance();
 
     const void* pContent = pPacket->GetContent();
     u32 contentSize = pPacket->GetContentSize();
@@ -102,11 +99,27 @@ void NetworkMgr::PacketCallback(kiwi::PacketBase* pPacket, void* pArg) {
 
 #undef HANDLE_PACKET
 
+    if (pMessage == nullptr) {
+        return;
+    }
+
+    // Save client address from connect messages
+    if (pMessage->GetKind() == IMessage::EKind_Connect) {
+        r.mPeerAddr = static_cast<ConnectMsg*>(pMessage)->GetPeerAddr();
+    }
+
     // Notify listeners
-    if (pMessage != nullptr) {
-        K_FOREACH (it, p->mListenerList) {
-            (*it)->OnMessage(pMessage);
-        }
+    K_FOREACH (it, r.mListenerList) {
+        ASSERT_PTR(*it);
+        (*it)->OnMessage(pMessage);
+    }
+
+    delete pMessage;
+
+    // TODO(kiwi) Move this somewhere else
+    if (r.mPeerAddr.IsValid()) {
+        u8 ack = 0xAA;
+        r.mpServer->Send(ack, &r.mPeerAddr);
     }
 }
 

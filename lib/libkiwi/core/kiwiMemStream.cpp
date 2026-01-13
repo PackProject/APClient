@@ -160,13 +160,13 @@ s32 MemStream::PeekImpl(void* pDst, u32 size) {
  * @note String size limited to 0x400 (1024) characters
  */
 String MemStream::Read_string() {
-    static int sTextBufferPos = 0;
+    int pos = 0;
     static char sTextBuffer[1024 / sizeof(char)];
 
     // Form string in work buffer
-    while (sTextBufferPos < K_LENGTHOF(sTextBuffer)) {
+    while (pos < K_LENGTHOF(sTextBuffer)) {
         char ch = Read_s8();
-        sTextBuffer[sTextBufferPos++] = ch;
+        sTextBuffer[pos++] = ch;
 
         // Null terminator
         if (ch == '\0') {
@@ -180,7 +180,7 @@ String MemStream::Read_string() {
     }
 
     // No matter what happened, null terminator should be at the end
-    sTextBuffer[sTextBufferPos] = '\0';
+    sTextBuffer[pos] = '\0';
     return String(sTextBuffer);
 }
 
@@ -209,13 +209,13 @@ String MemStream::Peek_string() {
  * @note String size limited to 0x200 (512) characters
  */
 WString MemStream::Read_wstring() {
-    static int sTextBufferPos = 0;
+    int pos = 0;
     static wchar_t sTextBuffer[1024 / sizeof(wchar_t)];
 
     // Form string in work buffer
-    while (sTextBufferPos < K_LENGTHOF(sTextBuffer)) {
+    while (pos < K_LENGTHOF(sTextBuffer)) {
         wchar_t ch = Read_u16();
-        sTextBuffer[sTextBufferPos++] = ch;
+        sTextBuffer[pos++] = ch;
 
         // Null terminator
         if (ch == L'\0') {
@@ -229,7 +229,7 @@ WString MemStream::Read_wstring() {
     }
 
     // No matter what happened, null terminator should be at the end
-    sTextBuffer[sTextBufferPos] = L'\0';
+    sTextBuffer[pos] = L'\0';
     return WString(sTextBuffer);
 }
 

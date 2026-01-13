@@ -10,9 +10,10 @@
  * Mod entrypoint
  */
 void KokeshiMain() {
-#ifndef NDEBUG
     // Setup libkiwi debugging utilities
+#if !defined(NDEBUG)
     kiwi::Nw4rException::CreateInstance();
+
     kiwi::MapFile::CreateInstance();
     kiwi::MapFile::GetInstance().Open(kokeshi::MAPFILE_PATH,
                                       kiwi::MapFile::ELinkType_Relocatable);

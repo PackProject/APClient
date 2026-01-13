@@ -15,8 +15,17 @@
 namespace kokeshi {
 namespace {
 
-//! Memory interface for the Kamek loader
-const kamek::loaderFunctions cLoaderFunctions = {Alloc, Free};
+#if defined(PACK_RESORT)
+//! Stop from creating unused MEM1 heap (0x80000)
+KM_WRITE_32(0x8022DC70, 0x60000000);
+//! Stop from creating unused MEM2 heap (0x80000)
+KM_WRITE_32(0x8022DC90, 0x60000000);
+#endif
+
+/**
+ * @brief Memory interface for the Kamek loader
+ */
+const kamek::loaderFunctions LOADER_FUNCS = {Alloc, Free};
 
 /**
  * @brief Logs message to the console
@@ -41,7 +50,7 @@ KOKESHI_BY_PACK(KM_BRANCH(0x80183f18, Report),  // Wii Sports
  * @brief Loads Kamek module and applies patches
  */
 void Load() {
-    kamek::loadKamekBinaryFromDisc(&cLoaderFunctions, BINARY_PATH);
+    kamek::loadKamekBinaryFromDisc(&LOADER_FUNCS, BINARY_PATH);
 }
 // clang-format off
 KOKESHI_BY_PACK(KM_BRANCH(0x80183098, Load),  // Wii Sports
@@ -61,9 +70,6 @@ void* Alloc(size_t size, bool sys) {
     EGG::Heap* pMem1Heap = RPSysSystem::getRootHeapMem1();
     EGG::Heap* pMem2Heap = RPSysSystem::getRootHeapMem2();
 
-    OS_ASSERT(pMem1Heap != nullptr, "MEM1 heap is NULL");
-    OS_ASSERT(pMem2Heap != nullptr, "MEM2 heap is NULL");
-
     return RP_GET_INSTANCE(RPSysSystem)
         ->alloc(sys ? pMem1Heap : pMem2Heap, size, 32);
 }
@@ -77,9 +83,6 @@ void* Alloc(size_t size, bool sys) {
 void Free(void* pBlock, bool sys) {
     EGG::Heap* pMem1Heap = RPSysSystem::getRootHeapMem1();
     EGG::Heap* pMem2Heap = RPSysSystem::getRootHeapMem2();
-
-    OS_ASSERT(pMem1Heap != nullptr, "MEM1 heap is NULL");
-    OS_ASSERT(pMem2Heap != nullptr, "MEM2 heap is NULL");
 
     return RP_GET_INSTANCE(RPSysSystem)
         ->free(sys ? pMem1Heap : pMem2Heap, pBlock);

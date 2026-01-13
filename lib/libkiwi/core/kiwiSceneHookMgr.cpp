@@ -238,10 +238,9 @@ void SceneHookMgr::DoPause() {
         }
     }
 }
-KOKESHI_BY_PACK(KM_CALL(0x8018cec8, SceneHookMgr::DoPause), // Wii Sports
-                KM_CALL(0x8018b084, SceneHookMgr::DoPause), // Wii Play
-                KM_CALL(0x8022fc94,
-                        SceneHookMgr::DoPause)); // Wii Sports Resort
+KOKESHI_BY_PACK(KM_CALL(0x8018cec8, SceneHookMgr::DoPause),  // Wii Sports
+                KM_CALL(0x8018b084, SceneHookMgr::DoPause),  // Wii Play
+                KM_CALL(0x8022fc94, SceneHookMgr::DoPause)); // Wii Sports Resort
 
 /**
  * @brief Runs active hooks and scene function(s) for exiting the pause menu
@@ -264,10 +263,9 @@ void SceneHookMgr::DoUnPause() {
     }
 }
 // 'Continue'
-KOKESHI_BY_PACK(KM_CALL(0x8018d118, SceneHookMgr::DoUnPause), // Wii Sports
-                KM_CALL(0x8018b174, SceneHookMgr::DoUnPause), // Wii Play
-                KM_CALL(0x8022fc38,
-                        SceneHookMgr::DoUnPause)); // Wii Sports Resort
+KOKESHI_BY_PACK(KM_CALL(0x8018d118, SceneHookMgr::DoUnPause),  // Wii Sports
+                KM_CALL(0x8018b174, SceneHookMgr::DoUnPause),  // Wii Play
+                KM_CALL(0x8022fc38, SceneHookMgr::DoUnPause)); // Wii Sports Resort
 // 'Start over'
 KOKESHI_BY_PACK(KM_CALL(0x8018d14c, SceneHookMgr::DoUnPause), // Wii Sports
                 KM_CALL(0x8018b1a8, SceneHookMgr::DoUnPause), // Wii Play

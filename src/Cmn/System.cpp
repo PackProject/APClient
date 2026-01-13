@@ -18,7 +18,7 @@ void System::Initialize() {
     CheckMgr::CreateInstance();
 
     // TODO: Move to debug menu eventually
-#ifndef NDEBUG
+#if !defined(NDEBUG)
     ItemMgr::GetInstance().Debug();
     CosmeticMgr::GetInstance().Debug();
     CheckMgr::GetInstance().Debug();

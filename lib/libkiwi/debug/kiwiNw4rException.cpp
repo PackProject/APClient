@@ -6,6 +6,26 @@
 #include <cstdio>
 
 namespace kiwi {
+namespace {
+
+/**
+ * @brief Prints heap information
+ *
+ * @param pName Heap name
+ * @param pHeap Heap object
+ */
+void LogHeap(const char* pName, EGG::Heap* pHeap) {
+    if (pHeap == nullptr) {
+        Nw4rException::GetInstance().Printf("[%s] nullptr ->\n", pName);
+        return;
+    }
+
+    Nw4rException::GetInstance().Printf(
+        "%s: %.2fKB free\n", pName, pHeap,
+        OS_MEM_B_TO_KB(static_cast<f32>(pHeap->getAllocatableSize())));
+}
+
+} // namespace
 
 K_DYNAMIC_SINGLETON_IMPL(Nw4rException);
 
@@ -305,22 +325,22 @@ void Nw4rException::DumpAssert() {
 void Nw4rException::PrintHeapInfo() {
     Printf("---Heap Info---\n");
 
-    Printf("libkiwi (MEM1): %.2f KB free\n",
-           OS_MEM_B_TO_KB(static_cast<f32>(
-               MemoryMgr::GetInstance().GetFreeSize(EMemory_MEM1))));
+    LogHeap("libkiwi (MEM1)", MemoryMgr::GetInstance().GetHeap(EMemory_MEM1));
+    LogHeap("libkiwi (MEM2)", MemoryMgr::GetInstance().GetHeap(EMemory_MEM2));
 
-    Printf("libkiwi (MEM2): %.2f KB free\n",
-           OS_MEM_B_TO_KB(static_cast<f32>(
-               MemoryMgr::GetInstance().GetFreeSize(EMemory_MEM2))));
+    LogHeap("EGG (MEM1)", RPSysSystem::getRootHeapMem1());
+    LogHeap("EGG (MEM2)", RPSysSystem::getRootHeapMem2());
+    LogHeap("EGG (System)", RPSysSystem::getSystemHeap());
 
-    Printf("RPSysSystem (System): %.2f KB free\n",
-           OS_MEM_B_TO_KB(static_cast<f32>(
-               RPSysSystem::getSystemHeap()->getAllocatableSize())));
+    LogHeap("RPSysSystem (System)",
+            RP_GET_INSTANCE(RPSysSystem)->getSystemHeapRP());
+    LogHeap("RPSysSystem (Resource)",
+            RP_GET_INSTANCE(RPSysSystem)->getResourceHeap());
 
-    Printf("RPSysSystem (Resource): %.2f KB free\n",
-           OS_MEM_B_TO_KB(static_cast<f32>(RP_GET_INSTANCE(RPSysSystem)
-                                               ->getResourceHeap()
-                                               ->getAllocatableSize())));
+#if defined(PACK_RESORT)
+    LogHeap("RPSysSystem (RootScene)",
+            RP_GET_INSTANCE(RPSysSystem)->getRootSceneHeap());
+#endif
 
     Printf("\n");
 }

@@ -228,6 +228,27 @@ public:
     }
 
     /**
+     * @brief Gets the heap for resource caching
+     */
+    EGG::Heap* getResCacheHeap() const {
+        return mpResCacheHeap;
+    }
+
+    /**
+     * @brief Gets the root heap for all scene heaps
+     */
+    EGG::Heap* getRootSceneHeap() const {
+        return mpRootSceneHeap;
+    }
+
+    /**
+     * @brief Gets the root heap for all scene dependency heaps
+     */
+    EGG::Heap* getRootSceneDependHeap() const {
+        return mpRootSceneDependHeap;
+    }
+
+    /**
      * @brief Gets the heap which holds the rest of free MEM1 memory
      */
     EGG::Heap* getMem1RestHeap() const {

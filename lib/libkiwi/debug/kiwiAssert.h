@@ -54,7 +54,7 @@
  * @name Internal usage
  */
 /**@{*/
-#ifndef NDEBUG
+#if !defined(NDEBUG)
 //! Log a message to the console
 #define K_LOG(msg) kiwi_log(msg)
 //! Log a message (format string) to the console

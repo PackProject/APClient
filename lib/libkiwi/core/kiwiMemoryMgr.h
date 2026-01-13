@@ -44,6 +44,13 @@ public:
     void Free(void* pBlock) const;
 
     /**
+     * @brief Gets the heap corresponding to the specified memory region
+     *
+     * @param memory Target memory region
+     */
+    EGG::Heap* GetHeap(EMemory memory) const;
+
+    /**
      * @brief Gets size of available heap memory
      *
      * @param memory Target memory region
@@ -69,28 +76,31 @@ private:
      * @brief Constructor
      */
     MemoryMgr();
+
     /**
      * @brief Destructor
      */
     ~MemoryMgr();
 
     /**
-     * @brief Gets the heap corresponding to the specified memory region
-     *
-     * @param memory Target memory region
+     * @brief Dumps heap information for debugging purposes
      */
-    EGG::Heap* GetHeap(EMemory memory) const;
+    void Dump();
 
 private:
-// TODO(kiwi) How to get more MEM1 memory from WS2?
+    // 1024KB of MEM1 is not available for use in WS2
 #if defined(PACK_SPORTS) || defined(PACK_PLAY)
-    //! Initial size for each heap
-    static const u32 HEAP_SIZE = OS_MEM_KB_TO_B(1024);
+    //! Initial heap size in the MEM1 region
+    static const u32 HEAP_SIZE_MEM1 = OS_MEM_KB_TO_B(1024);
 #elif defined(PACK_RESORT)
-    //! Initial size for each heap
-    static const u32 HEAP_SIZE = OS_MEM_KB_TO_B(512);
+    //! Initial heap size in the MEM1 region
+    static const u32 HEAP_SIZE_MEM1 = OS_MEM_KB_TO_B(512);
 #endif
 
+    //! Initial heap size in the MEM2 region
+    static const u32 HEAP_SIZE_MEM2 = OS_MEM_KB_TO_B(1024);
+
+private:
     EGG::Heap* mpHeapMEM1; //!< Heap in MEM1 region
     EGG::Heap* mpHeapMEM2; //!< Heap in MEM2 region
 };

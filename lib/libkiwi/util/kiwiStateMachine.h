@@ -67,7 +67,13 @@ public:
     /**
      * @brief Destructor
      */
-    virtual ~StateMachine() {}
+    virtual ~StateMachine() {
+        delete[] mpCalcFunctions;
+        mpCalcFunctions = nullptr;
+
+        delete[] mpExitFunctions;
+        mpExitFunctions = nullptr;
+    }
 
     /**
      * @brief Tests whether the current state is in its first step/tick

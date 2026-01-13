@@ -30,9 +30,7 @@ void VariablePacket::SetContent(const void* pContent, u32 size) {
     K_ASSERT(size > 0);
 
     // May need to reallocate the buffer
-    if (size > mBuffer.Capacity()) {
-        Alloc(size);
-    }
+    Reserve(size);
 
     u32 bytesWritten = mBuffer.Write(pContent, size);
     K_ASSERT(bytesWritten == size);

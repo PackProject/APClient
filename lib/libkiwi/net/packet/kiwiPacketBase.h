@@ -37,6 +37,13 @@ public:
     void Alloc(u32 size);
 
     /**
+     * @brief Expands the existing packet buffer to at least the specified size
+     *
+     * @param size Buffer size
+     */
+    void Reserve(u32 size);
+
+    /**
      * @brief Gets the size of the overhead needed for the packet header
      */
     virtual u32 GetOverhead() const = 0;

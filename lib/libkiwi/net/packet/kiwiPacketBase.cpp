@@ -28,9 +28,20 @@ void PacketBase::Alloc(u32 size) {
     K_ASSERT_EX(size < GetMaxContent(), "Must be fragmented!");
 
     AutoMutexLock lock(mBufferMutex);
-
-    // Packet type may have memory overhead from the header
     mBuffer.Alloc(size + GetOverhead());
+}
+
+/**
+ * @brief Expands the existing packet buffer to at least the specified size
+ *
+ * @param size Buffer size
+ */
+void PacketBase::Reserve(u32 size) {
+    K_ASSERT(size > 0);
+    K_ASSERT_EX(size < GetMaxContent(), "Must be fragmented!");
+
+    AutoMutexLock lock(mBufferMutex);
+    mBuffer.Reserve(size + GetOverhead());
 }
 
 /**

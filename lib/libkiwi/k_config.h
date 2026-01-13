@@ -63,7 +63,7 @@
 #define K_TYPEOF(x) __typeof__(x)
 
 // 'decltype'
-#ifndef __INTELLISENSE__
+#if !defined(__INTELLISENSE__)
 #define K_DECLTYPE(x) __decltype__(x)
 #else
 #define K_DECLTYPE(x) decltype(x)

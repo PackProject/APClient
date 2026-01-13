@@ -125,7 +125,7 @@ void NetBuffer::Reserve(u32 size) {
  */
 u32 NetBuffer::Read(void* pDst, u32 size) {
     K_ASSERT_PTR(pDst);
-    K_ASSERT(size < mBufferSize);
+    K_ASSERT(size <= mBufferSize);
     K_ASSERT_PTR(mpBuffer);
 
     // Don't allow overflow
@@ -147,7 +147,7 @@ u32 NetBuffer::Read(void* pDst, u32 size) {
  */
 u32 NetBuffer::Write(const void* pSrc, u32 size) {
     K_ASSERT_PTR(pSrc);
-    K_ASSERT(size < mBufferSize);
+    K_ASSERT(size <= mBufferSize);
     K_ASSERT_PTR(mpBuffer);
 
     // Don't allow overflow
