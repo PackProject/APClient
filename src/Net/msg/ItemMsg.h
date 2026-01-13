@@ -19,7 +19,7 @@ public:
      *
      * @param rStrm Stream to packet content
      */
-    ItemMsg(kiwi::MemStream& /* rStrm */) {}
+    ItemMsg(kiwi::MemStream& rStrm);
 
     /**
      * @brief Gets the type of this command
