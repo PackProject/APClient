@@ -78,13 +78,6 @@ public:
      */
     void SetCheckItem(CheckID id, ItemID item);
 
-    /**
-     * @brief Awards the item mapped to the specified check
-     *
-     * @param id Check ID
-     */
-    void GiveCheckItem(CheckID id) const;
-
 private:
     /**
      * @brief Constructor

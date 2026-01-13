@@ -102,17 +102,5 @@ void CheckMgr::SetCheckItem(CheckID id, ItemID item) {
     mCheckToItemID.Insert(id, item);
 }
 
-/**
- * @brief Awards the item mapped to the specified check
- *
- * @param id Check ID
- */
-void CheckMgr::GiveCheckItem(CheckID id) const {
-    ItemID item = GetCheckItem(id);
-    ASSERT(item != ITEM_INVALID);
-
-    ItemMgr::GetInstance().SetItemState(item, true);
-}
-
 } // namespace Cmn
 } // namespace AP

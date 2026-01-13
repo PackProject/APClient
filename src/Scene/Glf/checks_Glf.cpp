@@ -20,8 +20,8 @@ void SetGolfHoleComplete(int holeIdx) {
     if (hasCheck)
         return;
 
-    Cmn::CheckMgr::GetInstance().GiveCheckItem(
-        CheckID(CHECK_GOLF_COMPLETE_HOLE_1 + holeIdx));
+    Cmn::CheckMgr::GetInstance().SetCheckState(
+        CheckID(CHECK_GOLF_COMPLETE_HOLE_1 + holeIdx), true);
 }
 
 TRAMPOLINE_DEF(0x803f76b0, 0x803f76b4){

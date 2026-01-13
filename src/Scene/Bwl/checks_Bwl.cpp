@@ -16,13 +16,7 @@ namespace Check {
 namespace Std {
 
 void SetBowlingStrikeCheck() {
-    bool hasCheck = Cmn::CheckMgr::GetInstance().GetCheckState(
-        CHECK_BOWLING_STANDARD_FIRST_STRIKE);
-    if (hasCheck)
-        return;
-
-    Cmn::CheckMgr::GetInstance().GiveCheckItem(
-        CHECK_BOWLING_STANDARD_FIRST_STRIKE);
+    Cmn::CheckMgr::GetInstance().SetCheckState(CHECK_BOWLING_STANDARD_FIRST_STRIKE, true);
 }
 
 TRAMPOLINE_DEF(0x804ece1c, 0x804ece20) {

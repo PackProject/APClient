@@ -19,8 +19,8 @@ void GetSwordplayFirstWinCheck() {
         CheckID(CHECK_SWORDPLAY_DUEL_FIRST_WIN));
 
     if (!hasCheck) {
-        Cmn::CheckMgr::GetInstance().GiveCheckItem(
-            CheckID(CHECK_SWORDPLAY_DUEL_FIRST_WIN));
+        Cmn::CheckMgr::GetInstance().SetCheckState(
+            CheckID(CHECK_SWORDPLAY_DUEL_FIRST_WIN), true);
 
         hasCheck = Cmn::CheckMgr::GetInstance().GetCheckState(
             CheckID(CHECK_SWORDPLAY_DUEL_FIRST_WIN));

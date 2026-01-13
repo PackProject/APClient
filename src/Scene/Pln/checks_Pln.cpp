@@ -26,8 +26,8 @@ void SetIPointGrabbed(int totalIPoints) {
     if (hasCheck)
         return;
 
-    Cmn::CheckMgr::GetInstance().GiveCheckItem(
-        CheckID(CHECK_ISLAND_FLYOVER_IPOINT_GROUP_1 + iGroup - 1));
+    Cmn::CheckMgr::GetInstance().SetCheckState(
+        CheckID(CHECK_ISLAND_FLYOVER_IPOINT_GROUP_1 + iGroup - 1), true);
 }
 
 TRAMPOLINE_DEF(0x802619c8, 0x802619cc) {
