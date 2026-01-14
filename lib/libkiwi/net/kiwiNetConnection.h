@@ -13,19 +13,17 @@ class PacketBase;
 class SockAddrAny;
 class SocketBase;
 
-namespace detail {
-//! @addtogroup libkiwi_net
-//! @{
-
 // Forward declarations
+namespace detail {
 class NetConnectionMgr;
+} // namespace detail
 
 /**
  * @brief Network socket connection wrapper
  */
 class NetConnection {
     // Expose Calc only to the manager
-    friend class NetConnectionMgr;
+    friend class detail::NetConnectionMgr;
 
 public:
     /**
@@ -129,8 +127,6 @@ private:
     void Calc();
 };
 
-//! @}
-} // namespace detail
 //! @}
 } // namespace kiwi
 

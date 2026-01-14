@@ -1,5 +1,7 @@
 #include "Net/msg/ItemMsg.h"
+
 #include "Cmn/ItemMgr.h"
+#include "const.h"
 
 #include <libkiwi.h>
 
@@ -8,13 +10,13 @@ namespace Net {
 
 /**
  * @brief Constructor
- * 
+ *
  * @param rStrm Stream to packet content
  */
 ItemMsg::ItemMsg(kiwi::MemStream& rStrm) {
-    u16 itemId = rStrm.Read_u16();
+    mItemID = static_cast<ItemID>(rStrm.Read_u16());
+    ASSERT(mItemID != ITEM_INVALID);
+}
 
-    Cmn::ItemMgr::GetInstance().SetItemState((ItemID)itemId, true);
-}
-}
-}
+} // namespace Net
+} // namespace AP

@@ -9,14 +9,12 @@ namespace kiwi {
 //! @{
 
 // Forward declarations
+class NetConnection;
 class StdThread;
 
 namespace detail {
 //! @addtogroup libkiwi_net
 //! @{
-
-// Forward declarations
-class NetConnection;
 
 /**
  * @brief Network socket connection manager

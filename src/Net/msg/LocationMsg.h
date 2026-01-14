@@ -2,8 +2,7 @@
 #define APCLIENT_NET_MSG_LOCATION_MSG_H
 #include <types.h>
 
-#include "Net/IMessage.h"
-#include "Net/NetworkMgr.h"
+#include "Net/Define.h"
 
 #include <libkiwi.h>
 
@@ -13,29 +12,21 @@ namespace Net {
 /**
  * @brief Location message
  */
-class LocationMsg : public IMessage {
+class LocationMsg : public kiwi::ap::IMessage {
 public:
     /**
      * @brief Constructor
      *
      * @param rStrm Stream to packet content
      */
-    LocationMsg(kiwi::MemStream& rStrm);
+    LocationMsg(kiwi::MemStream& /* rStrm */) {}
 
     /**
-     * @brief returns MemStream of all location data
+     * @brief Gets the type of this message
      */
-    kiwi::TVector<u32> GetChecks();
-
-    /**
-     * @brief Gets the type of this command
-     */
-    virtual EKind GetKind() const {
-        return EKind_Location;
+    virtual u32 GetType() const {
+        return Define::EMessageType_Location;
     }
-
-private:
-    kiwi::TVector<u32> mData;
 };
 
 } // namespace Net

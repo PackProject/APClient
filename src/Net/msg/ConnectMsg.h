@@ -2,7 +2,7 @@
 #define APCLIENT_NET_MSG_CONNECT_MSG_H
 #include <types.h>
 
-#include "Net/IMessage.h"
+#include "Net/Define.h"
 
 #include <libkiwi.h>
 
@@ -12,7 +12,7 @@ namespace Net {
 /**
  * @brief PC client connection message
  */
-class ConnectMsg : public IMessage {
+class ConnectMsg : public kiwi::ap::IMessage {
 public:
     /**
      * @brief Constructor
@@ -22,10 +22,10 @@ public:
     ConnectMsg(kiwi::MemStream& rStrm);
 
     /**
-     * @brief Gets the type of this command
+     * @brief Gets the type of this message
      */
-    virtual EKind GetKind() const {
-        return EKind_Connect;
+    virtual u32 GetType() const {
+        return Define::EMessageType_Connect;
     }
 
     /**
