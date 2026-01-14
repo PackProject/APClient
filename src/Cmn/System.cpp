@@ -3,8 +3,8 @@
 #include "Cmn/CheckMgr.h"
 #include "Cmn/CosmeticMgr.h"
 #include "Cmn/ItemMgr.h"
+#include "Cmn/SceneHook.h"
 #include "Net/NetworkMgr.h"
-#include "Net/TextDisplay.h"
 
 namespace AP {
 namespace Cmn {
@@ -25,7 +25,7 @@ void System::Initialize() {
 #endif
 
     Net::NetworkMgr::CreateInstance();
-    Net::TextDisplay::CreateInstance();
+    Cmn::SceneHook::CreateInstance();
 }
 
 } // namespace Cmn

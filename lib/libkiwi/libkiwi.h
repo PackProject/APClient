@@ -1,6 +1,10 @@
 #ifndef LIBKIWI_LIBRARY_H
 #define LIBKIWI_LIBRARY_H
 
+#include <libkiwi/ap/kiwiAPServer.h>
+#include <libkiwi/ap/kiwiIAPMessage.h>
+#include <libkiwi/ap/kiwiIAPMessageListener.h>
+#include <libkiwi/ap/kiwiIAPMessageParser.h>
 #include <libkiwi/core/kiwiColor.h>
 #include <libkiwi/core/kiwiConsoleOut.h>
 #include <libkiwi/core/kiwiController.h>

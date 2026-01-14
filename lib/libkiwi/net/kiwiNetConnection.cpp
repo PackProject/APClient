@@ -1,7 +1,6 @@
 #include <libkiwi.h>
 
 namespace kiwi {
-namespace detail {
 
 /**
  * @brief Constructor
@@ -19,14 +18,14 @@ NetConnection::NetConnection(SocketBase* pSocket,
     K_ASSERT_PTR(mpSocket);
     K_ASSERT_PTR(mpPacketFactory);
 
-    NetConnectionMgr::GetInstance().AddConnection(this);
+    detail::NetConnectionMgr::GetInstance().AddConnection(this);
 }
 
 /**
  * @brief Destructor
  */
 NetConnection::~NetConnection() {
-    NetConnectionMgr::GetInstance().RemoveConnection(this);
+    detail::NetConnectionMgr::GetInstance().RemoveConnection(this);
 
     // Not owned by the connection
     mpSocket = nullptr;
@@ -109,5 +108,4 @@ void NetConnection::Calc() {
     }
 }
 
-} // namespace detail
 } // namespace kiwi

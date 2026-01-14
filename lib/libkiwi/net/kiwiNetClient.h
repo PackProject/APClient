@@ -10,7 +10,7 @@ namespace kiwi {
 /**
  * @brief Network client
  */
-class NetClient : public detail::NetConnection {
+class NetClient : public NetConnection {
 public:
     /**
      * @brief Constructor
