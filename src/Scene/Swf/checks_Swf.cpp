@@ -21,16 +21,6 @@ void GetSwordplayFirstWinCheck() {
     if (!hasCheck) {
         Cmn::CheckMgr::GetInstance().SetCheckState(
             CheckID(CHECK_SWORDPLAY_DUEL_FIRST_WIN), true);
-
-        hasCheck = Cmn::CheckMgr::GetInstance().GetCheckState(
-            CheckID(CHECK_SWORDPLAY_DUEL_FIRST_WIN));
-
-        kiwi::cout << "Check: "
-                   << Cmn::CheckMgr::GetCheckName(
-                          CheckID(CHECK_SWORDPLAY_DUEL_FIRST_WIN))
-                   << " has been set to " << hasCheck << kiwi::endl;
-    } else {
-        kiwi::cout << "Already has check..." << kiwi::endl;
     }
 }
 
