@@ -175,28 +175,28 @@
     X(0x1307, ISLAND_FLYOVER_UNLOCK_TWO_SEATER, "Island Flyover - Unlock Two Seater") \
     X(0x1308, ISLAND_FLYOVER_UNLOCK_BOOST, "Island Flyover - Unlock Boosting") \
     X(0x1309, ISLAND_FLYOVER_UNLOCK_BRAKE, "Island Flyover - Unlock Braking") \
-    X(0xFF00, ISLAND_FLYOVER_XP_DUEL, "100 Skill Points (Swordplay Duel)") \
-    X(0xFF01, XP_SPEED_SLICE, "100 Skill Points (Swordplay Speed Slice)") \
-    X(0xFF02, XP_SHOWDOWN, "100 Skill Points (Swordplay Showdown)") \
-    X(0xFF03, XP_WAKEBOARDING, "100 Skill Points (Wakeboarding)") \
-    X(0xFF04, XP_FRISBEE_DOG, "100 Skill Points (Frisbee Dog)") \
-    X(0xFF05, XP_FRISBEE_GOLF, "100 Skill Points (Frisbee Golf)") \
-    X(0xFF06, XP_ARCHERY, "100 Skill Points (Archery)") \
-    X(0xFF07, XP_3PC, "100 Skill Points (Basketball - 3 Point Contest)") \
-    X(0xFF08, XP_PICKUP_GAME, "100 Skill Points (Basketball - Pickup Game)") \
-    X(0xFF09, XP_RETURN_CHALLENGE, "100 Skill Points (Table Tennis - Return Challenge)") \
-    X(0xFF0A, XP_MATCH, "100 Skill Points (Table Tennis - Match)") \
-    X(0xFF0B, XP_GOLF, "100 Skill Points (Golf)") \
-    X(0xFF0C, XP_BOWLING_STD, "100 Skill Points (Bowling - 10-pin Game)") \
-    X(0xFF0D, XP_BOWLING_HUNDRED, "100 Skill Points (Bowling - 100-pin Game)") \
-    X(0xFF0E, XP_BOWLING_SPIN_CONTROL, "100 Skill Points (Bowling - Spin Control)") \
-    X(0xFF0F, XP_POWER_CRUISING, "100 Skill Points (Power Cruising)") \
-    X(0xFF10, XP_CANOEING, "100 Skill Points (Canoeing)") \
-    X(0xFF11, XP_CYCLING, "100 Skill Points (Cycling)") \
-    X(0xFF12, XP_SKYDIVING, "100 Skill Points (Air Sports - Skydiving)") \
-    X(0xFF13, SWORDPLAY_SHOWDOWN_EXTRA_HEART, "Extra Max Heart (Swordplay Showdown)") \
-    X(0xFF14, CYCLING_EXTRA_HEART, "Extra Max Heart (Cycling)") \
-    X(0xFF15, RANDOM_COSMETIC, "Random Cosmetic")
+    X(0x2000, ISLAND_FLYOVER_XP_DUEL, "100 Skill Points (Swordplay Duel)") \
+    X(0x2001, XP_SPEED_SLICE, "100 Skill Points (Swordplay Speed Slice)") \
+    X(0x2002, XP_SHOWDOWN, "100 Skill Points (Swordplay Showdown)") \
+    X(0x2003, XP_WAKEBOARDING, "100 Skill Points (Wakeboarding)") \
+    X(0x2004, XP_FRISBEE_DOG, "100 Skill Points (Frisbee Dog)") \
+    X(0x2005, XP_FRISBEE_GOLF, "100 Skill Points (Frisbee Golf)") \
+    X(0x2006, XP_ARCHERY, "100 Skill Points (Archery)") \
+    X(0x2007, XP_3PC, "100 Skill Points (Basketball - 3 Point Contest)") \
+    X(0x2008, XP_PICKUP_GAME, "100 Skill Points (Basketball - Pickup Game)") \
+    X(0x2009, XP_RETURN_CHALLENGE, "100 Skill Points (Table Tennis - Return Challenge)") \
+    X(0x200A, XP_MATCH, "100 Skill Points (Table Tennis - Match)") \
+    X(0x200B, XP_GOLF, "100 Skill Points (Golf)") \
+    X(0x200C, XP_BOWLING_STD, "100 Skill Points (Bowling - 10-pin Game)") \
+    X(0x200D, XP_BOWLING_HUNDRED, "100 Skill Points (Bowling - 100-pin Game)") \
+    X(0x200E, XP_BOWLING_SPIN_CONTROL, "100 Skill Points (Bowling - Spin Control)") \
+    X(0x200F, XP_POWER_CRUISING, "100 Skill Points (Power Cruising)") \
+    X(0x2010, XP_CANOEING, "100 Skill Points (Canoeing)") \
+    X(0x2011, XP_CYCLING, "100 Skill Points (Cycling)") \
+    X(0x2012, XP_SKYDIVING, "100 Skill Points (Air Sports - Skydiving)") \
+    X(0x2013, SWORDPLAY_SHOWDOWN_EXTRA_HEART, "Extra Max Heart (Swordplay Showdown)") \
+    X(0x2014, CYCLING_EXTRA_HEART, "Extra Max Heart (Cycling)") \
+    X(0x2015, RANDOM_COSMETIC, "Random Cosmetic")
 
 // clang-format on
 

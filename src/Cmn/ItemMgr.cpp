@@ -938,6 +938,87 @@ void ItemMgr::SetItemState(ItemID id, bool state) {
         mPlnBrakeFlag = true;
         break;
     }
+    case ITEM_XP_SPEED_SLICE: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_XP_SHOWDOWN: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_XP_WAKEBOARDING: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_XP_FRISBEE_DOG: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_XP_ARCHERY: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_XP_3PC: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_XP_PICKUP_GAME: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_XP_RETURN_CHALLENGE: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_XP_MATCH: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_XP_GOLF: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_XP_BOWLING_STD: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_XP_BOWLING_HUNDRED: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_XP_BOWLING_SPIN_CONTROL: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_XP_POWER_CRUISING: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_XP_CANOEING: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_XP_CYCLING: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_XP_SKYDIVING: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_SWORDPLAY_SHOWDOWN_EXTRA_HEART: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_CYCLING_EXTRA_HEART: {
+        // TODO: implement
+        break;
+    }
+    case ITEM_RANDOM_COSMETIC: {
+        // TODO: implement
+        break;
+    }
+
 
     default: {
         ASSERT_EX(false, "Unknown ItemID: %d", id);
