@@ -340,6 +340,13 @@ void Nw4rException::PrintHeapInfo() {
 #if defined(PACK_RESORT)
     LogHeap("RPSysSystem (RootScene)",
             RP_GET_INSTANCE(RPSysSystem)->getRootSceneHeap());
+    LogHeap("RPSysSystem (RootSceneDepend)",
+            RP_GET_INSTANCE(RPSysSystem)->getRootSceneDependHeap());
+
+    LogHeap("RPSysSystem (Mem1Rest)",
+            RP_GET_INSTANCE(RPSysSystem)->getMem1RestHeap());
+    LogHeap("RPSysSystem (Mem2Rest)",
+            RP_GET_INSTANCE(RPSysSystem)->getMem2RestHeap());
 #endif
 
     Printf("\n");

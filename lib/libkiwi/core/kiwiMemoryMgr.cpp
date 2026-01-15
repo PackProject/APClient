@@ -69,11 +69,11 @@ MemoryMgr::MemoryMgr() {
     EGG::Heap* pRootHeapMEM2 = RPSysSystem::getRootHeapMem2();
     K_ASSERT_PTR(pRootHeapMEM2);
 
-    mpHeapMEM1 = EGG::ExpHeap::create(HEAP_SIZE_MEM1, pRootHeapMEM1);
+    mpHeapMEM1 = EGG::ExpHeap::create(HEAP_SIZE, pRootHeapMEM1);
     K_ASSERT_PTR(mpHeapMEM1);
     K_ASSERT(OSIsMEM1Region(mpHeapMEM1));
 
-    mpHeapMEM2 = EGG::ExpHeap::create(HEAP_SIZE_MEM2, pRootHeapMEM2);
+    mpHeapMEM2 = EGG::ExpHeap::create(HEAP_SIZE, pRootHeapMEM2);
     K_ASSERT_PTR(mpHeapMEM2);
     K_ASSERT(OSIsMEM2Region(mpHeapMEM2));
 

@@ -393,7 +393,7 @@ private:
     EGG::Heap* mpResCacheHeap;        // at 0xC
     EGG::Heap* mpRootSceneHeap;       // at 0x10
     EGG::Heap* mpRootSceneDependHeap; // at 0x14
-    char UNK_0x18[0x28 - 0x14];
+    char UNK_0x18[0x28 - 0x18];
     EGG::Heap* mpMem1RestHeap; // at 0x28
     EGG::Heap* mpMem2RestHeap; // at 0x2C
     // . . .

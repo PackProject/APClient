@@ -88,17 +88,14 @@ private:
     void Dump();
 
 private:
-    // 1024KB of MEM1 is not available for use in WS2
+    // 1024KB is not available for use in WS2
 #if defined(PACK_SPORTS) || defined(PACK_PLAY)
-    //! Initial heap size in the MEM1 region
-    static const u32 HEAP_SIZE_MEM1 = OS_MEM_KB_TO_B(1024);
+    //! Initial heap size
+    static const u32 HEAP_SIZE = OS_MEM_KB_TO_B(1024);
 #elif defined(PACK_RESORT)
-    //! Initial heap size in the MEM1 region
-    static const u32 HEAP_SIZE_MEM1 = OS_MEM_KB_TO_B(512);
+    //! Initial heap size
+    static const u32 HEAP_SIZE = OS_MEM_KB_TO_B(512);
 #endif
-
-    //! Initial heap size in the MEM2 region
-    static const u32 HEAP_SIZE_MEM2 = OS_MEM_KB_TO_B(1024);
 
 private:
     EGG::Heap* mpHeapMEM1; //!< Heap in MEM1 region
