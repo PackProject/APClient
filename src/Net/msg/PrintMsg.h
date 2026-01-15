@@ -25,7 +25,7 @@ public:
      * @brief Gets the type of this message
      */
     virtual u32 GetType() const {
-        return Define::EMessageType_Print;
+        return Define::EMsgType_Print;
     }
 
     /**

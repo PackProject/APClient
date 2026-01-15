@@ -1,6 +1,7 @@
 #include "Net/GameMessageParser.h"
 
 #include "Net/Define.h"
+#include "Net/msg/AuthMsg.h"
 #include "Net/msg/ConnectMsg.h"
 #include "Net/msg/DisconnectMsg.h"
 #include "Net/msg/ItemMsg.h"
@@ -29,23 +30,27 @@ kiwi::ap::IMessage* GameMessageParser::Parse(const void* pData, u32 size) {
         static_cast<Define::EMessageType>(strm.Read_u8());
 
     switch (type) {
-    case Define::EMessageType_Connect: {
+    case Define::EMsgType_Connect: {
         return new ConnectMsg(strm);
     }
 
-    case Define::EMessageType_Disconnect: {
+    case Define::EMsgType_Disconnect: {
         return new DisconnectMsg(strm);
     }
 
-    case Define::EMessageType_Print: {
+    case Define::EMsgType_Auth: {
+        return new AuthMsg(strm);
+    }
+
+    case Define::EMsgType_Print: {
         return new PrintMsg(strm);
     }
 
-    case Define::EMessageType_Item: {
+    case Define::EMsgType_Item: {
         return new ItemMsg(strm);
     }
 
-    case Define::EMessageType_Location: {
+    case Define::EMsgType_Location: {
         return new LocationMsg(strm);
     }
 

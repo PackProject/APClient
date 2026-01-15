@@ -10,11 +10,12 @@ namespace Define {
  * @brief Archipelago message types
  */
 enum EMessageType {
-    /* 0x00 */ EMessageType_Connect,
-    /* 0x01 */ EMessageType_Disconnect,
-    /* 0x02 */ EMessageType_Print,
-    /* 0x03 */ EMessageType_Item,
-    /* 0x04 */ EMessageType_Location,
+    /* 0x00 */ EMsgType_Connect,
+    /* 0x01 */ EMsgType_Disconnect,
+    /* 0x02 */ EMsgType_Auth,
+    /* 0x03 */ EMsgType_Print,
+    /* 0x04 */ EMsgType_Item,
+    /* 0x05 */ EMsgType_Location,
 };
 
 //! General message acknowledgement byte

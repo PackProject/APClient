@@ -15,11 +15,32 @@ class NetworkMgr : public kiwi::ap::Server,
 
     friend class kiwi::DynamicSingleton<NetworkMgr>;
 
+public:
+    /**
+     * @brief Gets the player slot name
+     */
+    const kiwi::WString& GetPlayerName() const {
+        return mPlayerName;
+    }
+
+    /**
+     * @brief Sets the player slot name
+     *
+     * @param rName Player slot name
+     */
+    void SetPlayerName(const kiwi::WString& rName) {
+        mPlayerName = rName;
+    }
+
 private:
     /**
      * @brief Constructor
      */
     NetworkMgr();
+
+private:
+    //! Player slot name
+    kiwi::WString mPlayerName;
 };
 
 } // namespace Net

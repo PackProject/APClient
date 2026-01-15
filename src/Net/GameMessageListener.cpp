@@ -6,6 +6,7 @@
 #include "Cmn/TextDisplay.h"
 #include "Net/Define.h"
 #include "Net/NetworkMgr.h"
+#include "Net/msg/AuthMsg.h"
 #include "Net/msg/ConnectMsg.h"
 #include "Net/msg/ItemMsg.h"
 #include "Net/msg/PrintMsg.h"
@@ -26,20 +27,27 @@ void GameMessageListener::OnReceiveMessage(kiwi::ap::IMessage* pMessage) {
 
     switch (pMessage->GetType()) {
     // PC client is attempting to connect
-    case Define::EMessageType_Connect: {
+    case Define::EMsgType_Connect: {
         ConnectMsg* pConnectMsg = static_cast<ConnectMsg*>(pMessage);
         NetworkMgr::GetInstance().SetPeerAddr(pConnectMsg->GetPeerAddr());
         break;
     }
 
     // PC client has disconnected
-    case Define::EMessageType_Disconnect: {
+    case Define::EMsgType_Disconnect: {
         NetworkMgr::GetInstance().ResetPeerAddr();
         break;
     }
 
+    // PC client is sending authentication details
+    case Define::EMsgType_Auth: {
+        AuthMsg* pAuthMsg = static_cast<AuthMsg*>(pMessage);
+        Net::NetworkMgr::GetInstance().SetPlayerName(pAuthMsg->GetPlayerName());
+        break;
+    }
+
     // PC client wants to display a message
-    case Define::EMessageType_Print: {
+    case Define::EMsgType_Print: {
         PrintMsg* pPrintMsg = static_cast<PrintMsg*>(pMessage);
 
         K_FOREACH (it, pPrintMsg->GetMessageList()) {
@@ -49,14 +57,14 @@ void GameMessageListener::OnReceiveMessage(kiwi::ap::IMessage* pMessage) {
     }
 
     // PC client wants to award an item
-    case Define::EMessageType_Item: {
+    case Define::EMsgType_Item: {
         ItemMsg* pItemMsg = static_cast<ItemMsg*>(pMessage);
         Cmn::ItemMgr::GetInstance().SetItemState(pItemMsg->GetItemID(), true);
         break;
     }
 
     // PC client is requesting a list of completed locations/checks
-    case Define::EMessageType_Location: {
+    case Define::EMsgType_Location: {
         break;
     }
 
@@ -86,7 +94,7 @@ void GameMessageListener::OnRespondMessage(kiwi::ap::IMessage* pMessage,
 
     switch (pMessage->GetType()) {
     // PC client is requesting a list of completed locations/checks
-    case Define::EMessageType_Location: {
+    case Define::EMsgType_Location: {
         kiwi::TVector<u16> locations;
 
 #define X(ID, IDENTIFIER, STR)                                                 \
