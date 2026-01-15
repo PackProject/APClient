@@ -108,8 +108,8 @@
     X(0x0076, SKYDIVING_STAMP_4, "Skydiving (Stamp) - Camera Shy") \
     X(0x0077, SKYDIVING_STAMP_5, "Skydiving (Stamp) - 200-point Dive") \
     X(0x0200, SWORDPLAY_DUEL_FIRST_WIN, "Swordplay Duel - First Win!") \
+    X(0x0400, POWER_CRUISING_1500_POINTS, "Power Cruising - 1,500 Points!") \
     X(0x0E00, BOWLING_STANDARD_FIRST_STRIKE, "Bowling Standard Game - First Strike!") \
-    X(0x1100, POWER_CRUISING_1500_POINTS, "Power Cruising - 1,500 Points!") \
     X(0x1B00, ISLAND_FLYOVER_IPOINT_GROUP_1, "Progressive Island Flyover I Point Group 1") \
     X(0x1B01, ISLAND_FLYOVER_IPOINT_GROUP_2, "Progressive Island Flyover I Point Group 2") \
     X(0x1B02, ISLAND_FLYOVER_IPOINT_GROUP_3, "Progressive Island Flyover I Point Group 3") \
