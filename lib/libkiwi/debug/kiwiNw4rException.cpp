@@ -16,7 +16,7 @@ namespace {
  */
 void LogHeap(const char* pName, EGG::Heap* pHeap) {
     if (pHeap == nullptr) {
-        Nw4rException::GetInstance().Printf("[%s] nullptr ->\n", pName);
+        Nw4rException::GetInstance().Printf("%s: nullptr\n", pName);
         return;
     }
 
@@ -328,26 +328,13 @@ void Nw4rException::PrintHeapInfo() {
     LogHeap("libkiwi (MEM1)", MemoryMgr::GetInstance().GetHeap(EMemory_MEM1));
     LogHeap("libkiwi (MEM2)", MemoryMgr::GetInstance().GetHeap(EMemory_MEM2));
 
-    LogHeap("EGG (MEM1)", RPSysSystem::getRootHeapMem1());
-    LogHeap("EGG (MEM2)", RPSysSystem::getRootHeapMem2());
-    LogHeap("EGG (System)", RPSysSystem::getSystemHeap());
+    LogHeap("RootMem1", RPSysSystem::getRootHeapMem1());
+    LogHeap("RootMem2", RPSysSystem::getRootHeapMem2());
 
-    LogHeap("RPSysSystem (System)",
-            RP_GET_INSTANCE(RPSysSystem)->getSystemHeapRP());
-    LogHeap("RPSysSystem (Resource)",
-            RP_GET_INSTANCE(RPSysSystem)->getResourceHeap());
+    LogHeap("SysMem1", RPSysSystem::getSystemHeap());
+    LogHeap("SysMem2", RP_GET_INSTANCE(RPSysSystem)->getSystemHeapRP());
 
-#if defined(PACK_RESORT)
-    LogHeap("RPSysSystem (RootScene)",
-            RP_GET_INSTANCE(RPSysSystem)->getRootSceneHeap());
-    LogHeap("RPSysSystem (RootSceneDepend)",
-            RP_GET_INSTANCE(RPSysSystem)->getRootSceneDependHeap());
-
-    LogHeap("RPSysSystem (Mem1Rest)",
-            RP_GET_INSTANCE(RPSysSystem)->getMem1RestHeap());
-    LogHeap("RPSysSystem (Mem2Rest)",
-            RP_GET_INSTANCE(RPSysSystem)->getMem2RestHeap());
-#endif
+    LogHeap("Res", RP_GET_INSTANCE(RPSysSystem)->getResourceHeap());
 
     Printf("\n");
 }
@@ -361,6 +348,7 @@ void Nw4rException::PrintBuildInfo() {
     Printf("%s\n", GetBuildDate());
     Printf("%s (%s)\n", GetBuildPack(), GetBuildTarget());
     Printf("Commit %s\n", GetGitCommitHash());
+
     Printf("\n");
 }
 
@@ -513,6 +501,7 @@ const char* Nw4rException::scExceptionNames[OS_ERR_MAX] = {
     "System Interrupt",
     "Thermal Interrupt",
     "Protection",
-    "Floating Point"};
+    "Floating Point",
+};
 
 } // namespace kiwi

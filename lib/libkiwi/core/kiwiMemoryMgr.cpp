@@ -189,22 +189,16 @@ bool MemoryMgr::IsHeapMemory(const void* pAddr) const {
  * @brief Dumps heap information for debugging purposes
  */
 void MemoryMgr::Dump() {
-    LogHeap("libkiwi:MEM1", mpHeapMEM1);
-    LogHeap("libkiwi:MEM2", mpHeapMEM2);
+    LogHeap("libkiwi (MEM1)", mpHeapMEM1);
+    LogHeap("libkiwi (MEM2)", mpHeapMEM2);
 
-    LogHeap("EGG:MEM1", RPSysSystem::getRootHeapMem1());
-    LogHeap("EGG:MEM2", RPSysSystem::getRootHeapMem2());
-    LogHeap("EGG:System", RPSysSystem::getSystemHeap());
+    LogHeap("RootMem1", RPSysSystem::getRootHeapMem1());
+    LogHeap("RootMem2", RPSysSystem::getRootHeapMem2());
 
-    LogHeap("RPSysSystem:System",
-            RP_GET_INSTANCE(RPSysSystem)->getSystemHeapRP());
-    LogHeap("RPSysSystem:Resource",
-            RP_GET_INSTANCE(RPSysSystem)->getResourceHeap());
+    LogHeap("SysMem1", RPSysSystem::getSystemHeap());
+    LogHeap("SysMem2", RP_GET_INSTANCE(RPSysSystem)->getSystemHeapRP());
 
-#if defined(PACK_RESORT)
-    LogHeap("RPSysSystem:RootScene",
-            RP_GET_INSTANCE(RPSysSystem)->getRootSceneHeap());
-#endif
+    LogHeap("Res", RP_GET_INSTANCE(RPSysSystem)->getResourceHeap());
 }
 
 } // namespace kiwi
