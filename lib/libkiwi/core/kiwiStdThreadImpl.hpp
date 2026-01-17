@@ -139,48 +139,17 @@ struct MemberFunction {
  * @param rObj Class instance
  */
 template <typename TFunc, typename TClass>
-K_DONT_INLINE void StdThreadImpl::SetMemberFunction(TFunc pFunc,
-                                                    const TClass& rObj) {
+K_INLINE void StdThreadImpl::SetMemberFunction(TFunc pFunc,
+                                               const TClass& rObj) {
 
     K_STATIC_ASSERT_EX(sizeof(TFunc) == sizeof(MemberFunction),
                        "Not a member function");
 
-    register const MemberFunction* pPtmf;
-    register u32 self;
-
-    // clang-format off
-    asm volatile {
-        mr pPtmf, r4 // pFunc -> pPtmf
-        mr self, r5 //  rObj  -> self
-    }
-    K_ASSERT_PTR(pPtmf);
-    K_ASSERT(self != 0);
-    // clang-format on
-
-    K_ASSERT_PTR(mpOSThread);
-    K_ASSERT(mpOSThread->state == OS_THREAD_STATE_READY);
-
-    // Adjust this pointer
-    self += pPtmf->toff;
-    SetGPR(3, self);
-
-    // Non-virtual function?
-    if (pPtmf->voff == -1) {
-        SetFunction(pPtmf->pAddr);
-        return;
-    }
-
-    // Find virtual function table
-    const void** pVtbl = BitCast<const void**>(self + pPtmf->voff);
-
-    // Find virtual function address
-    K_ASSERT(pPtmf->foff >= 0);
-    SetFunction(pVtbl[pPtmf->foff / sizeof(void*)]);
+    SetMemberFunctionImpl(&pFunc, &rObj);
 }
 
 //! @}
 } // namespace detail
-
 //! @}
 } // namespace kiwi
 

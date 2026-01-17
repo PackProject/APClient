@@ -11,6 +11,9 @@
 #define __CONCAT(x, y) x##y
 #define CONCAT(x, y) __CONCAT(x, y)
 
+// stop Kamek hooks from being dead-stripped when compiling with file-level IPA
+#define NO_DEAD_STRIP __attribute__((used, force_active))
+
 // allow Kamek hooks to be defined from C++ source files
 #pragma section ".kamek"
 
@@ -24,7 +27,7 @@
 // hook type IDs _must_ match what's in the Kamek source!
 // clang-format off
 #define KM_IDENTIFIER(key, counter) _k##key##counter
-#define KM_HOOK_INT(counter) __declspec(section ".kamek") static const u32 KM_IDENTIFIER(Hook, counter)
+#define KM_HOOK_INT(counter) NO_DEAD_STRIP __declspec(section ".kamek") static const u32 KM_IDENTIFIER(Hook, counter)
 // clang-format on
 
 // general hook definition macros
@@ -78,7 +81,7 @@
 //   branch to exitPoint when done; otherwise, it executes blr as normal
 #define KM_BRANCHDefInt(counter, addr, exitPoint, returnType, ...)             \
     returnType KM_IDENTIFIER(UserFunc, counter)(__VA_ARGS__);                  \
-    KM_BRANCH(addr, KM_IDENTIFIER(UserFunc, counter));                         \
+    KM_BRANCH(addr, KM_IDENTIFIER(UserFunc, counter));                           \
     KM_PATCH_EXIT_POINT(KM_IDENTIFIER(UserFunc, counter), exitPoint);          \
     returnType KM_IDENTIFIER(UserFunc, counter)(__VA_ARGS__)
 
@@ -92,7 +95,7 @@
 //   defined directly underneath.
 #define KM_CALL_DEF_INT(counter, addr, returnType, ...)                        \
     returnType KM_IDENTIFIER(UserFunc, counter)(__VA_ARGS__);                  \
-    KM_CALL(addr, KM_IDENTIFIER(UserFunc, counter));                           \
+    KM_CALL(addr, KM_IDENTIFIER(UserFunc, counter));                             \
     returnType KM_IDENTIFIER(UserFunc, counter)(__VA_ARGS__)
 
 #define KM_CALL_DEF_CPP(addr, returnType, ...)                                 \

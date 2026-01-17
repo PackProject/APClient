@@ -80,5 +80,45 @@ void StdThreadImpl::SetGPR(u32 idx, u32 value) {
     mpOSThread->context.gprs[idx] = value;
 }
 
+/**
+ * @brief Sets a member function to run on this thread (internal
+ * implementation)
+ */
+void StdThreadImpl::SetMemberFunctionImpl(
+    ... /* TFunc pFunc, const TClass& rObj */) {
+
+    register const MemberFunction* pPtmf;
+    register u32 self;
+
+    // clang-format off
+    asm volatile {
+        mr pPtmf, r4 // pFunc -> pPtmf
+        mr self, r5 //  rObj  -> self
+    }
+    K_ASSERT_PTR(pPtmf);
+    K_ASSERT(self != 0);
+    // clang-format on
+
+    K_ASSERT_PTR(mpOSThread);
+    K_ASSERT(mpOSThread->state == OS_THREAD_STATE_READY);
+
+    // Adjust this pointer
+    self += pPtmf->toff;
+    SetGPR(3, self);
+
+    // Non-virtual function?
+    if (pPtmf->voff == -1) {
+        SetFunction(pPtmf->pAddr);
+        return;
+    }
+
+    // Find virtual function table
+    const void** pVtbl = BitCast<const void**>(self + pPtmf->voff);
+
+    // Find virtual function address
+    K_ASSERT(pPtmf->foff >= 0);
+    SetFunction(pVtbl[pPtmf->foff / sizeof(void*)]);
+}
+
 } // namespace detail
 } // namespace kiwi

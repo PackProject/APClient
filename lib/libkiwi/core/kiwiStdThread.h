@@ -62,6 +62,13 @@ protected:
     void SetMemberFunction(TFunc pFunc, const TClass& rObj);
 
 private:
+    /**
+     * @brief Sets a member function to run on this thread (internal
+     * implementation)
+     */
+    void SetMemberFunctionImpl(...);
+
+private:
     OSThread* mpOSThread; //!< RVL thread
     u8* mpThreadStack;    //!< RVL thread stack
 

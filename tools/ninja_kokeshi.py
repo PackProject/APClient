@@ -541,6 +541,7 @@ class KokeshiProject:
             "-proc gekko",           # Gekko processor
             "-Cpp_exceptions off",   # Disable C++ exceptions
             "-enum int",             # Force 4-byte enumerations
+            "-ipa file",             # Apply file-level optimizations
             "-O4,s",                 # Max optimization level, focus on small code size
             "-use_lmw_stmw on",      # Use lmw/stmw for stack frames to save code size
             "-fp fmadd",             # Use compact floating-point instructions to save code size
