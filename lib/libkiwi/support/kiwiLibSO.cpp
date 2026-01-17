@@ -893,12 +893,20 @@ SOResult LibSO::SetSockOpt(SOSocket socket, SOSockOptLevel level, SOSockOpt opt,
 void LibSO::WaitForDHCP() {
     K_ASSERT_EX(sDevNetIpTop.IsOpen(), "Please call LibSO::Initialize");
 
+    u32 start = OSGetTick();
+
     SockAddr4 addr;
     while (addr.addr.raw == 0) {
+        // Give up after 10 seconds
+        if (OS_TICKS_DELTA(OSGetTick(), start) > OS_SEC_TO_TICKS(10)) {
+            break;
+        }
+
         GetHostID(addr);
         OSSleepTicks(OS_MSEC_TO_TICKS(10));
     }
 
+    K_ASSERT_EX(addr.addr.raw != 0, "DHCP failed");
     sLastError = SO_SUCCESS;
 }
 
