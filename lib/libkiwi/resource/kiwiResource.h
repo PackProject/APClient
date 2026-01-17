@@ -1,6 +1,3 @@
-// TODO(kiwi) Needs changes for WSR
-#if !defined(PACK_RESORT)
-
 #ifndef LIBKIWI_RESOURCE_RESOURCE_H
 #define LIBKIWI_RESOURCE_RESOURCE_H
 #include <Pack/RPKernel.h>
@@ -71,7 +68,5 @@ private:
 
 //! @}
 } // namespace kiwi
-
-#endif
 
 #endif

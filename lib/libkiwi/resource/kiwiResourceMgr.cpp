@@ -1,5 +1,4 @@
-// TODO(kiwi) Needs changes for WSR
-#if !defined(PACK_RESORT)
+#define LIBKIWI_INTERNAL
 
 // Implementation must be visible to the extension
 #define private protected
@@ -14,11 +13,14 @@
 
 #include <egg/core.h>
 
-#include <nw4r/ut.h>
-
+#include <revolution/FS.h>
 #include <revolution/OS.h>
 
 #include <cstring>
+
+#if defined(PACK_RESORT)
+#include <Sports2/Sp2Cmn.h>
+#endif
 
 namespace kiwi {
 namespace {
@@ -27,7 +29,7 @@ namespace {
  * @brief Gets the current locale directory name
  */
 String GetLocalDirectory() {
-    char buffer[32];
+    char buffer[FS_MAX_PATH + 1];
     std::memset(buffer, 0, sizeof(buffer));
 
     RP_GET_INSTANCE(RPSysProjectLocal)->appendLocalDirectory(buffer);
@@ -36,28 +38,37 @@ String GetLocalDirectory() {
     return String(buffer);
 }
 
+/**
+ * @brief Gets the static data directory name
+ */
+String GetStaticDirectory() {
+#if defined(PACK_RESORT)
+    return GetLocalDirectory() + "Static/";
+#else
+    const char* DIRS[kiwi::EPackID_Max] = {
+        "SportsStatic/",  // EPackID_SportsPack
+        "PartyStatic/",   // EPackID_PartyPack
+        "HealthStatic/",  // EPackID_HealthPack
+        "MusicStatic/",   // EPackID_MusicPack
+        "AllPackStatic/", // EPackID_AllPack
+    };
+
+    return DIRS[RP_GET_INSTANCE(RPSysProjectLocal)->getPack()];
+#endif
+}
+
 } // namespace
 
 /**
  * @brief Patch archive file extension
  */
-const char* ResourceMgr::scPatchExtension = ".wpatch";
+const char* ResourceMgr::PATCH_EXTENSION = ".wpatch";
 
-/**
- * @brief Static/shared directory names
- */
-const char* ResourceMgr::scStaticDirs[kiwi::EPackID_Max] = {
-    "SportsStatic/",  // EPackID_SportsPack
-    "PartyStatic/",   // EPackID_PartyPack
-    "HealthStatic/",  // EPackID_HealthPack
-    "MusicStatic/",   // EPackID_MusicPack
-    "AllPackStatic/", // EPackID_AllPack
-};
-
+#if !defined(PACK_RESORT)
 /**
  * @brief Scenes with cached archives
  */
-const kiwi::ESceneID ResourceMgr::scCachedScenes[] = {
+const kiwi::ESceneID ResourceMgr::CACHED_SCENES[] = {
 #if defined(PACK_SPORTS)
     ESceneID_RPSysPlayerSelectScene,
     ESceneID_RPSysNunchukScene,
@@ -88,9 +99,9 @@ const kiwi::ESceneID ResourceMgr::scCachedScenes[] = {
     ESceneID_RPPartyTitleScene,
     ESceneID_RPPartyMenuScene,
 #else
-#error Not yet implemented for WSR
 #endif
 };
+#endif
 
 /**
  * @brief Resource file cache
@@ -101,6 +112,160 @@ THashMap<String, const Resource*> ResourceMgr::sResourceCache;
  * @brief Decompressed resource file cache
  */
 THashMap<String, const Resource*> ResourceMgr::sDecompCache;
+
+/******************************************************************************
+ *
+ * For Wii Sports Resort
+ *
+ ******************************************************************************/
+
+#if defined(PACK_RESORT)
+
+#endif
+
+/******************************************************************************
+ *
+ * For original Pack Project titles
+ *
+ ******************************************************************************/
+
+#if !defined(PACK_RESORT)
+
+/**
+ * @brief Attempts to load the common archive for the specified scene
+ *
+ * @note The "common" archive must always be named `common.carc`.
+ *
+ * @param scene Scene ID
+ * @param pHeap Heap from which to allocate the buffer
+ * @return Multi-handle archive containing any patches
+ */
+MultiArchive* ResourceMgr::LoadGameCommonArchive(s32 scene, EGG::Heap* pHeap) {
+    if (pHeap == nullptr) {
+        pHeap = EGG::Heap::getCurrentHeap();
+    }
+
+    K_ASSERT_PTR(pHeap);
+
+    const char* pResDir = SceneCreator::GetInstance().GetSceneDirectory(scene);
+    K_ASSERT_PTR(pResDir);
+
+    String path = Format("Common/%scommon.carc", pResDir);
+
+    const Resource* pResource = LoadDecomp(path, pHeap);
+    K_ASSERT_PTR(pResource);
+
+    MultiArchive* pArchive = MultiArchive::Mount(*pResource, pHeap);
+    K_ASSERT_PTR(pArchive);
+
+    return pArchive;
+}
+KOKESHI_BY_PACK(KM_BRANCH(0x80187A0C, ResourceMgr::LoadGameCommonArchive), // Wii Sports
+                KM_BRANCH(0x801872D4, ResourceMgr::LoadGameCommonArchive), // Wii Play
+                /* not applicable */); // Wii Sports Resort
+
+/**
+ * @brief Attempts to load the local archive for the specified scene
+ *
+ * @note The "local" archive must always be named `local.carc`.
+ *
+ * @param scene Scene ID
+ * @param pHeap Heap from which to allocate the buffer
+ * @return Multi-handle archive containing any patches
+ */
+MultiArchive* ResourceMgr::LoadGameLocalArchive(s32 scene, EGG::Heap* pHeap) {
+    if (pHeap == nullptr) {
+        pHeap = EGG::Heap::getCurrentHeap();
+    }
+
+    K_ASSERT_PTR(pHeap);
+
+    const char* pResDir = SceneCreator::GetInstance().GetSceneDirectory(scene);
+    K_ASSERT_PTR(pResDir);
+
+    String path = Format("%s%slocal.carc", GetLocalDirectory().CStr(), pResDir);
+
+    const Resource* pResource = LoadDecomp(path, pHeap);
+    K_ASSERT_PTR(pResource);
+
+    MultiArchive* pArchive = MultiArchive::Mount(*pResource, pHeap);
+    K_ASSERT_PTR(pArchive);
+
+    return pArchive;
+}
+KOKESHI_BY_PACK(KM_BRANCH(0x80187964, ResourceMgr::LoadGameLocalArchive), // Wii Sports
+                KM_BRANCH(0x8018722C, ResourceMgr::LoadGameLocalArchive), // Wii Play
+                KOKESHI_NOTIMPLEMENTED); // Wii Sports Resort
+
+/**
+ * @brief Loads all resources with static lifetime
+ */
+void ResourceMgr::LoadStaticArchives() {
+    EGG::Heap* pResHeap = RP_GET_INSTANCE(RPSysSystem)->getResourceHeap();
+    K_ASSERT_PTR(pResHeap);
+
+    LoadStaticCommonArchive();
+    LoadStaticLocalArchive();
+    LoadMessageArchive();
+    LoadFontArchive();
+
+    IRPSysKokeshiBodyManager* pBodyManager = nullptr;
+
+#if defined(PACK_SPORTS)
+    pBodyManager = new (pResHeap) RPSportsBodyManager();
+#elif defined(PACK_PLAY)
+    pBodyManager = new (pResHeap) RPPartyBodyManager();
+#endif
+
+    K_ASSERT_PTR(pBodyManager);
+    RP_GET_INSTANCE(RPSysKokeshiManager)->SetBodyManager(pBodyManager);
+
+    RP_GET_INSTANCE(RPSysFontManager)->LoadResFonts();
+}
+KOKESHI_BY_PACK(KM_BRANCH_MF(0x80187604, ResourceMgr, LoadStaticArchives), // Wii Sports
+                KM_BRANCH_MF(0x80186FA4, ResourceMgr, LoadStaticArchives), // Wii Play
+                KOKESHI_NOTIMPLEMENTED); // Wii Sports Resort
+
+/**
+ * @brief Loads all cached resources
+ */
+void ResourceMgr::LoadCacheArchives() {
+    EGG::Heap* pResHeap = RP_GET_INSTANCE(RPSysSystem)->getResourceHeap();
+    K_ASSERT_PTR(pResHeap);
+
+    for (int i = 0; i < K_LENGTHOF(CACHED_SCENES); i++) {
+        const char* pResDir =
+            SceneCreator::GetInstance().GetSceneDirectory(CACHED_SCENES[i]);
+        K_ASSERT_PTR(pResDir);
+
+        String commonPath = Format("Common/%scommon.carc", pResDir);
+
+        // Not enough memory to decompress these all ahead of time
+        const Resource* pCommonResource = Load(commonPath, pResHeap);
+        K_ASSERT_PTR(pCommonResource);
+
+        // TODO(kiwi) Why only Wii Play? Are the local archives just that small?
+#if defined(PACK_PLAY)
+        String localPath =
+            Format("%s%slocal.carc", GetLocalDirectory().CStr(), pResDir);
+
+        // Not enough memory to decompress these all ahead of time
+        const Resource* pLocalResource = Load(localPath, pResHeap);
+        K_ASSERT_PTR(pLocalResource);
+#endif
+    }
+}
+KOKESHI_BY_PACK(KM_BRANCH_MF(0x801874B4, ResourceMgr, LoadCacheArchives), // Wii Sports
+                KM_BRANCH_MF(0x80186D54, ResourceMgr, LoadCacheArchives), // Wii Play
+                KOKESHI_NOTIMPLEMENTED); // Wii Sports Resort
+
+#endif
+
+/******************************************************************************
+ *
+ * Shared code
+ *
+ ******************************************************************************/
 
 /**
  * @brief Attempts to get the specified file from the archive
@@ -126,9 +291,9 @@ void* ResourceMgr::GetFileFromArchive(MultiArchive* pArchive, const char* pPath,
 
     return pFileData;
 }
-KOKESHI_BY_PACK(KOKESHI_NOTIMPLEMENTED, // Wii Sports
-                KM_BRANCH(0x801871E0, ResourceMgr::GetFileFromArchive), // Wii Play
-                KOKESHI_NOTIMPLEMENTED); // Wii Sports Resort
+KOKESHI_BY_PACK(KM_BRANCH(0x80187878, ResourceMgr::GetFileFromArchive),  // Wii Sports
+                KM_BRANCH(0x801871E0, ResourceMgr::GetFileFromArchive),  // Wii Play
+                KM_BRANCH(0x80232594, ResourceMgr::GetFileFromArchive)); // Wii Sports Resort
 
 /**
  * @brief Removes the specified resource file from the cache
@@ -161,169 +326,9 @@ void* ResourceMgr::GetMessageResource(const char* pPath) {
     return GetFileFromArchive(
         static_cast<MultiArchive*>(GetInstance().mpMessageArchive), pPath);
 }
-KOKESHI_BY_PACK(KOKESHI_NOTIMPLEMENTED, // Wii Sports
-                KM_BRANCH(0x801871A4, ResourceMgr::GetMessageResource), // Wii Play
-                KOKESHI_NOTIMPLEMENTED); // Wii Sports Resort
-
-/**
- * @brief Attempts to load the common archive for the specified scene
- *
- * @note The "common" archive must always be named `common.carc`.
- *
- * @param scene Scene ID
- * @param pHeap Heap from which to allocate the buffer
- * @return Multi-handle archive containing any patches
- */
-MultiArchive* ResourceMgr::LoadGameCommonArchive(s32 scene, EGG::Heap* pHeap) {
-    if (pHeap == nullptr) {
-        pHeap = EGG::Heap::getCurrentHeap();
-    }
-
-    K_ASSERT_PTR(pHeap);
-
-    const char* pResDir = SceneCreator::GetInstance().GetSceneDirectory(scene);
-    K_ASSERT_PTR(pResDir);
-
-    const Resource* pResource = LoadDecomp( //
-        Format("Common/%scommon.carc",      //
-               pResDir),                    //
-        pHeap);
-
-    K_ASSERT_PTR(pResource);
-
-    MultiArchive* pArchive = MultiArchive::Mount(*pResource, pHeap);
-    K_ASSERT_PTR(pArchive);
-
-    return pArchive;
-}
-KOKESHI_BY_PACK(KOKESHI_NOTIMPLEMENTED, // Wii Sports
-                KM_BRANCH(0x801872D4, ResourceMgr::LoadGameCommonArchive), // Wii Play
-                KOKESHI_NOTIMPLEMENTED); // Wii Sports Resort
-
-/**
- * @brief Attempts to load the local archive for the specified scene
- *
- * @note The "local" archive must always be named `local.carc`.
- *
- * @param scene Scene ID
- * @param pHeap Heap from which to allocate the buffer
- * @return Multi-handle archive containing any patches
- */
-MultiArchive* ResourceMgr::LoadGameLocalArchive(s32 scene, EGG::Heap* pHeap) {
-    if (pHeap == nullptr) {
-        pHeap = EGG::Heap::getCurrentHeap();
-    }
-
-    K_ASSERT_PTR(pHeap);
-
-    const char* pResDir = SceneCreator::GetInstance().GetSceneDirectory(scene);
-    K_ASSERT_PTR(pResDir);
-
-    const Resource* pResource = LoadDecomp( //
-        Format("%s%slocal.carc",            //
-               GetLocalDirectory().CStr(),  //
-               pResDir),                    //
-        pHeap);
-
-    K_ASSERT_PTR(pResource);
-
-    MultiArchive* pArchive = MultiArchive::Mount(*pResource, pHeap);
-    K_ASSERT_PTR(pArchive);
-
-    return pArchive;
-}
-KOKESHI_BY_PACK(KOKESHI_NOTIMPLEMENTED, // Wii Sports
-                KM_BRANCH(0x8018722C, ResourceMgr::LoadGameLocalArchive), // Wii Play
-                KOKESHI_NOTIMPLEMENTED); // Wii Sports Resort
-
-/**
- * @brief Loads all resources with static lifetime
- */
-void ResourceMgr::LoadStaticArchives() {
-    const char* pStaticDir =
-        scStaticDirs[RP_GET_INSTANCE(RPSysProjectLocal)->getPack()];
-
-    EGG::Heap* pResHeap = RP_GET_INSTANCE(RPSysSystem)->getResourceHeap();
-    K_ASSERT_PTR(pResHeap);
-
-    const Resource* pResource = nullptr;
-
-    // Common static archive
-    pResource =
-        LoadDecomp(Format("Common/%scommon.carc", pStaticDir), pResHeap);
-
-    K_ASSERT_PTR(pResource);
-    mpStaticCommonArchive = MultiArchive::Mount(*pResource, pResHeap);
-    K_ASSERT_PTR(mpStaticCommonArchive);
-
-    // Locale static archive
-    pResource = LoadDecomp(
-        Format("%s%slocal.carc", GetLocalDirectory().CStr(), pStaticDir),
-        pResHeap);
-
-    K_ASSERT_PTR(pResource);
-    mpStaticLocalArchive = MultiArchive::Mount(*pResource, pResHeap);
-    K_ASSERT_PTR(mpStaticLocalArchive);
-
-    // Message archive
-    pResource = LoadDecomp(
-        Format("%sMessage/message.carc", GetLocalDirectory().CStr()), pResHeap);
-
-    K_ASSERT_PTR(pResource);
-    mpMessageArchive = MultiArchive::Mount(*pResource, pResHeap);
-    K_ASSERT_PTR(mpMessageArchive);
-
-    // Font archive
-    pResource = LoadDecomp(
-        Format("%sFont/font.carc", GetLocalDirectory().CStr()), pResHeap);
-
-    K_ASSERT_PTR(pResource);
-    mpFontArchive = MultiArchive::Mount(*pResource, pResHeap);
-    K_ASSERT_PTR(mpFontArchive);
-
-    RPPartyBodyManager* pBodyManager = new (pResHeap) RPPartyBodyManager();
-    K_ASSERT_PTR(pBodyManager);
-    RP_GET_INSTANCE(RPSysKokeshiManager)->SetBodyManager(pBodyManager);
-
-    RP_GET_INSTANCE(RPSysFontManager)->LoadResFonts();
-}
-KOKESHI_BY_PACK(KOKESHI_NOTIMPLEMENTED, // Wii Sports
-                KM_BRANCH_MF(0x80186FA4, ResourceMgr, LoadStaticArchives), // Wii Play
-                KOKESHI_NOTIMPLEMENTED); // Wii Sports Resort
-
-/**
- * @brief Loads all cached resources
- */
-void ResourceMgr::LoadCacheArchives() {
-    EGG::Heap* pResHeap = RP_GET_INSTANCE(RPSysSystem)->getResourceHeap();
-    K_ASSERT_PTR(pResHeap);
-
-    for (int i = 0; i < K_LENGTHOF(scCachedScenes); i++) {
-        const char* pResDir =
-            SceneCreator::GetInstance().GetSceneDirectory(scCachedScenes[i]);
-
-        K_ASSERT_PTR(pResDir);
-
-        // Not enough memory to decompress these all ahead of time
-        const Resource* pCommonResource =
-            Load(Format("Common/%scommon.carc", pResDir), pResHeap);
-
-        K_ASSERT_PTR(pCommonResource);
-
-        // TODO(kiwi) Why only Wii Play? Are the local archives just that small?
-#if defined(PACK_PLAY)
-        // Not enough memory to decompress these all ahead of time
-        const Resource* pLocalResource =
-            Load(Format("%s%slocal.carc", GetLocalDirectory().CStr(), pResDir),
-                 pResHeap);
-
-        K_ASSERT_PTR(pLocalResource);
-#endif
-    }
-}
-KOKESHI_BY_PACK(KOKESHI_NOTIMPLEMENTED, // Wii Sports
-                KM_BRANCH_MF(0x80186D54, ResourceMgr, LoadCacheArchives), // Wii Play
-                KOKESHI_NOTIMPLEMENTED); // Wii Sports Resort
+KOKESHI_BY_PACK(KM_BRANCH(0x8018783C, ResourceMgr::GetMessageResource),  // Wii Sports
+                KM_BRANCH(0x801871A4, ResourceMgr::GetMessageResource),  // Wii Play
+                KM_BRANCH(0x80232580, ResourceMgr::GetMessageResource)); // Wii Sports Resort
 
 /**
  * @brief Loads the Kokeshi archive
@@ -334,15 +339,92 @@ void ResourceMgr::LoadKokeshiArchive() {
 
     const Resource* pResource =
         LoadDecomp("Common/Kokeshi/common.carc", pResHeap);
-
     K_ASSERT_PTR(pResource);
 
     mpKokeshiArchive = MultiArchive::Mount(*pResource, pResHeap);
     K_ASSERT_PTR(mpKokeshiArchive);
 }
-KOKESHI_BY_PACK(KOKESHI_NOTIMPLEMENTED, // Wii Sports
-                KM_BRANCH_MF(0x80186CEC, ResourceMgr, LoadKokeshiArchive), // Wii Play
-                KOKESHI_NOTIMPLEMENTED); // Wii Sports Resort
+KOKESHI_BY_PACK(KM_BRANCH_MF(0x8018744C, ResourceMgr, LoadKokeshiArchive),  // Wii Sports
+                KM_BRANCH_MF(0x80186CEC, ResourceMgr, LoadKokeshiArchive),  // Wii Play
+                KM_BRANCH_MF(0x80232374, ResourceMgr, LoadKokeshiArchive)); // Wii Sports Resort
+
+/**
+ * @brief Loads the static lifetime common archive
+ */
+void ResourceMgr::LoadStaticCommonArchive() {
+    EGG::Heap* pResHeap = RP_GET_INSTANCE(RPSysSystem)->getResourceHeap();
+    K_ASSERT_PTR(pResHeap);
+
+    String path = Format("Common/%scommon.carc", GetStaticDirectory().CStr());
+
+    const Resource* pResource = LoadDecomp(path, pResHeap);
+    K_ASSERT_PTR(pResource);
+
+    mpStaticCommonArchive = MultiArchive::Mount(*pResource, pResHeap);
+    K_ASSERT_PTR(mpStaticCommonArchive);
+}
+KOKESHI_BY_PACK(/* not applicable */,                                       // Wii Sports
+                KM_BRANCH_MF(0x80186CEC, ResourceMgr, LoadKokeshiArchive),  // Wii Play
+                KM_BRANCH_MF(0x80232290, ResourceMgr, LoadKokeshiArchive)); // Wii Sports Resort
+
+/**
+ * @brief Loads the static lifetime local archive
+ */
+void ResourceMgr::LoadStaticLocalArchive() {
+    EGG::Heap* pResHeap = RP_GET_INSTANCE(RPSysSystem)->getResourceHeap();
+    K_ASSERT_PTR(pResHeap);
+
+    String path = Format("%s%slocal.carc", GetLocalDirectory().CStr(),
+                         GetStaticDirectory().CStr());
+
+    const Resource* pResource = LoadDecomp(path, pResHeap);
+    K_ASSERT_PTR(pResource);
+
+    mpStaticLocalArchive = MultiArchive::Mount(*pResource, pResHeap);
+    K_ASSERT_PTR(mpStaticLocalArchive);
+}
+
+/**
+ * @brief Loads the message archive
+ */
+void ResourceMgr::LoadMessageArchive() {
+    EGG::Heap* pResHeap = RP_GET_INSTANCE(RPSysSystem)->getResourceHeap();
+    K_ASSERT_PTR(pResHeap);
+
+    String path = Format("%sMessage/message.carc", GetLocalDirectory().CStr());
+
+    const Resource* pResource = LoadDecomp(path, pResHeap);
+    K_ASSERT_PTR(pResource);
+
+    mpMessageArchive = MultiArchive::Mount(*pResource, pResHeap);
+    K_ASSERT_PTR(mpMessageArchive);
+
+#if defined(PACK_RESORT)
+    RP_GET_INSTANCE(Sp2::Cmn::MsgResMgr)->CreateInstance();
+#endif
+}
+KOKESHI_BY_PACK(/* not applicable */, // Wii Sports
+                /* not applicable */, // Wii Play
+                KM_BRANCH_MF(0x80231974, ResourceMgr, LoadMessageArchive)); // Wii Sports Resort
+
+/**
+ * @brief Loads the font archive
+ */
+void ResourceMgr::LoadFontArchive() {
+    EGG::Heap* pResHeap = RP_GET_INSTANCE(RPSysSystem)->getResourceHeap();
+    K_ASSERT_PTR(pResHeap);
+
+    String path = Format("%sFont/font.carc", GetLocalDirectory().CStr());
+
+    const Resource* pResource = LoadDecomp(path, pResHeap);
+    K_ASSERT_PTR(pResource);
+
+    mpFontArchive = MultiArchive::Mount(*pResource, pResHeap);
+    K_ASSERT_PTR(mpFontArchive);
+}
+KOKESHI_BY_PACK(/* not applicable */, // Wii Sports
+                /* not applicable */, // Wii Play
+                KM_BRANCH_MF(0x802318E4, ResourceMgr, LoadFontArchive)); // Wii Sports Resort
 
 /**
  * @brief Attempts to load the specified resource file
@@ -386,7 +468,7 @@ const Resource* ResourceMgr::Load(const char* pPath, EGG::Heap* pHeap,
     K_ASSERT_PTR(pNewResource);
 
     // Patch file is optional
-    String patchPath = String(pPath) + scPatchExtension;
+    String patchPath = String(pPath) + PATCH_EXTENSION;
     void* pPatchData = FileRipper::Rip(patchPath, EStorage_DVD, arg);
 
     if (pPatchData != nullptr) {
@@ -522,5 +604,3 @@ RPSysFile* ResourceMgr::DecompFile(const RPSysFile& rFile, EGG::Heap* pHeap) {
 }
 
 } // namespace kiwi
-
-#endif

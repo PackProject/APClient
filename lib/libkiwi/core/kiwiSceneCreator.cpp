@@ -352,12 +352,9 @@ bool SceneCreator::ChangeSceneAfterFade(s32 id, const nw4r::ut::Color* pColor) {
 }
 #endif
 
-KOKESHI_BY_PACK(KM_BRANCH_MF(0x80184ba4, SceneCreator,
-                             ChangeSceneAfterFade), // Wii Sports
-                KM_BRANCH_MF(0x8018459c, SceneCreator,
-                             ChangeSceneAfterFade), // Wii Play
-                KM_BRANCH_MF(0x8022edfc, SceneCreator,
-                             ChangeSceneAfterFade)); // Wii Sports Resort
+KOKESHI_BY_PACK(KM_BRANCH_MF(0x80184ba4, SceneCreator, ChangeSceneAfterFade),  // Wii Sports
+                KM_BRANCH_MF(0x8018459c, SceneCreator, ChangeSceneAfterFade),  // Wii Play
+                KM_BRANCH_MF(0x8022edfc, SceneCreator, ChangeSceneAfterFade)); // Wii Sports Resort
 
 /**
  * @brief Gets the specified scene's name
@@ -380,12 +377,9 @@ const char* SceneCreator::GetSceneDirectory(s32 id) const {
     const Info* pInfo = GetSceneInfo(id);
     return pInfo->dir;
 }
-KOKESHI_BY_PACK(KM_BRANCH_MF(0x80184758, SceneCreator,
-                             GetSceneDirectory), // Wii Sports
-                KM_BRANCH_MF(0x80184124, SceneCreator,
-                             GetSceneDirectory), // Wii Play
-                KM_BRANCH_MF(0x8022ebe8, SceneCreator,
-                             GetSceneDirectory)); // Wii Sports Resort
+KOKESHI_BY_PACK(KM_BRANCH_MF(0x80184758, SceneCreator, GetSceneDirectory),  // Wii Sports
+                KM_BRANCH_MF(0x80184124, SceneCreator, GetSceneDirectory),  // Wii Play
+                KM_BRANCH_MF(0x8022ebe8, SceneCreator, GetSceneDirectory)); // Wii Sports Resort
 
 #if defined(PACK_RESORT)
 /**
@@ -456,12 +450,9 @@ EExitType SceneCreator::GetSceneExitType(s32 id) const {
     K_ASSERT_PTR(pInfo);
     return pInfo->exit;
 }
-KOKESHI_BY_PACK(KM_BRANCH_MF(0x80184558, SceneCreator,
-                             GetSceneExitType), // Wii Sports
-                KM_BRANCH_MF(0x80183f90, SceneCreator,
-                             GetSceneExitType), // Wii Play
-                KM_BRANCH_MF(0x8022eac4, SceneCreator,
-                             GetSceneExitType)); // Wii Sports Resort
+KOKESHI_BY_PACK(KM_BRANCH_MF(0x80184558, SceneCreator, GetSceneExitType),  // Wii Sports
+                KM_BRANCH_MF(0x80183f90, SceneCreator, GetSceneExitType),  // Wii Play
+                KM_BRANCH_MF(0x8022eac4, SceneCreator, GetSceneExitType)); // Wii Sports Resort
 
 /**
  * @brief Tests whether the specified scene requires the RP common sound
@@ -538,10 +529,9 @@ RPSysScene* SceneCreator::Create(s32 id) {
     pScene->setCreatorSceneID(mLastSceneID);
     return pScene;
 }
-KOKESHI_BY_PACK(KM_BRANCH_MF(0x80184838, SceneCreator, Create), // Wii Sports
-                KM_BRANCH_MF(0x80184230, SceneCreator, Create), // Wii Play
-                KM_BRANCH_MF(0x8022ec90, SceneCreator,
-                             Create)); // Wii Sports Resort
+KOKESHI_BY_PACK(KM_BRANCH_MF(0x80184838, SceneCreator, Create),  // Wii Sports
+                KM_BRANCH_MF(0x80184230, SceneCreator, Create),  // Wii Play
+                KM_BRANCH_MF(0x8022ec90, SceneCreator, Create)); // Wii Sports Resort
 
 /**
  * @brief Creates a new system scene by ID
@@ -600,7 +590,7 @@ RPSysScene* SceneCreator::CreatePackScene(s32 id) {
  */
 RPSysScene* SceneCreator::CreateUserScene(s32 id) {
     const Info* pInfo = GetSceneInfo(id);
-    K_ASSERT_PTR(pInfo);
+    K_ASSERT_PTR_EX(pInfo, "Invalid user scene: %d", id);
     return pInfo->pCt();
 }
 

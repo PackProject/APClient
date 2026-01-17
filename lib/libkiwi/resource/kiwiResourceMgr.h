@@ -1,6 +1,3 @@
-// TODO(kiwi) Needs changes for WSR
-#if !defined(PACK_RESORT)
-
 #ifndef LIBKIWI_RESOURCE_RESOURCE_MGR_H
 #define LIBKIWI_RESOURCE_RESOURCE_MGR_H
 #include <libkiwi/k_types.h>
@@ -48,6 +45,12 @@ public:
      */
     static void* GetMessageResource(const char* pPath);
 
+#if defined(PACK_RESORT)
+    // TODO(kiwi) FUN_80232228
+    // TODO(kiwi) FUN_80231fe4
+    static MultiArchive* LoadArchiveWS2(...);
+#endif
+
     /**
      * @brief Attempts to load the common archive for the specified scene
      *
@@ -88,6 +91,28 @@ public:
     void LoadKokeshiArchive();
 
 private:
+    LIBKIWI_KAMEK_PUBLIC
+
+    /**
+     * @brief Loads the static lifetime common archive
+     */
+    void LoadStaticCommonArchive();
+
+    /**
+     * @brief Loads the static lifetime local archive
+     */
+    void LoadStaticLocalArchive();
+
+    /**
+     * @brief Loads the message archive
+     */
+    void LoadMessageArchive();
+
+    /**
+     * @brief Loads the font archive
+     */
+    void LoadFontArchive();
+
     /**
      * @brief Attempts to load the specified resource file
      *
@@ -131,13 +156,12 @@ private:
 
 private:
     //! Patch archive file extension
-    static const char* scPatchExtension;
+    static const char* PATCH_EXTENSION;
 
-    //! Static/shared directory names
-    static const char* scStaticDirs[kiwi::EPackID_Max];
-
+#if !defined(PACK_RESORT)
     //! Scenes with cached archives
-    static const kiwi::ESceneID scCachedScenes[];
+    static const kiwi::ESceneID CACHED_SCENES[];
+#endif
 
     //! Raw resource file cache
     static THashMap<String, const Resource*> sResourceCache;
@@ -147,7 +171,5 @@ private:
 
 //! @}
 } // namespace kiwi
-
-#endif
 
 #endif

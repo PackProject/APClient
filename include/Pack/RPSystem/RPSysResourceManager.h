@@ -22,6 +22,34 @@ class RPSysResourceManager {
     RP_SINGLETON_DECL(RPSysResourceManager);
 
 public:
+#if defined(PACK_RESORT)
+    /**
+     * @brief Archive type
+     */
+    enum EArchive {
+        EArchive_Common,  //!< common.carc
+        EArchive_Local,   //!< local.carc
+        EArchive_Common2, //!< common.carc
+        EArchive_Local2,  //!< local.carc
+        EArchive_Stage,   //!< StageArc.carc
+        EArchive_Effect,  //!< effect.carc
+
+        EArchive_Max
+    };
+
+    /**
+     * @brief File list index
+     */
+    enum EList {
+        EList_Main,
+        EList_Static,
+        EList_Cache,
+
+        EList_Max
+    };
+#endif
+
+public:
     /**
      * @brief Loads a file from the DVD
      * @remark If no heap is specified, the current heap is used instead.
@@ -164,10 +192,14 @@ public:
     void GetGameSoundLocalPath(char* pBuffer, u32 bufSize, s32 id);
 
 private:
+#if defined(PACK_RESORT)
+    nw4r::ut::List mFileLists[EList_Max]; // at 0x4
+#else
     //! Resource cache for compressed files
     nw4r::ut::List mFileCache; // at 0x4
     //! Resource cache for decompressed files
     nw4r::ut::List mDecompFileCache; // at 0x10
+#endif
 
     //! Work buffer for building filepaths
     char* mpPathWork; // at 0x1C
