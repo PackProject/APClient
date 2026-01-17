@@ -3,9 +3,6 @@
 #include <cstdio>
 
 namespace kiwi {
-
-K_DYNAMIC_SINGLETON_IMPL(Nw4rConsole);
-
 namespace {
 
 /**
@@ -46,6 +43,7 @@ Nw4rConsole::Nw4rConsole() {
  */
 Nw4rConsole::~Nw4rConsole() {
     delete[] mpTextBuffer;
+    mpTextBuffer = nullptr;
 }
 
 /**

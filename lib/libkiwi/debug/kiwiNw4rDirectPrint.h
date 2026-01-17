@@ -2,7 +2,6 @@
 #define LIBKIWI_DEBUG_NW4R_DIRECT_PRINT_H
 #include <libkiwi/core/kiwiColor.h>
 #include <libkiwi/k_types.h>
-#include <libkiwi/util/kiwiDynamicSingleton.h>
 
 namespace kiwi {
 //! @addtogroup libkiwi_debug
@@ -140,11 +139,6 @@ private:
     u16 mBufferRows;   //!< Framebuffer rows
 
     Color mBufferColor; //!< Framebuffer text color
-
-    //! Default buffer width (in pixels)
-    static const u16 scBufferWidthDefault = 640;
-    //! Default buffer height (in pixels)
-    static const u16 scBufferHeightDefault = 480;
 
     static const u32 scFontData[];  //!< Font data pt. 1
     static const u32 scFontData2[]; //!< Font data pt. 2

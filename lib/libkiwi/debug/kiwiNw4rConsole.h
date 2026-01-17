@@ -10,10 +10,18 @@ namespace kiwi {
 /**
  * @brief Reimplementation of NW4R's debug console
  */
-class Nw4rConsole : public DynamicSingleton<Nw4rConsole> {
-    friend class DynamicSingleton<Nw4rConsole>;
-
+class Nw4rConsole {
 public:
+    /**
+     * @brief Constructor
+     */
+    Nw4rConsole();
+
+    /**
+     * @brief Destructor
+     */
+    virtual ~Nw4rConsole();
+
     /**
      * @brief Toggles console visibilty
      */
@@ -69,16 +77,6 @@ public:
     void DrawDirect() const;
 
 private:
-    /**
-     * @brief Constructor
-     */
-    Nw4rConsole();
-
-    /**
-     * @brief Destructor
-     */
-    virtual ~Nw4rConsole();
-
     /**
      * @brief Scrolls console display horizontally
      *

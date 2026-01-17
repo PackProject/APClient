@@ -1,5 +1,7 @@
 #include <libkiwi.h>
 
+#include <egg/core.h>
+
 #include <revolution/VI.h>
 
 #include <cstdio>
@@ -24,6 +26,25 @@ void WaitVIRetrace() {
 }
 
 /**
+ * @brief Clears a framebuffer using the specified color
+ *
+ * @param pXfb Framebuffer
+ * @param size Framebuffer size
+ * @param color Clear color
+ */
+void ClearFB(void* pXfb, u32 size, Color color) {
+    u32* pPtr = static_cast<u32*>(pXfb);
+
+    // Framebuffer uses YUV encoding
+    color = color.ToYuv();
+    u32 data = color.r << 24 | color.g << 16 | color.r << 8 | color.b;
+
+    for (u32 i = 0; i < size / sizeof(u32); i++) {
+        pPtr[i] = data;
+    }
+}
+
+/**
  * @brief Creates framebuffer
  *
  * @param pRmo GX render configuration
@@ -33,21 +54,14 @@ void* CreateFB(const GXRenderModeObj* pRmo) {
     // Calculate framebuffer size in bytes
     u32 size = RoundUp(pRmo->fbWidth, 16) * pRmo->xfbHeight * sizeof(u16);
 
-    // Try using heap, but be careful to not throw a nested exception
-    void* pXfb = nullptr;
-    if (MemoryMgr::GetInstance().GetFreeSize(EMemory_MEM1) > size) {
-        pXfb = new (32, EMemory_MEM1) u8[size];
-    }
+    u8* pXfb = static_cast<u8*>(OSGetArenaHi()) - size;
+    pXfb = RoundUp(pXfb, 32);
 
-    // Force allocation from OS arena
-    if (pXfb == nullptr) {
-        K_LOG("Can't get framebuffer from heap\n");
-        pXfb = static_cast<u8*>(OSGetArenaHi()) - size;
-        OSSetArenaHi(pXfb);
-    }
+    ClearFB(pXfb, size, Color::BLUE);
+    VISetNextFrameBuffer(pXfb);
 
     VIConfigure(pRmo);
-    VISetNextFrameBuffer(pXfb);
+
     return pXfb;
 }
 
@@ -56,51 +70,53 @@ void* CreateFB(const GXRenderModeObj* pRmo) {
 /**
  * @brief Constructor
  */
-Nw4rDirectPrint::Nw4rDirectPrint() {
+Nw4rDirectPrint::Nw4rDirectPrint()
+    : mpBuffer(nullptr),
+      mBufferSize(0),
+      mBufferWidth(0),
+      mBufferHeight(0),
+      mBufferRows(0) {
+
     SetColor(Color::WHITE);
-    ChangeXfb(nullptr, scBufferWidthDefault, scBufferHeightDefault);
 }
 
 /**
  * @brief Destructor
  */
 Nw4rDirectPrint::~Nw4rDirectPrint() {
-    delete mpBuffer;
+    delete[] mpBuffer;
+    mpBuffer = nullptr;
 }
 
 /**
  * @brief Sets up XFB for printing
  */
 void Nw4rDirectPrint::SetupXfb() {
-    const GXRenderModeObj* pRmo = nullptr;
-
-    // Initialize direct print
     SetColor(Color::WHITE);
 
-// TODO(kiwi) WS2 framebuffer is 608x456. Why?
-#if defined(PACK_SPORTS) || defined(PACK_PLAY)
+    void* pXfb = nullptr;
+    const GXRenderModeObj* pRmo = nullptr;
+
+    // TODO(kiwi) Why won't this work with WS2?
+#if !defined(PACK_RESORT)
     // Try to repurpose current framebuffer
-    void* pXfb = VIGetCurrentFrameBuffer();
+    pXfb = VIGetCurrentFrameBuffer();
+    pRmo = EGG::BaseSystem::getVideo()->getRenderModeObj();
+#endif
 
     // Create new framebuffer if one doesn't exist
     if (pXfb == nullptr) {
+        K_LOG("Need to create framebuffer\n");
+
         pRmo = LibGX::GetDefaultRenderMode();
         pXfb = CreateFB(pRmo);
     }
-#elif defined(PACK_RESORT)
-    pRmo = LibGX::GetDefaultRenderMode();
-    void* pXfb = CreateFB(pRmo);
-#endif
 
     VISetBlack(FALSE);
     VIFlush();
     WaitVIRetrace();
 
-    if (pRmo != nullptr) {
-        ChangeXfb(pXfb, pRmo->fbWidth, pRmo->xfbHeight);
-    } else {
-        ChangeXfb(pXfb, scBufferWidthDefault, scBufferHeightDefault);
-    }
+    ChangeXfb(pXfb, pRmo->fbWidth, pRmo->xfbHeight);
 }
 
 /**

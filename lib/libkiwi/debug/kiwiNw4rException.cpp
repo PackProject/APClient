@@ -33,11 +33,12 @@ K_DYNAMIC_SINGLETON_IMPL(Nw4rException);
  * @brief Constructor
  */
 Nw4rException::Nw4rException()
-    : mpUserCallback(DefaultCallback),
+    : mpConsole(nullptr),
+      mpUserCallback(DefaultCallback),
       mpUserCallbackArg(nullptr),
       mpRenderMode(nullptr) {
 
-    Nw4rConsole::CreateInstance();
+    mpConsole = new Nw4rConsole();
 
     // Create exception thread
     OSCreateThread(&mThread, ThreadFunc, nullptr,
@@ -56,6 +57,14 @@ Nw4rException::Nw4rException()
     // Auto-detect render mode
     mpRenderMode = LibGX::GetDefaultRenderMode();
     K_WARN_EX(mpRenderMode == nullptr, "No render mode!\n");
+}
+
+/**
+ * @brief Destructor
+ */
+Nw4rException::~Nw4rException() {
+    delete mpConsole;
+    mpConsole = nullptr;
 }
 
 /**
@@ -90,7 +99,7 @@ void Nw4rException::Printf(const char* pMsg, ...) {
 
     std::va_list list;
     va_start(list, pMsg);
-    Nw4rConsole::GetInstance().VPrintf(pMsg, list);
+    mpConsole->VPrintf(pMsg, list);
     va_end(list);
 }
 
@@ -191,7 +200,9 @@ void Nw4rException::ErrorHandler(u8 error, OSContext* pCtx, u32 _dsisr,
 void Nw4rException::DefaultCallback(const Info& rInfo, void* pArg) {
 #pragma unused(rInfo)
 #pragma unused(pArg)
-    Nw4rConsole::GetInstance().DrawDirect();
+
+    Nw4rConsole* pConsole = GetInstance().mpConsole;
+    pConsole->DrawDirect();
 
     while (true) {
         // Only re-draw when display is changed
@@ -204,16 +215,16 @@ void Nw4rException::DefaultCallback(const Info& rInfo, void* pArg) {
 
             // Vertical scroll
             if (ks.hold & KPAD_BTN_DUP) {
-                Nw4rConsole::GetInstance().ScrollUp();
+                pConsole->ScrollUp();
             } else if (ks.hold & KPAD_BTN_DDOWN) {
-                Nw4rConsole::GetInstance().ScrollDown();
+                pConsole->ScrollDown();
             }
 
             // Horizontal scroll
             if (ks.hold & KPAD_BTN_DLEFT) {
-                Nw4rConsole::GetInstance().ScrollLeft();
+                pConsole->ScrollLeft();
             } else if (ks.hold & KPAD_BTN_DRIGHT) {
-                Nw4rConsole::GetInstance().ScrollRight();
+                pConsole->ScrollRight();
             }
 
             // Determine whether we need to draw the display again
@@ -222,7 +233,7 @@ void Nw4rException::DefaultCallback(const Info& rInfo, void* pArg) {
         }
 
         if (draw) {
-            Nw4rConsole::GetInstance().DrawDirect();
+            pConsole->DrawDirect();
         }
 
         // Wait 100ms before polling again
@@ -244,7 +255,7 @@ void Nw4rException::DumpError() {
     // Acquire framebuffer
     Nw4rDirectPrint::GetInstance().SetupXfb();
     // Show console
-    Nw4rConsole::GetInstance().SetVisible(true);
+    mpConsole->SetVisible(true);
 
     // Dump information
     if (mErrorInfo.error == EError_AssertFail) {
@@ -255,7 +266,7 @@ void Nw4rException::DumpError() {
 
     // Display information
     while (true) {
-        Nw4rConsole::GetInstance().DrawDirect();
+        mpConsole->DrawDirect();
 
         if (mpUserCallback != nullptr) {
             mpUserCallback(mErrorInfo, mpUserCallbackArg);

@@ -9,6 +9,9 @@ namespace kiwi {
 //! @addtogroup libkiwi_debug
 //! @{
 
+// Forward declarations
+class Nw4rConsole;
+
 /**
  * @brief Reimplementation of NW4R's exception
  */
@@ -142,6 +145,11 @@ private:
     Nw4rException();
 
     /**
+     * @brief Destructor
+     */
+    ~Nw4rException();
+
+    /**
      * @brief Exception thread main function
      *
      * @param pArg Thread function argument
@@ -213,6 +221,9 @@ private:
 private:
     //! Exception thread stack size
     static const u32 scStackSize = 0x4000;
+
+private:
+    Nw4rConsole* mpConsole; //!< Exception console
 
     Info mErrorInfo; //!< Exception/assertion info
 
