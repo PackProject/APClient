@@ -24,10 +24,10 @@ SocketBase::SocketBase(SOProtoFamily family, SOSockType type)
     success = SetBlockingIOP(false);
     K_ASSERT(success);
 
-    // success = SetSendBufferSize(0xFFFF);
-    // K_ASSERT(success);
-    // success = SetRecvBufferSize(0xFFFF);
-    // K_ASSERT(success);
+    success = SetSendBufferSize(0xFFFF);
+    K_ASSERT(success);
+    success = SetRecvBufferSize(0xFFFF);
+    K_ASSERT(success);
 }
 
 /**

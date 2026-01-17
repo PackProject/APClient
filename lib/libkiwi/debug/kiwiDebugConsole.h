@@ -13,24 +13,8 @@ namespace kiwi {
 /**
  * @brief Debugging console output
  */
-class DebugConsole : public Nw4rConsole, public DynamicSingleton<DebugConsole> {
-public:
-    /**
-     * @brief Enters the console main loop
-     */
-    void Enter();
-
-private:
-    /**
-     * @brief Draws the console using DirectPrint
-     */
-    virtual void DrawDirect();
-
-    /**
-     * @brief Console main loop
-     */
-    void MainLoop();
-};
+class DebugConsole : public Nw4rConsole,
+                     public DynamicSingleton<DebugConsole> {};
 
 //! @}
 } // namespace kiwi

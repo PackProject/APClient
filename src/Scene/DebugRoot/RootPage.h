@@ -1,6 +1,7 @@
 #ifndef APCLIENT_SCENE_DEBUGROOTSCENE_ROOT_PAGE_H
 #define APCLIENT_SCENE_DEBUGROOTSCENE_ROOT_PAGE_H
 #include "const.h"
+#include "scene/DebugRoot/ConsolePage.h"
 #include "scene/DebugRoot/SceneSelectPage.h"
 #include "scene/DebugRoot/ThreadDebugPage.h"
 
@@ -30,16 +31,6 @@ public:
      */
     static kiwi::EDebugMenuResult GotoMenuProc(kiwi::DebugOptionBase* pInvoker,
                                                void* pArg);
-
-    /**
-     * @brief Debug console option callback
-     *
-     * @param pInvoker Callback invoker
-     * @param pArg Callback user argument
-     * @return Result of action
-     */
-    static kiwi::EDebugMenuResult
-    DebugConsoleProc(kiwi::DebugOptionBase* pInvoker, void* pArg);
 
     /**
      * @brief Unit test manager option callback
@@ -76,7 +67,8 @@ private:
     // ItemDebugPage mItemDebugPage;
 
     //! Toggle debug console
-    kiwi::DebugProcOption mDebugConsole;
+    kiwi::DebugOpenPageOption mDebugConsole;
+    ConsolePage mConsolePage;
 
     //! Unit test manager
     kiwi::DebugProcOption mUnitTest;

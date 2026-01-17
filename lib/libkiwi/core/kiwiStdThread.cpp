@@ -15,7 +15,7 @@ StdThreadImpl::StdThreadImpl() : mpOSThread(nullptr), mpThreadStack(nullptr) {
 
     BOOL success = OSCreateThread(mpOSThread, nullptr, nullptr,
                                   mpThreadStack + scStackSize, scStackSize,
-                                  OS_PRIORITY_MAX - 1, 0);
+                                  OS_PRIORITY_MAX, 0);
 
     K_ASSERT(success);
 }

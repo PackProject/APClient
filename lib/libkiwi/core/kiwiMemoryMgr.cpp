@@ -14,7 +14,7 @@ namespace {
  * @param pHeap Heap object
  */
 void LogHeap(const char* pName, EGG::Heap* pHeap) {
-    if (pHeap == nullptr) {
+    if (!PtrUtil::IsPointer(pHeap)) {
         K_LOG_EX("[%s] nullptr ->\n", pName);
         return;
     }

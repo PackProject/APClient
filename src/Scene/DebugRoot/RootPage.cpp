@@ -20,7 +20,8 @@ RootPage::RootPage(kiwi::DebugMenu& rMenu)
       mItemDebug(rMenu, "Item Debug", *this),
       mCheckDebug(rMenu, "Check Debug", *this),
       mCosmeticDebug(rMenu, "Cosmetic Debug", *this),
-      mDebugConsole(rMenu, "Debug Console", DebugConsoleProc),
+      mDebugConsole(rMenu, "Debug Console", mConsolePage),
+      mConsolePage(rMenu),
       mUnitTest(rMenu, "Unit Test", UnitTestProc) {
 
     mOptions.PushBack(&mGotoMenu);
@@ -50,20 +51,6 @@ kiwi::EDebugMenuResult RootPage::GotoMenuProc(kiwi::DebugOptionBase* pInvoker,
     kiwi::SceneCreator::GetInstance().ChangeTitleScene();
 
     return kiwi::EDebugMenuResult_Select;
-}
-
-/**
- * @brief Debug console option callback
- *
- * @param pInvoker Callback invoker
- * @param pArg Callback user argument
- * @return Result of action
- */
-kiwi::EDebugMenuResult
-RootPage::DebugConsoleProc(kiwi::DebugOptionBase* pInvoker, void* pArg) {
-    kiwi::DebugConsole::GetInstance().Enter();
-
-    return kiwi::EDebugMenuResult_Back;
 }
 
 /**
