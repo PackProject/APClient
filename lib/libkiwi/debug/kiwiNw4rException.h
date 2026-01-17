@@ -236,8 +236,6 @@ private:
     OSMessageQueue mMessageQueue; //!< Thread message queue
     OSMessage mMessageBuffer;     //!< Thread message buffer
 
-    const GXRenderModeObj* mpRenderMode; //!< Current GX render mode
-
     //! OS exception names
     static const char* scExceptionNames[OS_ERR_MAX];
 

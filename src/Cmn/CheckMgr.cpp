@@ -74,9 +74,6 @@ bool CheckMgr::GetCheckState(CheckID id) const {
  * @param state Whether the check has been completed
  */
 void CheckMgr::SetCheckState(CheckID id, bool state) {
-    kiwi::cout << "Check: " << GetCheckName(id) << " has been set to " << state
-               << kiwi::endl;
-
     mCheckState.Insert(id, state);
 }
 

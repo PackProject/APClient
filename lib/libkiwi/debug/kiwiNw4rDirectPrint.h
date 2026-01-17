@@ -2,6 +2,7 @@
 #define LIBKIWI_DEBUG_NW4R_DIRECT_PRINT_H
 #include <libkiwi/core/kiwiColor.h>
 #include <libkiwi/k_types.h>
+#include <libkiwi/util/kiwiStaticSingleton.h>
 
 namespace kiwi {
 //! @addtogroup libkiwi_debug
@@ -10,8 +11,8 @@ namespace kiwi {
 /**
  * @brief Reimplementation of NW4R's direct print system
  */
-class Nw4rDirectPrint : public DynamicSingleton<Nw4rDirectPrint> {
-    friend class DynamicSingleton<Nw4rDirectPrint>;
+class Nw4rDirectPrint : public StaticSingleton<Nw4rDirectPrint> {
+    friend class StaticSingleton<Nw4rDirectPrint>;
 
 public:
     /**

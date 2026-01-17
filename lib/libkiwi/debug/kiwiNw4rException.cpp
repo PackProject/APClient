@@ -35,8 +35,7 @@ K_DYNAMIC_SINGLETON_IMPL(Nw4rException);
 Nw4rException::Nw4rException()
     : mpConsole(nullptr),
       mpUserCallback(DefaultCallback),
-      mpUserCallbackArg(nullptr),
-      mpRenderMode(nullptr) {
+      mpUserCallbackArg(nullptr) {
 
     mpConsole = new Nw4rConsole();
 
@@ -53,10 +52,6 @@ Nw4rException::Nw4rException()
     OSSetErrorHandler(OS_ERR_ALIGNMENT, ErrorHandler);
     OSSetErrorHandler(OS_ERR_PROTECTION, ErrorHandler);
     OSSetErrorHandler(OS_ERR_FP_EXCEPTION, nullptr);
-
-    // Auto-detect render mode
-    mpRenderMode = LibGX::GetDefaultRenderMode();
-    K_WARN_EX(mpRenderMode == nullptr, "No render mode!\n");
 }
 
 /**
@@ -89,14 +84,6 @@ void Nw4rException::SetUserCallback(UserCallback pCallback, void* pArg) {
  * @param ... Format arguments
  */
 void Nw4rException::Printf(const char* pMsg, ...) {
-    if (mpRenderMode == nullptr) {
-        return;
-    }
-
-    Nw4rDirectPrint::GetInstance().ChangeXfb(VIGetCurrentFrameBuffer(),
-                                             mpRenderMode->fbWidth,
-                                             mpRenderMode->xfbHeight);
-
     std::va_list list;
     va_start(list, pMsg);
     mpConsole->VPrintf(pMsg, list);
@@ -210,7 +197,7 @@ void Nw4rException::DefaultCallback(const Info& rInfo, void* pArg) {
 
         for (int i = 0; i < WPAD_MAX_CONTROLLERS; i++) {
             KPADStatus ks;
-            memset(&ks, 0, sizeof(KPADStatus));
+            std::memset(&ks, 0, sizeof(KPADStatus));
             KPADRead(i, &ks, 1);
 
             // Vertical scroll
@@ -252,9 +239,7 @@ void Nw4rException::DumpError() {
     OSDisableScheduler();
     OSEnableInterrupts();
 
-    // Acquire framebuffer
     Nw4rDirectPrint::GetInstance().SetupXfb();
-    // Show console
     mpConsole->SetVisible(true);
 
     // Dump information

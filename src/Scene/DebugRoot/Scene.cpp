@@ -12,7 +12,15 @@ K_DECL_SCENE(Scene);
 /**
  * @brief Constructor
  */
-Scene::Scene() : mRootPage(mDebugMenu), mAmbientTimer(0), mExitTimer(0) {}
+Scene::Scene()
+    : mStateMachine(this, EState_Max, EState_Menu),
+      mRootPage(mDebugMenu),
+      mAmbientTimer(0),
+      mExitTimer(0) {
+
+    mStateMachine.RegistState(EState_Menu, &Scene::State_Menu_calc);
+    mStateMachine.RegistState(EState_Exit, &Scene::State_Exit_calc);
+}
 
 /**
  * @brief Performs initial scene setup
@@ -23,7 +31,7 @@ void Scene::OnConfigure() {
 }
 
 /**
- * @brief Calculate state user callback
+ * @brief Runs one step of scene logic
  */
 void Scene::OnCalculate() {
     if ((++mAmbientTimer % 120) == 0 && kiwi::RNG.Chance(0.10)) {
@@ -34,15 +42,13 @@ void Scene::OnCalculate() {
         }
     }
 
-    // Let sound effects finish before exiting
-    if (mExitTimer > 0) {
-        if (--mExitTimer <= 0) {
-            kiwi::SceneCreator::GetInstance().ChangeMenuScene();
-        }
+    mStateMachine.Calculate();
+}
 
-        return;
-    }
-
+/**
+ * @brief Updates the scene in the Menu state
+ */
+void Scene::State_Menu_calc() {
     kiwi::EDebugMenuResult result = mDebugMenu.Calculate();
 
     switch (result) {
@@ -51,11 +57,7 @@ void Scene::OnCalculate() {
         break;
     }
 
-    case kiwi::EDebugMenuResult_Cursor: {
-        Sp2::Snd::startSe(SE_CMN_CURSOR_01);
-        break;
-    }
-
+    case kiwi::EDebugMenuResult_Cursor:
     case kiwi::EDebugMenuResult_Change: {
         Sp2::Snd::startSe(SE_CMN_CURSOR_01);
         break;
@@ -72,8 +74,8 @@ void Scene::OnCalculate() {
     }
 
     case kiwi::EDebugMenuResult_Exit: {
+        mStateMachine.ChangeState(EState_Exit);
         Sp2::Snd::startSe(SE_CMN_CANCEL_01);
-        mExitTimer = 30;
         break;
     }
 
@@ -85,6 +87,20 @@ void Scene::OnCalculate() {
         UNREACHABLE();
         break;
     }
+    }
+}
+
+/**
+ * @brief Updates the scene in the Exit state
+ */
+void Scene::State_Exit_calc() {
+    if (mStateMachine.IsFirstStep()) {
+        mExitTimer = EXIT_TIMER;
+    }
+
+    // Let sound effects finish before exiting
+    if (--mExitTimer < 0) {
+        kiwi::SceneCreator::GetInstance().ChangeMenuScene();
     }
 }
 

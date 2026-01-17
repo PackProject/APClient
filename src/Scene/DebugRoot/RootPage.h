@@ -31,6 +31,16 @@ public:
                                                void* pArg);
 
     /**
+     * @brief Debug console option callback
+     *
+     * @param pInvoker Callback invoker
+     * @param pArg Callback user argument
+     * @return Result of action
+     */
+    static kiwi::EDebugMenuResult
+    DebugConsoleProc(kiwi::DebugOptionBase* pInvoker, void* pArg);
+
+    /**
      * @brief Unit test manager option callback
      *
      * @param pInvoker Callback invoker
@@ -59,6 +69,9 @@ private:
     //! AP cosmetic debug
     kiwi::DebugOpenPageOption mCosmeticDebug;
     // ItemDebugPage mItemDebugPage;
+
+    //! Toggle debug console
+    kiwi::DebugProcOption mDebugConsole;
 
     //! Unit test manager
     kiwi::DebugProcOption mUnitTest;

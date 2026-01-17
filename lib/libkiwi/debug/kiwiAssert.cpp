@@ -19,7 +19,11 @@ void kiwi_log(const char* pMsg, ...) {
     std::vsnprintf(msgBuf, sizeof(msgBuf), pMsg, list);
     va_end(list);
 
-    OSReport(msgBuf);
+    if (kiwi::DebugConsole::IsCreateInstance()) {
+        kiwi::DebugConsole::GetInstance().Printf(msgBuf);
+    } else {
+        OSReport(msgBuf);
+    }
 }
 
 /**

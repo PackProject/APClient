@@ -18,8 +18,6 @@ u32 CodeWidth(const char* pCode) {
  * @brief Constructor
  */
 Nw4rConsole::Nw4rConsole() {
-    Nw4rDirectPrint::CreateInstance();
-
     mWidth = scWidthDefault;
     mHeight = scHeightDefault;
     mpTextBuffer = new char[(mWidth + 1) * mHeight];
@@ -74,7 +72,7 @@ void Nw4rConsole::VPrintf(const char* pMsg, std::va_list args) {
 /**
  * @brief Draws console using DirectPrint
  */
-void Nw4rConsole::DrawDirect() const {
+void Nw4rConsole::DrawDirect() {
     // Not visible/not setup
     if (!Nw4rDirectPrint::GetInstance().IsActive() || !mIsVisible) {
         return;
@@ -91,6 +89,14 @@ void Nw4rConsole::DrawDirect() const {
 
     // Keep framebuffer updated
     Nw4rDirectPrint::GetInstance().StoreCache();
+}
+
+/**
+ * @brief Scrolls the console to show the latest text line
+ */
+void Nw4rConsole::ShowLatestLine() {
+    s32 baseLine = GetTotalLines() - mViewNumLine;
+    mViewTopLine = Max<s32>(0, baseLine);
 }
 
 /**
@@ -133,6 +139,10 @@ char* Nw4rConsole::NextLine() {
 
     mPrintX = 0;
     mPrintTop++;
+
+    // if (mPrintTop == mHeight) {
+    //     mPrintTop = 0;
+    // }
 
     if (mPrintTop == mRingTopLine) {
         mRingNumLine--;
