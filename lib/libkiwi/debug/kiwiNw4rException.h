@@ -91,17 +91,24 @@ public:
      * @see EError, Assert
      */
     struct Info {
-        EError error;    //!< Exception type
-        OSContext* pCtx; //!< Last context before error
-        u32 dsisr;       //!< Last DSISR value before error
-        u32 dar;         //!< Last DAR value before error
-        u32 msr;         //!< Last MSR value before error
-        Assert assert;   //!< Assertion info (if assertion failed)
+        EError error;        //!< Exception type
+        OSContext* pCtx;     //!< Last context before error
+        u32 dsisr;           //!< Last DSISR value before error
+        u32 dar;             //!< Last DAR value before error
+        u32 msr;             //!< Last MSR value before error
+        OSThread* pOSThread; //!< OS thread where the error occurred
+        Assert assert;       //!< Assertion info (if assertion failed)
 
         /**
          * @brief Constructor
          */
-        Info() : error(EError_None), pCtx(nullptr), dsisr(0), dar(0), msr(0) {}
+        Info()
+            : error(EError_None),
+              pCtx(nullptr),
+              dsisr(0),
+              dar(0),
+              msr(0),
+              pOSThread(nullptr) {}
     };
 
     /**

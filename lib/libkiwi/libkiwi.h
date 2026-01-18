@@ -23,6 +23,7 @@
 #include <libkiwi/core/kiwiSceneHookMgr.h>
 #include <libkiwi/core/kiwiStaticMem.h>
 #include <libkiwi/core/kiwiStdThread.h>
+#include <libkiwi/core/kiwiThread.h>
 #include <libkiwi/crypt/kiwiBase64.h>
 #include <libkiwi/crypt/kiwiChecksum.h>
 #include <libkiwi/crypt/kiwiSHA1.h>

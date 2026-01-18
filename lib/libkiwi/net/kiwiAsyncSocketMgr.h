@@ -1,8 +1,10 @@
 #ifndef LIBKIWI_NET_ASYNC_SOCKET_MGR_H
 #define LIBKIWI_NET_ASYNC_SOCKET_MGR_H
+#include <libkiwi/core/kiwiThread.h>
 #include <libkiwi/debug/kiwiAssert.h>
 #include <libkiwi/k_types.h>
 #include <libkiwi/prim/kiwiList.h>
+#include <libkiwi/prim/kiwiMutex.h>
 #include <libkiwi/util/kiwiStaticSingleton.h>
 
 namespace kiwi {
@@ -20,7 +22,9 @@ namespace detail {
 /**
  * @brief Asynchronous socket manager
  */
-class AsyncSocketMgr : public StaticSingleton<AsyncSocketMgr> {
+class AsyncSocketMgr : public kiwi::Thread,
+                       public StaticSingleton<AsyncSocketMgr> {
+
     friend class StaticSingleton<AsyncSocketMgr>;
 
 public:
@@ -29,19 +33,14 @@ public:
      *
      * @param pSocket New socket
      */
-    void AddSocket(AsyncSocket* pSocket) {
-        K_ASSERT_PTR(pSocket);
-        mSocketList.PushBack(pSocket);
-    }
+    void AddSocket(AsyncSocket* pSocket);
 
     /**
      * @brief Removes a socket from the manager list
      *
      * @param pSocket Socket
      */
-    void RemoveSocket(AsyncSocket* pSocket) {
-        mSocketList.Remove(pSocket);
-    }
+    void RemoveSocket(AsyncSocket* pSocket);
 
 private:
     /**
@@ -50,20 +49,15 @@ private:
     AsyncSocketMgr();
 
     /**
-     * @brief Destructor
-     */
-    ~AsyncSocketMgr();
-
-    /**
      * @brief Thread function
      */
-    void ThreadFunc();
+    virtual void Run();
 
 private:
-    //! Manager thread
-    StdThread* mpThread;
     //! Open sockets
     TList<AsyncSocket*> mSocketList;
+    //! Socket list mutex
+    Mutex mListMutex;
 };
 
 //! @}

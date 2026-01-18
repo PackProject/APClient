@@ -43,6 +43,7 @@ Nw4rException::Nw4rException()
     OSCreateThread(&mThread, ThreadFunc, nullptr,
                    mThreadStack + sizeof(mThreadStack), sizeof(mThreadStack),
                    OS_PRIORITY_MIN, OS_THREAD_DETACHED);
+
     OSInitMessageQueue(&mMessageQueue, &mMessageBuffer, 1);
     OSResumeThread(&mThread);
 
@@ -129,7 +130,9 @@ void* Nw4rException::ThreadFunc(void* pArg) {
     VISetBlack(FALSE);
     VIFlush();
 
+    GetInstance().mErrorInfo.pOSThread = reinterpret_cast<OSThread*>(msg);
     GetInstance().DumpError();
+
     return nullptr;
 }
 
@@ -160,8 +163,11 @@ void Nw4rException::ErrorHandler(u8 error, OSContext* pCtx, u32 _dsisr,
     LibOS::FillFPUContext(pCtx);
     OSSetErrorHandler(error, nullptr);
 
+    // Save exception thread
+    OSMessage threadMsg = reinterpret_cast<OSMessage>(OSGetCurrentThread());
+
     // Allow thread to continue
-    OSSendMessage(&GetInstance().mMessageQueue, 0, OS_MSG_BLOCKING);
+    OSSendMessage(&GetInstance().mMessageQueue, threadMsg, OS_MSG_BLOCKING);
 
     if (OSGetCurrentThread() == nullptr) {
         VISetPreRetraceCallback(nullptr);
@@ -276,6 +282,16 @@ void Nw4rException::DumpException() {
     Printf("Symbol: ");
     PrintSymbol(reinterpret_cast<void*>(mErrorInfo.pCtx->srr0));
     Printf("\n");
+
+    if (mErrorInfo.pOSThread != nullptr) {
+        Thread* pKiwiThread =
+            static_cast<Thread*>(mErrorInfo.pOSThread->specific[0]);
+
+        Printf("Thread: %s\n", pKiwiThread->GetName().CStr());
+    } else {
+        Printf("Thread: OSThread\n");
+    }
+
     Printf("\n");
 
     // Memory status

@@ -38,8 +38,8 @@ void ThreadDebugPage::UserDraw() {
         "EXITED", "READY", "RUNNING", "SLEEPING", "MORIBUND",
     };
 
-    static const f32 ox = 0.15f;
-    static const f32 oy = 0.20f;
+    static const f32 ox = 0.10f;
+    static const f32 oy = 0.10f;
 
     static const f32 option = 0.25f;
 
@@ -49,12 +49,18 @@ void ThreadDebugPage::UserDraw() {
     f32 x = ox;
     f32 y = oy;
 
-    int i = 0;
-
-    for (OSThread* pIt = OS_CURRENT_THREAD; pIt != nullptr;
+    for (OSThread* pIt = OSGetCurrentThread(); pIt != nullptr;
          pIt = pIt->nextActive) {
 
-        kiwi::Text("[%02d] %s flg=%d pri=%d sus=%d\n", i++,
+        // libkiwi threads link to the OSThread userdata
+        void* pUserData = pIt->specific[0];
+
+        const char* pName =
+            pUserData != nullptr
+                ? static_cast<kiwi::Thread*>(pUserData)->GetName().CStr()
+                : "NoName";
+
+        kiwi::Text("[%s] %s flg=%d pri=%d sus=%d\n", pName,
                    STATE_TBL[pIt->state], pIt->flags, pIt->priority,
                    pIt->suspend)
             .SetTextColor(kiwi::Color::WHITE)
