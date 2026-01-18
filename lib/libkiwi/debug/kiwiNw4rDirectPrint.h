@@ -23,6 +23,13 @@ public:
     }
 
     /**
+     * @brief Tests the OS arena was destroyed to forcibly create a framebuffer
+     */
+    bool IsAllocArenaXfb() const {
+        return mIsAllocArenaXfb;
+    }
+
+    /**
      * @brief Sets up XFB for printing
      */
     void SetupXfb();
@@ -140,6 +147,8 @@ private:
     u16 mBufferRows;   //!< Framebuffer rows
 
     Color mBufferColor; //!< Framebuffer text color
+
+    bool mIsAllocArenaXfb; //!< Whether the OS arena was used for an XFB
 
     static const u32 scFontData[];  //!< Font data pt. 1
     static const u32 scFontData2[]; //!< Font data pt. 2

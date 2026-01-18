@@ -197,6 +197,10 @@ private:
     void DumpAssert();
 
     /**
+     * @brief Prints thread information to the screen
+     */
+    void PrintThreadInfo();
+    /**
      * @brief Prints heap information to the screen
      */
     void PrintHeapInfo();

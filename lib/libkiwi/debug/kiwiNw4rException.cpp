@@ -282,20 +282,13 @@ void Nw4rException::DumpException() {
     Printf("Symbol: ");
     PrintSymbol(reinterpret_cast<void*>(mErrorInfo.pCtx->srr0));
     Printf("\n");
-
-    if (mErrorInfo.pOSThread != nullptr) {
-        Thread* pKiwiThread =
-            static_cast<Thread*>(mErrorInfo.pOSThread->specific[0]);
-
-        Printf("Thread: %s\n", pKiwiThread->GetName().CStr());
-    } else {
-        Printf("Thread: OSThread\n");
-    }
-
+    PrintThreadInfo();
     Printf("\n");
 
-    // Memory status
-    PrintHeapInfo();
+    // Avoid heap access if the arena was destroyed
+    if (!Nw4rDirectPrint::GetInstance().IsAllocArenaXfb()) {
+        PrintHeapInfo();
+    }
 
     // Build region/target
     PrintBuildInfo();
@@ -317,10 +310,13 @@ void Nw4rException::DumpAssert() {
     Printf("******** ASSERTION FAILED! ********\n");
     Printf("%s\n", mErrorInfo.assert.pMsg);
     Printf("Source: %s(%d)\n", mErrorInfo.assert.pFile, mErrorInfo.assert.line);
+    PrintThreadInfo();
     Printf("\n");
 
-    // Memory status
-    PrintHeapInfo();
+    // Avoid heap access if the arena was destroyed
+    if (!Nw4rDirectPrint::GetInstance().IsAllocArenaXfb()) {
+        PrintHeapInfo();
+    }
 
     // Build region/target
     PrintBuildInfo();
@@ -332,9 +328,29 @@ void Nw4rException::DumpAssert() {
 }
 
 /**
+ * @brief Prints thread information to the screen
+ */
+void Nw4rException::PrintThreadInfo() {
+    if (mErrorInfo.pOSThread == nullptr ||
+        mErrorInfo.pOSThread->specific[0] == nullptr) {
+
+        Printf("Thread: OSThread\n");
+        return;
+    }
+
+    // libkiwi threads link to the thread userdata
+    Thread* pKiwiThread =
+        static_cast<Thread*>(mErrorInfo.pOSThread->specific[0]);
+
+    Printf("Thread: %s\n", pKiwiThread->GetName().CStr());
+}
+
+/**
  * @brief Prints heap information to the screen
  */
 void Nw4rException::PrintHeapInfo() {
+    AutoInterruptLock lock;
+
     Printf("---Heap Info---\n");
 
     LogHeap("libkiwi (MEM1)", MemoryMgr::GetInstance().GetHeap(EMemory_MEM1));

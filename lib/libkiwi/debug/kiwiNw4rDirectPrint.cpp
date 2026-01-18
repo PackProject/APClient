@@ -73,7 +73,8 @@ Nw4rDirectPrint::Nw4rDirectPrint()
       mBufferSize(0),
       mBufferWidth(0),
       mBufferHeight(0),
-      mBufferRows(0) {
+      mBufferRows(0),
+      mIsAllocArenaXfb(false) {
 
     SetColor(Color::WHITE);
 }
@@ -97,8 +98,9 @@ void Nw4rDirectPrint::SetupXfb() {
 
     // Try to repurpose current framebuffer
     pXfb = VIGetCurrentFrameBuffer();
-    pRenderMode = EGG::BaseSystem::getVideo()->getRenderModeObj();
+    mIsAllocArenaXfb = false;
 
+    pRenderMode = EGG::BaseSystem::getVideo()->getRenderModeObj();
     if (pRenderMode == nullptr) {
         K_LOG("Need default rendermode\n");
         pRenderMode = LibGX::GetDefaultRenderMode();
@@ -108,6 +110,7 @@ void Nw4rDirectPrint::SetupXfb() {
     if (pXfb == nullptr) {
         K_LOG("Need to create framebuffer\n");
         pXfb = CreateFB(pRenderMode);
+        mIsAllocArenaXfb = true;
     }
 
     VISetBlack(FALSE);
