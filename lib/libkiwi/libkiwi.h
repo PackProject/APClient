@@ -23,10 +23,12 @@
 #include <libkiwi/core/kiwiSceneHookMgr.h>
 #include <libkiwi/core/kiwiStaticMem.h>
 #include <libkiwi/core/kiwiStdThread.h>
+#include <libkiwi/core/kiwiThread.h>
 #include <libkiwi/crypt/kiwiBase64.h>
 #include <libkiwi/crypt/kiwiChecksum.h>
 #include <libkiwi/crypt/kiwiSHA1.h>
 #include <libkiwi/debug/kiwiAssert.h>
+#include <libkiwi/debug/kiwiDebugConsole.h>
 #include <libkiwi/debug/kiwiDebugMenu.h>
 #include <libkiwi/debug/kiwiDebugOption.h>
 #include <libkiwi/debug/kiwiGeckoDebugger.h>

@@ -15,7 +15,7 @@ namespace {
  * @param pHeap Heap object
  */
 void LogHeap(const char* pName, EGG::Heap* pHeap) {
-    if (pHeap == nullptr) {
+    if (!PtrUtil::IsPointer(pHeap)) {
         Nw4rException::GetInstance().Printf("%s: nullptr\n", pName);
         return;
     }
@@ -35,8 +35,7 @@ K_DYNAMIC_SINGLETON_IMPL(Nw4rException);
 Nw4rException::Nw4rException()
     : mpConsole(nullptr),
       mpUserCallback(DefaultCallback),
-      mpUserCallbackArg(nullptr),
-      mpRenderMode(nullptr) {
+      mpUserCallbackArg(nullptr) {
 
     mpConsole = new Nw4rConsole();
 
@@ -44,6 +43,7 @@ Nw4rException::Nw4rException()
     OSCreateThread(&mThread, ThreadFunc, nullptr,
                    mThreadStack + sizeof(mThreadStack), sizeof(mThreadStack),
                    OS_PRIORITY_MIN, OS_THREAD_DETACHED);
+
     OSInitMessageQueue(&mMessageQueue, &mMessageBuffer, 1);
     OSResumeThread(&mThread);
 
@@ -53,10 +53,6 @@ Nw4rException::Nw4rException()
     OSSetErrorHandler(OS_ERR_ALIGNMENT, ErrorHandler);
     OSSetErrorHandler(OS_ERR_PROTECTION, ErrorHandler);
     OSSetErrorHandler(OS_ERR_FP_EXCEPTION, nullptr);
-
-    // Auto-detect render mode
-    mpRenderMode = LibGX::GetDefaultRenderMode();
-    K_WARN_EX(mpRenderMode == nullptr, "No render mode!\n");
 }
 
 /**
@@ -89,14 +85,6 @@ void Nw4rException::SetUserCallback(UserCallback pCallback, void* pArg) {
  * @param ... Format arguments
  */
 void Nw4rException::Printf(const char* pMsg, ...) {
-    if (mpRenderMode == nullptr) {
-        return;
-    }
-
-    Nw4rDirectPrint::GetInstance().ChangeXfb(VIGetCurrentFrameBuffer(),
-                                             mpRenderMode->fbWidth,
-                                             mpRenderMode->xfbHeight);
-
     std::va_list list;
     va_start(list, pMsg);
     mpConsole->VPrintf(pMsg, list);
@@ -142,7 +130,9 @@ void* Nw4rException::ThreadFunc(void* pArg) {
     VISetBlack(FALSE);
     VIFlush();
 
+    GetInstance().mErrorInfo.pOSThread = reinterpret_cast<OSThread*>(msg);
     GetInstance().DumpError();
+
     return nullptr;
 }
 
@@ -173,8 +163,11 @@ void Nw4rException::ErrorHandler(u8 error, OSContext* pCtx, u32 _dsisr,
     LibOS::FillFPUContext(pCtx);
     OSSetErrorHandler(error, nullptr);
 
+    // Save exception thread
+    OSMessage threadMsg = reinterpret_cast<OSMessage>(OSGetCurrentThread());
+
     // Allow thread to continue
-    OSSendMessage(&GetInstance().mMessageQueue, 0, OS_MSG_BLOCKING);
+    OSSendMessage(&GetInstance().mMessageQueue, threadMsg, OS_MSG_BLOCKING);
 
     if (OSGetCurrentThread() == nullptr) {
         VISetPreRetraceCallback(nullptr);
@@ -210,7 +203,7 @@ void Nw4rException::DefaultCallback(const Info& rInfo, void* pArg) {
 
         for (int i = 0; i < WPAD_MAX_CONTROLLERS; i++) {
             KPADStatus ks;
-            memset(&ks, 0, sizeof(KPADStatus));
+            std::memset(&ks, 0, sizeof(KPADStatus));
             KPADRead(i, &ks, 1);
 
             // Vertical scroll
@@ -252,9 +245,7 @@ void Nw4rException::DumpError() {
     OSDisableScheduler();
     OSEnableInterrupts();
 
-    // Acquire framebuffer
     Nw4rDirectPrint::GetInstance().SetupXfb();
-    // Show console
     mpConsole->SetVisible(true);
 
     // Dump information
@@ -291,10 +282,13 @@ void Nw4rException::DumpException() {
     Printf("Symbol: ");
     PrintSymbol(reinterpret_cast<void*>(mErrorInfo.pCtx->srr0));
     Printf("\n");
+    PrintThreadInfo();
     Printf("\n");
 
-    // Memory status
-    PrintHeapInfo();
+    // Avoid heap access if the arena was destroyed
+    if (!Nw4rDirectPrint::GetInstance().IsAllocArenaXfb()) {
+        PrintHeapInfo();
+    }
 
     // Build region/target
     PrintBuildInfo();
@@ -316,10 +310,13 @@ void Nw4rException::DumpAssert() {
     Printf("******** ASSERTION FAILED! ********\n");
     Printf("%s\n", mErrorInfo.assert.pMsg);
     Printf("Source: %s(%d)\n", mErrorInfo.assert.pFile, mErrorInfo.assert.line);
+    PrintThreadInfo();
     Printf("\n");
 
-    // Memory status
-    PrintHeapInfo();
+    // Avoid heap access if the arena was destroyed
+    if (!Nw4rDirectPrint::GetInstance().IsAllocArenaXfb()) {
+        PrintHeapInfo();
+    }
 
     // Build region/target
     PrintBuildInfo();
@@ -331,9 +328,29 @@ void Nw4rException::DumpAssert() {
 }
 
 /**
+ * @brief Prints thread information to the screen
+ */
+void Nw4rException::PrintThreadInfo() {
+    if (mErrorInfo.pOSThread == nullptr ||
+        mErrorInfo.pOSThread->specific[0] == nullptr) {
+
+        Printf("Thread: OSThread\n");
+        return;
+    }
+
+    // libkiwi threads link to the thread userdata
+    Thread* pKiwiThread =
+        static_cast<Thread*>(mErrorInfo.pOSThread->specific[0]);
+
+    Printf("Thread: %s\n", pKiwiThread->GetName().CStr());
+}
+
+/**
  * @brief Prints heap information to the screen
  */
 void Nw4rException::PrintHeapInfo() {
+    AutoInterruptLock lock;
+
     Printf("---Heap Info---\n");
 
     LogHeap("libkiwi (MEM1)", MemoryMgr::GetInstance().GetHeap(EMemory_MEM1));

@@ -17,6 +17,8 @@ void KokeshiMain() {
     kiwi::MapFile::CreateInstance();
     kiwi::MapFile::GetInstance().Open(kokeshi::MAPFILE_PATH,
                                       kiwi::MapFile::ELinkType_Relocatable);
+
+    kiwi::DebugConsole::CreateInstance();
 #endif
 
     // Initialize network socket system

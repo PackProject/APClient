@@ -25,6 +25,8 @@ namespace Net {
 void GameMessageListener::OnReceiveMessage(kiwi::ap::IMessage* pMessage) {
     ASSERT_PTR(pMessage);
 
+    LOG_EX("[Listener] MessageKind: %d\n", pMessage->GetType());
+
     switch (pMessage->GetType()) {
     // PC client is attempting to connect
     case Define::EMsgType_Connect: {

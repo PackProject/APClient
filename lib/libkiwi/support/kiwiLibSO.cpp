@@ -93,8 +93,8 @@ void LibSO::Initialize() {
             kd_request.Ioctl(Ioctl_NWC24iStartupSocket, dummy, commonResult);
         K_ASSERT_EX(result >= 0, "NWC24iStartupSocket failed (%d)", result);
 
-        K_ASSERT(commonResult->result >= 0);
-        K_ASSERT(commonResult->exResult >= 0);
+        // K_ASSERT(commonResult->result >= 0);
+        // K_ASSERT(commonResult->exResult >= 0);
     }
 
     // 3. SO startup

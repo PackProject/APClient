@@ -57,6 +57,16 @@ typedef union KPADEXStatus {
         f32 ltrigger; // at 0x1C
         f32 rtrigger; // at 0x20
     } cl;             // at 0x0
+
+#if defined(PACK_RESORT)
+    struct {
+        f64 tgc_weight;     // at 0x0
+        f64 weight[4];      // at 0x8
+        f64 weight_ave[4];  // at 0x28
+        s32 weight_err;     // at 0x48
+        s32 tgc_weight_err; // at 0x4C
+    } bl;
+#endif
 } KPADEXStatus;
 
 typedef struct KPADStatus {
@@ -81,6 +91,14 @@ typedef struct KPADStatus {
     s8 dpd_valid_fg;        // at 0x5E
     u8 data_format;         // at 0x5F
     KPADEXStatus ex_status; // at 0x60
+#if defined(PACK_RESORT)
+    Vec mpls_rot;     // at 0xB0
+    Vec unkBC;        // at 0xBC
+    Vec mpls_basis_x; // at 0xC8
+    Vec mpls_basis_y; // at 0xD4
+    Vec mpls_basis_z; // at 0xE0
+    u32 unkEC;
+#endif
 } KPADStatus;
 
 void KPADSetBtnRepeat(s32 chan, f32, f32);

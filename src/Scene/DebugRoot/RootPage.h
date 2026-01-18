@@ -1,7 +1,9 @@
 #ifndef APCLIENT_SCENE_DEBUGROOTSCENE_ROOT_PAGE_H
 #define APCLIENT_SCENE_DEBUGROOTSCENE_ROOT_PAGE_H
 #include "const.h"
+#include "scene/DebugRoot/ConsolePage.h"
 #include "scene/DebugRoot/SceneSelectPage.h"
+#include "scene/DebugRoot/ThreadDebugPage.h"
 
 #include <libkiwi.h>
 
@@ -45,8 +47,12 @@ private:
     kiwi::DebugProcOption mGotoMenu;
 
     //! Debug scene select
-    kiwi::DebugOpenPageOption mSceneSelect;
+    kiwi::DebugOpenPageOption mSceneDebug;
     SceneSelectPage mSceneSelectPage;
+
+    //! Thread debug
+    kiwi::DebugOpenPageOption mThreadDebug;
+    ThreadDebugPage mThreadDebugPage;
 
     //! AP item debug
     kiwi::DebugOpenPageOption mItemDebug;
@@ -59,6 +65,10 @@ private:
     //! AP cosmetic debug
     kiwi::DebugOpenPageOption mCosmeticDebug;
     // ItemDebugPage mItemDebugPage;
+
+    //! Toggle debug console
+    kiwi::DebugOpenPageOption mDebugConsole;
+    ConsolePage mConsolePage;
 
     //! Unit test manager
     kiwi::DebugProcOption mUnitTest;

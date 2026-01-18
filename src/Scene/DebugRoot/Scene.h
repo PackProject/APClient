@@ -49,6 +49,34 @@ public:
     virtual void OnUserDraw();
 
 private:
+    /**
+     * @brief State machine state
+     */
+    enum EState {
+        EState_Menu, //!< Waiting for menu control
+        EState_Exit, //!< Exiting the scene
+
+        EState_Max
+    };
+
+    //! Time before fading out when exiting the scene
+    static const u32 EXIT_TIMER = 30;
+
+private:
+    /**
+     * @brief Updates the scene in the Menu state
+     */
+    K_STATE_DECL(Menu);
+
+    /**
+     * @brief Updates the scene in the Exit state
+     */
+    K_STATE_DECL(Exit);
+
+private:
+    //! Logic state machine
+    kiwi::StateMachine<Scene> mStateMachine;
+
     //! Debug menu
     kiwi::DebugMenu mDebugMenu;
     //! Root menu page

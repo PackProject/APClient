@@ -1,8 +1,12 @@
 #ifndef LIBKIWI_NET_NET_CONNECTION_MGR_H
 #define LIBKIWI_NET_NET_CONNECTION_MGR_H
+#include <libkiwi/core/kiwiThread.h>
 #include <libkiwi/k_types.h>
 #include <libkiwi/prim/kiwiList.h>
+#include <libkiwi/prim/kiwiMutex.h>
 #include <libkiwi/util/kiwiStaticSingleton.h>
+
+#include <revolution/OS.h>
 
 namespace kiwi {
 //! @addtogroup libkiwi_net
@@ -19,7 +23,9 @@ namespace detail {
 /**
  * @brief Network socket connection manager
  */
-class NetConnectionMgr : public StaticSingleton<NetConnectionMgr> {
+class NetConnectionMgr : public kiwi::Thread,
+                         public StaticSingleton<NetConnectionMgr> {
+
     friend class StaticSingleton<NetConnectionMgr>;
 
 public:
@@ -28,19 +34,14 @@ public:
      *
      * @param pConnection New network connection
      */
-    void AddConnection(NetConnection* pConnection) {
-        K_ASSERT_PTR(pConnection);
-        mConnectionList.PushBack(pConnection);
-    }
+    void AddConnection(NetConnection* pConnection);
 
     /**
      * @brief Removes a network connection from the manager list
      *
      * @param pConnection Network connection
      */
-    void RemoveConnection(NetConnection* pConnection) {
-        mConnectionList.Remove(pConnection);
-    }
+    void RemoveConnection(NetConnection* pConnection);
 
 private:
     /**
@@ -49,20 +50,15 @@ private:
     NetConnectionMgr();
 
     /**
-     * @brief Destructor
-     */
-    ~NetConnectionMgr();
-
-    /**
      * @brief Thread function
      */
-    void ThreadFunc();
+    virtual void Run();
 
 private:
-    //! Manager thread
-    StdThread* mpThread;
     //! Open connections
     TList<NetConnection*> mConnectionList;
+    //! Connection list mutex
+    Mutex mListMutex;
 };
 
 //! @}

@@ -13,18 +13,24 @@ namespace DebugRoot {
 RootPage::RootPage(kiwi::DebugMenu& rMenu)
     : kiwi::DebugPage(rMenu),
       mGotoMenu(rMenu, "Goto Menu", GotoMenuProc),
-      mSceneSelect(rMenu, "Scene Debug", mSceneSelectPage),
+      mSceneDebug(rMenu, "Scene Debug", mSceneSelectPage),
       mSceneSelectPage(rMenu),
+      mThreadDebug(rMenu, "Thread Debug", mThreadDebugPage),
+      mThreadDebugPage(rMenu),
       mItemDebug(rMenu, "Item Debug", *this),
       mCheckDebug(rMenu, "Check Debug", *this),
       mCosmeticDebug(rMenu, "Cosmetic Debug", *this),
+      mDebugConsole(rMenu, "Debug Console", mConsolePage),
+      mConsolePage(rMenu),
       mUnitTest(rMenu, "Unit Test", UnitTestProc) {
 
     mOptions.PushBack(&mGotoMenu);
-    mOptions.PushBack(&mSceneSelect);
+    mOptions.PushBack(&mSceneDebug);
+    mOptions.PushBack(&mThreadDebug);
     mOptions.PushBack(&mItemDebug);
     mOptions.PushBack(&mCheckDebug);
     mOptions.PushBack(&mCosmeticDebug);
+    mOptions.PushBack(&mDebugConsole);
     mOptions.PushBack(&mUnitTest);
 
     // TODO(kiwi) Not yet implemented
