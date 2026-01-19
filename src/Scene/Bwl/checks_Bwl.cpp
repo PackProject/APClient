@@ -23,11 +23,10 @@ TRAMPOLINE_DEF(0x804ece1c, 0x804ece20) {
     // clang-format off
     TRAMPOLINE_BEGIN
 
-    li r0, 0x451
     bl SetBowlingStrikeCheck
 
     TRAMPOLINE_END
-    mr r3, r0
+    li r3, 0x451
     blr
     // clang-format on
 }
