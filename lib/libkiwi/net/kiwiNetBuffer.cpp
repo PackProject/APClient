@@ -251,7 +251,7 @@ void NetBuffer::SocketXferCallback(SOResult result, u32 size, void* pArg) {
     CommandBlock* pCmdBlock = static_cast<CommandBlock*>(pArg);
     NetBuffer* p = pCmdBlock->pBuffer;
 
-    if (result != SO_EWOULDBLOCK) {
+    if (result != SO_SUCCESS && result != SO_EWOULDBLOCK) {
         K_LOG_EX("[NetBuffer] result: %d, size: %d\n", result, size);
     }
 

@@ -37,6 +37,7 @@ void NetConnectionMgr::RemoveConnection(NetConnection* pConnection) {
  */
 void NetConnectionMgr::Run() {
     K_LOG("[NetConnectionMgr] Start up\n");
+    K_LOG_EX("[NetConnectionMgr] OSThread: %p\n", GetOSThread());
 
     while (true) {
         mListMutex.Lock();

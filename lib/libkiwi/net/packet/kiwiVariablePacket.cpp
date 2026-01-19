@@ -123,6 +123,10 @@ void VariablePacket::BufferCallback(SOResult result, u32 size, void* pArg) {
     K_ASSERT_PTR(pArg);
     VariablePacket* p = static_cast<VariablePacket*>(pArg);
 
+    if (result != SO_SUCCESS && result != SO_EWOULDBLOCK) {
+        K_LOG_EX("[VariablePacket] result: %d, size: %d\n", result, size);
+    }
+
     switch (p->mStateMachine.GetState()) {
     case EState_Recv: {
         // Receive is complete once any data is received

@@ -46,6 +46,13 @@ public:
     void Resume();
 
     /**
+     * @brief Gets the internal operating system thread
+     */
+    OSThread* GetOSThread() const {
+        return mpOSThread;
+    }
+
+    /**
      * @brief Accesses the thread's name
      */
     const String& GetName() const {

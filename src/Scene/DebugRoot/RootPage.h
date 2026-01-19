@@ -2,6 +2,7 @@
 #define APCLIENT_SCENE_DEBUGROOTSCENE_ROOT_PAGE_H
 #include "const.h"
 #include "scene/DebugRoot/ConsolePage.h"
+#include "scene/DebugRoot/HeapDebugPage.h"
 #include "scene/DebugRoot/SceneSelectPage.h"
 #include "scene/DebugRoot/ThreadDebugPage.h"
 
@@ -53,6 +54,10 @@ private:
     //! Thread debug
     kiwi::DebugOpenPageOption mThreadDebug;
     ThreadDebugPage mThreadDebugPage;
+
+    //! Heap debug
+    kiwi::DebugOpenPageOption mHeapDebug;
+    HeapDebugPage mHeapDebugPage;
 
     //! AP item debug
     kiwi::DebugOpenPageOption mItemDebug;

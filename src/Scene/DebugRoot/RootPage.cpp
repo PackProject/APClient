@@ -17,6 +17,8 @@ RootPage::RootPage(kiwi::DebugMenu& rMenu)
       mSceneSelectPage(rMenu),
       mThreadDebug(rMenu, "Thread Debug", mThreadDebugPage),
       mThreadDebugPage(rMenu),
+      mHeapDebug(rMenu, "Heap Debug", mHeapDebugPage),
+      mHeapDebugPage(rMenu),
       mItemDebug(rMenu, "Item Debug", *this),
       mCheckDebug(rMenu, "Check Debug", *this),
       mCosmeticDebug(rMenu, "Cosmetic Debug", *this),
@@ -27,6 +29,7 @@ RootPage::RootPage(kiwi::DebugMenu& rMenu)
     mOptions.PushBack(&mGotoMenu);
     mOptions.PushBack(&mSceneDebug);
     mOptions.PushBack(&mThreadDebug);
+    mOptions.PushBack(&mHeapDebug);
     mOptions.PushBack(&mItemDebug);
     mOptions.PushBack(&mCheckDebug);
     mOptions.PushBack(&mCosmeticDebug);

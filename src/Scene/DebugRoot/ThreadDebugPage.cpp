@@ -6,6 +6,38 @@
 
 namespace AP {
 namespace DebugRoot {
+namespace {
+
+/**
+ * @brief Displays information about the specified thread
+ *
+ * @param pOSThread Operating system thread
+ * @param ox Text X-position
+ * @param oy Text Y-position
+ */
+void DrawThreadText(const OSThread* pOSThread, f32 ox, f32 oy) {
+    ASSERT_PTR(pOSThread);
+
+    static const char* STATE_TBL[] = {
+        "EXITED", "READY", "RUNNING", "SLEEPING", "MORIBUND",
+    };
+
+    // libkiwi threads link to the OSThread userdata
+    void* pUserData = pOSThread->specific[0];
+    kiwi::Thread* pKiwiThread = static_cast<kiwi::Thread*>(pUserData);
+
+    const char* pName =
+        pKiwiThread != nullptr ? pKiwiThread->GetName().CStr() : "NoName";
+
+    kiwi::Text("[%s] %s flg=%d pri=%d sus=%d", pName,
+               STATE_TBL[pOSThread->state], pOSThread->flags,
+               pOSThread->priority, pOSThread->suspend)
+        .SetTextColor(kiwi::Color::WHITE)
+        .SetStrokeType(kiwi::ETextStroke_Outline)
+        .SetPosition(ox, oy);
+}
+
+} // namespace
 
 /**
  * @brief Updates the page state
@@ -34,17 +66,9 @@ void ThreadDebugPage::UserDraw() {
     kiwi::AutoInterruptLock lock;
     OSDisableScheduler();
 
-    static const char* STATE_TBL[] = {
-        "EXITED", "READY", "RUNNING", "SLEEPING", "MORIBUND",
-    };
-
     static const f32 ox = 0.10f;
     static const f32 oy = 0.10f;
-
-    static const f32 option = 0.25f;
-
     static const f32 row = 0.05f;
-    static const f32 column = 0.30f;
 
     f32 x = ox;
     f32 y = oy;
@@ -52,21 +76,7 @@ void ThreadDebugPage::UserDraw() {
     for (OSThread* pIt = OSGetCurrentThread(); pIt != nullptr;
          pIt = pIt->nextActive) {
 
-        // libkiwi threads link to the OSThread userdata
-        void* pUserData = pIt->specific[0];
-
-        const char* pName =
-            pUserData != nullptr
-                ? static_cast<kiwi::Thread*>(pUserData)->GetName().CStr()
-                : "NoName";
-
-        kiwi::Text("[%s] %s flg=%d pri=%d sus=%d\n", pName,
-                   STATE_TBL[pIt->state], pIt->flags, pIt->priority,
-                   pIt->suspend)
-            .SetTextColor(kiwi::Color::WHITE)
-            .SetStrokeType(kiwi::ETextStroke_Outline)
-            .SetPosition(x, y);
-
+        DrawThreadText(pIt, x, y);
         y += row;
     }
 

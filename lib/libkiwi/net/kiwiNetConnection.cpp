@@ -87,9 +87,8 @@ void NetConnection::Calc() {
             K_ASSERT_PTR(mpRecvPacket);
             mpRecvPacket->Recv(mpSocket);
         }
-
         // Update receive operation
-        if (mpRecvPacket->Calc()) {
+        else if (mpRecvPacket->Calc()) {
             mpRecvCallback(mpRecvPacket, mpRecvCallbackArg);
 
             delete mpRecvPacket;

@@ -98,8 +98,10 @@ private:
 #endif
 
 private:
-    EGG::Heap* mpHeapMEM1; //!< Heap in MEM1 region
-    EGG::Heap* mpHeapMEM2; //!< Heap in MEM2 region
+    //! Heap in MEM1 region
+    EGG::Heap* mpHeapMEM1;
+    //! Heap in MEM2 region
+    EGG::Heap* mpHeapMEM2;
 };
 
 //! @}
