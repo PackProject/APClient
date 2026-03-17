@@ -151,7 +151,8 @@
     X(0x0E00, TABLE_TENNIS_RETURN_PRO_STATUS, "Table Tennis Return Challenge - Pro Status") \
     X(0x0F00, TABLE_TENNIS_MATCH_PRO_STATUS, "Table Tennis Match - Pro Status") \
     X(0x0F01, TABLE_TENNIS_MATCH_BEAT_THE_CHAMPION, "Table Tennis Match - Beat The Champion") \
-    X(0x1000, WAKEBOARD_PRO_STATUS, "Wakeboarding - Pro Status") \
+    X(0x1000, WAKEBOARDING_PRO_STATUS, "Wakeboarding - Pro Status") \
+    X(0x1001, WAKEBOARDING_1500_POINTS, "Wakeboarding - 1500 Points") \
     X(0x1B00, ISLAND_FLYOVER_IPOINT_GROUP_1, "Progressive Island Flyover I Point Group 1") \
     X(0x1B01, ISLAND_FLYOVER_IPOINT_GROUP_2, "Progressive Island Flyover I Point Group 2") \
     X(0x1B02, ISLAND_FLYOVER_IPOINT_GROUP_3, "Progressive Island Flyover I Point Group 3") \
