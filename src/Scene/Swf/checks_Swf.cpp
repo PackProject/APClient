@@ -15,13 +15,8 @@ namespace Check {
  ******************************************************************************/
 
 void GetDuelFirstWinCheck() {
-    bool hasCheck = Cmn::CheckMgr::GetInstance().GetCheckState(
-        CheckID(CHECK_SWORDPLAY_DUEL_FIRST_WIN));
-
-    if (!hasCheck) {
-        Cmn::CheckMgr::GetInstance().SetCheckState(
-            CheckID(CHECK_SWORDPLAY_DUEL_FIRST_WIN), true);
-    }
+    Cmn::CheckMgr::GetInstance().SetCheckState(
+        CHECK_SWORDPLAY_DUEL_FIRST_WIN, true);
 }
 
 TRAMPOLINE_DEF(0x802b1e34, 0x802b1e38) {
@@ -45,16 +40,11 @@ TRAMPOLINE_DEF(0x802b1e34, 0x802b1e38) {
  ******************************************************************************/
 
 void GetSpeedSliceFirstWinCheck() {
-    bool hasCheck = Cmn::CheckMgr::GetInstance().GetCheckState(
-        CheckID(CHECK_SWORDPLAY_SPEED_SLICE_FIRST_WIN));
-
-    if (!hasCheck) {
-        Cmn::CheckMgr::GetInstance().SetCheckState(
-            CheckID(CHECK_SWORDPLAY_SPEED_SLICE_FIRST_WIN), true);
-    }
+    Cmn::CheckMgr::GetInstance().SetCheckState(
+        CHECK_SWORDPLAY_SPEED_SLICE_FIRST_WIN, true);
 }
 
-TRAMPOLINE_DEF(0x8062f89c, 0x8062f8a0) {
+TRAMPOLINE_DEF(0x8062f848, 0x8062f84c) {
     // clang-format off
     TRAMPOLINE_BEGIN
 
