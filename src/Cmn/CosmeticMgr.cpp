@@ -37,7 +37,7 @@ void CosmeticMgr::Clear() {
 void CosmeticMgr::Debug() {
     kiwi::Random r;
 
-    mRandomBgmFlag = true;
+    mRandomBgmFlag = false;
     for (int i = 0; i < K_LENGTHOF(mRandomBgmMapping); i++) {
         mRandomBgmMapping[i] = i;
     }

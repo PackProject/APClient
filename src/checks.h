@@ -130,7 +130,7 @@
     X(0x0114, SWORDPLAY_SHOWDOWN_COMPLETE_STAGE_20, "Swordplay Showdown - Complete Stage 20") \
     X(0x0200, SWORDPLAY_DUEL_FIRST_WIN, "Swordplay Duel - First Win!") \
     X(0x0201, SWORDPLAY_DUEL_PRO_STATUS, "Swordplay Duel - Pro Status") \
-    X(0x0202, SWORDPLAY_DUEL_BEAT_THE_CHAMPTION, "Swordplay Duel - Beat The Champion") \
+    X(0x0202, SWORDPLAY_DUEL_BEAT_THE_CHAMPION, "Swordplay Duel - Beat The Champion") \
     X(0x0300, SWORDPLAY_SPEED_SLICE_FIRST_WIN, "Swordplay Speed Slice - First Win!") \
     X(0x0301, SWORDPLAY_SPEED_SLICE_PRO_STATUS, "Swordplay Speed Slice - Pro Status") \
     X(0x0302, SWORDPLAY_SPEED_SLICE_BEAT_THE_CHAMPION, "Swordplay Speed Slice - Beat The Champion") \
