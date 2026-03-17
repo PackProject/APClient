@@ -67,7 +67,7 @@ void Server::PacketCallback(PacketBase* pPacket, void* pArg) {
     Server* p = static_cast<Server*>(pArg);
     K_ASSERT_PTR(p->mpParser);
 
-    K_LOG_EX("[Server] ContentSize: %d\n", pPacket->GetContentSize());
+    //K_LOG_EX("[Server] ContentSize: %d\n", pPacket->GetContentSize());
 
     IMessage* pMessage =
         p->mpParser->Parse(pPacket->GetContent(), pPacket->GetContentSize());

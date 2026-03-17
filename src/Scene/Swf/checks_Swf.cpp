@@ -65,6 +65,49 @@ TRAMPOLINE_DEF(0x8062f89c, 0x8062f8a0) {
     blr
 }
 
+/******************************************************************************
+ *
+ * Swordplay (Showdown)
+ *
+ ******************************************************************************/
+
+int currentStageID = -1;
+
+void GetSwordplayShowdownStageCheck() {
+    if(currentStageID == -1) return;
+    LOG_EX("Completed Stage: %d\n", currentStageID);
+    Cmn::CheckMgr::GetInstance().SetCheckState(CheckID(CHECK_SWORDPLAY_SHOWDOWN_COMPLETE_STAGE_1 + currentStageID), true);
+}
+
+void UpdateShowdownStageID(int stageID) {
+    LOG_EX("Updating Stage ID: %d\n", stageID);
+    currentStageID = stageID;
+}
+
+TRAMPOLINE_DEF(0x80634b10, 0x80634b14) {
+    // clang-format off
+    TRAMPOLINE_BEGIN
+
+    bl GetSwordplayShowdownStageCheck
+
+    TRAMPOLINE_END
+    li r4, 0x1e
+    blr
+}
+
+TRAMPOLINE_DEF(0x8060ca00, 0x8060ca04) {
+    //clang-format off
+    TRAMPOLINE_BEGIN
+
+    stw r0, 0x30(r31)
+    mr r3, r0
+    bl UpdateShowdownStageID
+
+    TRAMPOLINE_END
+    
+    blr
+}
+
 } // namespace Check
 } // namespace Swf
 } // namespace AP
