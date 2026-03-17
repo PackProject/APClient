@@ -15,6 +15,7 @@ namespace Check {
  ******************************************************************************/
 namespace Std {
 
+//TODO: Needs to check stage for each bowling mini game
 void SetBowlingStrikeCheck() {
     Cmn::CheckMgr::GetInstance().SetCheckState(CHECK_BOWLING_STANDARD_FIRST_STRIKE, true);
 }

@@ -30,6 +30,19 @@
 // clang-format on
 
 /**
+ * @brief Saves *ALL* registers at the start of a trampoline function
+ */
+// clang-format off
+#define TRAMPOLINE_BEGIN_FRAME \
+    stwu r1, -0x100(r1); \
+    stmw r3,  0x0C(r1) ; \
+    mflr r12           ; \
+    stw  r12, 0x08(r1) ; \
+    mfcr r12           ; \
+    stw  r12, 0x88(r1) ;
+// clang-format on
+
+/**
  * @brief Restores registers at the end of a trampoline function
  */
 // clang-format off
