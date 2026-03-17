@@ -16,8 +16,7 @@ namespace Check {
 namespace Std {
 
 void SetWakeboardingPointsCheck(int points) {
-    LOG_EX("%d\n", points);
-    if(points >= 150) {
+    if(points >= 1500) {
         Cmn::CheckMgr::GetInstance().SetCheckState(CHECK_WAKEBOARDING_1500_POINTS, true);
     }
 }
