@@ -26,12 +26,9 @@
 
 #include "bta_sys.h"
 
-
-
 /*****************************************************************************
 **  Function Declarations
 *****************************************************************************/
-
 
 /*******************************************************************************
 **
@@ -42,7 +39,7 @@
 ** Returns          void
 **
 *******************************************************************************/
-BTA_API void bta_sys_hw_co_enable( tBTA_SYS_HW_MODULE module );
+BTA_API void bta_sys_hw_co_enable(tBTA_SYS_HW_MODULE module);
 
 /*******************************************************************************
 **
@@ -53,7 +50,6 @@ BTA_API void bta_sys_hw_co_enable( tBTA_SYS_HW_MODULE module );
 ** Returns          void
 **
 *******************************************************************************/
-BTA_API void bta_sys_hw_co_disable( tBTA_SYS_HW_MODULE module );
-
+BTA_API void bta_sys_hw_co_disable(tBTA_SYS_HW_MODULE module);
 
 #endif

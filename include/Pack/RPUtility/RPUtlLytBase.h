@@ -1,6 +1,6 @@
 #ifndef RP_UTILITY_LYT_BASE_H
 #define RP_UTILITY_LYT_BASE_H
-#include "RPTypes.h"
+#include <Pack/types_pack.h>
 
 #include <egg/core.h>
 

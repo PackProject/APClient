@@ -1,7 +1,8 @@
 #ifndef RP_UTILITY_GAME_OBJ_BASE_H
 #define RP_UTILITY_GAME_OBJ_BASE_H
+#include <Pack/types_pack.h>
+
 #include <Pack/RPGraphics.h>
-#include <Pack/RPTypes.h>
 #include <Pack/RPUtility/RPUtlActorBase.h>
 
 #include <egg/math.h>

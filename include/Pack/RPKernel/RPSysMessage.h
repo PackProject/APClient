@@ -1,70 +1,83 @@
 #ifndef RP_KERNEL_MESSAGE_H
 #define RP_KERNEL_MESSAGE_H
-#include "RPTypes.h"
-#include <egg/util/eggMsgRes.h>
+#include <Pack/types_pack.h>
+
+#include <egg/util.h>
+
+//! @addtogroup rp_kernel
+//! @{
 
 /**
- * @brief MsgRes wrapper with extra MsgInfo support
- * @details Has added support for the extra text features
- * seen in RP BMG files (scale, char space, etc.)
- * @wfuname
+ * @brief MsgRes wrapper for extra message info data
  */
 class RPSysMessage : public EGG::MsgRes {
 public:
     /**
-     * @brief RP extension for MsgInfo
-     * @details MsgInfoBlock stores the sizes of its entries,
-     * allowing games to add extra features to their text.
+     * @brief Message info extension
      */
-    struct RPMsgInfoBlockEntry
-        : public EGG::MsgRes::MessageInfoDataBlock::Entry {
-        // @brief Text scale
-        u16 mScale; // at 0x8
-        // @brief Text kerning
-        s8 mCharSpace; // at 0xA
+    struct Entry : EGG::MsgRes::MessageInfoDataBlock::Entry {
+        //! Text scale
+        u16 scale; // at 0x8
+        //! Space between characters
+        s8 charSpace; // at 0xA
     };
 
 public:
     /**
-     * @address 80190dec
-     * @param bin Binary message file (BMG)
+     * @brief Constructor
+     *
+     * @param pBinary Binary file data
+     * @param pHeap Heap to use for allocations
      */
-    RPSysMessage(const void* bin, EGG::Heap* heap);
-
-    // @address 80190d94
-    virtual ~RPSysMessage();
-
-    /**
-     * @brief Get message info by ID
-     * @param groupId Message group ID
-     * @param msgId Message ID
-     * @address 80190d90
-     */
-    RPMsgInfoBlockEntry* GetMessage(u32 groupId, u32 msgId);
+    RPSysMessage(const void* pBinary, EGG::Heap* pHeap);
 
     /**
-     * @brief Get message attribute by ID
-     * @param groupId Message group ID
-     * @param msgId Message ID
-     * @address 80190d6c
+     * @brief Destructor
      */
-    u32 GetAttribute(u32 groupId, u32 msgId);
+    virtual ~RPSysMessage(); // at 0x8
 
     /**
-     * @brief Get message scale by ID
-     * @param groupId Message group ID
-     * @param msgId Message ID
-     * @address 80190d48
+     * @brief Gets the text for the specified message
+     *
+     * @param group Group ID
+     * @param idx Message index
      */
-    u16 GetScale(u32 groupId, u32 msgId);
+    const wchar_t* GetMsg(u32 group, u32 idx);
 
     /**
-     * @brief Get message char space (kerning) by ID
-     * @param groupId Message group ID
-     * @param msgId Message ID
-     * @address 80190d24
+     * @brief Gets the info block for the specified message
+     *
+     * @param group Group ID
+     * @param idx Message index
      */
-    s8 GetCharSpace(u32 groupId, u32 msgId);
+    const Entry* GetMsgEntry(u32 group, u32 idx);
+
+    /**
+     * @brief Gets the attributes for the specified message
+     *
+     * @param group Group ID
+     * @param idx Message index
+     */
+    u32 GetAttribute(u32 group, u32 idx);
+
+    /**
+     * @brief Gets the scale of the specified message
+     * @details The decimal scale is obtained by dividing this value by 100.
+     *
+     * @param group Group ID
+     * @param idx Message index
+     */
+    u16 GetScale(u32 group, u32 idx);
+
+    /**
+     * @brief Gets the character spacing of the specified message
+     *
+     * @param group Group ID
+     * @param idx Message index
+     */
+    u8 GetCharSpace(u32 group, u32 idx);
 };
+
+//! @}
 
 #endif

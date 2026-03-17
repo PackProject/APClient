@@ -16,6 +16,8 @@ enum EMemory {
     EMemory_MEM1, //!< 24MB RAM brought over from NGC. [0x80000000 - 0x817FFFFF]
     EMemory_MEM2, //!< 64MB RAM unique to RVL.         [0x90000000 - 0x93FFFFFF]
 
+    EMemory_Scene, //!< Current scene heap
+
     EMemory_Max
 };
 
@@ -89,7 +91,7 @@ private:
 
 private:
     // 1024KB is not available for use in WS2
-#if defined(PACK_SPORTS) || defined(PACK_PLAY)
+#if defined(PACK_SPORTS) || defined(PACK_PARTY)
     //! Initial heap size
     static const u32 HEAP_SIZE = OS_MEM_KB_TO_B(1024);
 #elif defined(PACK_RESORT)
@@ -98,10 +100,8 @@ private:
 #endif
 
 private:
-    //! Heap in MEM1 region
-    EGG::Heap* mpHeapMEM1;
-    //! Heap in MEM2 region
-    EGG::Heap* mpHeapMEM2;
+    EGG::Heap* mpHeapMEM1; //!< Heap in MEM1 region
+    EGG::Heap* mpHeapMEM2; //!< Heap in MEM2 region
 };
 
 //! @}

@@ -1,34 +1,37 @@
 #ifndef RP_KERNEL_LYT_ALLOCATOR_H
 #define RP_KERNEL_LYT_ALLOCATOR_H
-#include "RPTypes.h"
-#include <egg/core/eggAllocator.h>
+#include <Pack/types_pack.h>
+
+#include <egg/core.h>
+
+#include <revolution/MEM.h>
+
+//! @addtogroup rp_kernel
+//! @{
 
 /**
- * @brief Memory allocator for layouts
- * @details Wrapper for EGG::Allocator with custom free func
- * @wfuname
+ * @brief Layout memory allocator
  */
 class RPSysLytAllocator : public EGG::Allocator {
 public:
-    // @address 8019e434
-    RPSysLytAllocator(EGG::Heap* heap, s32 r5);
+    /**
+     * @brief Constructor
+     *
+     * @param pHeap Heap to use for allocations
+     * @param align Required byte alignment for allocations
+     */
+    RPSysLytAllocator(EGG::Heap* pHeap, s32 align = 4);
 
-    // @address 8019e3dc
-    virtual ~RPSysLytAllocator();
+    /**
+     * @brief Destructor
+     */
+    virtual ~RPSysLytAllocator() override; // at 0x8
 
 private:
-    /**
-     * @brief Alloc/free funcs
-     * @note Base class's funcs point here
-     */
-    MEMAllocatorFuncs mFuncs; // at 0x14
+    //! Custom allocator functions
+    MEMAllocatorFuncs mExFuncs; // at 0x14
 };
 
-/**
- * @brief Layout allocator free func
- * @note Alloc func is carried over from base class
- * @address 8019e490
- */
-static void FreeMemory(MEMAllocator* allocator, void* mem);
+//! @}
 
 #endif

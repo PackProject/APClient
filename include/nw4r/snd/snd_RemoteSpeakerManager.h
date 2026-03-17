@@ -13,14 +13,6 @@ namespace detail {
 
 class RemoteSpeakerManager {
 public:
-    static RemoteSpeakerManager& GetInstance();
-
-    RemoteSpeaker& GetRemoteSpeaker(int idx);
-
-    void Setup();
-    void Shutdown();
-
-private:
     static const int SPEAKER_ALARM_HZ = 150;
 
 #if defined(__KOKESHI__)
@@ -33,6 +25,14 @@ private:
 #if defined(__KOKESHI__)
 #pragma warning reset(10124)
 #endif
+
+public:
+    static RemoteSpeakerManager& GetInstance();
+
+    RemoteSpeaker& GetRemoteSpeaker(int idx);
+
+    void Setup();
+    void Shutdown();
 
 private:
     RemoteSpeakerManager();

@@ -1,7 +1,9 @@
 #ifndef RP_PARTY_TNK_FIELD_MGR_H
 #define RP_PARTY_TNK_FIELD_MGR_H
+#include <Pack/types_pack.h>
+
 #include <Pack/RPParty/RPTnkScene/RPTnkGameObjMgrBase.h>
-#include <Pack/RPTypes.h>
+#include <Pack/RPSingleton.h>
 
 /**
  * @brief Tanks field manager

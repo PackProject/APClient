@@ -3,7 +3,6 @@
 #include <nw4r/types_nw4r.h>
 
 #include <nw4r/ef/drawstrategy/ef_drawstrategyimpl.h>
-
 #include <nw4r/math.h>
 
 namespace nw4r {

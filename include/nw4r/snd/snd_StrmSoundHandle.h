@@ -3,7 +3,6 @@
 #include <nw4r/types_nw4r.h>
 
 #include <nw4r/snd/snd_StrmSound.h>
-
 #include <nw4r/ut.h>
 
 namespace nw4r {

@@ -1,6 +1,8 @@
 #ifndef RP_SYSTEM_SCENE_CREATOR_H
 #define RP_SYSTEM_SCENE_CREATOR_H
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSingleton.h>
 
 #include <egg/core.h>
 
@@ -9,7 +11,6 @@
 
 /**
  * @brief Scene factory
- * @wfuname
  */
 class RPSysSceneCreator : public EGG::SceneCreator {
     RP_SINGLETON_DECL_EX(RPSysSceneCreator);
@@ -17,10 +18,8 @@ class RPSysSceneCreator : public EGG::SceneCreator {
 public:
     /**
      * @brief Game scene ID
-     * @wfuname
      */
     enum ESceneID {
-#ifndef PACK_RESORT
         // RPSystem
         ESceneID_RPSysBootScene,         //!< Logo
         ESceneID_RPSysPlayerSelectScene, //!< Player Select
@@ -39,7 +38,6 @@ public:
         ESceneID_RPSportsPhysicalPreviewScene, //!< Physical Test (Description)
         ESceneID_RPSportsPhysicalResultScene,  //!< Physical Test (Result)
         ESceneID_RPGolSelectScene,             //!< Golf (Course Select)
-#endif
 
 #if defined(PACK_SPORTS)
         ESceneID_Max,
@@ -60,7 +58,7 @@ public:
         ESceneID_RPPartyMiiLoadScene, //!< Mii/GameMgr Setup
         ESceneID_RPPartyMenuScene,    //!< Main Menu
 
-#if defined(PACK_PLAY)
+#if defined(PACK_PARTY)
         ESceneID_Max,
 #endif
 
@@ -173,21 +171,36 @@ public:
     };
 
 public:
-#ifdef PACK_SPORTS
+    /**
+     * @brief Creates a scene by ID
+     *
+     * @param id Scene ID
+     */
+    virtual EGG::Scene* create(s32 id); // at 0x8
+    /**
+     * @brief Destroys a scene
+     * @remark If the scene manager has requested a shutdown, this function will
+     * tell the system to shutdown.
+     *
+     * @param id ID of the scene being destroyed
+     */
+    virtual void destroy(s32 id); // at 0xC
+
+#if defined(PACK_SPORTS)
     /**
      * @brief Creates a Sports Pack scene by ID
      *
      * @param id Scene ID
      */
     EGG::Scene* createSportsScene(s32 id);
-#elif PACK_PLAY
+#elif defined(PACK_PARTY)
     /**
      * @brief Creates a Party Pack scene by ID
      *
      * @param id Scene ID
      */
     EGG::Scene* createPartyScene(s32 id);
-#elif PACK_RESORT
+#elif defined(PACK_RESORT)
     /**
      * @brief Creates a Wii Sports 2 scene by ID
      *
@@ -206,35 +219,18 @@ public:
      */
     bool changeSceneAfterFade(s32 id, bool reload = false);
     /**
-     * @brief Changes the scene to the boot scene (performs a soft reset)
+     * @brief Changes to the boot scene (performs a soft reset)
      */
     void changeSoftReset();
 
     /**
-     * @brief Creates a scene by ID
-     *
-     * @param id Scene ID
-     */
-    virtual EGG::Scene* create(s32 id);
-    /**
-     * @brief Destroys a scene
-     * @remark If the scene manager has requested a shutdown, this function will
-     * tell the system to shutdown.
-     *
-     * @param id ID of the scene being destroyed
-     */
-    virtual void destroy(s32 id);
-
-    /**
      * @brief Gets the scene's resource directory
-     * @bug If the specified scene has no entry, this function's result is
-     * undefined behavior. It reads from memory before the array of entries.
      *
      * @param id Scene ID (-1 to use the current scene)
      */
     const char* getResDirName(s32 id = -1);
 
-#ifdef PACK_SPORTS
+#if defined(PACK_SPORTS)
     /**
      * @brief Gets the sport corresponding to the scene ID
      * @note If the specified scene has no entry, this function returns -1.
@@ -254,8 +250,6 @@ public:
 
     /**
      * @brief Gets the scene's create logic type
-     * @bug If the specified scene has no entry, this function's result is
-     * undefined behavior. It reads from memory before the array of entries.
      *
      * @param id Scene ID (-1 to use the current scene)
      */
@@ -263,8 +257,6 @@ public:
 
     /**
      * @brief Gets the scene's exit logic type
-     * @bug If the specified scene has no entry, this function's result is
-     * undefined behavior. It reads from memory before the array of entries.
      *
      * @param id Scene ID (-1 to use the current scene)
      */
@@ -273,15 +265,13 @@ public:
     /**
      * @brief Tests whether the scene should use the pack's common sound
      * archive.
-     * @bug If the specified scene has no entry, this function's result is
-     * undefined behavior. It reads from memory before the array of entries.
      *
      * @param id Scene ID (-1 to use the current scene)
      */
     bool isCommonSound(s32 id = -1);
 
 // KOKESHI: We need to access private members in SceneCreator
-#ifdef __KOKESHI__
+#if defined(__KOKESHI__)
 public:
 #else
 private:

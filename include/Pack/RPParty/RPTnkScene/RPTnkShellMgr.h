@@ -1,8 +1,10 @@
 #ifndef RP_PARTY_TNK_SHELL_MGR_H
 #define RP_PARTY_TNK_SHELL_MGR_H
+#include <Pack/types_pack.h>
+
 #include <Pack/RPParty/RPTnkScene/RPTnkGameObjMgrBase.h>
 #include <Pack/RPParty/RPTnkScene/RPTnkShell.h>
-#include <Pack/RPTypes.h>
+#include <Pack/RPSingleton.h>
 
 /**
  * @brief Tanks mine object manager
@@ -17,9 +19,5 @@ public:
 private:
     char _18[0x40 - 0x18];
 };
-
-#if defined(__KOKESHI__)
-DECL_WEAK inline RPTnkShellMgr::RPTnkShellMgr() {}
-#endif
 
 #endif

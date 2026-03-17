@@ -12,6 +12,7 @@ extern "C" {
 #define WUD_MAX_DEV_ENTRY_FOR_SMP SC_MAX_DEV_ENTRY_FOR_SMP
 #define WUD_MAX_DEV_ENTRY SC_MAX_DEV_ENTRY
 #define WUD_DEV_HANDLE_INVALID (-1)
+#define WUD_ADDR_LEN BD_ADDR_LEN
 
 // Forward declarations
 typedef struct WUDDevInfo WUDDevInfo;
@@ -39,6 +40,12 @@ typedef enum {
     WUD_SYNC_TYPE_STANDARD,
     WUD_SYNC_TYPE_SIMPLE,
 } WUDSyncType;
+
+typedef enum {
+    WUD_RESULT_SYNC_BUSY = -1,
+    WUD_RESULT_SYNC_WAITING,
+    WUD_RESULT_SYNC_DONE,
+} WUDSyncResult;
 
 typedef void* (*WUDAllocFunc)(u32 size);
 typedef BOOL (*WUDFreeFunc)(void* pBlock);

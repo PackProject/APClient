@@ -1,6 +1,8 @@
 #ifndef RP_SYSTEM_PAUSE_MGR_H
 #define RP_SYSTEM_PAUSE_MGR_H
-#include "types.h"
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSingleton.h>
 
 class RPSysPauseMgr {
     RP_SINGLETON_DECL(RPSysPauseMgr);

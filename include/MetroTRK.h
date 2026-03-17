@@ -11,6 +11,7 @@ extern "C" {
 #include <MetroTRK/debugger/Portable/dserror.h>
 #include <MetroTRK/debugger/Portable/mem_TRK.h>
 #include <MetroTRK/debugger/Portable/msgbuf.h>
+#include <MetroTRK/debugger/Portable/msghndlr.h>
 #include <MetroTRK/debugger/Portable/mutex_TRK.h>
 #include <MetroTRK/debugger/Portable/nubevent.h>
 #include <MetroTRK/debugger/Portable/nubinit.h>

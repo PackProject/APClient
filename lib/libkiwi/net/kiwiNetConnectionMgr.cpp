@@ -6,47 +6,26 @@ namespace detail {
 /**
  * @brief Constructor
  */
-NetConnectionMgr::NetConnectionMgr() : Thread("NetConnectionMgr") {
-    Resume();
+NetConnectionMgr::NetConnectionMgr() {
+    mpThread = new StdThread(&NetConnectionMgr::ThreadFunc, *this);
 }
 
 /**
- * @brief Appends a new network connection to the manager list
- *
- * @param pConnection New network connection
+ * @brief Destructor
  */
-void NetConnectionMgr::AddConnection(NetConnection* pConnection) {
-    K_ASSERT_PTR(pConnection);
-
-    AutoMutexLock lock(mListMutex);
-    mConnectionList.PushBack(pConnection);
-}
-
-/**
- * @brief Removes a network connection from the manager list
- *
- * @param pConnection Network connection
- */
-void NetConnectionMgr::RemoveConnection(NetConnection* pConnection) {
-    AutoMutexLock lock(mListMutex);
-    mConnectionList.Remove(pConnection);
+NetConnectionMgr::~NetConnectionMgr() {
+    delete mpThread;
+    mpThread = nullptr;
 }
 
 /**
  * @brief Thread function
  */
-void NetConnectionMgr::Run() {
-    K_LOG("[NetConnectionMgr] Start up\n");
-    K_LOG_EX("[NetConnectionMgr] OSThread: %p\n", GetOSThread());
-
+void NetConnectionMgr::ThreadFunc() {
     while (true) {
-        mListMutex.Lock();
-
         K_FOREACH (it, mConnectionList) {
             (*it)->Calc();
         }
-
-        mListMutex.Unlock();
     }
 }
 

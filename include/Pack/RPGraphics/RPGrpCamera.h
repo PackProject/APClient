@@ -1,8 +1,8 @@
 #ifndef RP_GRAPHICS_CAMERA_H
 #define RP_GRAPHICS_CAMERA_H
-#include <Pack/RPTypes.h>
-#include <nw4r/g3d.h>
+#include <Pack/types_pack.h>
 
+#include <nw4r/g3d.h>
 #include <nw4r/math.h>
 
 class RPGrpCamera {

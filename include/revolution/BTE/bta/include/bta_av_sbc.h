@@ -30,7 +30,7 @@
 *****************************************************************************/
 
 /* SBC packet header size */
-#define BTA_AV_SBC_HDR_SIZE         A2D_SBC_MPL_HDR_LEN
+#define BTA_AV_SBC_HDR_SIZE A2D_SBC_MPL_HDR_LEN
 
 /*******************************************************************************
 **
@@ -46,8 +46,8 @@
 ** Returns          none
 **
 *******************************************************************************/
-extern void bta_av_sbc_init_up_sample (UINT32 src_sps, UINT32 dst_sps,
-                                       UINT16 bits, UINT16 n_channels);
+extern void bta_av_sbc_init_up_sample(UINT32 src_sps, UINT32 dst_sps,
+                                      UINT16 bits, UINT16 n_channels);
 
 /*******************************************************************************
 **
@@ -55,7 +55,8 @@ extern void bta_av_sbc_init_up_sample (UINT32 src_sps, UINT32 dst_sps,
 **
 ** Description      Given the source (p_src) audio data and
 **                  source speed (src_sps, samples per second),
-**                  This function converts it to audio data in the desired format
+**                  This function converts it to audio data in the desired
+*format
 **
 **                  p_src: the data buffer that holds the source audio data
 **                  p_dst: the data buffer to hold the converted audio data
@@ -63,7 +64,8 @@ extern void bta_av_sbc_init_up_sample (UINT32 src_sps, UINT32 dst_sps,
 **                  dst_samples: The size of p_dst (number of bytes)
 **
 ** Note:            An AE reported an issue with this function.
-**                  When called with bta_av_sbc_up_sample(src, uint8_array_dst..)
+**                  When called with bta_av_sbc_up_sample(src,
+*uint8_array_dst..)
 **                  the byte before uint8_array_dst may get overwritten.
 **                  Using uint16_array_dst avoids the problem.
 **                  This issue is related to endian-ness and is hard to resolve
@@ -74,9 +76,8 @@ extern void bta_av_sbc_init_up_sample (UINT32 src_sps, UINT32 dst_sps,
 **                  The number of bytes used in p_src (in *p_ret)
 **
 *******************************************************************************/
-extern int bta_av_sbc_up_sample (void *p_src, void *p_dst,
-                                 UINT32 src_samples, UINT32 dst_samples,
-                                 UINT32 *p_ret);
+extern int bta_av_sbc_up_sample(void* p_src, void* p_dst, UINT32 src_samples,
+                                UINT32 dst_samples, UINT32* p_ret);
 
 /*******************************************************************************
 **
@@ -84,20 +85,22 @@ extern int bta_av_sbc_up_sample (void *p_src, void *p_dst,
 **
 ** Description      Given the source (p_src) audio data and
 **                  source speed (src_sps, samples per second),
-**                  This function converts it to audio data in the desired format
+**                  This function converts it to audio data in the desired
+*format
 **
 **                  p_src: the data buffer that holds the source audio data
 **                  p_dst: the data buffer to hold the converted audio data
-**                  src_samples: The number of source samples (in uint of 4 bytes)
+**                  src_samples: The number of source samples (in uint of 4
+*bytes)
 **                  dst_samples: The size of p_dst (in uint of 4 bytes)
 **
 ** Returns          The number of bytes used in p_dst
 **                  The number of bytes used in p_src (in *p_ret)
 **
 *******************************************************************************/
-extern int bta_av_sbc_up_sample_16s (void *p_src, void *p_dst,
-                                 UINT32 src_samples, UINT32 dst_samples,
-                                 UINT32 *p_ret);
+extern int bta_av_sbc_up_sample_16s(void* p_src, void* p_dst,
+                                    UINT32 src_samples, UINT32 dst_samples,
+                                    UINT32* p_ret);
 
 /*******************************************************************************
 **
@@ -105,20 +108,22 @@ extern int bta_av_sbc_up_sample_16s (void *p_src, void *p_dst,
 **
 ** Description      Given the source (p_src) audio data and
 **                  source speed (src_sps, samples per second),
-**                  This function converts it to audio data in the desired format
+**                  This function converts it to audio data in the desired
+*format
 **
 **                  p_src: the data buffer that holds the source audio data
 **                  p_dst: the data buffer to hold the converted audio data
-**                  src_samples: The number of source samples (in uint of 2 bytes)
+**                  src_samples: The number of source samples (in uint of 2
+*bytes)
 **                  dst_samples: The size of p_dst (in uint of 2 bytes)
 **
 ** Returns          The number of bytes used in p_dst
 **                  The number of bytes used in p_src (in *p_ret)
 **
 *******************************************************************************/
-extern int bta_av_sbc_up_sample_16m (void *p_src, void *p_dst,
-                                     UINT32 src_samples, UINT32 dst_samples,
-                                     UINT32 *p_ret);
+extern int bta_av_sbc_up_sample_16m(void* p_src, void* p_dst,
+                                    UINT32 src_samples, UINT32 dst_samples,
+                                    UINT32* p_ret);
 
 /*******************************************************************************
 **
@@ -126,20 +131,21 @@ extern int bta_av_sbc_up_sample_16m (void *p_src, void *p_dst,
 **
 ** Description      Given the source (p_src) audio data and
 **                  source speed (src_sps, samples per second),
-**                  This function converts it to audio data in the desired format
+**                  This function converts it to audio data in the desired
+*format
 **
 **                  p_src: the data buffer that holds the source audio data
 **                  p_dst: the data buffer to hold the converted audio data
-**                  src_samples: The number of source samples (in uint of 2 bytes)
+**                  src_samples: The number of source samples (in uint of 2
+*bytes)
 **                  dst_samples: The size of p_dst (in uint of 2 bytes)
 **
 ** Returns          The number of bytes used in p_dst
 **                  The number of bytes used in p_src (in *p_ret)
 **
 *******************************************************************************/
-extern int bta_av_sbc_up_sample_8s (void *p_src, void *p_dst,
-                                 UINT32 src_samples, UINT32 dst_samples,
-                                 UINT32 *p_ret);
+extern int bta_av_sbc_up_sample_8s(void* p_src, void* p_dst, UINT32 src_samples,
+                                   UINT32 dst_samples, UINT32* p_ret);
 
 /*******************************************************************************
 **
@@ -147,7 +153,8 @@ extern int bta_av_sbc_up_sample_8s (void *p_src, void *p_dst,
 **
 ** Description      Given the source (p_src) audio data and
 **                  source speed (src_sps, samples per second),
-**                  This function converts it to audio data in the desired format
+**                  This function converts it to audio data in the desired
+*format
 **
 **                  p_src: the data buffer that holds the source audio data
 **                  p_dst: the data buffer to hold the converted audio data
@@ -158,9 +165,8 @@ extern int bta_av_sbc_up_sample_8s (void *p_src, void *p_dst,
 **                  The number of bytes used in p_src (in *p_ret)
 **
 *******************************************************************************/
-extern int bta_av_sbc_up_sample_8m (void *p_src, void *p_dst,
-                                     UINT32 src_samples, UINT32 dst_samples,
-                                     UINT32 *p_ret);
+extern int bta_av_sbc_up_sample_8m(void* p_src, void* p_dst, UINT32 src_samples,
+                                   UINT32 dst_samples, UINT32* p_ret);
 
 /*******************************************************************************
 **
@@ -178,7 +184,8 @@ extern int bta_av_sbc_up_sample_8m (void *p_src, void *p_dst,
 **                  Codec configuration in p_cap.
 **
 *******************************************************************************/
-extern UINT8 bta_av_sbc_cfg_for_cap(UINT8 *p_peer, tA2D_SBC_CIE *p_cap, tA2D_SBC_CIE *p_pref);
+extern UINT8 bta_av_sbc_cfg_for_cap(UINT8* p_peer, tA2D_SBC_CIE* p_cap,
+                                    tA2D_SBC_CIE* p_pref);
 
 /*******************************************************************************
 **
@@ -190,7 +197,7 @@ extern UINT8 bta_av_sbc_cfg_for_cap(UINT8 *p_peer, tA2D_SBC_CIE *p_cap, tA2D_SBC
 ** Returns          0 if ok, nonzero if error.
 **
 *******************************************************************************/
-extern UINT8 bta_av_sbc_cfg_in_cap(UINT8 *p_cfg, tA2D_SBC_CIE *p_cap);
+extern UINT8 bta_av_sbc_cfg_in_cap(UINT8* p_cfg, tA2D_SBC_CIE* p_cap);
 
 /*******************************************************************************
 **
@@ -201,7 +208,6 @@ extern UINT8 bta_av_sbc_cfg_in_cap(UINT8 *p_cfg, tA2D_SBC_CIE *p_cap);
 ** Returns          void
 **
 *******************************************************************************/
-extern void bta_av_sbc_bld_hdr(BT_HDR *p_buf, UINT16 fr_per_pkt);
+extern void bta_av_sbc_bld_hdr(BT_HDR* p_buf, UINT16 fr_per_pkt);
 
 #endif /* BTA_AV_SBC_H */
-

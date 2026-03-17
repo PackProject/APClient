@@ -1,24 +1,31 @@
 # Contributing
 
-Thank you for your interest in the Kokeshi project! We ask that you please follow these contribution guidelines to ensure consistency across the codebase and its documentation.
+Thank you for your interest in the Kokeshi project!
+
+We ask that you please follow these contribution guidelines to ensure consistency across the codebase and its documentation.
 
 ## Project Structure
-Header files that detail game concepts should be placed in the `include` directory. Depending on the module in which the code lies, you should choose the appropriate sub-directory to hold the header files:
 
-```
+To achieve interoperability with code in the base DOL file, we must create header files containing class definitions, function prototypes, and other concepts gathered through the reverse engineering process.
+
+Header files that detail these game concepts should be placed in the `include` directory. Depending on the module in which the code lies, you should choose the appropriate sub-directory to hold the header files:
+
+```text
 └── include:
     ├── egg: Nintendo EAD middleware
     ├── MetroTRK: Metrowerks Target Resident Kernel (TRK) Debugger
     ├── MSL: Metrowerks Standard Library
-    ├── nw4r: NintendoWare for Revolution (NW4R)
-    ├── Pack: Revolution Pack Project
+    ├── nw4r: NintendoWare for Revolution (NW4R) SDK
+    ├── Pack: Revolution Pack Project (RP)
     ├── revolution: Revolution (RVL) SDK
+    ├── runtime: CodeWarrior compiler runtime
     ├── RVLFaceLib: Revolution Face Library (RFL)
     └── Sports2: Wii Sports 2 (Resort)
 ```
 
 ## File Formats
-Please use the following file extensions for Kokeshi code:
+
+Please use the following file extensions for source code files:
 
 | File Extension | Usage                                                |
 | -------------- | ---------------------------------------------------- |
@@ -28,9 +35,13 @@ Please use the following file extensions for Kokeshi code:
 | `*.hpp`        | Large C++ template definitions that must be included |
 
 ## Style Guide
-Kokeshi contains a `.clang-format` configuration file which handles most of the code formatting. Still, there are some important style elements to conform to:
+
+This repository contains a `.clang-format` configuration file which handles most of the code formatting automatically.
+
+Even then, there are some important style elements to manually conform to:
 
 ### Header Guards
+
 Although this project will likely always use the CodeWarrior compiler, which supports the `#pragma once` directive, please use standard include guards instead.
 
 This is done both for readability purposes and to provide context about the file inside the guard:
@@ -38,9 +49,11 @@ This is done both for readability purposes and to provide context about the file
 - `#ifndef EGG_CORE_ARCHIVE_H` -> `include/egg/core/eggArchive.h`
 - `#ifndef NW4R_UT_LIST_H` -> `include/nw4r/ut/ut_list.h`
 
-#### Syntax
+#### Guard syntax
+
 Please use the following format:
-```
+
+```cpp
 #ifndef {library}_{module}_{filename}_H
 #define {library}_{module}_{filename}_H
 
@@ -49,24 +62,26 @@ Please use the following format:
 #endif
 ```
 
-Terms separated by case/underscores should both be converted to underscores in the guard name:
+Identifier terms separated by case/underscores should be converted to underscores in the guard name:
 
 - `myClass` -> `MY_CLASS`
 - `MyClass` -> `MY_CLASS`
 - `My_Class` -> `MY_CLASS`
 - `MYClass` -> `MY_CLASS`
 
-#### Special cases
-The only exception is for Pack Project (RP) files. The classes exist in the global namespace and often include the module name in both the directory and filename:
-
-- `include/Pack/RPAudio/RPSndAudioMgr.h` -> `#ifndef RP_AUDIO_SND_AUDIO_MGR_H`
-- `include/Pack/RPGraphics/RPGrpRenderer.h` -> `#ifndef RP_GRAPHICS_RENDERER_H`
-- `include/Pack/RPUtility/RPUtlBaseFsm.h` -> `#ifndef RP_UTILITY_BASE_FSM_H`
+> [!IMPORTANT]
+> The only exception is for Pack Project (RP) files. The classes exist in the global namespace, and as such often include the module name in *both the directory and filename*:
+>
+> - `include/Pack/RPAudio/RPSndAudioMgr.h` -> `#ifndef RP_AUDIO_SND_AUDIO_MGR_H`
+> - `include/Pack/RPGraphics/RPGrpRenderer.h` -> `#ifndef RP_GRAPHICS_RENDERER_H`
+> - `include/Pack/RPUtility/RPUtlBaseFsm.h` -> `#ifndef RP_UTILITY_BASE_FSM_H`
 
 ### Include Directives
-*Include-what-you-use.* Unnecessary `#include` directives only increase the duration of compilation. 
 
-#### Syntax
+*Include-what-you-use.* Unnecessary `#include` directives only increase the duration of compilation.
+
+#### Include syntax
+
 Please use the `<>` characters over `""` when writing include paths, and use filepaths relative to `include/` or `lib/`:
 
 ```cpp
@@ -77,8 +92,8 @@ Please use the `<>` characters over `""` when writing include paths, and use fil
 ```
 
 #### Vs. forward declarations
-If a forward declaration can resolve the dependency, favor that over `#include`'ing the corresponding file:
 
+If a forward declaration can resolve the dependency, favor that over `#include`'ing the corresponding file:
 
 ```cpp
 #include <Pack/RPGraphics.h> // ❌ Don't do this!!!
@@ -104,6 +119,9 @@ The only exception is when dealing with symbols from other libraries:
 
 // Forward declarations
 class IRPGrpDrawObject; // ✅ From same library, so forward declare it.
+namespace EGG {
+class Heap; // ❌ Don't do this!!! Heap is from the EGG library, not RP!
+}
 
 class RPGrpRenderer {
 public:
@@ -111,11 +129,22 @@ public:
     void AppendDrawObject(IRPGrpDrawObject* pDrawObject);
 ```
 
+If you do need to write forward declarations, please write a comment as follows:
+
+```cpp
+// Forward declarations
+class IRPGrpDrawObject;
+class IRPGrpModelCallback;
+class IRPGrpHostIOSocket;
+```
+
 #### Public header files
-Many libraries/modules have a "public" or "external" header file that will in-turn `#include` all of its respective files.
+
+Many libraries/modules have a "public" or "external" header file which will, in-turn, `#include` all of its internal files.
 
 For example, `include/revolution/NAND.h` is the public header file for the NAND library:
-```c
+
+```cpp
 #ifndef RVL_SDK_PUBLIC_NAND_H
 #define RVL_SDK_PUBLIC_NAND_H
 #ifdef __cplusplus
@@ -133,52 +162,69 @@ extern "C" {
 #endif
 ```
 
-Using public headers is OK as long as:
-1. They are from another library
-2. You are writing the `#include` directive in an implementation file (`*.c`/`*.cpp`) 
+> [!CAUTION]
+> Using public headers is OK as long as:
+>
+> - They are from another library
+> - You are writing the `#include` directive in an implementation file (`*.c`/`*.cpp`)
+>
+Otherwise, it is very easy to form a circular dependency. Here's an example!
 
-Otherwise, it is easy to form a circular dependency.
-Here's an example!
+`egg/core/eggDvdFile.h`:
 
-`libkiwi/core/kiwiColor.h`:
 ```cpp
-#include <libkiwi.h>                     // ❌ It will cause a circular dependency!
-#include <libkiwi/core/kiwiConsoleOut.h> // ✅ Include only what you use.
-#include <revolution/NAND.h>             // ✅ NAND is in another library (RVL SDK).
+#include <egg/core.h>         // ❌ It will cause a circular dependency!
+#include <egg/core/eggFile.h> // ✅ Include only what you use.
+#include <revolution/DVD.h>   // ✅ DVD is in another library (RVL SDK).
 ```
 
-`libkiwi/core/kiwiColor.cpp`:
+`egg/core/eggDvdFile.cpp`:
+
 ```cpp
-#include <libkiwi.h>                     // ✅ OK because this is the implementation file!
-#include <libkiwi/core/kiwiConsoleOut.h> // ✅ Also OK.
-#include <revolution/NAND.h>             // ✅ NAND is in another library (RVL SDK).
+#include <egg/core.h>         // ✅ OK because this is the implementation file!
+#include <egg/core/eggFile.h> // ✅ Also OK.
+#include <revolution/DVD.h>   // ✅ DVD is in another library (RVL SDK).
 ```
 
-#### libkiwi
-All libkiwi header files must at least include the types header file:
-```c
-#include <libkiwi/k_types.h>
-```
+#### Types headers
+
+All header files must at least include the types header file:
+
+| Library    | Types header                 |
+| ---------- | ---------------------------- |
+| libkiwi    | `<libkiwi/k_types.h>`        |
+| NW4R       | `<nw4r/types_nw4r.h>`        |
+| EGG        | `<egg/types_egg.h>`          |
+| RP         | `<Pack/types_pack.h>`        |
+| All others | `<types.h>`                  |
 
 ### Naming Scheme
 
-#### Functions
+> [!IMPORTANT]
+> The only exceptions to the rules below are identifiers that must be named otherwise for the sake of decompilation accuracy and/or interoperability.
+>
+> This includes functions/data with known symbols, identifiers whose names are revealed by strings in the binary, and any members which must control the placement of a class's virtual table.
+
+#### Function naming
+
 Please write function names in PascalCase:
+
 ```cpp
 void myFunction();  // ❌ Don't do this!!!
 void my_function(); // ❌ Don't do this!!!
 void MyFunction();  // ✅ Do this!!!
 ```
 
-#### Data
+#### Data naming
+
 Please use the following prefixes for data members/function parameters:
 
-| Prefix | Meaning                      |
-| ------ | ---------------------------- |
-| `m`    | C++ class private member     |
-| `s`    | C/C++ static, private member |
-| `p`    | C/C++ pointer-typed variable |
-| `r`    | C++ reference-typed variable |
+| Prefix | Meaning                                 |
+| ------ | --------------------------------------- |
+| `m`    | C++ class private member                |
+| `s`    | C/C++ static, private member            |
+| `p`    | C/C++ pointer-typed member or variable  |
+| `r`    | C++ reference-typed member or variable  |
 
 If no prefix is required, write the name in camelCase.
 
@@ -213,13 +259,12 @@ bool GetHandle(int& handle);  // ❌ Don't do this!!! 'handle' is a reference!
 bool GetHandle(int& rHandle); // ✅ Do this!!!
 ```
 
-#### Macros
+#### Macro naming
+
 Please write macros in uppercase SNAKE_CASE.
 
-#### Exceptions
-The only exceptions to these rules are identifiers that must be named otherwise due to the decompilation, such as functions/data with known symbols, and the `OSIsMEM` family of macros.
-
 ### Declaration Order
+
 Please use the following order when writing C++ classes:
 
 1. Public members
@@ -227,16 +272,23 @@ Please use the following order when writing C++ classes:
 3. Private members
 
 #### Order per section
+
 In each section (public/protected/private), use the following order of declarations:
 
 - Type aliases (`friend`, `typedef`, `using`)
 - Nested types
-- Static constants
-- ### **[Re-declare the access specifier here]**
+- Literal constants
+
+**Re-declare the access specifier at this point!**
+
 - Constructor(s) and assignment operator(s)
 - Destructor
+- Virtual functions
 - All other functions
-- ### **[Re-declare the access specifier here]**
+
+**Re-declare the access specifier at this point!**
+
+- Constant, static members
 - Non-constant, static members
 - All other data members
 
@@ -256,7 +308,7 @@ public:
         Color color;
     };
 
-    // 3. Static constants
+    // 3. Literal constants
     static const int FRUIT_MAX = 10;
 
 // Re-declare access specifier
@@ -267,15 +319,16 @@ public:
     // 5. Destructor
     virtual ~FruitBasket();
 
-    // 6. Static functions
-    static String GetName() {
+    // 6. Virtual functions
+    virtual String GetName() {
         return "FruitBasket";
     }
 
-    // 7. Non-static functions
+    // 7. All other functions
     void AddFruit(const Fruit& rFruit) {
         mFruits.PushBack(rFruit);
     }
+    static void Initialize();
 
 // 2. PROTECTED ACCESS
 protected:
@@ -289,80 +342,89 @@ private:
     // 7. Non-static functions
     void Clear();
 
-    // 8. Non-constant, static members
+    // 8. Constant, static members
+    static const IBasket::Profile PROFILE;
+
+    // 9. Non-constant, static members
     static TList<FruitBasket> sInstances;
 
-    // 9. All other data members
+    // 10. All other data members
     TList<Fruit> mFruits;
 };
 ```
 
-#### Exceptions
-The only exceptions to these rules are classes where certain members must be declared higher up because of the placement of the class's virtual table. This is only important for ensuring interoperability with classes in the DOL.
-
 ### Header Implementation
+
 With older compilers it was common to implement function bodies in a header file so that they can be inlined across translation units. Because Kokeshi relies on the CodeWarrior compiler, this is still is a potential optimization.
 
 However, Kokeshi code is compiled with size optimizations, not speed optimizations. As a result, the compiler will often not inline functions unless they are one or two instructions.
 
-So, please only implement functions in-header **if they are a single C/C++ statement** (`return *this` in operators does not count). This does not include ASSERT macros, as they are stripped from release builds.
+> [!IMPORTANT]
+> So, please only implement functions in-header **if they are a single C/C++ statement** (`return *this` in operators does not count). This does not include `ASSERT` macros, as they are stripped from release builds.
 
-Don't bother implementing virtual function bodies in-header, as they will never be inlined unless the call is manually devirtualized.
+Unless it benefits readability, don't bother implementing virtual function bodies in-header. They will never be inlined unless the call is manually devirtualized.
 
 **NOTE: These restrictions does not apply to templated functions, although templated *member functions* should go in a .hpp file (see `libkiwi/prim/kiwiVectorImpl.hpp`).**
 
 ### Doxygen
-Kokeshi uses Doxygen to offer a website view of the codebase.
 
-At the time of writing, this documentation lives at [packproject.dev/Kokeshi](https://packproject.dev/Kokeshi) and is updated as the main branch changes.
+Kokeshi uses [Doxygen](https://www.doxygen.nl) as the standard format for documentation.
 
-#### Syntax
+At the time of writing, this documentation lives at [packproject.dev/Kokeshi](https://packproject.dev/Kokeshi) and reflects the state of the main branch.
+
+#### Doxygen syntax
+
 - Use the `@` prefix to issue Doxygen commands, rather than `\`.
 - Use `//!` for single-line Doxygen comments, rather than  `///`.
 
-#### Groups
+#### Doxygen groups
+
 The only required Doxygen grouping is for modules that are not distinguished by namespaces. This is especially true for C code where there is no such construct as a "namespace".
 
 For example, the Doxygen group hierarchy `NW4R` -> `ut` is represented by the contents of the namespace `nw4r::ut`.
 
-For some libraries this relation does not occur. EGG and libkiwi have many modules but only one namespace. To get around this, the contents of their header files are divided into Doxygen groups depending on the directory the file is in.
+For some libraries, this relation does not occur. EGG has many modules but only one namespace. To get around this, the contents of their header files are divided into Doxygen groups depending on the directory the file is in.
 
-Below is the outline of `libkiwi/core/kiwiColor.h`. It exists in the `core` module of libkiwi, but must be explicitly placed into a group because it only uses the root `kiwi` namespace:
+Below is the outline of `egg/core/eggDvdFile.h`. It exists in the `core` module of EGG, but must be explicitly placed into a Doxygen group because it only uses the root `EGG` namespace:
 
 ```cpp
-#ifndef LIBKIWI_CORE_COLOR_H
-#define LIBKIWI_CORE_COLOR_H
-#include <libkiwi/k_types.h>
-#include <nw4r/ut.h>
+#ifndef EGG_CORE_DVD_FILE_H
+#define EGG_CORE_DVD_FILE_H
+#include <egg/types_egg.h>
 
-namespace kiwi {
-//! @addtogroup libkiwi_core
+namespace EGG {
+//! @addtogroup egg_core
 //! @{
 
     // File contents . . .
 
 //! @}
-} // namespace kiwi
+} // namespace EGG
 
 #endif
 ```
 
+> [!NOTE]
+> Due to this repository being in the early stages, it is not important to include documentation in files outside of the Pack Project modules (the "game code").
+
 **To see a list of all Doxygen groups, please see `include/__doxygen.hpp`.**
 
 #### Comments
-Comments do not have heavy restrictions but should follow a consistent format to generate readable Doxygen pages:
 
-##### Syntax
-For functions, write the brief description such that it could be prefixed with "This function" and still make sense:
+Comments do not have heavy restrictions, but they should follow a consistent format to generate readable Doxygen pages:
 
-```
-// ❌ [This function] **clear** the memory buffer
+##### Function comments
+
+When documenting functions, write the `@brief` description such that it could be prefixed with "This function" and still make sense:
+
+```cpp
+// ❌ [This function] **CLEAR** the memory buffer
 /**
  * @brief Clear the memory buffer
  */
 void Clear();
 
-// ✅ [This function] **clears** the memory buffer
+// ✅ [This function] **CLEARS** the memory buffer
 /**
  * @brief Clears the memory buffer
  */
@@ -371,36 +433,16 @@ void Clear();
 
 If the function is a simple check that returns a boolean result, start the description with "Tests whether":
 
-```
+```cpp
 /**
  * @brief Tests whether the buffer is empty
  */
 bool Empty() const;
 ```
 
-##### Structures
-Structures (`struct`/`class`) should at least provide a brief description:
-```
-/**
- * @brief Interface for binary file serialization/deserialization
- */
-class IBinary {
-public:
-```
+Functions should document all parameters with the `@param` command:
 
-##### Enumerations
-Enumerations should at least provide a brief description:
-```
-/**
- * @brief Stream seek origin
- */
-enum ESeekDir { ESeekDir_Begin, ESeekDir_Current, ESeekDir_End };
-```
-
-##### Functions
-Functions should at least provide a brief description, documenting all parameters:
-
-```
+```cpp
 /**
  * @brief Advances this stream's position
  *
@@ -412,7 +454,12 @@ void Seek(ESeekDir dir, s32 offset);
 
 If the return value is not obvious, explain its purpose with the `@return` command:
 
-```
+> [!WARNING]
+> It is easy to accidentally use `@returns` (with the "s") instead of `@return`.
+>
+> Please use `@return` in your documentation.
+
+```cpp
 /**
  * @brief Writes data to this stream (internal implementation)
  *
@@ -423,9 +470,9 @@ If the return value is not obvious, explain its purpose with the `@return` comma
 s32 WriteImpl(const void* pSrc, u32 size);
 ```
 
-If a pointer/reference typed parameter is meant to be given an initial value through the function, mark it as an *out* parameter, like so:
+If a pointer/reference typed parameter is meant to be given an initial value through the function, mark it as an ***out*** parameter, like so:
 
-```
+```cpp
 /**
  * @brief Gets the console's IP address
  *
@@ -434,10 +481,49 @@ If a pointer/reference typed parameter is meant to be given an initial value thr
 void GetHostAddr(SockAddr4& rAddr)
 ```
 
-##### Macros
+Doxygen also provides the `[in]` tag to mark input parameters.
+
+However, please only use this tag if the parameter is both an in **and** out parameter. This is common with "in-place" algorithms:
+
+```cpp
+/**
+ * @brief Performs the Fisher-Yates shuffle algorithm to generate a random
+ * permutation of the specified values
+ *
+ * @param[in,out] rArray Input array (shuffled in-place)
+ * @param size Length of input array
+ */
+void Shuffle(int* pArray, size_t size) {
+```
+
+##### Structure comments
+
+Structures (`struct`/`class`) should at least provide a `@brief` description:
+
+```cpp
+/**
+ * @brief Interface for binary file serialization/deserialization
+ */
+class IBinary {
+public:
+```
+
+##### Enumeration comments
+
+Enumerations (`enum`) should at least provide a `@brief` description:
+
+```cpp
+/**
+ * @brief Stream seek origin
+ */
+enum ESeekDir { ESeekDir_Begin, ESeekDir_Current, ESeekDir_End };
+```
+
+##### Macro comments
+
 Macros can be documented like functions, but also a single-line comment will suffice when there are no parameters, or their purpose is obvious:
 
-```
+```cpp
 /**
  * @brief Helper for creating version numbers
  * 
@@ -450,10 +536,11 @@ Macros can be documented like functions, but also a single-line comment will suf
 #define K_VERSION(major, minor) ((major << 8) | minor)
 ```
 
-##### Data
+##### Data comments
+
 Data members should provide a single-line brief description. It does not matter whether this is a comment above or after the declaration:
 
-```
+```cpp
 //! Stream open flag
 bool mIsOpen; 
 //! Position in data 
@@ -463,10 +550,14 @@ bool mIsOpen;  //!< Stream open flag
 u32 mPosition; //!< Position in data
 ```
 
-##### Constructors/Destructors
+> [!NOTE]
+> Please do not mix these types of comments in the same scope!
+
+##### Constructor/Destructor comments
+
 The brief description for constructors should be "Constructor", and the brief description for destructors should be "Destructor":
 
-```
+```cpp
 /**
  * @brief Constructor
  */
@@ -480,7 +571,7 @@ virtual ~IStream();
 
 If there are many constructor overloads for purposes such as moving/copying, feel free to specify the constructor "type" in the Doxygen detailed description:
 
-```
+```cpp
 /**
  * @brief Constructor
  */
@@ -507,22 +598,106 @@ Optional(const Optional& rOther);
  * @param rValue Value
  */
 Optional(const T& rValue);
+```
 
-#ifdef LIBKIWI_CPP1X
-/**
- * @brief Constructor
- * @details Move constructor
- *
- * @param rOther Optional value
- */
-Optional(const Optional&& rOther);
+#### Statement comments
 
-/**
- * @brief Constructor
- * @details Move constructor
- *
- * @param rValue Optional value
- */
-Optional(const T&& rValue);
-#endif
+When writing statement-level comments, please try to make sure you are actually solving one of the following problems:
+
+- The purpose (the "*why*") of the code statement is unclear:
+
+```cpp
+void IScene::Configure() {
+    // . . . . .
+
+    // 2D view is required for drawing layouts (✅ Explains purpose!)
+    RPGrpRenderer::GetCurrent()->CreateView2D(1, pScreen);
+    RPGrpRenderer::GetCurrent()->CorrectView();
+
+    // Derived class behavior (✅ Explains purpose!)
+    OnConfigure();
+}
+```
+
+- The functionality (the "*what*") of the code statement is unclear:
+
+```cpp
+int Decomp::decodeSZS(u8* pSrc, u8* pDst) {
+    // . . . . .
+
+    // Literal (chunk bit is set) (✅ Provides context!)
+    if (chunk & bit) {
+        pDst[dstIdx++] = pSrc[srcIdx++];
+    }
+    // Back-reference (chunk bit is not set) (✅ Provides context!)
+    else {
+        // Next bytes contain run offset, length (✅ Provides context!)
+        int packed = pSrc[srcIdx] << 8 | pSrc[srcIdx + 1];
+        srcIdx += 2;
+```
+
+While the latter may traditionally be seen as a sign to refactor, we often do not have this freedom with matching decomp. In these cases, statement-level comments explaining *what* is happening is appreciated.
+
+For simple code statements, or statements where the functionality is obvious, please do not restate the logic in comment form:
+
+```cpp
+void DvdFile::initiate() {
+    // Initializes the mutexes (❌ This is a redundant explanation!!!)
+    OSInitMutex(&mSyncMutex);
+    OSInitMutex(&mAsyncMutex);
+
+    // Initializes the message queues (❌ This is a redundant explanation!!!)
+    OSInitMessageQueue(&mSyncQueue, mSyncBuffer, ARRAY_SIZE(mSyncBuffer));
+    OSInitMessageQueue(&mAsyncQueue, mAsyncBuffer, ARRAY_SIZE(mAsyncBuffer));
+}
+```
+
+#### TO-DO comments
+
+In situations where you want to make a note of something for later, a "TODO" comment can be very useful.
+
+> [!TIP]
+> We often use these types of comments for:
+>
+> - Highlighting a "fakematch", or code that is matching but is either likely not accurate or is written in a non-portable manner
+> - Making a note of an unknown concept
+> - Making a note of changes to make during a future refactor
+
+Please make sure you include your Git username as part of any TODO comments, so others who may seek further clarification will know who to contact:
+
+```cpp
+// ✅ Provides context, and includes an author name!
+// TODO(kiwi) Permuter fake(?)match
+font_u8 = (u8*)font;
+*widthOut = (font_u8 + font->widthTableOfs)[code];
+
+// ❌ Provides no context or author name!
+// TODO
+void __OSGetDiscState(u8* out) {
+    u32 flags;
+```
+
+#### Bug comments
+
+To highlight a bug or oversight in the code, use the `@bug` Doxygen command:
+
+```cpp
+template <u32 N> struct ResNameDataT {
+    u32 len; // at 0x0
+    // @bug 'N' already includes the null terminator
+    char str[ROUND_UP(N + 1, 4)]; // at 0x4
+};
+```
+
+```cpp
+// @bug Typo of 'i'
+if (rSetting.mColorInput.mTevColor[1] ==
+    ColorInput::TEVCOLOR1_2) {
+```
+
+```cpp
+if (chan < WPAD_CHAN0 || chan >= WPAD_MAX_CONTROLLERS) {
+    // @bug Will be interpreted as TRUE
+    return RFLErrcode_WrongParam;
+}
 ```

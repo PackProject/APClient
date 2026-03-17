@@ -1,7 +1,8 @@
 #ifndef RP_GRAPHICS_FOG_MANAGER_H
 #define RP_GRAPHICS_FOG_MANAGER_H
-#include "RPTypes.h"
-#include <egg/gfx/eggFogManager.h>
+#include <Pack/types_pack.h>
+
+#include <egg/gfxe.h>
 
 /**
  * @brief RP engine fog manager

@@ -125,47 +125,44 @@ typedef struct WPADDevConfig {
     u8 volume; // at 0x2D
 } WPADDevConfig;
 
-typedef struct WPADFSConfig {
-    s16 stickXCenter; // at 0x0
-    s16 at_0x02;      // at 0x2
-    s16 at_0x04;      // at 0x4
-    s16 stickYCenter; // at 0x6
-    s16 at_0x08;      // at 0x8
-    s16 at_0x0a;      // at 0xA
-
-    s16 accX0g; // at 0xC
-    s16 accY0g; // at 0xE
-    s16 accZ0g; // at 0x10
-
-    s16 accX1g; // at 0x12
-    s16 accY1g; // at 0x14
-    s16 accZ1g; // at 0x16
-} WPADFSConfig;
-
-typedef struct WPADCLConfig {
-    s16 lStickXCenter; // at 0x0
-    s16 at_0x02;       // at 0x2
-    s16 at_0x04;       // at 0x4
-    s16 lStickYCenter; // at 0x6
-    s16 at_0x08;       // at 0x8
-    s16 at_0x0a;       // at 0xA
-
-    s16 rStickXCenter; // at 0xC
-    s16 at_0x0e;       // at 0xE
-    s16 at_0x10;       // at 0x10
-    s16 rStickYCenter; // at 0x12
-    s16 at_0x14;       // at 0x14
-    s16 at_0x16;       // at 0x16
-
-    u8 triggerLZero; // at 0x18
-    u8 triggerRZero; // at 0x19
-} WPADCLConfig;
-
 typedef struct WPADExtConfig {
     union {
-        WPADFSConfig fs;
-        WPADCLConfig cl;
-    };
+        struct WPADFSConfig {
+            s16 stickXCenter; // at 0x0
+            s16 at_0x02;      // at 0x2
+            s16 at_0x04;      // at 0x4
+            s16 stickYCenter; // at 0x6
+            s16 at_0x08;      // at 0x8
+            s16 at_0x0a;      // at 0xA
+
+            s16 accX0g; // at 0xC
+            s16 accY0g; // at 0xE
+            s16 accZ0g; // at 0x10
+
+            s16 accX1g; // at 0x12
+            s16 accY1g; // at 0x14
+            s16 accZ1g; // at 0x16
+        } fs;
+
+        struct WPADCLConfig {
+            s16 lStickXCenter; // at 0x0
+            s16 at_0x02;       // at 0x2
+            s16 at_0x04;       // at 0x4
+            s16 lStickYCenter; // at 0x6
+            s16 at_0x08;       // at 0x8
+            s16 at_0x0a;       // at 0xA
+
+            s16 rStickXCenter; // at 0xC
+            s16 at_0x0e;       // at 0xE
+            s16 at_0x10;       // at 0x10
+            s16 rStickYCenter; // at 0x12
+            s16 at_0x14;       // at 0x14
+            s16 at_0x16;       // at 0x16
+
+            u8 triggerLZero; // at 0x18
+            u8 triggerRZero; // at 0x19
+        } cl;
+    } u;
 } WPADExtConfig;
 
 typedef struct WPADCB {

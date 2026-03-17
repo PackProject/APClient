@@ -30,28 +30,28 @@
 **  Constants
 *****************************************************************************/
 /*** class of device settings ***/
-#define BTA_UTL_SET_COD_MAJOR_MINOR     0x01
-#define BTA_UTL_SET_COD_SERVICE_CLASS   0x02 /* only set the bits in the input */
-#define BTA_UTL_CLR_COD_SERVICE_CLASS   0x04
-#define BTA_UTL_SET_COD_ALL             0x08 /* take service class as the input (may clear some set bits!!) */
-#define BTA_UTL_INIT_COD                0x0a
+#define BTA_UTL_SET_COD_MAJOR_MINOR 0x01
+#define BTA_UTL_SET_COD_SERVICE_CLASS                                          \
+    0x02 /* only set the bits in the input                                     \
+          */
+#define BTA_UTL_CLR_COD_SERVICE_CLASS 0x04
+#define BTA_UTL_SET_COD_ALL                                                    \
+    0x08 /* take service class as the input (may clear some set bits!!) */
+#define BTA_UTL_INIT_COD 0x0a
 
 /*****************************************************************************
 **  Type Definitions
 *****************************************************************************/
 
 /** for utl_set_device_class() **/
-typedef struct
-{
-    UINT8       minor;
-    UINT8       major;
-    UINT16      service;
+typedef struct {
+    UINT8 minor;
+    UINT8 major;
+    UINT16 service;
 } tBTA_UTL_COD;
 
-
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /*****************************************************************************
@@ -70,7 +70,7 @@ extern "C"
 ** Returns          Integer value or -1 on error.
 **
 *******************************************************************************/
-extern INT16 utl_str2int(const char *p_s);
+extern INT16 utl_str2int(const char* p_s);
 
 /*******************************************************************************
 **
@@ -85,7 +85,7 @@ extern INT16 utl_str2int(const char *p_s);
 ** Returns          0 if strings match, nonzero otherwise.
 **
 *******************************************************************************/
-extern int utl_strucmp(const char *p_s, const char *p_t);
+extern int utl_strucmp(const char* p_s, const char* p_t);
 
 /*******************************************************************************
 **
@@ -99,7 +99,7 @@ extern int utl_strucmp(const char *p_s, const char *p_t);
 ** Returns          Length of string.
 **
 *******************************************************************************/
-extern UINT8 utl_itoa(UINT16 i, char *p_s);
+extern UINT8 utl_itoa(UINT16 i, char* p_s);
 
 /*******************************************************************************
 **
@@ -113,7 +113,7 @@ extern UINT8 utl_itoa(UINT16 i, char *p_s);
 ** Returns          Nothing.
 **
 *******************************************************************************/
-extern void utl_freebuf(void **p);
+extern void utl_freebuf(void** p);
 
 /*******************************************************************************
 **
@@ -125,16 +125,21 @@ extern void utl_freebuf(void **p);
 **                  p_cod   - Pointer to the device class to set to
 **
 **                  cmd     - the fields of the device class to update.
-**                            BTA_UTL_SET_COD_MAJOR_MINOR, - overwrite major, minor class
-**                            BTA_UTL_SET_COD_SERVICE_CLASS - set the bits in the input
-**                            BTA_UTL_CLR_COD_SERVICE_CLASS - clear the bits in the input
-**                            BTA_UTL_SET_COD_ALL - overwrite major, minor, set the bits in service class
-**                            BTA_UTL_INIT_COD - overwrite major, minor, and service class
+**                            BTA_UTL_SET_COD_MAJOR_MINOR, - overwrite major,
+*minor class
+**                            BTA_UTL_SET_COD_SERVICE_CLASS - set the bits in
+*the input
+**                            BTA_UTL_CLR_COD_SERVICE_CLASS - clear the bits in
+*the input
+**                            BTA_UTL_SET_COD_ALL - overwrite major, minor, set
+*the bits in service class
+**                            BTA_UTL_INIT_COD - overwrite major, minor, and
+*service class
 **
 ** Returns          TRUE if successful, Otherwise FALSE
 **
 *******************************************************************************/
-extern BOOLEAN utl_set_device_class(tBTA_UTL_COD *p_cod, UINT8 cmd);
+extern BOOLEAN utl_set_device_class(tBTA_UTL_COD* p_cod, UINT8 cmd);
 
 /*******************************************************************************
 **
@@ -147,7 +152,7 @@ extern BOOLEAN utl_set_device_class(tBTA_UTL_COD *p_cod, UINT8 cmd);
 ** Returns          TRUE if successful, Otherwise FALSE
 **
 *******************************************************************************/
-extern BOOLEAN utl_isintstr(const char *p_s);
+extern BOOLEAN utl_isintstr(const char* p_s);
 
 /*******************************************************************************
 **
@@ -160,7 +165,7 @@ extern BOOLEAN utl_isintstr(const char *p_s);
 ** Returns          TRUE if successful, Otherwise FALSE
 **
 *******************************************************************************/
-extern BOOLEAN utl_isdialstr(const char *p_s);
+extern BOOLEAN utl_isdialstr(const char* p_s);
 
 #ifdef __cplusplus
 }

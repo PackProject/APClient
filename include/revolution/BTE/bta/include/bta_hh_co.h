@@ -26,21 +26,22 @@
 
 #include "bta_hh_api.h"
 
-
 /*******************************************************************************
 **
 ** Function         bta_hh_co_data
 **
-** Description      This callout function is executed by HH when data is received
+** Description      This callout function is executed by HH when data is
+*received
 **                  in interupt channel.
 **
 **
 ** Returns          void.
 **
 *******************************************************************************/
-BTA_API extern void bta_hh_co_data(UINT8 dev_handle, UINT8 *p_rpt, UINT16 len,
-                                   tBTA_HH_PROTO_MODE  mode, UINT8 sub_class,
-                                   UINT8 ctry_code, BD_ADDR peer_addr, UINT8 app_id);
+BTA_API extern void bta_hh_co_data(UINT8 dev_handle, UINT8* p_rpt, UINT16 len,
+                                   tBTA_HH_PROTO_MODE mode, UINT8 sub_class,
+                                   UINT8 ctry_code, BD_ADDR peer_addr,
+                                   UINT8 app_id);
 
 /*******************************************************************************
 **
@@ -69,4 +70,3 @@ BTA_API extern void bta_hh_co_open(UINT8 dev_handle, UINT8 sub_class,
 BTA_API extern void bta_hh_co_close(UINT8 dev_handle, UINT8 app_id);
 
 #endif /* BTA_HH_CO_H */
-

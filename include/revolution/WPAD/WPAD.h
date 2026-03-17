@@ -8,7 +8,6 @@
 extern "C" {
 #endif
 
-#define WPAD_ADDR_LEN 6
 #define WPAD_MAX_DPD_OBJECTS 4
 
 #define WPAD_MIN_DPD_SENS 1
@@ -18,6 +17,8 @@ extern "C" {
 #define WPAD_MAX_DPD_Y 767
 
 #define WPAD_MAX_SPEAKER_VOLUME 127
+
+#define WPAD_ADDR_LEN WUD_ADDR_LEN
 
 extern u8 _scFlush;
 
@@ -51,6 +52,12 @@ typedef enum {
 
     WPAD_ERR_BUSY = WPAD_ERR_COMMUNICATION_ERROR,
 } WPADResult;
+
+typedef enum {
+    WPAD_SYNC_BUSY = WUD_RESULT_SYNC_BUSY,
+    WPAD_SYNC_WAITING = WUD_RESULT_SYNC_WAITING,
+    WPAD_SYNC_DONE = WUD_RESULT_SYNC_DONE,
+} WPADSyncResult;
 
 typedef enum {
     WPAD_CHAN0,

@@ -1,6 +1,6 @@
-#include <Pack/RPSystem.h>
-
 #include <libkiwi.h>
+
+#include <Pack/RPSystem.h>
 
 namespace kiwi {
 
@@ -8,7 +8,7 @@ namespace kiwi {
  * @brief Resource font name table
  */
 const char* FontMgr::FONT_NAMES[EResFont_Max] = {
-#if defined(PACK_SPORTS) || defined(PACK_PLAY)
+#if defined(PACK_SPORTS) || defined(PACK_PARTY)
     "pac_nRodDb_32_I4.brfnt",  "pac_nRodDb_32_IA4.brfnt",
     "pac_nRodDb_62_IA4.brfnt", "pac_nRodDb_200_IA4.brfnt",
     "pac_nRodEb_32_I4.brfnt",  "pac_nRodEb_70_IA4.brfnt",

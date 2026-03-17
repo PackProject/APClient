@@ -6,47 +6,27 @@ namespace detail {
 /**
  * @brief Constructor
  */
-AsyncSocketMgr::AsyncSocketMgr() : Thread("AsyncSocketMgr") {
-    Resume();
+AsyncSocketMgr::AsyncSocketMgr() {
+    mpThread = new StdThread(&AsyncSocketMgr::ThreadFunc, *this);
 }
 
 /**
- * @brief Appends a new socket to the manager list
- *
- * @param pSocket New socket
+ * @brief Destructor
  */
-void AsyncSocketMgr::AddSocket(AsyncSocket* pSocket) {
-    K_ASSERT_PTR(pSocket);
-
-    AutoMutexLock lock(mListMutex);
-    mSocketList.PushBack(pSocket);
-}
-
-/**
- * @brief Removes a socket from the manager list
- *
- * @param pSocket Socket
- */
-void AsyncSocketMgr::RemoveSocket(AsyncSocket* pSocket) {
-    AutoMutexLock lock(mListMutex);
-    mSocketList.Remove(pSocket);
+AsyncSocketMgr::~AsyncSocketMgr() {
+    delete mpThread;
+    mpThread = nullptr;
 }
 
 /**
  * @brief Thread function
  */
-void AsyncSocketMgr::Run() {
-    K_LOG("[AsyncSocketMgr] Start up\n");
-
+void AsyncSocketMgr::ThreadFunc() {
     while (true) {
-        mListMutex.Lock();
-
         K_FOREACH (it, mSocketList) {
             K_ASSERT((*it)->IsOpen());
             (*it)->Calc();
         }
-
-        mListMutex.Unlock();
     }
 }
 

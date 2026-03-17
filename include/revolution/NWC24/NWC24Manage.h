@@ -1,11 +1,12 @@
 #ifndef RVL_SDK_NWC24_MANAGE_H
 #define RVL_SDK_NWC24_MANAGE_H
+#include <types.h>
+
 #include <revolution/NWC24/NWC24Config.h>
 #include <revolution/NWC24/NWC24Download.h>
 #include <revolution/NWC24/NWC24FriendList.h>
 #include <revolution/NWC24/NWC24SecretFList.h>
 #include <revolution/NWC24/NWC24Types.h>
-#include <types.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -31,6 +32,7 @@ typedef struct NWC24Work {
     u8 secretFlHeader[WORK_SIZE(NWC24SecretFLHeader)]; // at 0x2800
     u8 dlHeader[WORK_SIZE(NWC24DlHeader)];             // at 0x3000
     u8 dlTask[WORK_SIZE(NWC24DlTask)];                 // at 0x3800
+    u8 padding[0x4000 - 0x3A00];
 } NWC24Work;
 #undef WORK_SIZE
 

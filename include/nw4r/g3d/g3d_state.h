@@ -5,7 +5,6 @@
 #include <nw4r/g3d/g3d_camera.h>
 #include <nw4r/g3d/g3d_fog.h>
 #include <nw4r/g3d/res/g3d_resmat.h>
-
 #include <nw4r/math.h>
 
 #include <revolution/GX.h>
@@ -54,6 +53,7 @@ static const int NUM_FOG = 32;
 static const int NUM_SCNDEPENDENT_TEXMTX_FUNCTYPE = 256;
 
 enum InvalidateFlag {
+    INVALIDATE_SYNCGX = 0,
     INVALIDATE_TEX = (1 << 0),
     INVALIDATE_TLUT = (1 << 1),
     INVALIDATE_TEV = (1 << 2),

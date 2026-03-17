@@ -1,8 +1,9 @@
 #ifndef RP_SYSTEM_NUNCHUK_SCENE_H
 #define RP_SYSTEM_NUNCHUK_SCENE_H
-#include "IRPSysHostIOSocket.h"
-#include "RPSysScene.h"
-#include "RPTypes.h"
+#include <Pack/types_pack.h>
+
+#include <Pack/RPKernel.h>
+#include <Pack/RPSystem/RPSysScene.h>
 
 /**
  * @brief Pack Project nunchuk scene

@@ -6,7 +6,6 @@
 #include <nw4r/lyt/lyt_common.h>
 #include <nw4r/lyt/lyt_resources.h>
 #include <nw4r/lyt/lyt_types.h>
-
 #include <nw4r/math.h>
 #include <nw4r/ut.h>
 
@@ -52,7 +51,7 @@ namespace res {
  *
  ******************************************************************************/
 struct Pane {
-    static const u32 SIGNATURE = 'pan1';
+    static const u32 SIGNATURE = FOURCC('p', 'a', 'n', '1');
 
     DataBlockHeader blockHeader;               // at 0x0
     u8 flag;                                   // at 0x8
@@ -98,8 +97,8 @@ public:
     virtual void Draw(const DrawInfo& rInfo);     // at 0x14
     virtual void DrawSelf(const DrawInfo& rInfo); // at 0x18
 
-    virtual void Animate(u32 option);     // at 0x1C
-    virtual void AnimateSelf(u32 option); // at 0x20
+    virtual void Animate(u32 option = 0);     // at 0x1C
+    virtual void AnimateSelf(u32 option = 0); // at 0x20
 
     virtual ut::Color GetVtxColor(u32 idx) const;       // at 0x24
     virtual void SetVtxColor(u32 idx, ut::Color color); // at 0x28
@@ -154,8 +153,7 @@ public:
         return mTranslate;
     }
     void SetTranslate(const math::VEC2& rTransXY) {
-        mTranslate.x = rTransXY.x;
-        mTranslate.y = rTransXY.y;
+        SetTranslate(math::VEC3(rTransXY.x, rTransXY.y, 0.0f));
     }
     void SetTranslate(const math::VEC3& rTrans) {
         mTranslate = rTrans;

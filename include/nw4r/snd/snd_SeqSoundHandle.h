@@ -3,7 +3,6 @@
 #include <nw4r/types_nw4r.h>
 
 #include <nw4r/snd/snd_SeqSound.h>
-
 #include <nw4r/ut.h>
 
 namespace nw4r {
@@ -37,6 +36,12 @@ public:
         }
     }
 
+    void SetTrackPitch(u32 trackFlags, f32 pitch) {
+        if (IsAttachedSound()) {
+            mSound->SetTrackPitch(trackFlags, pitch);
+        }
+    }
+
     void WriteVariable(int idx, s16 value) {
         if (IsAttachedSound()) {
             mSound->WriteVariable(idx, value);
@@ -49,6 +54,10 @@ public:
         }
 
         return 0;
+    }
+
+    static void WriteGlobalVariable(int idx, s16 value) {
+        detail::SeqSound::WriteGlobalVariable(idx, value);
     }
 
 private:

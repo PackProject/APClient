@@ -2,7 +2,7 @@
 
 //
 //
-// This file serves a dummy file to define doxygen information.
+// This file serves a dummy file to define Doxygen information.
 //
 //
 
@@ -220,7 +220,7 @@
 
 //! @ingroup nw4r
 //! @defgroup nw4r_lyt lyt
-//! @brief Layouts
+//! @brief Layout UI
 
 // END NW4R
 //
@@ -240,6 +240,10 @@
 //! @ingroup egg
 //! @defgroup egg_gfx gfx
 //! @brief Graphics
+
+//! @ingroup egg
+//! @defgroup egg_gfxe gfxe
+//! @brief Graphics extensions
 
 //! @ingroup egg
 //! @defgroup egg_prim prim
@@ -387,6 +391,7 @@
 
 
 
+
 //! @addtogroup nw4r
 //! @{
 
@@ -452,7 +457,6 @@ namespace lyt {}
 
 
 
-
 //! @addtogroup hbm
 //! @{
 
@@ -460,7 +464,6 @@ namespace lyt {}
 namespace homebutton {}
 
 //! @}
-
 
 
 

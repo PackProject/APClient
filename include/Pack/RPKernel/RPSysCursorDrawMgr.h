@@ -1,10 +1,10 @@
 #ifndef RP_KERNEL_CURSOR_DRAW_MGR_H
 #define RP_KERNEL_CURSOR_DRAW_MGR_H
-#include <egg/types_egg.h>
+#include <Pack/types_pack.h>
 
-#include "IRPSysHostIOSocket.h"
-#include "RPTypes.h"
-#include <egg/math/eggVector.h>
+#include <Pack/RPGraphics.h>
+
+#include <egg/math.h>
 
 // Class declarations
 class RPSysEffect;

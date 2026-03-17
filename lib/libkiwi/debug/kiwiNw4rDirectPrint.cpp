@@ -8,6 +8,9 @@
 #include <cstring>
 
 namespace kiwi {
+
+K_DYNAMIC_SINGLETON_IMPL(Nw4rDirectPrint);
+
 namespace {
 
 /**
@@ -44,13 +47,12 @@ void ClearFB(void* pXfb, u32 size, Color color) {
 /**
  * @brief Creates framebuffer
  *
- * @param pRenderMode GX render configuration
+ * @param pRmo GX render configuration
  * @return Framebuffer
  */
-void* CreateFB(const GXRenderModeObj* pRenderMode) {
+void* CreateFB(const GXRenderModeObj* pRmo) {
     // Calculate framebuffer size in bytes
-    u32 size = RoundUp(pRenderMode->fbWidth, 16) * pRenderMode->xfbHeight *
-               sizeof(u16);
+    u32 size = RoundUp(pRmo->fbWidth, 16) * pRmo->xfbHeight * sizeof(u16);
 
     u8* pXfb = static_cast<u8*>(OSGetArenaHi()) - size;
     pXfb = RoundUp(pXfb, 32);
@@ -58,7 +60,7 @@ void* CreateFB(const GXRenderModeObj* pRenderMode) {
     ClearFB(pXfb, size, Color::BLUE);
     VISetNextFrameBuffer(pXfb);
 
-    VIConfigure(pRenderMode);
+    VIConfigure(pRmo);
 
     return pXfb;
 }
@@ -73,8 +75,7 @@ Nw4rDirectPrint::Nw4rDirectPrint()
       mBufferSize(0),
       mBufferWidth(0),
       mBufferHeight(0),
-      mBufferRows(0),
-      mIsAllocArenaXfb(false) {
+      mBufferRows(0) {
 
     SetColor(Color::WHITE);
 }
@@ -94,30 +95,28 @@ void Nw4rDirectPrint::SetupXfb() {
     SetColor(Color::WHITE);
 
     void* pXfb = nullptr;
-    const GXRenderModeObj* pRenderMode = nullptr;
+    const GXRenderModeObj* pRmo = nullptr;
 
+    // TODO(kiwi) Why won't this work with WS2?
+#if !defined(PACK_RESORT)
     // Try to repurpose current framebuffer
     pXfb = VIGetCurrentFrameBuffer();
-    mIsAllocArenaXfb = false;
-
-    pRenderMode = EGG::BaseSystem::getVideo()->getRenderModeObj();
-    if (pRenderMode == nullptr) {
-        K_LOG("Need default rendermode\n");
-        pRenderMode = LibGX::GetDefaultRenderMode();
-    }
+    pRmo = EGG::BaseSystem::getVideo()->getRenderModeObj();
+#endif
 
     // Create new framebuffer if one doesn't exist
     if (pXfb == nullptr) {
         K_LOG("Need to create framebuffer\n");
-        pXfb = CreateFB(pRenderMode);
-        mIsAllocArenaXfb = true;
+
+        pRmo = LibGX::GetDefaultRenderMode();
+        pXfb = CreateFB(pRmo);
     }
 
     VISetBlack(FALSE);
     VIFlush();
     WaitVIRetrace();
 
-    ChangeXfb(pXfb, pRenderMode->fbWidth, pRenderMode->xfbHeight);
+    ChangeXfb(pXfb, pRmo->fbWidth, pRmo->xfbHeight);
 }
 
 /**

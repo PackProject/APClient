@@ -1,6 +1,6 @@
 #ifndef RP_PARTY_UTL_MODEL_RIGID_H
 #define RP_PARTY_UTL_MODEL_RIGID_H
-#include <types.h>
+#include <Pack/types_pack.h>
 
 #include <Pack/RPParty/RPPartyUtlModel.h>
 

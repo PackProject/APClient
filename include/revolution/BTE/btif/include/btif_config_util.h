@@ -37,14 +37,13 @@ extern "C" {
 
 #define BLUEZ_PATH "/data/misc/bluetoothd/"
 #define BLUEZ_PATH_BAK "/data/misc/bluetoothd_bak"
-#define BLUEZ_LINKKEY  "linkkeys"
+#define BLUEZ_LINKKEY "linkkeys"
 #define BLUEZ_NAMES "names"
 #define BLUEZ_PROFILES "profiles"
 #define BLUEZ_CLASSES "classes"
 #define BLUEZ_TYPES "types"
 #define BLUEZ_CONFIG "config"
 #define BLUEZ_ALIASES "aliases"
-
 
 /*******************************************************************************
 **  Functions

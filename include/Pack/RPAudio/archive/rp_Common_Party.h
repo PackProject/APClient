@@ -1,5 +1,5 @@
-#ifndef RP_AUDIO_RP_COMMON_PARTY_H
-#define RP_AUDIO_RP_COMMON_PARTY_H
+#ifndef RP_AUDIO_RP_COMMON_PARTY_SOUND_H
+#define RP_AUDIO_RP_COMMON_PARTY_SOUND_H
 
 //! @addtogroup rp_audio
 //! @{

@@ -5,7 +5,6 @@
 #include <nw4r/ef/ef_activitylist.h>
 #include <nw4r/ef/ef_referencedobject.h>
 #include <nw4r/ef/ef_res_emitter.h>
-
 #include <nw4r/math.h>
 #include <nw4r/ut.h>
 

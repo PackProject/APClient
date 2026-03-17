@@ -27,8 +27,8 @@
 #define BTA_PB_API_H
 
 #include "bta_api.h"
-#include "btm_api.h"
 #include "bta_sys.h"
+#include "btm_api.h"
 
 /*****************************************************************************
 **  Constants and data types
@@ -39,11 +39,11 @@
 ***************************/
 
 /* Profile supported features */
-#define BTA_PBS_SUPF_DOWNLOAD     0x0001
-#define BTA_PBS_SURF_BROWSE       0x0002
+#define BTA_PBS_SUPF_DOWNLOAD 0x0001
+#define BTA_PBS_SURF_BROWSE 0x0002
 
 /* Profile supported repositories */
-#define BTA_PBS_REPOSIT_LOCAL      0x01    /* Local PhoneBook */
-#define BTA_PBS_REPOSIT_SIM        0x02    /* SIM card PhoneBook */
+#define BTA_PBS_REPOSIT_LOCAL 0x01 /* Local PhoneBook */
+#define BTA_PBS_REPOSIT_SIM 0x02   /* SIM card PhoneBook */
 
 #endif

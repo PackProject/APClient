@@ -1,7 +1,9 @@
 #ifndef RP_SPORTS_GOL_PLAYER_MANAGER_H
 #define RP_SPORTS_GOL_PLAYER_MANAGER_H
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSingleton.h>
 #include <Pack/RPSports/RPGolScene/RPGolPlayer.h>
-#include <Pack/RPTypes.h>
 
 class RPGolPlayerManager {
     RP_SINGLETON_DECL(RPGolPlayerManager);

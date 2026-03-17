@@ -44,17 +44,17 @@ typedef void (*tHCI_INIT)(void);
 typedef void (*tHCI_CLEANUP)(void);
 
 /* Send HCI command/data to the transport */
-typedef void (*tHCI_SEND)(HC_BT_HDR *p_msg);
+typedef void (*tHCI_SEND)(HC_BT_HDR* p_msg);
 
 /* Handler for HCI upstream path */
 typedef uint16_t (*tHCI_RCV)(void);
 
 /* Callback function for the returned event of internally issued command */
-typedef void (*tINT_CMD_CBACK)(void *p_mem);
+typedef void (*tINT_CMD_CBACK)(void* p_mem);
 
 /* Handler for sending HCI command from the local module */
-typedef uint8_t (*tHCI_SEND_INT)(uint16_t opcode, HC_BT_HDR *p_buf, \
-                                  tINT_CMD_CBACK p_cback);
+typedef uint8_t (*tHCI_SEND_INT)(uint16_t opcode, HC_BT_HDR* p_buf,
+                                 tINT_CMD_CBACK p_cback);
 
 /* Handler for getting acl data length */
 typedef void (*tHCI_ACL_DATA_LEN_HDLR)(void);
@@ -81,6 +81,4 @@ typedef struct {
 **  Functions
 ******************************************************************************/
 
-
 #endif /* HCI_H */
-

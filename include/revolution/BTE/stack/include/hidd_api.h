@@ -37,18 +37,18 @@ enum { HID_CHANNEL_INTR, HID_CHANNEL_CTRL };
 */
 
 enum {
-  HID_DHOST_EVT_OPEN,
-  HID_DHOST_EVT_CLOSE,
-  HID_DHOST_EVT_GET_REPORT,
-  HID_DHOST_EVT_SET_REPORT,
-  HID_DHOST_EVT_SET_PROTOCOL,
-  HID_DHOST_EVT_INTR_DATA,
-  HID_DHOST_EVT_VC_UNPLUG,
-  HID_DHOST_EVT_SUSPEND,
-  HID_DHOST_EVT_EXIT_SUSPEND,
+    HID_DHOST_EVT_OPEN,
+    HID_DHOST_EVT_CLOSE,
+    HID_DHOST_EVT_GET_REPORT,
+    HID_DHOST_EVT_SET_REPORT,
+    HID_DHOST_EVT_SET_PROTOCOL,
+    HID_DHOST_EVT_INTR_DATA,
+    HID_DHOST_EVT_VC_UNPLUG,
+    HID_DHOST_EVT_SUSPEND,
+    HID_DHOST_EVT_EXIT_SUSPEND,
 };
-typedef void(tHID_DEV_HOST_CALLBACK)(BD_ADDR bd_addr, UINT8 event,
-                                     UINT32 data, BT_HDR* p_buf);
+typedef void(tHID_DEV_HOST_CALLBACK)(BD_ADDR bd_addr, UINT8 event, UINT32 data,
+                                     BT_HDR* p_buf);
 
 /*****************************************************************************
  *  External Function Declarations
@@ -224,9 +224,10 @@ extern tHID_STATUS HID_DevGetDevice(BD_ADDR* addr);
  * Returns          tHID_STATUS
  *
  ******************************************************************************/
-extern tHID_STATUS HID_DevSetIncomingQos(
-    UINT8 service_type, UINT32 token_rate, UINT32 token_bucket_size,
-    UINT32 peak_bandwidth, UINT32 latency, UINT32 delay_variation);
+extern tHID_STATUS HID_DevSetIncomingQos(UINT8 service_type, UINT32 token_rate,
+                                         UINT32 token_bucket_size,
+                                         UINT32 peak_bandwidth, UINT32 latency,
+                                         UINT32 delay_variation);
 
 /*******************************************************************************
  *
@@ -237,16 +238,18 @@ extern tHID_STATUS HID_DevSetIncomingQos(
  * Returns          tHID_STATUS
  *
  ******************************************************************************/
-extern tHID_STATUS HID_DevSetOutgoingQos(
-    UINT8 service_type, UINT32 token_rate, UINT32 token_bucket_size,
-    UINT32 peak_bandwidth, UINT32 latency, UINT32 delay_variation);
+extern tHID_STATUS HID_DevSetOutgoingQos(UINT8 service_type, UINT32 token_rate,
+                                         UINT32 token_bucket_size,
+                                         UINT32 peak_bandwidth, UINT32 latency,
+                                         UINT32 delay_variation);
 
 /*******************************************************************************
  *
  * Function         HID_DevSetTraceLevel
  *
  * Description      This function sets the trace level for HID Dev. If called
- *                  with a value of 0xFF, it simply reads the current trace level.
+ *                  with a value of 0xFF, it simply reads the current trace
+ *level.
  *
  * Returns          the new (current) trace level
  *

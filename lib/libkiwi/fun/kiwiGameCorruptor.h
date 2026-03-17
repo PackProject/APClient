@@ -1,8 +1,9 @@
 #ifndef LIBKIWI_FUN_GAME_CORRUPTOR_H
 #define LIBKIWI_FUN_GAME_CORRUPTOR_H
-#include <Pack/RPSystem.h>
 #include <libkiwi/k_types.h>
 #include <libkiwi/util/kiwiDynamicSingleton.h>
+
+#include <Pack/RPSystem.h>
 
 #include <egg/core.h>
 

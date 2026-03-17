@@ -42,7 +42,8 @@ typedef long long SINT64;
 typedef __int64 SINT64;
 #endif
 
-#elif (SBC_IS_64_MULT_IN_WINDOW_ACCU == TRUE) || (SBC_IS_64_MULT_IN_IDCT == TRUE)
+#elif (SBC_IS_64_MULT_IN_WINDOW_ACCU == TRUE) ||                               \
+    (SBC_IS_64_MULT_IN_IDCT == TRUE)
 
 #if (SBC_FOR_EMBEDDED_LINUX == TRUE)
 typedef long long SINT64;
@@ -52,6 +53,6 @@ typedef __int64 SINT64;
 
 #endif
 
-#define abs32(x) ( (x >= 0) ? x : (-x) )
+#define abs32(x) ((x >= 0) ? x : (-x))
 
 #endif

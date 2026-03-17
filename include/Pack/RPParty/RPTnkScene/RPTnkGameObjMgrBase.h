@@ -1,7 +1,8 @@
 #ifndef RP_PARTY_TNK_GAME_OBJ_MGR_BASE_H
 #define RP_PARTY_TNK_GAME_OBJ_MGR_BASE_H
-#include <Pack/RPTypes.h>
-#include <Pack/RPUtility/RPUtlActorBase.h>
+#include <Pack/types_pack.h>
+
+#include <Pack/RPUtility.h>
 
 #include <egg/core.h>
 

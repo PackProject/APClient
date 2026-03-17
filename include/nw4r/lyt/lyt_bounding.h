@@ -3,7 +3,6 @@
 #include <nw4r/types_nw4r.h>
 
 #include <nw4r/lyt/lyt_pane.h>
-
 #include <nw4r/ut.h>
 
 namespace nw4r {
@@ -20,7 +19,7 @@ namespace res {
  *
  ******************************************************************************/
 struct Bounding : Pane {
-    static const u32 SIGNATURE = 'bnd1';
+    static const u32 SIGNATURE = FOURCC('b', 'n', 'd', '1');
 };
 
 } // namespace res

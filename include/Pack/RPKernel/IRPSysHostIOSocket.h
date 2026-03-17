@@ -1,18 +1,17 @@
 #ifndef RP_KERNEL_I_HOST_IO_SOCKET_H
 #define RP_KERNEL_I_HOST_IO_SOCKET_H
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
 
 //! @addtogroup rp_kernel
 //! @{
 
 /**
- * @brief Host I/O for debugging
+ * @brief Host I/O socket
  */
 class IRPSysHostIOSocket {
 public:
     /**
      * @brief Constructor
-     * @stubbed
      *
      * @param pName Socket name
      * @param ... Format string arguments
@@ -20,25 +19,27 @@ public:
     IRPSysHostIOSocket(const char* pName, ...);
     /**
      * @brief Constructor
-     * @stubbed
      */
     IRPSysHostIOSocket();
+
     /**
      * @brief Destructor
-     * @stubbed
      */
     virtual ~IRPSysHostIOSocket(); // at 0x8
 
     /**
-     * @brief Receives UI control values from the host
-     * @stubbed
+     * @brief Handles property events from the host
      */
-    virtual void ListenPropertyEvent() {} // at 0xC
+    virtual void ListenPropertyEvent() { // at 0xC
+        // Stubbed for release
+    }
+
     /**
-     * @brief Sends UI control layout to the host
-     * @stubbed
+     * @brief Generates UI control messages for the host
      */
-    virtual void GenMessage() {} // at 0x10
+    virtual void GenMessage() { // at 0x10
+        // Stubbed for release
+    }
 };
 
 //! @}

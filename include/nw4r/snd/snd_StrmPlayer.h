@@ -9,7 +9,6 @@
 #include <nw4r/snd/snd_StrmFile.h>
 #include <nw4r/snd/snd_Task.h>
 #include <nw4r/snd/snd_Voice.h>
-
 #include <nw4r/ut.h>
 
 #include <revolution/OS.h>
@@ -29,7 +28,7 @@ public:
     };
 
     struct StrmHeader {
-        // TODO: Why 8 if the player only supports 2???
+        // TODO(kiwi) Why 8 if the player only supports 2???
         static const int STRM_CHANNEL_MAX = 8;
 
         StrmInfo strmInfo;                     // at 0x0
@@ -130,7 +129,7 @@ private:
     static const int DATA_BLOCK_COUNT_MAX = 32;
     static const int DATA_BLOCK_SIZE_MAX = 0x2000;
 
-    // TODO: How is this calculated?
+    // TODO(kiwi) How is this calculated?
     static const int LOAD_BUFFER_SIZE = 0x4000 + 32;
 
 private:

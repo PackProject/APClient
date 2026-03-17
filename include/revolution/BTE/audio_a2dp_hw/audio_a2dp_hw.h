@@ -35,11 +35,11 @@
 #define A2DP_CTRL_PATH "/data/misc/bluedroid/.a2dp_ctrl"
 #define A2DP_DATA_PATH "/data/misc/bluedroid/.a2dp_data"
 
-#define AUDIO_STREAM_DEFAULT_RATE          44100
-#define AUDIO_STREAM_DEFAULT_FORMAT        AUDIO_FORMAT_PCM_16_BIT
-#define AUDIO_STREAM_DEFAULT_CHANNEL_FLAG  AUDIO_CHANNEL_OUT_STEREO
-#define AUDIO_STREAM_OUTPUT_BUFFER_SZ      (20*512)
-#define AUDIO_SKT_DISCONNECTED             (-1)
+#define AUDIO_STREAM_DEFAULT_RATE 44100
+#define AUDIO_STREAM_DEFAULT_FORMAT AUDIO_FORMAT_PCM_16_BIT
+#define AUDIO_STREAM_DEFAULT_CHANNEL_FLAG AUDIO_CHANNEL_OUT_STEREO
+#define AUDIO_STREAM_OUTPUT_BUFFER_SZ (20 * 512)
+#define AUDIO_SKT_DISCONNECTED (-1)
 
 typedef enum {
     A2DP_CTRL_CMD_NONE,
@@ -49,11 +49,7 @@ typedef enum {
     A2DP_CTRL_CMD_SUSPEND
 } tA2DP_CTRL_CMD;
 
-typedef enum {
-    A2DP_CTRL_ACK_SUCCESS,
-    A2DP_CTRL_ACK_FAILURE
-} tA2DP_CTRL_ACK;
-
+typedef enum { A2DP_CTRL_ACK_SUCCESS, A2DP_CTRL_ACK_FAILURE } tA2DP_CTRL_ACK;
 
 /*****************************************************************************
 **  Type definitions for callback functions
@@ -71,7 +67,6 @@ typedef enum {
 **  Functions
 ******************************************************************************/
 
-
 /*****************************************************************************
 **
 ** Function
@@ -83,4 +78,3 @@ typedef enum {
 ******************************************************************************/
 
 #endif /* A2DP_AUDIO_HW_H */
-

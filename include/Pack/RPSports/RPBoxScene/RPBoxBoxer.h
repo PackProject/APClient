@@ -1,6 +1,6 @@
 #ifndef RP_SPORTS_BOX_BOXER_H
 #define RP_SPORTS_BOX_BOXER_H
-#include "RPTypes.h"
+#include <Pack/types_pack.h>
 
 /**
  * @brief Info about a boxer

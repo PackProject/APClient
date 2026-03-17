@@ -1,7 +1,8 @@
 #ifndef RP_SYSTEM_PLAYER_SELECT_SCENE_H
 #define RP_SYSTEM_PLAYER_SELECT_SCENE_H
-#include "RPSysScene.h"
-#include "RPTypes.h"
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSystem/RPSysScene.h>
 
 /**
  * @brief Pack Project player select scene

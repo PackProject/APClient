@@ -30,21 +30,16 @@
 **  Constants
 *****************************************************************************/
 
-
-
 /* BT_HDR buffer offset */
-#define BTA_PAN_MIN_OFFSET       PAN_MINIMUM_OFFSET
-
+#define BTA_PAN_MIN_OFFSET PAN_MINIMUM_OFFSET
 
 /* Data Flow Mask */
-#define BTA_PAN_RX_PUSH          0x00        /* RX push. */
-#define BTA_PAN_RX_PUSH_BUF      0x01        /* RX push with zero copy. */
-#define BTA_PAN_RX_PULL          0x02        /* RX pull. */
-#define BTA_PAN_TX_PUSH          0x00        /* TX push. */
-#define BTA_PAN_TX_PUSH_BUF      0x10        /* TX push with zero copy. */
-#define BTA_PAN_TX_PULL          0x20        /* TX pull. */
-
-
+#define BTA_PAN_RX_PUSH 0x00     /* RX push. */
+#define BTA_PAN_RX_PUSH_BUF 0x01 /* RX push with zero copy. */
+#define BTA_PAN_RX_PULL 0x02     /* RX pull. */
+#define BTA_PAN_TX_PUSH 0x00     /* TX push. */
+#define BTA_PAN_TX_PUSH_BUF 0x10 /* TX push with zero copy. */
+#define BTA_PAN_TX_PULL 0x20     /* TX pull. */
 
 /*****************************************************************************
 **  Function Declarations
@@ -64,7 +59,7 @@
 ** Returns          Data flow mask.
 **
 *******************************************************************************/
-BTA_API extern UINT8 bta_pan_co_init(UINT8 *q_level);
+BTA_API extern UINT8 bta_pan_co_init(UINT8* q_level);
 
 /*******************************************************************************
 **
@@ -78,7 +73,9 @@ BTA_API extern UINT8 bta_pan_co_init(UINT8 *q_level);
 ** Returns          void
 **
 *******************************************************************************/
-BTA_API extern void bta_pan_co_open(UINT16 handle, UINT8 app_id, tBTA_PAN_ROLE local_role, tBTA_PAN_ROLE peer_role, BD_ADDR peer_addr);
+BTA_API extern void bta_pan_co_open(UINT16 handle, UINT8 app_id,
+                                    tBTA_PAN_ROLE local_role,
+                                    tBTA_PAN_ROLE peer_role, BD_ADDR peer_addr);
 
 /*******************************************************************************
 **
@@ -136,8 +133,11 @@ BTA_API extern void bta_pan_co_rx_path(UINT16 handle, UINT8 app_id);
 ** Returns          void
 **
 *******************************************************************************/
-BTA_API extern void bta_pan_co_tx_write(UINT16 handle, UINT8 app_id, BD_ADDR src, BD_ADDR dst, UINT16 protocol, UINT8 *p_data,
-                                UINT16 len, BOOLEAN ext, BOOLEAN forward);
+BTA_API extern void bta_pan_co_tx_write(UINT16 handle, UINT8 app_id,
+                                        BD_ADDR src, BD_ADDR dst,
+                                        UINT16 protocol, UINT8* p_data,
+                                        UINT16 len, BOOLEAN ext,
+                                        BOOLEAN forward);
 
 /*******************************************************************************
 **
@@ -152,9 +152,10 @@ BTA_API extern void bta_pan_co_tx_write(UINT16 handle, UINT8 app_id, BD_ADDR src
 ** Returns          void
 **
 *******************************************************************************/
-BTA_API extern void bta_pan_co_tx_writebuf(UINT16 handle, UINT8 app_id, BD_ADDR src, BD_ADDR dst, UINT16 protocol, BT_HDR *p_buf,
-                                   BOOLEAN ext, BOOLEAN forward);
-
+BTA_API extern void bta_pan_co_tx_writebuf(UINT16 handle, UINT8 app_id,
+                                           BD_ADDR src, BD_ADDR dst,
+                                           UINT16 protocol, BT_HDR* p_buf,
+                                           BOOLEAN ext, BOOLEAN forward);
 
 /*******************************************************************************
 **
@@ -170,8 +171,8 @@ BTA_API extern void bta_pan_co_tx_writebuf(UINT16 handle, UINT8 app_id, BD_ADDR 
 ** Returns          void
 **
 *******************************************************************************/
-BTA_API extern void bta_pan_co_rx_flow(UINT16 handle, UINT8 app_id, BOOLEAN enable);
-
+BTA_API extern void bta_pan_co_rx_flow(UINT16 handle, UINT8 app_id,
+                                       BOOLEAN enable);
 
 /*******************************************************************************
 **
@@ -182,8 +183,9 @@ BTA_API extern void bta_pan_co_rx_flow(UINT16 handle, UINT8 app_id, BOOLEAN enab
 ** Returns          void
 **
 *******************************************************************************/
-BTA_API extern void bta_pan_co_pfilt_ind(UINT16 handle, BOOLEAN indication, tBTA_PAN_STATUS result,
-                                    UINT16 len, UINT8 *p_filters);
+BTA_API extern void bta_pan_co_pfilt_ind(UINT16 handle, BOOLEAN indication,
+                                         tBTA_PAN_STATUS result, UINT16 len,
+                                         UINT8* p_filters);
 
 /*******************************************************************************
 **
@@ -194,8 +196,8 @@ BTA_API extern void bta_pan_co_pfilt_ind(UINT16 handle, BOOLEAN indication, tBTA
 ** Returns          void
 **
 *******************************************************************************/
-BTA_API extern void bta_pan_co_mfilt_ind(UINT16 handle,  BOOLEAN indication, tBTA_PAN_STATUS result,
-                                    UINT16 len, UINT8 *p_filters);
+BTA_API extern void bta_pan_co_mfilt_ind(UINT16 handle, BOOLEAN indication,
+                                         tBTA_PAN_STATUS result, UINT16 len,
+                                         UINT8* p_filters);
 
 #endif /* BTA_PAN_CO_H */
-

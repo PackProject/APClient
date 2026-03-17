@@ -1,6 +1,6 @@
 #ifndef RP_GRAPHICS_I_DRAW_OBJECT_H
 #define RP_GRAPHICS_I_DRAW_OBJECT_H
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
 
 //! @addtogroup rp_graphics
 //! @{

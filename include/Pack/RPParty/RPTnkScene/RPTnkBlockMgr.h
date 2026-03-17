@@ -1,8 +1,9 @@
 #ifndef RP_PARTY_TNK_BLOCK_MGR_H
 #define RP_PARTY_TNK_BLOCK_MGR_H
+#include <Pack/types_pack.h>
+
 #include <Pack/RPParty/RPTnkScene/RPTnkBlock.h>
 #include <Pack/RPParty/RPTnkScene/RPTnkGameObjMgrBase.h>
-#include <Pack/RPTypes.h>
 
 /**
  * @brief Tanks block object manager
@@ -16,9 +17,5 @@ public:
 
     void Clear();
 };
-
-#if defined(__KOKESHI__)
-DECL_WEAK inline RPTnkBlockMgr::RPTnkBlockMgr() {}
-#endif
 
 #endif

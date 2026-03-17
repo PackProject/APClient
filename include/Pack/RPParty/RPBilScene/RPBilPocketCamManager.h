@@ -1,7 +1,9 @@
 #ifndef RP_PARTY_BIL_POCKET_CAM_MANAGER_H
 #define RP_PARTY_BIL_POCKET_CAM_MANAGER_H
+#include <Pack/types_pack.h>
+
 #include <Pack/RPParty/RPPartyUtlModel.h>
-#include <Pack/RPTypes.h>
+#include <Pack/RPSingleton.h>
 
 class RPBilPocketCamManager {
     RP_SINGLETON_DECL(RPBilPocketCamManager);

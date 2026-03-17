@@ -1,10 +1,10 @@
 #ifndef RP_SPORTS_BASE_SCENE_H
 #define RP_SPORTS_BASE_SCENE_H
-#include "RPSysScene.h"
-#include "RPSysSceneCreator.h"
-#include "RPTypes.h"
+#include <Pack/types_pack.h>
 
-class RPSysMessage;
+#include <Pack/RPKernel.h>
+#include <Pack/RPSystem.h>
+
 class RPSportsTrainingResult;
 
 /**

@@ -96,9 +96,9 @@
 #if defined(__cplusplus)
 
 // Some versions of CW allow C++11
-#if defined(__MWERKS__) && __option(cpp1x)
+#if __cplusplus >= 199711L
 #define LIBKIWI_CPP1X
-#elif __cplusplus >= 199711L
+#elif defined(__MWERKS__) && __option(cpp1x)
 #define LIBKIWI_CPP1X
 #endif
 

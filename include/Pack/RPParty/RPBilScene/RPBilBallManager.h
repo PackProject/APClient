@@ -1,15 +1,16 @@
 #ifndef RP_PARTY_BIL_BALL_MANAGER_H
 #define RP_PARTY_BIL_BALL_MANAGER_H
+#include <Pack/types_pack.h>
+
+#include <Pack/RPAudio.h>
+#include <Pack/RPKernel.h>
 #include <Pack/RPParty/RPPartyUtlModel.h>
-#include <Pack/RPTypes.h>
 
 // Forward declarations
 class RPBilBall;
 class RPBilBallGuide;
 class RPBilBallPlaceFoul;
 class RPBilBallDisplay;
-class RPSysKokeshiIcon;
-template <int N> class TRPSndObject;
 
 class RPBilBallManager : public RPPartyUtlModel {
     RP_SINGLETON_DECL(RPBilBallManager);
@@ -52,7 +53,7 @@ private:
     RPBilBallPlaceFoul* mpPlaceFoulBall;          // at 0xCC
     RPBilBallDisplay* mpDisplayBalls[BALL_MAX];   // at 0xD0
     RPSysKokeshiIcon* mpKokeshiIcons[PLAYER_MAX]; // at 0xF8
-    TRPSndObject<4>* mpSndObject;                 // at 0x100
+    RPSndObject* mpSndObject;                     // at 0x100
 };
 
 #endif

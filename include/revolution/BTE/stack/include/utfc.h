@@ -25,8 +25,7 @@
 #define UTFC_H
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /*******************************************************************************
@@ -39,7 +38,8 @@ extern "C"
 ** Returns          Length of UTF-8 string in bytes.
 **
 *******************************************************************************/
-extern UINT16 utfc_16_to_8(UINT8 *p_utf8, UINT16 utf8_len, UINT16 *p_utf16, UINT16 utf16_len);
+extern UINT16 utfc_16_to_8(UINT8* p_utf8, UINT16 utf8_len, UINT16* p_utf16,
+                           UINT16 utf16_len);
 
 /*******************************************************************************
 **
@@ -52,7 +52,7 @@ extern UINT16 utfc_16_to_8(UINT8 *p_utf8, UINT16 utf8_len, UINT16 *p_utf16, UINT
 ** Returns          Length of UTF-16 array including null character.
 **
 *******************************************************************************/
-extern UINT16 utfc_8_to_16(UINT16 *p_utf16, UINT16 utf16_len, UINT8 *p_utf8);
+extern UINT16 utfc_8_to_16(UINT16* p_utf16, UINT16 utf16_len, UINT8* p_utf8);
 
 #ifdef __cplusplus
 }

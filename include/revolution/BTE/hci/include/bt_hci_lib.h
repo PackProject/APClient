@@ -19,12 +19,12 @@
 #ifndef BT_HCI_LIB_H
 #define BT_HCI_LIB_H
 
-#include <stdint.h>
 #include <sys/cdefs.h>
 #include <sys/types.h>
 
-/** Struct types */
+#include <stdint.h>
 
+/** Struct types */
 
 /** Typedefs and defines */
 
@@ -35,7 +35,7 @@ typedef void* TRANSAC;
 typedef enum {
     BT_HC_CHIP_PWR_OFF,
     BT_HC_CHIP_PWR_ON,
-}  bt_hc_chip_power_state_t;
+} bt_hc_chip_power_state_t;
 
 /** Bluetooth Low Power Mode */
 typedef enum {
@@ -92,7 +92,6 @@ typedef enum {
     BT_HC_STATUS_CORRUPTED_BUFFER
 } bt_hc_status_t;
 
-
 /* Section comment */
 
 /*
@@ -103,10 +102,12 @@ typedef enum {
 typedef void (*hostwake_ind_cb)(bt_hc_low_power_event_t event);
 
 /* preload initialization callback */
-typedef void (*preload_result_cb)(TRANSAC transac, bt_hc_preload_result_t result);
+typedef void (*preload_result_cb)(TRANSAC transac,
+                                  bt_hc_preload_result_t result);
 
 /* postload initialization callback */
-typedef void (*postload_result_cb)(TRANSAC transac, bt_hc_postload_result_t result);
+typedef void (*postload_result_cb)(TRANSAC transac,
+                                   bt_hc_postload_result_t result);
 
 /* lpm enable/disable callback */
 typedef void (*lpm_result_cb)(bt_hc_lpm_request_result_t result);
@@ -115,33 +116,34 @@ typedef void (*lpm_result_cb)(bt_hc_lpm_request_result_t result);
 typedef char* (*alloc_mem_cb)(int size);
 
 /* datapath buffer deallocation callback (callout) */
-typedef int (*dealloc_mem_cb)(TRANSAC transac, char *p_buf);
+typedef int (*dealloc_mem_cb)(TRANSAC transac, char* p_buf);
 
 /* transmit result callback */
-typedef int (*tx_result_cb)(TRANSAC transac, char *p_buf, bt_hc_transmit_result_t result);
+typedef int (*tx_result_cb)(TRANSAC transac, char* p_buf,
+                            bt_hc_transmit_result_t result);
 
 /* a previously setup buffer is read and available for processing
    buffer is deallocated in stack when processed */
-typedef int (*data_ind_cb)(TRANSAC transac, char *p_buf, int len);
+typedef int (*data_ind_cb)(TRANSAC transac, char* p_buf, int len);
 
 typedef struct {
     /** set to sizeof(bt_hc_callbacks_t) */
-    size_t         size;
+    size_t size;
 
     /* notifies caller result of preload request */
-    preload_result_cb  preload_cb;
+    preload_result_cb preload_cb;
 
     /* notifies caller result of postload request */
-    postload_result_cb  postload_cb;
+    postload_result_cb postload_cb;
 
     /* notifies caller result of lpm enable/disable */
-    lpm_result_cb  lpm_cb;
+    lpm_result_cb lpm_cb;
 
     /* notifies hardware on host wake state */
-    hostwake_ind_cb       hostwake_ind;
+    hostwake_ind_cb hostwake_ind;
 
     /* buffer allocation request */
-    alloc_mem_cb   alloc;
+    alloc_mem_cb alloc;
 
     /* buffer deallocation request */
     dealloc_mem_cb dealloc;
@@ -150,7 +152,7 @@ typedef struct {
     data_ind_cb data_ind;
 
     /* notifies caller when a buffer is transmitted (or failed) */
-    tx_result_cb  tx_result;
+    tx_result_cb tx_result;
 } bt_hc_callbacks_t;
 
 /*
@@ -158,19 +160,19 @@ typedef struct {
  */
 typedef struct {
     /** Set to sizeof(bt_hc_interface_t) */
-    size_t          size;
+    size_t size;
 
     /**
      * Opens the interface and provides the callback routines
      * to the implemenation of this interface.
      */
-    int   (*init)(const bt_hc_callbacks_t* p_cb, unsigned char *local_bdaddr);
+    int (*init)(const bt_hc_callbacks_t* p_cb, unsigned char* local_bdaddr);
 
     /** Chip power control */
     void (*set_power)(bt_hc_chip_power_state_t state);
 
     /** Set low power mode wake */
-    int   (*lpm)(bt_hc_low_power_event_t event);
+    int (*lpm)(bt_hc_low_power_event_t event);
 
     /** Called prior to stack initialization */
     void (*preload)(TRANSAC transac);
@@ -179,18 +181,17 @@ typedef struct {
     void (*postload)(TRANSAC transac);
 
     /** Transmit buffer */
-    int (*transmit_buf)(TRANSAC transac, char *p_buf, int len);
+    int (*transmit_buf)(TRANSAC transac, char* p_buf, int len);
 
     /** Controls receive flow */
     int (*set_rxflow)(bt_rx_flow_state_t state);
 
     /** Controls HCI logging on/off */
-    int (*logging)(bt_hc_logging_state_t state, char *p_path);
+    int (*logging)(bt_hc_logging_state_t state, char* p_path);
 
     /** Closes the interface */
-    void  (*cleanup)( void );
+    void (*cleanup)(void);
 } bt_hc_interface_t;
-
 
 /*
  * External shared lib functions
@@ -199,4 +200,3 @@ typedef struct {
 extern const bt_hc_interface_t* bt_hc_get_interface(void);
 
 #endif /* BT_HCI_LIB_H */
-

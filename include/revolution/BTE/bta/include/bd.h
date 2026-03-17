@@ -30,13 +30,12 @@
 
 /* bd addr length and type */
 #ifndef BD_ADDR_LEN
-#define BD_ADDR_LEN     6
+#define BD_ADDR_LEN 6
 typedef UINT8 BD_ADDR[BD_ADDR_LEN];
 #endif
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /* global constant for "any" bd addr */
@@ -99,4 +98,3 @@ extern void bdsetany(BD_ADDR a);
 #endif
 
 #endif /* BD_H */
-

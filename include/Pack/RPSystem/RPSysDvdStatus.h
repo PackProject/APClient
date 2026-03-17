@@ -1,6 +1,8 @@
 #ifndef RP_SYSTEM_DVD_STATUS_H
 #define RP_SYSTEM_DVD_STATUS_H
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSingleton.h>
 
 #include <egg/core.h>
 

@@ -1,8 +1,9 @@
 #ifndef RP_PARTY_TNK_BLOCK_H
 #define RP_PARTY_TNK_BLOCK_H
+#include <Pack/types_pack.h>
+
 #include <Pack/RPGraphics.h>
 #include <Pack/RPParty/RPTnkScene/RPTnkGameObjBase.h>
-#include <Pack/RPTypes.h>
 
 #include <egg/math.h>
 

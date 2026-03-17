@@ -1,8 +1,10 @@
 #ifndef RP_SYSTEM_SYSTEM_H
 #define RP_SYSTEM_SYSTEM_H
+#include <Pack/types_pack.h>
+
 #include <Pack/RPSystem/RPSysConfigData.h>
 #include <Pack/RPSystem/RPSysRenderMode.h>
-#include <Pack/RPTypes.h>
+#include <Pack/RPSystem/RPSysSceneCreator.h>
 
 #include <egg/core.h>
 
@@ -16,10 +18,6 @@
 
 /**
  * @brief Pack Project engine system
- * @wfuname
- *
- * @details The system class manages the low level components of the RP engine,
- * such as its many heaps, console power/reset callbacks, and TV/render modes.
  */
 class RPSysSystem {
 public:
@@ -72,7 +70,7 @@ public:
     u16 getFBHeight() const;
 
     /**
-     * @brief Loads the Pack Project build information from the disc
+     * @brief Loads the Pack Project build timestamp from the disc
      */
     void createTimeStamp();
     /**
@@ -85,10 +83,9 @@ public:
     void createFromSystemHeap();
 
     /**
-     * @brief Gets the engine ready to calculate and draw the first frame
+     * @brief Prepares the engine for the first frame
      */
     void setup();
-
     /**
      * @brief Enters the engine's main loop
      */
@@ -97,7 +94,7 @@ public:
     /**
      * @brief Gets the ID of the boot scene
      */
-    u32 getBootScene();
+    RPSysSceneCreator::ESceneID getBootScene();
 
     /**
      * @brief Gets the current clock time represented as a 32-bit calendar time
@@ -137,7 +134,7 @@ public:
                          u32& rMDay);
 
     /**
-     * @brief Shut-down the engine and exit the application
+     * @brief Shuts down the engine and exits the application
      * @details Depending on the instructions from the scene manager, this will
      * either exit to the system menu or shutdown the console.
      */
@@ -219,50 +216,6 @@ public:
         return mpResourceHeap;
     }
 
-#if defined(PACK_RESORT)
-    /**
-     * @brief Gets the system's main heap
-     */
-    EGG::Heap* getSystemHeapRP() const {
-        return mpSystemHeap;
-    }
-
-    /**
-     * @brief Gets the heap for resource caching
-     */
-    EGG::Heap* getResCacheHeap() const {
-        return mpResCacheHeap;
-    }
-
-    /**
-     * @brief Gets the root heap for all scene heaps
-     */
-    EGG::Heap* getRootSceneHeap() const {
-        return mpRootSceneHeap;
-    }
-
-    /**
-     * @brief Gets the root heap for all scene dependency heaps
-     */
-    EGG::Heap* getRootSceneDependHeap() const {
-        return mpRootSceneDependHeap;
-    }
-
-    /**
-     * @brief Gets the heap which holds the rest of free MEM1 memory
-     */
-    EGG::Heap* getMem1RestHeap() const {
-        return mpMem1RestHeap;
-    }
-
-    /**
-     * @brief Gets the heap which holds the rest of free MEM2 memory
-     */
-    EGG::Heap* getMem2RestHeap() const {
-        return mpMem2RestHeap;
-    }
-#endif
-
     /**
      * @brief Gets the thread for asynchronous NAND operations
      */
@@ -311,6 +264,41 @@ public:
      */
     void setCallBack();
 
+#if defined(PACK_RESORT)
+    /**
+     * @brief Gets the system's main heap
+     */
+    EGG::Heap* getSystemHeapRP() const {
+        return mpSystemHeap;
+    }
+
+    EGG::Heap* getResCacheHeap() const {
+        return mpResCacheHeap;
+    }
+
+    EGG::Heap* getRootSceneHeap() const {
+        return mpRootSceneHeap;
+    }
+
+    EGG::Heap* getRootSceneDependHeap() const {
+        return mpRootSceneDependHeap;
+    }
+
+    /**
+     * @brief Gets the heap which holds the rest of free MEM1 memory
+     */
+    EGG::Heap* getMem1RestHeap() const {
+        return mpMem1RestHeap;
+    }
+
+    /**
+     * @brief Gets the heap which holds the rest of free MEM2 memory
+     */
+    EGG::Heap* getMem2RestHeap() const {
+        return mpMem2RestHeap;
+    }
+#endif
+
 private:
     /**
      * @brief Constructor
@@ -319,7 +307,7 @@ private:
     /**
      * @brief Destructor
      */
-    virtual ~RPSysSystem();
+    virtual ~RPSysSystem(); // at 0x8
 
     /**
      * @brief OS reset callback
@@ -331,22 +319,17 @@ private:
     static void shutdownSystemCallBack();
 
 private:
-    //! Engine configuration
-    static RPSysConfigData sConfigData;
-
-    //! Active render mode
-    static GXRenderModeObj* spRenderModeObj;
-    //! Render mode format @see RPSysRenderMode::EFormat
-    static u32 sRenderModeFormat;
-    //! @brief Time (in milliseconds) when the render mode was setup
-    //! @remark This value is only non-zero when scan mode/TV format is changed
-    //! and the system must wait.
-    static u32 sRenderModeWaitStart;
-
-    //! Class singleton instance
-    static RPSysSystem* spInstance;
-
-#if defined(PACK_SPORTS) || defined(PACK_PLAY)
+#if defined(PACK_RESORT)
+    EGG::Heap* mpSystemHeap;          // at 0x4
+    EGG::Heap* mpResourceHeap;        // at 0x8
+    EGG::Heap* mpResCacheHeap;        // at 0xC
+    EGG::Heap* mpRootSceneHeap;       // at 0x10
+    EGG::Heap* mpRootSceneDependHeap; // at 0x14
+    char UNK_0x18[0x28 - 0x14];
+    EGG::Heap* mpMem1RestHeap; // at 0x28
+    EGG::Heap* mpMem2RestHeap; // at 0x2C
+    // . . .
+#else
     //! Effect manager work memory size
     u32 mEffectWorkSize; // at 0x4
 
@@ -387,17 +370,22 @@ private:
 
     //! Pack Project build information
     char* mpTimeStampString; // at 0x58
-#elif defined(PACK_RESORT)
-    EGG::Heap* mpSystemHeap;          // at 0x4
-    EGG::Heap* mpResourceHeap;        // at 0x8
-    EGG::Heap* mpResCacheHeap;        // at 0xC
-    EGG::Heap* mpRootSceneHeap;       // at 0x10
-    EGG::Heap* mpRootSceneDependHeap; // at 0x14
-    char UNK_0x18[0x28 - 0x18];
-    EGG::Heap* mpMem1RestHeap; // at 0x28
-    EGG::Heap* mpMem2RestHeap; // at 0x2C
-    // . . .
 #endif
+
+    //! Engine configuration
+    static RPSysConfigData sConfigData;
+
+    //! Active render mode
+    static GXRenderModeObj* spRenderModeObj;
+    //! Render mode format @see RPSysRenderMode::EFormat
+    // static u32 sRenderModeFormat;
+    //! @brief Time (in milliseconds) when the render mode was setup
+    //! @remark This value is only non-zero when scan mode/TV format is changed
+    //! and the system must wait.
+    static u32 sRenderModeWaitStart;
+
+    //! Class singleton instance
+    static RPSysSystem* spInstance;
 };
 
 //! @}

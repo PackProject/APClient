@@ -1,7 +1,8 @@
 #ifndef RP_UTILITY_ACTOR_BASE_H
 #define RP_UTILITY_ACTOR_BASE_H
-#include <Pack/RPSystem/RP_DEBUG_STUB_1.h>
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
+
+#include <Pack/RPKernel/RP_DEBUG_STUB_1.h>
 
 /**
  * @brief Basic actor with lifecycle hooks

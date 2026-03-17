@@ -1,9 +1,10 @@
 #ifndef RP_PARTY_BIL_BALL_H
 #define RP_PARTY_BIL_BALL_H
+#include <Pack/types_pack.h>
+
 #include <Pack/RPParty/RPPartyUtlModel.h>
 #include <Pack/RPParty/RPPartyUtlModelRigid.h>
-#include <Pack/RPTypes.h>
-#include <Pack/RPUtility/RPUtlBaseFsm.h>
+#include <Pack/RPUtility.h>
 
 // Forward declarations
 class RPSysEffect;

@@ -1,7 +1,8 @@
 #ifndef RP_SYSTEM_COMMON_OBJECT_H
 #define RP_SYSTEM_COMMON_OBJECT_H
-#include <Pack/RPGraphics/IRPGrpDrawObject.h>
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
+
+#include <Pack/RPGraphics.h>
 
 //! @addtogroup rp_system
 //! @{

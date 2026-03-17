@@ -1,13 +1,17 @@
 #ifndef RP_SYSTEM_SAVE_DATA_MGR_H
 #define RP_SYSTEM_SAVE_DATA_MGR_H
-#include <Pack/RPKernel/IRPSysHostIOSocket.h>
-#include <Pack/RPParty/RPPartyPlayerData.h>
-#include <Pack/RPParty/RPPartySystemData.h>
-#include <Pack/RPSports/RPSportsPlayerData.h>
-#include <Pack/RPSports/RPSportsSystemData.h>
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
+
+#include <Pack/RPKernel.h>
+#include <Pack/RPSingleton.h>
+#include <Pack/RPSystem/RPPartyPlayerData.h>
+#include <Pack/RPSystem/RPPartySystemData.h>
+#include <Pack/RPSystem/RPSportsPlayerData.h>
+#include <Pack/RPSystem/RPSportsSystemData.h>
 
 #include <egg/core.h>
+
+#include <revolution/OS.h>
 
 //! @addtogroup rp_system
 //! @{
@@ -17,7 +21,6 @@ class RPSysSaveData;
 
 /**
  * @brief Save data manager
- * @wfuname
  */
 class RPSysSaveDataMgr : public IRPSysHostIOSocket {
     RP_SINGLETON_DECL_EX(RPSysSaveDataMgr);
@@ -27,9 +30,10 @@ public:
      * @brief Banner file type
      */
     enum EBannerType {
-        EBannerType_Real,     //!< Writes to the "real" file (`banner.bin`)
-        EBannerType_Temporary //!< Writes to the temporary file
-                              //!< (`/tmp/banner.bin`)
+        EBannerType_Real, //!< Banner file in the home directory
+        EBannerType_Temp, //!< Banner file in the temporary directory
+
+        EBannerType_Max
     };
 
 public:
@@ -38,64 +42,58 @@ public:
      */
     /**@{*/
     /**
-     * @brief Gets the Sports Pack player data corresponding to the player index
+     * @brief Gets the Sports Pack player data at the specified player list
+     * index
      *
-     * @param i Index into the player list
-     * @return Copy of the player data
+     * @param idx Player list index
      */
-    RPSportsPlayerData getSportsPlayerData(s32 i) const;
+    RPSportsPlayerData getSportsPlayerData(s32 idx) const;
     /**
-     * @brief Sets the Sports Pack player data corresponding to the player index
+     * @brief Sets the Sports Pack player data at the specified player list
+     * index
      *
-     * @param rData Player data
-     * @param i Index into the player list
+     * @param rPlayerData Player data
+     * @param idx Player list index
      */
-    void setSportsPlayerData(const RPSportsPlayerData& rData, s32 i);
+    void setSportsPlayerData(const RPSportsPlayerData& rPlayerData, s32 idx);
 
     /**
      * @brief Gets the Sports Pack system data
-     *
-     * @return Copy of the system data
      */
     RPSportsSystemData getSportsSystemData() const;
-#if defined(PACK_SPORTS)
     /**
      * @brief Sets the Sports Pack system data
      *
-     * @param rData System data
+     * @param rSystemData System data
      */
-    void setSportsSystemData(const RPSportsSystemData& rData);
-#endif
+    void setSportsSystemData(const RPSportsSystemData& rSystemData);
 
     /**
-     * @brief Gets the Party Pack player data corresponding to the player index
+     * @brief Gets the Party Pack player data at the specified player list
+     * index
      *
-     * @param i Index into the player list
-     * @return Copy of the player data
+     * @param idx Player list index
      */
-    RPPartyPlayerData getPartyPlayerData(s32 i) const;
+    RPPartyPlayerData getPartyPlayerData(s32 idx) const;
     /**
-     * @brief Sets the Party Pack player data corresponding to the player index
+     * @brief Sets the Party Pack player data at the specified player list
+     * index
      *
-     * @param rData Player data
-     * @param i Index into the player list
+     * @param rPlayerData Player data
+     * @param idx Player list index
      */
-    void setPartyPlayerData(const RPPartyPlayerData& rData, s32 i);
+    void setPartyPlayerData(const RPPartyPlayerData& rPlayerData, s32 idx);
 
     /**
      * @brief Gets the Party Pack system data
-     *
-     * @return Copy of the system data
      */
     RPPartySystemData getPartySystemData() const;
-#if defined(PACK_PLAY)
     /**
      * @brief Sets the Party Pack system data
      *
-     * @param rData System data
+     * @param rSystemData System data
      */
-    void setPartySystemData(const RPPartySystemData& rData);
-#endif
+    void setPartySystemData(const RPPartySystemData& rSystemData);
     /**@}*/
 
     /**
@@ -103,69 +101,73 @@ public:
      */
     /**@{*/
     /**
-     * @brief Checks which of the save data files (banner file, save file) exist
-     * on the NAND
+     * @brief Checks which save data files exist on the NAND
      *
      * @return Success
      */
     bool existPackFileSync();
     /**
-     * @brief Asynchronously checks which of the save data files (banner file,
-     * save file) exist on the NAND
+     * @brief Checks which save data files exist on the NAND (asynchronous)
      *
      * @return Success
      */
     bool existPackFileAsync();
     /**
-     * @brief Asynchronously checks if the NAND has enough free space to store
-     * both the banner and save files
+     * @brief Tests whether the NAND has enough free space to store both the
+     * banner and save files (asynchronous)
      *
      * @return Success
      */
     bool existNandMemoryAsync();
 
     /**
-     * @brief Asynchronously creates both the banner and save files on the NAND
+     * @brief Attempts to create both the banner and save files on the NAND
+     *
+     * @return Success
+     */
+    bool createPackFileSync();
+    /**
+     * @brief Attempts to create both the banner and save files on the NAND
+     * (asynchonous)
      *
      * @return Success
      */
     bool createPackFileAsync();
     /**
-     * @brief Deletes both the banner and save files from the NAND
+     * @brief Attempts to delete both the banner and save files from the NAND
      *
      * @return Success
      */
     bool deletePackFileSync();
     /**
-     * @brief Saves both the banner and save files to the NAND
+     * @brief Attempts to save both the banner and save files to the NAND
      *
      * @return Success
      */
     bool savePackFileSync();
 
     /**
-     * @brief Asynchronously loads the save file from the NAND
+     * @brief Attempts to load the save file from the NAND (asynchronous)
      *
      * @return Success
      */
     bool loadAsync();
     /**
-     * @brief Asynchronously saves both the banner and save files to the NAND
+     * @brief Attempts to save both the banner and save files to the NAND
+     * (asynchronous)
      *
      * @return Success
      */
     bool saveAsync();
 
     /**
-     * @brief Saves the save file to the NAND
-     * @details If saving is disabled, this function does nothing.
-     */
-    void saveSync();
-    /**
      * @brief Loads the save file from the NAND
      */
     void loadSync();
-    /**@}*/
+    /**
+     * @brief Saves both the banner and save files to the NAND
+     */
+    void saveSync();
 
     /**
      * @name State checking
@@ -191,14 +193,11 @@ public:
     bool isNandMemoryExist() const;
 
     /**
-     * @brief Tests whether the save file is broken
-     * @details The save file is broken if the file magic is broken or the
-     * checksum is incorrect.
+     * @brief Tests whether the save file is broken (bad magic, checksum, etc.)
      */
     bool isSaveFileBroken() const;
     /**
-     * @brief Tests whether any unrecoverable error occurred while loading the
-     * save file
+     * @brief Tests whether any unrecoverable error has occurred
      * @typo
      */
     bool isErrorOccured() const;
@@ -245,10 +244,9 @@ public:
     /**
      * @brief Updates the save manager state
      *
-     * @param checkContinue Whether to prompt the user to continue without
-     * saving
+     * @param display Whether the scene is fully displayed
      */
-    void update(bool checkContinue);
+    void update(bool display);
 
     /**
      * @brief Initializes the banner file binary
@@ -259,9 +257,8 @@ private:
     /**
      * @brief Bitflag indices
      */
-    enum EFlag {
-        EFlag_NandMemoryExist, //!< Enough NAND memory exists for both the
-                               //!< banner file and save file
+    enum {
+        EFlag_NandMemoryExist, //!< Enough NAND memory exists for all files
         EFlag_BannerFileExist, //!< The banner file exists on the NAND
         EFlag_SaveFileExist,   //!< The save file exists on the NAND
         EFlag_3,
@@ -269,21 +266,40 @@ private:
         EFlag_5,
         EFlag_6,
         EFlag_7,
-        EFlag_NandAccess,     //!< NAND operation is happening on another thread
-        EFlag_AsyncSave,      //!< Save file is being written on another thread
-        EFlag_ContinueReject, //!< "Continue without saving?" prompt is
-                              //!< currently displayed
+        EFlag_NandAccess,  //!< NAND operation is happening on another thread
+        EFlag_AsyncSave,   //!< Save file is being written on another thread
+        EFlag_ErrorWindow, //!< System window error was displayed
         EFlag_11,
         EFlag_NandError, //!< Unrecoverable NAND error
         EFlag_13,
+        EFlag_14,
     };
 
-private:
     /**
-     * @brief Constructor
+     * @brief banner.tpl file indices
      */
-    RPSysSaveDataMgr();
+    enum ETplIndex {
+        ETplIndex_BannerTexture, //!< Banner texture
+        ETplIndex_IconTexture,   //!< Icon texture
+    };
 
+    //! VF work memory size
+    static const u32 VF_WORK_SIZE = OS_MEM_KB_TO_B(16);
+
+    //! NAND save file banner size
+    static const u32 SAVE_BANNER_SIZE = NAND_BANNER_SIZE(1);
+
+    //! Number of files written when saving
+#if defined(PACK_SPORTS)
+    static const u32 SAVE_FILE_NUM = 2; // RPSports.dat, banner.bin
+#elif defined(PACK_PARTY)
+    static const u32 SAVE_FILE_NUM = 2; // RPParty.dat, banner.bin
+#endif
+
+    //! Number of icon texture frames in the save banner
+    static const u32 BANNER_ICON_FRAME_NUM = 1;
+
+private:
     /**
      * @brief Prompts the user to continue without saving
      */
@@ -293,15 +309,23 @@ private:
      * @brief Checks if the NAND has enough free space to store both the banner
      * and save files
      */
-    void existNandMemorySync();
+    void existNandMemorySync() DECOMP_DONT_INLINE;
 
+    /**
+     * @brief Checks whether the banner file exists on the NAND
+     */
+    void existBannerFile();
     /**
      * @brief Creates the banner file on the NAND
      * @details For safety purposes, the banner file is first created in the
      * temporary directory, before being moved out.
      */
     void createBannerFile();
-
+    /**
+     * @brief Deletes the banner file from the NAND
+     * @details This function only deletes the banner file in the home directory
+     */
+    void deleteBannerFile();
     /**
      * @brief Saves the banner file to the NAND
      *
@@ -310,43 +334,65 @@ private:
     void saveBannerFile(EBannerType type);
 
     /**
+     * @brief Checks whether the save file exists on the NAND
+     */
+    void existSaveFile();
+    /**
+     * @brief Deletes the save file from the NAND
+     */
+    void deleteSaveFile();
+
+    /**
      * @name Thread functions
      */
     /**@{*/
     /**
-     * @brief Checks which of the save data files (banner file, save file) exist
-     * on the NAND
+     * @brief Checks which save data files exist on the NAND
+     *
+     * @param pArg Thread function argument
      */
-    static void existPackFileFunc();
+    static void existPackFileFunc(void* pArg);
     /**
      * @brief Checks if the NAND has enough free space to store both the banner
      * and save files
+     *
+     * @param pArg Thread function argument
      */
-    static void existNandMemoryFunc();
+    static void existNandMemoryFunc(void* pArg);
 
     /**
      * @brief Creates both the banner and save files on the NAND
+     *
+     * @param pArg Thread function argument
      */
-    static void createPackFileFunc();
+    static void createPackFileFunc(void* pArg);
 
     /**
      * @brief Loads the save file from the NAND
+     *
+     * @param pArg Thread function argument
      */
-    static void loadDataFunc();
+    static void loadDataFunc(void* pArg);
     /**
      * @brief Saves both the banner and save files to the NAND
+     *
+     * @param pArg Thread function argument
      */
-    static void saveDataFunc();
+    static void saveDataFunc(void* pArg);
     /**@}*/
 
 private:
+    //! Banner file names
+    static const char* BANNER_FILE_NAMES[EBannerType_Max];
+    //! Save file name
+    static const char* SAVE_FILE_NAME;
+
     //! Status flags
     EGG::TBitFlag<u32> mFlags; // at 0x8
 
     //! Last NAND operation result
     s32 mNandErrorCode; // at 0xC
-    //! @unused
-    u32 WORD_0x10;
+    u32 unk10;
     //! NANDCheck result
     u32 mNandCheckAnswer; // at 0x14
 
@@ -354,14 +400,13 @@ private:
     u32 mSaveFileSize; // at 0x18
     //! Save banner (`banner.bin`) size
     u32 mBannerFileSize; // at 0x1C
-    //! @brief Size of both the save file and banner together
-    //! @note Size is aligned to the nearest NAND cluster (0x4000 bytes).
-    u32 mTotalFileSize; // at 0x20
+    //! Size of both the save file and banner together
+    u32 mClusterFileSize; // at 0x20
 
     //! Banner file binary
-    void* mpBannerFile; // at 0x24
+    NANDBanner* mpBannerFile; // at 0x24
     //! Save file binary
-    void* mpSaveFile; // at 0x28
+    u8* mpSaveFile; // at 0x28
 
     //! Game save data
     RPSysSaveData* mpSaveData; // at 0x2C

@@ -4,7 +4,6 @@
 
 #include <nw4r/g3d/res/g3d_resmat.h>
 #include <nw4r/g3d/res/g3d_resshp.h>
-
 #include <nw4r/math.h>
 
 namespace nw4r {

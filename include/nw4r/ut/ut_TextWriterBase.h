@@ -2,10 +2,9 @@
 #define NW4R_UT_TEXT_WRITER_BASE_H
 #include <nw4r/types_nw4r.h>
 
+#include <nw4r/math.h>
 #include <nw4r/ut/ut_CharWriter.h>
 #include <nw4r/ut/ut_TagProcessorBase.h>
-
-#include <nw4r/math.h>
 
 #include <cstdio>
 #include <cwchar>
@@ -14,6 +13,9 @@ namespace nw4r {
 namespace ut {
 
 template <typename T> class TextWriterBase : public CharWriter {
+public:
+    typedef TagProcessorBase<T> TagProcessorType;
+
 public:
     enum DrawFlag {
         // Align text lines

@@ -1,7 +1,8 @@
 #ifndef RP_PARTY_TNK_MINE_H
 #define RP_PARTY_TNK_MINE_H
+#include <Pack/types_pack.h>
+
 #include <Pack/RPParty/RPTnkScene/RPTnkGameObjBase.h>
-#include <Pack/RPTypes.h>
 
 /**
  * @brief Tanks mine object

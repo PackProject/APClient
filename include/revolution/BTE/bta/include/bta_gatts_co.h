@@ -30,23 +30,28 @@
 **
 ** Function         bta_gatts_co_update_handle_range
 **
-** Description      This callout function is executed by GATTS when a GATT server
+** Description      This callout function is executed by GATTS when a GATT
+*server
 **                  handle range ios to be added or removed.
 **
-** Parameter        is_add: true is to add a handle range; otherwise is to delete.
+** Parameter        is_add: true is to add a handle range; otherwise is to
+*delete.
 **                  p_hndl_range: handle range.
 **
 ** Returns          void.
 **
 *******************************************************************************/
-BTA_API extern void bta_gatts_co_update_handle_range(BOOLEAN is_add, tBTA_GATTS_HNDL_RANGE *p_hndl_range);
+BTA_API extern void
+bta_gatts_co_update_handle_range(BOOLEAN is_add,
+                                 tBTA_GATTS_HNDL_RANGE* p_hndl_range);
 
 /*******************************************************************************
 **
 ** Function         bta_gatts_co_srv_chg
 **
 ** Description      This call-out is to read/write/remove service change related
-**                  informaiton. The request consists of the cmd and p_req and the
+**                  informaiton. The request consists of the cmd and p_req and
+*the
 **                  response is returned in p_rsp
 **
 ** Parameter        cmd - request command
@@ -59,14 +64,15 @@ BTA_API extern void bta_gatts_co_update_handle_range(BOOLEAN is_add, tBTA_GATTS_
 **
 *******************************************************************************/
 BTA_API extern BOOLEAN bta_gatts_co_srv_chg(tBTA_GATTS_SRV_CHG_CMD cmd,
-                                            tBTA_GATTS_SRV_CHG_REQ *p_req,
-                                            tBTA_GATTS_SRV_CHG_RSP *p_rsp);
+                                            tBTA_GATTS_SRV_CHG_REQ* p_req,
+                                            tBTA_GATTS_SRV_CHG_RSP* p_rsp);
 
 /*******************************************************************************
 **
 ** Function         bta_gatts_co_load_handle_range
 **
-** Description      This callout function is executed by GATTS when a GATT server
+** Description      This callout function is executed by GATTS when a GATT
+*server
 **                  handle range is requested to be loaded from NV.
 **
 ** Parameter
@@ -74,9 +80,7 @@ BTA_API extern BOOLEAN bta_gatts_co_srv_chg(tBTA_GATTS_SRV_CHG_CMD cmd,
 ** Returns          void.
 **
 *******************************************************************************/
-BTA_API extern  BOOLEAN bta_gatts_co_load_handle_range(UINT8 index,
-                                                       tBTA_GATTS_HNDL_RANGE *p_handle);
-
+BTA_API extern BOOLEAN
+bta_gatts_co_load_handle_range(UINT8 index, tBTA_GATTS_HNDL_RANGE* p_handle);
 
 #endif /* BTA_GATTS_CO_H */
-

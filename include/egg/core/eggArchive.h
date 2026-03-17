@@ -8,8 +8,6 @@
 
 #include <revolution/ARC.h>
 
-#include <cstring>
-
 namespace EGG {
 
 // Forward declarations

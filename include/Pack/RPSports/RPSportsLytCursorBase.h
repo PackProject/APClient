@@ -1,10 +1,12 @@
 #ifndef RP_SPORTS_LYT_CURSOR_BASE_H
 #define RP_SPORTS_LYT_CURSOR_BASE_H
-#include <egg/types_egg.h>
+#include <Pack/types_pack.h>
 
-#include "RPTypes.h"
+#include <Pack/RPUtility.h>
 
-class RPUtlLytFrameCursor;
+#include <egg/core.h>
+#include <egg/math.h>
+
 class RPSportsLytButton;
 
 class RPSportsLytCursorBase {

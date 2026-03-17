@@ -2,9 +2,8 @@
 #define NW4R_UT_CHAR_WRITER_H
 #include <nw4r/types_nw4r.h>
 
-#include <nw4r/ut/ut_Color.h>
-
 #include <nw4r/math.h>
+#include <nw4r/ut/ut_Color.h>
 
 #include <revolution/GX.h>
 
@@ -99,6 +98,14 @@ public:
     }
     void MoveCursorY(f32 dy) {
         mCursorPos.y += dy;
+    }
+
+    void SetAlpha(u8 alpha) {
+        mAlpha = alpha;
+        UpdateVertexColor();
+    }
+    u8 GetAlpha() const {
+        return mAlpha;
     }
 
     void EnableFixedWidth(bool enable) {

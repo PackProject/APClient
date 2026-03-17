@@ -2,9 +2,9 @@
 #define NW4R_G3D_SCN_RFL_H
 #include <nw4r/types_nw4r.h>
 
-#include <nw4r/g3d/g3d_scnobj.h>
-
 #include <RVLFaceLib.h>
+
+#include <nw4r/g3d/g3d_scnobj.h>
 
 namespace nw4r {
 namespace g3d {
@@ -34,6 +34,10 @@ public:
 
     bool SetExpression(RFLExpression expression);
     bool GetExpression(RFLExpression* pExpression);
+
+    u32 GetExpressionFlag() const {
+        return mExpressionFlag;
+    }
 
     void SetLightSetIdx(int idx);
     s8 GetLightSetIdx() const {
@@ -75,6 +79,10 @@ public:
     }
     DrawProc GetDrawProc() const {
         return mpDrawProc;
+    }
+
+    void* GetUserData() const {
+        return mpUserData;
     }
 
 private:

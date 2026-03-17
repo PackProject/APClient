@@ -30,7 +30,8 @@
 **
 ** Function         bta_gattc_co_cache_open
 **
-** Description      This callout function is executed by GATTC when a GATT server
+** Description      This callout function is executed by GATTC when a GATT
+*server
 **                  cache is ready to be sent.
 **
 ** Parameter        server_bda: server bd address of this cache belongs to
@@ -48,7 +49,8 @@ BTA_API extern void bta_gattc_co_cache_open(BD_ADDR server_bda, UINT16 evt,
 **
 ** Function         bta_gattc_co_cache_close
 **
-** Description      This callout function is executed by GATTC when a GATT server
+** Description      This callout function is executed by GATTC when a GATT
+*server
 **                  cache is written completely.
 **
 ** Parameter        server_bda: server bd address of this cache belongs to
@@ -57,13 +59,15 @@ BTA_API extern void bta_gattc_co_cache_open(BD_ADDR server_bda, UINT16 evt,
 ** Returns          void.
 **
 *******************************************************************************/
-BTA_API extern void bta_gattc_co_cache_close(BD_ADDR server_bda, UINT16 conn_id);
+BTA_API extern void bta_gattc_co_cache_close(BD_ADDR server_bda,
+                                             UINT16 conn_id);
 
 /*******************************************************************************
 **
 ** Function         bta_gattc_co_cache_save
 **
-** Description      This callout function is executed by GATT when a server cache
+** Description      This callout function is executed by GATT when a server
+*cache
 **                  is available to save.
 **
 ** Parameter        server_bda: server bd address of this cache belongs to
@@ -76,8 +80,9 @@ BTA_API extern void bta_gattc_co_cache_close(BD_ADDR server_bda, UINT16 conn_id)
 **
 *******************************************************************************/
 BTA_API extern void bta_gattc_co_cache_save(BD_ADDR server_bda, UINT16 evt,
-                                          UINT16 num_attr, tBTA_GATTC_NV_ATTR *p_attr,
-                                          UINT16 attr_index, UINT16 conn_id);
+                                            UINT16 num_attr,
+                                            tBTA_GATTC_NV_ATTR* p_attr,
+                                            UINT16 attr_index, UINT16 conn_id);
 
 /*******************************************************************************
 **
@@ -98,4 +103,3 @@ BTA_API extern void bta_gattc_co_cache_load(BD_ADDR server_bda, UINT16 evt,
                                             UINT16 start_index, UINT16 conn_id);
 
 #endif /* BTA_GATT_CO_H */
-

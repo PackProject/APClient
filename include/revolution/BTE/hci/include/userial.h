@@ -32,24 +32,24 @@
 ******************************************************************************/
 
 /**** port IDs ****/
-#define USERIAL_PORT_1          0
-#define USERIAL_PORT_2          1
-#define USERIAL_PORT_3          2
-#define USERIAL_PORT_4          3
-#define USERIAL_PORT_5          4
-#define USERIAL_PORT_6          5
-#define USERIAL_PORT_7          6
-#define USERIAL_PORT_8          7
-#define USERIAL_PORT_9          8
-#define USERIAL_PORT_10         9
-#define USERIAL_PORT_11         10
-#define USERIAL_PORT_12         11
-#define USERIAL_PORT_13         12
-#define USERIAL_PORT_14         13
-#define USERIAL_PORT_15         14
-#define USERIAL_PORT_16         15
-#define USERIAL_PORT_17         16
-#define USERIAL_PORT_18         17
+#define USERIAL_PORT_1 0
+#define USERIAL_PORT_2 1
+#define USERIAL_PORT_3 2
+#define USERIAL_PORT_4 3
+#define USERIAL_PORT_5 4
+#define USERIAL_PORT_6 5
+#define USERIAL_PORT_7 6
+#define USERIAL_PORT_8 7
+#define USERIAL_PORT_9 8
+#define USERIAL_PORT_10 9
+#define USERIAL_PORT_11 10
+#define USERIAL_PORT_12 11
+#define USERIAL_PORT_13 12
+#define USERIAL_PORT_14 13
+#define USERIAL_PORT_15 14
+#define USERIAL_PORT_16 15
+#define USERIAL_PORT_17 16
+#define USERIAL_PORT_18 17
 
 typedef enum {
     USERIAL_OP_INIT,
@@ -101,7 +101,7 @@ uint8_t userial_open(uint8_t port);
 **                 copied into p_data.  This may be less than len.
 **
 *******************************************************************************/
-uint16_t  userial_read(uint16_t msg_id, uint8_t *p_buffer, uint16_t len);
+uint16_t userial_read(uint16_t msg_id, uint8_t* p_buffer, uint16_t len);
 
 /*******************************************************************************
 **
@@ -113,7 +113,7 @@ uint16_t  userial_read(uint16_t msg_id, uint8_t *p_buffer, uint16_t len);
 **                 may be less than len.
 **
 *******************************************************************************/
-uint16_t userial_write(uint16_t msg_id, uint8_t *p_data, uint16_t len);
+uint16_t userial_write(uint16_t msg_id, uint8_t* p_data, uint16_t len);
 
 /*******************************************************************************
 **
@@ -135,7 +135,6 @@ void userial_close(void);
 ** Returns         None
 **
 *******************************************************************************/
-void userial_ioctl(userial_ioctl_op_t op, void *p_data);
+void userial_ioctl(userial_ioctl_op_t op, void* p_data);
 
 #endif /* USERIAL_H */
-

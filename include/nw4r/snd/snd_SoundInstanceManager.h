@@ -3,7 +3,6 @@
 #include <nw4r/types_nw4r.h>
 
 #include <nw4r/snd/snd_InstancePool.h>
-
 #include <nw4r/ut.h>
 
 #include <revolution/OS.h>
@@ -87,8 +86,13 @@ public:
     }
 
     void InsertPriorityList(T* pSound, int priority) {
+        // TODO(kiwi) Fix this?
+#if defined(__KOKESHI__)
         __decltype__(mPriorityList.GetBeginIter()) it =
             mPriorityList.GetBeginIter();
+#else
+        typename TPrioList::Iterator it = mPriorityList.GetBeginIter();
+#endif
 
         for (; it != mPriorityList.GetEndIter(); ++it) {
             if (priority < it->CalcCurrentPlayerPriority()) {

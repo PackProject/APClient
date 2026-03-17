@@ -1,6 +1,9 @@
 #ifndef RP_SYSTEM_SCENE_MGR_H
 #define RP_SYSTEM_SCENE_MGR_H
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSingleton.h>
+#include <Pack/RPSystem/RPSysScene.h>
 
 #include <egg/core.h>
 
@@ -9,7 +12,6 @@
 
 /**
  * @brief Scene manager
- * @wfuname
  */
 class RPSysSceneMgr : public EGG::SceneManager {
     RP_SINGLETON_DECL_EX(RPSysSceneMgr);

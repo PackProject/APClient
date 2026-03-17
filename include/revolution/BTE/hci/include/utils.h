@@ -31,19 +31,32 @@
 **  Constants & Macros
 ******************************************************************************/
 
-#define STREAM_TO_UINT16(u16, p) {u16 = ((uint16_t)(*(p)) + (((uint16_t)(*((p) + 1))) << 8)); (p) += 2;}
-#define UINT16_TO_STREAM(p, u16) {*(p)++ = (uint8_t)(u16); *(p)++ = (uint8_t)((u16) >> 8);}
-#define UINT32_TO_STREAM(p, u32) {*(p)++ = (uint8_t)(u32); *(p)++ = (uint8_t)((u32) >> 8); *(p)++ = (uint8_t)((u32) >> 16); *(p)++ = (uint8_t)((u32) >> 24);}
+#define STREAM_TO_UINT16(u16, p)                                               \
+    {                                                                          \
+        u16 = ((uint16_t)(*(p)) + (((uint16_t)(*((p) + 1))) << 8));            \
+        (p) += 2;                                                              \
+    }
+#define UINT16_TO_STREAM(p, u16)                                               \
+    {                                                                          \
+        *(p)++ = (uint8_t)(u16);                                               \
+        *(p)++ = (uint8_t)((u16) >> 8);                                        \
+    }
+#define UINT32_TO_STREAM(p, u32)                                               \
+    {                                                                          \
+        *(p)++ = (uint8_t)(u32);                                               \
+        *(p)++ = (uint8_t)((u32) >> 8);                                        \
+        *(p)++ = (uint8_t)((u32) >> 16);                                       \
+        *(p)++ = (uint8_t)((u32) >> 24);                                       \
+    }
 
 /******************************************************************************
 **  Type definitions
 ******************************************************************************/
 
-typedef struct
-{
-    void        *p_first;
-    void        *p_last;
-    uint16_t    count;
+typedef struct {
+    void* p_first;
+    void* p_last;
+    uint16_t count;
 } BUFFER_Q;
 
 /******************************************************************************
@@ -63,7 +76,7 @@ typedef struct
 ** Returns         None
 **
 *******************************************************************************/
-void utils_init ();
+void utils_init();
 
 /*******************************************************************************
 **
@@ -74,7 +87,7 @@ void utils_init ();
 ** Returns         None
 **
 *******************************************************************************/
-void utils_cleanup ();
+void utils_cleanup();
 
 /*******************************************************************************
 **
@@ -85,7 +98,7 @@ void utils_cleanup ();
 ** Returns         None
 **
 *******************************************************************************/
-void utils_queue_init (BUFFER_Q *p_q);
+void utils_queue_init(BUFFER_Q* p_q);
 
 /*******************************************************************************
 **
@@ -96,7 +109,7 @@ void utils_queue_init (BUFFER_Q *p_q);
 ** Returns         None
 **
 *******************************************************************************/
-void utils_enqueue (BUFFER_Q *p_q, void *p_buf);
+void utils_enqueue(BUFFER_Q* p_q, void* p_buf);
 
 /*******************************************************************************
 **
@@ -107,30 +120,32 @@ void utils_enqueue (BUFFER_Q *p_q, void *p_buf);
 ** Returns         NULL if queue is empty, else buffer
 **
 *******************************************************************************/
-void *utils_dequeue (BUFFER_Q *p_q);
+void* utils_dequeue(BUFFER_Q* p_q);
 
 /*******************************************************************************
 **
 ** Function        utils_dequeue_unlocked
 **
-** Description     Dequeues a buffer from the head of the given queue without lock
+** Description     Dequeues a buffer from the head of the given queue without
+*lock
 **
 ** Returns         NULL if queue is empty, else buffer
 **
 *******************************************************************************/
-void *utils_dequeue_unlocked (BUFFER_Q *p_q);
+void* utils_dequeue_unlocked(BUFFER_Q* p_q);
 
 /*******************************************************************************
 **
 ** Function        utils_getnext
 **
-** Description     Return a pointer to the next buffer linked to the given buffer
+** Description     Return a pointer to the next buffer linked to the given
+*buffer
 **
 ** Returns         NULL if the given buffer does not point to any next buffer,
 **                 else next buffer address
 **
 *******************************************************************************/
-void *utils_getnext (void *p_buf);
+void* utils_getnext(void* p_buf);
 
 /*******************************************************************************
 **
@@ -141,19 +156,19 @@ void *utils_getnext (void *p_buf);
 ** Returns         NULL if the given queue is empty, else the given buffer
 **
 *******************************************************************************/
-void *utils_remove_from_queue (BUFFER_Q *p_q, void *p_buf);
+void* utils_remove_from_queue(BUFFER_Q* p_q, void* p_buf);
 
 /*******************************************************************************
 **
 ** Function        utils_remove_from_queue_unlocked
 **
-** Description     Dequeue the given buffer from the middle of the given queue without lock
+** Description     Dequeue the given buffer from the middle of the given queue
+*without lock
 **
 ** Returns         NULL if the given queue is empty, else the given buffer
 **
 *******************************************************************************/
-void *utils_remove_from_queue_unlocked (BUFFER_Q *p_q, void *p_buf);
-
+void* utils_remove_from_queue_unlocked(BUFFER_Q* p_q, void* p_buf);
 
 /*******************************************************************************
 **
@@ -164,7 +179,7 @@ void *utils_remove_from_queue_unlocked (BUFFER_Q *p_q, void *p_buf);
 ** Returns         None
 **
 *******************************************************************************/
-void utils_delay (uint32_t timeout);
+void utils_delay(uint32_t timeout);
 
 /*******************************************************************************
 **
@@ -176,7 +191,7 @@ void utils_delay (uint32_t timeout);
 ** Returns         None
 **
 *******************************************************************************/
-void utils_lock (void);
+void utils_lock(void);
 
 /*******************************************************************************
 **
@@ -188,7 +203,6 @@ void utils_lock (void);
 ** Returns         None
 **
 *******************************************************************************/
-void utils_unlock (void);
+void utils_unlock(void);
 
 #endif /* UTILS_H */
-

@@ -1,96 +1,165 @@
 #ifndef RP_SYSTEM_SAVE_DATA_H
 #define RP_SYSTEM_SAVE_DATA_H
-#include <types_egg.h>
+#include <Pack/types_pack.h>
 
-#include "RPTypes.h"
+#include <egg/core.h>
+
+//! @addtogroup rp_system
+//! @{
 
 // Forward declarations
-class RPPartySystemData;
 class RPPartyPlayerData;
-class RPSportsSystemData;
+class RPPartySystemData;
 class RPSportsPlayerData;
+class RPSportsSystemData;
 
 /**
- * @brief Generic structure to hold RP engine save data
- * @details While this structure is generic and can support multiple Pack
- * Project games, it seems that some of its behavior is set at compile time
- * rather than using RPSysProjectLocal.
- * @wfuname
+ * @brief Pack Project save data
  */
 class RPSysSaveData {
 public:
-    // @brief Potential errors in the save data
-    enum ESaveError {
-        SAVE_BAD_HI_MAGIC = (1 << 0), // Missing 'RPSP'
-        SAVE_BAD_LO_MAGIC = (1 << 1), // Missing '0000'
-        SAVE_BAD_CHECKSUM = (1 << 2)  // Checksum mismatch
-    };
+    //! Length of the player list
+    static const int PLAYER_LIST_SIZE = 100;
 
 public:
     /**
-     * @brief Size of save file
-     * @address 8018bf54
+     * @brief Constructor
      */
-    static u32 getFileSize();
-
-    // @address 8018ad34
     RPSysSaveData();
 
     /**
-     * @brief Write save to stream
-     * @address 8018ad70
-     * @param rawSave Binary save, needed to calculate checksum
+     * @brief Resets the save data state
      */
-    void write(EGG::RamStream* stream, const void* rawSave) const;
-    /**
-     * @brief Read save from stream
-     * @address 8018b0e4
-     * @param rawSave Binary save, needed to calculate checksum
-     */
-    void read(EGG::RamStream* stream, const void* rawSave);
-
-    // @address 8018c32c
-    RPPartySystemData* getPartySystemData() const;
-
-    // @address 8018c334
-    void setPartyPlayerData(const RPPartyPlayerData* playerData, u32 id);
-    // @address 8018c40c
-    RPPartyPlayerData* getPartyPlayerData(u32 id) const;
-
-    // @address 8018c41c
-    void setSportsSystemData(const RPSportsSystemData* cmnData);
-    // @address 8018c684
-    RPSportsSystemData* getSportsSystemData() const;
-
-    // @address 8018c68c
-    void setSportsPlayerData(const RPSportsPlayerData* playerData, u32 id);
-    // @address 8018cb6c
-    RPSportsPlayerData* getSportsPlayerData(u32 id) const;
+    void reset();
 
     /**
-     * @brief Check save data validity
+     * @brief Tests whether an error occurred while reading the save file
      * @typo
-     * @address 8018cb7c
      */
     bool isErrorOccured() const;
 
-private:
-    // @brief Flags regarding the status of the data
-    u32 mErrors; // at 0x0
-    // @brief Wii Sports System save data
-    RPSportsSystemData* mSportsCmnData; // at 0x4
-    // @brief Wii Sports player list (100 entries)
-    RPSportsPlayerData* mSportsPlayerList; // at 0x8
-    // @brief Wii Play System save data
-    RPPartySystemData* mPartyCmnData; // at 0xC
-    // @brief Wii Play player list (100 entries)
-    RPPartyPlayerData* mPartyPlayerList; // at 0x10
+    /**
+     * @brief Gets the Sports Pack player data at the specified player list
+     * index
+     *
+     * @param idx Player list index
+     */
+    RPSportsPlayerData* getSportsPlayerData(u32 idx) const;
+    /**
+     * @brief Sets the Sports Pack player data at the specified player list
+     * index
+     *
+     * @param pPlayerData Player data
+     * @param idx Player list index
+     */
+    void setSportsPlayerData(const RPSportsPlayerData* pPlayerData, u32 idx);
 
-    UNKWORD WORD_0x14;
-    UNKWORD WORD_0x18;
-    UNKWORD WORD_0x1C;
-    UNKWORD WORD_0x20;
-    UNKWORD WORD_0x24;
+    /**
+     * @brief Gets the Sports Pack system data
+     */
+    RPSportsSystemData* getSportsSystemData() const;
+    /**
+     * @brief Sets the Sports Pack system data
+     *
+     * @param pSystemData System data
+     */
+    void setSportsSystemData(const RPSportsSystemData* pSystemData);
+
+    /**
+     * @brief Gets the Party Pack player data at the specified player list
+     * index
+     *
+     * @param idx Player list index
+     */
+    RPPartyPlayerData* getPartyPlayerData(u32 idx) const;
+    /**
+     * @brief Sets the Party Pack player data at the specified player list
+     * index
+     *
+     * @param pPlayerData Player data
+     * @param idx Player list index
+     */
+    void setPartyPlayerData(const RPPartyPlayerData* pPlayerData, u32 idx);
+
+    /**
+     * @brief Gets the Party Pack system data
+     */
+    RPPartySystemData* getPartySystemData() const;
+    /**
+     * @brief Sets the Party Pack system data
+     *
+     * @param pSystemData System data
+     */
+    void setPartySystemData(const RPPartySystemData* pSystemData);
+
+    /**
+     * @brief Deserializes this object from the specified stream
+     *
+     * @param rStrm Memory stream
+     * @param pRawSave Raw save data
+     */
+    void read(EGG::RamStream& rStrm, const void* pRawSave);
+    /**
+     * @brief Serializes this object to the specified stream
+     *
+     * @param rStrm Memory stream
+     * @param pRawSave Raw save data
+     */
+    void write(EGG::RamStream& rStrm, const void* pRawSave) const;
+
+    /**
+     * @brief Gets the size of the current pack's save file, in bytes
+     */
+    static u32 getSaveFileSize();
+
+private:
+    enum {
+        EFlag_BadPack,    //!< The save file is not for this pack
+        EFlag_BadVersion, //!< The save file is not for this version
+        EFlag_BadCrc,     //!< The save file checksum is invalid
+    };
+
+    //! Name of the Pack Project game this save file is intended for
+#if defined(PACK_SPORTS)
+    static const u32 SIGNATURE_PACK = FOURCC('R', 'P', 'S', 'P');
+#elif defined(PACK_PARTY)
+    static const u32 SIGNATURE_PACK = FOURCC('R', 'P', 'P', 'T');
+#endif
+
+    //! Version of this save file
+    static const u32 SIGNATURE_VERSION = FOURCC('0', '0', '0', '0');
+
+private:
+    /**
+     * @brief Calculates a checksum of the specified data
+     *
+     * @param pData Data buffer
+     * @param size Buffer size
+     * @return 32-bit checksum
+     */
+    static u32 calcCrc(const void* pData, u32 size);
+
+private:
+    //! Data error flags
+    EGG::TBitFlag<u32> mFlags; // at 0x0
+
+    //! Sports Pack system data
+    RPSportsSystemData* mpSportsSystemData; // at 0x4
+    //! Sports Pack player save data list
+    RPSportsPlayerData* mpSportsPlayerList; // at 0x8
+
+    //! Party Pack system save data
+    RPPartySystemData* mpPartySystemData; // at 0xC
+    //! Party Pack player save data list
+    RPPartyPlayerData* mpPartyPlayerList; // at 0x10
+
+    u32 unk14;
+    u32 unk18;
+    u32 unk1C;
+    u32 unk20;
+    u32 unk24;
 };
+
+//! @}
 
 #endif

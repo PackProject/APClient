@@ -1,5 +1,7 @@
 #include <libkiwi.h>
 
+#include <Pack/RPSystem.h>
+
 #include <egg/core.h>
 
 #include <revolution/MEM.h>
@@ -14,7 +16,7 @@ namespace {
  * @param pHeap Heap object
  */
 void LogHeap(const char* pName, EGG::Heap* pHeap) {
-    if (!PtrUtil::IsPointer(pHeap)) {
+    if (pHeap == nullptr) {
         K_LOG_EX("[%s] nullptr ->\n", pName);
         return;
     }
@@ -29,7 +31,6 @@ void LogHeap(const char* pName, EGG::Heap* pHeap) {
  * @param pBlock Target of delete operation
  */
 void CheckDoubleFree(const void* pBlock) {
-#if !defined(NDEBUG)
     // nullptr delete is OK
     if (pBlock == nullptr) {
         return;
@@ -54,7 +55,6 @@ void CheckDoubleFree(const void* pBlock) {
                 "Heap block is corrupted");
 
     K_ASSERT_EX(pMBlock->state == 'UD', "Double free!");
-#endif
 }
 
 } // namespace
@@ -63,7 +63,11 @@ void CheckDoubleFree(const void* pBlock) {
  * @brief Constructor
  */
 MemoryMgr::MemoryMgr() {
+#if defined(PACK_RESORT)
     EGG::Heap* pRootHeapMEM1 = RPSysSystem::getRootHeapMem1();
+#else
+    EGG::Heap* pRootHeapMEM1 = RPSysSystem::getSystemHeap();
+#endif
     K_ASSERT_PTR(pRootHeapMEM1);
 
     EGG::Heap* pRootHeapMEM2 = RPSysSystem::getRootHeapMem2();
@@ -115,7 +119,10 @@ void* MemoryMgr::Alloc(u32 size, s32 align, EMemory memory) const {
  * @param pBlock Block
  */
 void MemoryMgr::Free(void* pBlock) const {
+#if !defined(NDEBUG)
     CheckDoubleFree(pBlock);
+#endif
+
     EGG::Heap::free(pBlock, nullptr);
 }
 
@@ -134,6 +141,14 @@ EGG::Heap* MemoryMgr::GetHeap(EMemory memory) const {
     case EMemory_MEM2: {
         K_ASSERT_PTR(mpHeapMEM2);
         return mpHeapMEM2;
+    }
+
+    case EMemory_Scene: {
+        EGG::Heap* pSceneHeap =
+            RP_GET_INSTANCE(RPSysSceneMgr)->getCurrentScene()->getHeap();
+
+        K_ASSERT_PTR(pSceneHeap);
+        return pSceneHeap;
     }
 
     default: {
@@ -189,14 +204,16 @@ bool MemoryMgr::IsHeapMemory(const void* pAddr) const {
  * @brief Dumps heap information for debugging purposes
  */
 void MemoryMgr::Dump() {
-    LogHeap("libkiwi (MEM1)", mpHeapMEM1);
-    LogHeap("libkiwi (MEM2)", mpHeapMEM2);
+    LogHeap("libkiwi (MEM1)", GetHeap(EMemory_MEM1));
+    LogHeap("libkiwi (MEM2)", GetHeap(EMemory_MEM2));
 
     LogHeap("RootMem1", RPSysSystem::getRootHeapMem1());
     LogHeap("RootMem2", RPSysSystem::getRootHeapMem2());
 
+#if defined(PACK_RESORT)
     LogHeap("SysMem1", RPSysSystem::getSystemHeap());
     LogHeap("SysMem2", RP_GET_INSTANCE(RPSysSystem)->getSystemHeapRP());
+#endif
 
     LogHeap("Res", RP_GET_INSTANCE(RPSysSystem)->getResourceHeap());
 }

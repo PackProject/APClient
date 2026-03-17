@@ -1,0 +1,101 @@
+# ============================================================================#
+#                                                                             #
+# Kokeshi project config file                                                 #
+#                                                                             #
+# ============================================================================#
+
+# ============================================================================#
+#
+# For additional project settings configurable by this file, please see
+# KokeshiConfig inside 'tools/ninja/config.py'.
+#
+# ============================================================================#
+
+# ========================================================================#
+# Game(s) that your mod should build for.
+# By default, we try building for Wii Sports.
+#
+# You can build for multiple games by writing multiple pack names.
+#
+# Valid choices are:
+#     "sports" (Wii Sports), "party" (Wii Play), "resort" (WSR)
+#
+# To handle this in your code, expect preprocessor definitions of the
+# format PACK_{NAME}, (i.e. PACK_SPORTS, PACK_PARTY, PACK_RESORT).
+#
+# ========================================================================#
+packs: [resort]
+
+# ========================================================================#
+# The version of the CodeWarrior compiler that should be used.
+# This can omitted if you are using a custom compiler anyways.
+#
+# The compiler versions should be in the format `OS:VER` (e.g. `Wii:1.7`).
+#
+# ========================================================================#
+mwcc_ver: Wii:1.7
+
+# ========================================================================#
+# The version of the Kamek linker that should be used.
+# This can be omitted if you are using a custom linker anyways.
+#
+# The release tags line up with the PackProject fork of Kamek.
+#
+# ========================================================================#
+kamek_ver: v1.0.0
+
+# ========================================================================#
+# The version of the wibo wrapper that should be used.
+#
+# This can be omitted if you are using a custom compiler that can be ran
+# natively.
+#
+# The release tags line up with the decompals/wibo repository.
+#
+# ========================================================================#
+wibo_ver: v1.1.0
+
+# ========================================================================#
+# Whether to include the latest Git repository commit short hash as a
+# preprocessor definition ("GIT_COMMIT_HASH") when compiling the module.
+#
+# NOTE: It is assumed that the Git repository is the current working
+# directory, and that command-line Git is installed on the current machine.
+#
+# ========================================================================#
+use_git_commit_hash: true
+
+# ========================================================================#
+# Common compiler flags to apply across all code.
+#
+# See _cflags_common_internal inside KokeshiConfig to see which flags are
+# already in use.
+#
+# ========================================================================#
+cflags_common: [-maxerrors 1]
+
+# ========================================================================#
+# Compiler flags to apply across all module code.
+#
+# ========================================================================#
+cflags_module: []
+
+# ========================================================================#
+# Compiler flags to apply across all code in debug builds.
+# TODO(kiwi): We don't support multiple build targets yet (see #44)
+#
+# ========================================================================#
+cflags_debug: []
+
+# ========================================================================#
+# Compiler flags to apply across all code in release builds.
+# TODO(kiwi): We don't support multiple build targets yet (see #44)
+#
+# ========================================================================#
+cflags_release: []
+
+# ========================================================================#
+# Additional flags to pass to the Clangd language parser.
+#
+# ========================================================================#
+clangd_flags: []

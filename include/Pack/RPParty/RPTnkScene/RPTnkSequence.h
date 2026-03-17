@@ -1,6 +1,8 @@
 #ifndef RP_PARTY_TNK_SEQUENCE_H
 #define RP_PARTY_TNK_SEQUENCE_H
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSingleton.h>
 
 class RPTnkSequence /* some base class */ {
     RP_SINGLETON_DECL(RPTnkSequence);

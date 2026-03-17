@@ -1,6 +1,6 @@
 #ifndef RP_GRAPHICS_VIEW_H
 #define RP_GRAPHICS_VIEW_H
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
 
 // Forward declarations
 class RPGrpCamera;

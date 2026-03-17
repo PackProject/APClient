@@ -1,10 +1,11 @@
 #ifndef LIBKIWI_CORE_SCENE_CREATOR_H
 #define LIBKIWI_CORE_SCENE_CREATOR_H
 
-#include <Pack/RPSystem.h>
 #include <libkiwi/core/kiwiController.h>
 #include <libkiwi/k_types.h>
 #include <libkiwi/util/kiwiExtension.h>
+
+#include <Pack/RPSystem.h>
 
 #include <nw4r/ut.h>
 
@@ -15,13 +16,13 @@ namespace kiwi {
 // Forward declarations
 namespace detail {
 template <typename T> class SceneDecl;
-}
+} // namespace detail
 
 /**
  * @brief Game scene ID
  */
 enum ESceneID {
-#if defined(PACK_SPORTS) || defined(PACK_PLAY)
+#if defined(PACK_SPORTS) || defined(PACK_PARTY)
     // RPSystem
     ESceneID_RPSysBootScene,
     ESceneID_RPSysPlayerSelectScene,
@@ -41,10 +42,6 @@ enum ESceneID {
     ESceneID_RPSportsPhysicalResultScene,
     ESceneID_RPGolSelectScene,
 
-#if defined(PACK_SPORTS)
-    ESceneID_Max,
-#endif
-
     // RPParty
     ESceneID_RPOchScene, //!< THEORY ONLY
     ESceneID_RPFshScene,
@@ -60,9 +57,7 @@ enum ESceneID {
     ESceneID_RPPartyMiiLoadScene,
     ESceneID_RPPartyMenuScene,
 
-#if defined(PACK_PLAY)
     ESceneID_Max,
-#endif
 #endif
 
 #if defined(PACK_RESORT)
@@ -203,7 +198,7 @@ public:
      */
     static s32 GetPrevSceneID();
 
-#if defined(PACK_SPORTS) || defined(PACK_PLAY)
+#if defined(PACK_SPORTS) || defined(PACK_PARTY)
     /**
      * @brief Fades out into a new scene
      *

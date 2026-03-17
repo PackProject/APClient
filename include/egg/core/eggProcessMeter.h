@@ -7,7 +7,6 @@
 #include <egg/core/eggStopWatch.h>
 #include <egg/core/eggSystem.h>
 #include <egg/core/eggThread.h>
-
 #include <egg/prim.h>
 
 #include <nw4r/ut.h>

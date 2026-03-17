@@ -1,8 +1,8 @@
 #ifndef RP_KERNEL_EFFECT_BASE_H
 #define RP_KERNEL_EFFECT_BASE_H
-#include <nw4r/ef.h>
+#include <Pack/types_pack.h>
 
-#include <RPTypes.h>
+#include <nw4r/ef.h>
 
 class RPSysEffect {
 public:

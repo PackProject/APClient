@@ -1,8 +1,9 @@
 #ifndef RP_PARTY_BIL_BALL_DISPLAY_H
 #define RP_PARTY_BIL_BALL_DISPLAY_H
+#include <Pack/types_pack.h>
+
 #include <Pack/RPParty/RPPartyUtlModel.h>
-#include <Pack/RPTypes.h>
-#include <Pack/RPUtility/RPUtlBaseFsm.h>
+#include <Pack/RPUtility.h>
 
 class RPBilBallDisplay : public RPPartyUtlModel {
 public:

@@ -13,16 +13,11 @@ StdThreadImpl::StdThreadImpl() : mpOSThread(nullptr), mpThreadStack(nullptr) {
     mpThreadStack = new (32) u8[scStackSize];
     K_ASSERT_PTR(mpThreadStack);
 
-    OSDisableScheduler();
-
     BOOL success = OSCreateThread(mpOSThread, nullptr, nullptr,
                                   mpThreadStack + scStackSize, scStackSize,
-                                  OS_PRIORITY_MAX, 0);
+                                  OS_PRIORITY_MAX - 1, 0);
+
     K_ASSERT(success);
-
-    mpOSThread->priority = OS_PRIORITY_MAX + 1;
-
-    OSEnableScheduler();
 }
 
 /**
@@ -47,13 +42,9 @@ void StdThreadImpl::Start() {
     K_ASSERT(mpOSThread->state == OS_THREAD_STATE_READY);
     K_ASSERT_EX(mpOSThread->context.srr0 != 0, "No function to call");
 
-    OSDisableScheduler();
-    mpOSThread->priority = OS_PRIORITY_MAX - 1;
-    OSEnableScheduler();
-
     // Resume thread to call function
-    // s32 suspend = OSResumeThread(mpOSThread);
-    // K_ASSERT(suspend == 1);
+    s32 suspend = OSResumeThread(mpOSThread);
+    K_ASSERT(suspend == 1);
 }
 
 /**

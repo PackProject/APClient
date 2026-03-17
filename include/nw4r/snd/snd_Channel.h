@@ -7,7 +7,6 @@
 #include <nw4r/snd/snd_MoveValue.h>
 #include <nw4r/snd/snd_Types.h>
 #include <nw4r/snd/snd_Voice.h>
-
 #include <nw4r/ut.h>
 
 namespace nw4r {

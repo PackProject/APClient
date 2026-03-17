@@ -1,6 +1,10 @@
 #ifndef RP_SPORTS_TRAINING_RESULT_H
 #define RP_SPORTS_TRAINING_RESULT_H
-#include "RPTypes.h"
+#include <Pack/types_pack.h>
+
+#include <Pack/RPKernel.h>
+
+#include <egg/core.h>
 
 class RPSportsTrainingResult {
 public:

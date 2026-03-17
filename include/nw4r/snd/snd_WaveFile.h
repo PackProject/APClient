@@ -4,7 +4,6 @@
 
 #include <nw4r/snd/snd_AxVoice.h>
 #include <nw4r/snd/snd_Types.h>
-
 #include <nw4r/ut.h>
 
 namespace nw4r {

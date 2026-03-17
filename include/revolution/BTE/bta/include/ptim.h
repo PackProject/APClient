@@ -3,12 +3,10 @@
  *  NOTICE OF CHANGES
  *  2024/03/26:
  *      - Modify tPTIM_CB structure to match RVL target
- * 
+ *
  *  Compile with REVOLUTION defined to include these changes.
- * 
+ *
  ******************************************************************************/
-
-
 
 /******************************************************************************
  *
@@ -42,19 +40,17 @@
 **  Constants and data types
 *****************************************************************************/
 
-typedef struct
-{
-    TIMER_LIST_Q        timer_queue;        /* GKI timer queue */
-    INT32               period;             /* Timer period in milliseconds */
+typedef struct {
+    TIMER_LIST_Q timer_queue; /* GKI timer queue */
+    INT32 period;             /* Timer period in milliseconds */
 #ifndef REVOLUTION
-    UINT32              last_gki_ticks;     /* GKI ticks since last time update called */
+    UINT32 last_gki_ticks; /* GKI ticks since last time update called */
 #endif
-    UINT8               timer_id;           /* GKI timer id */
+    UINT8 timer_id; /* GKI timer id */
 } tPTIM_CB;
 
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /*****************************************************************************
@@ -70,7 +66,7 @@ extern "C"
 ** Returns          void
 **
 *******************************************************************************/
-extern void ptim_init(tPTIM_CB *p_cb, UINT16 period, UINT8 timer_id);
+extern void ptim_init(tPTIM_CB* p_cb, UINT16 period, UINT8 timer_id);
 
 /*******************************************************************************
 **
@@ -81,7 +77,7 @@ extern void ptim_init(tPTIM_CB *p_cb, UINT16 period, UINT8 timer_id);
 ** Returns          void
 **
 *******************************************************************************/
-extern void ptim_timer_update(tPTIM_CB *p_cb);
+extern void ptim_timer_update(tPTIM_CB* p_cb);
 
 /*******************************************************************************
 **
@@ -93,7 +89,8 @@ extern void ptim_timer_update(tPTIM_CB *p_cb);
 ** Returns          void
 **
 *******************************************************************************/
-extern void ptim_start_timer(tPTIM_CB *p_cb, TIMER_LIST_ENT *p_tle, UINT16 type, INT32 timeout);
+extern void ptim_start_timer(tPTIM_CB* p_cb, TIMER_LIST_ENT* p_tle, UINT16 type,
+                             INT32 timeout);
 
 /*******************************************************************************
 **
@@ -104,7 +101,7 @@ extern void ptim_start_timer(tPTIM_CB *p_cb, TIMER_LIST_ENT *p_tle, UINT16 type,
 ** Returns          void
 **
 *******************************************************************************/
-extern void ptim_stop_timer(tPTIM_CB *p_cb, TIMER_LIST_ENT *p_tle);
+extern void ptim_stop_timer(tPTIM_CB* p_cb, TIMER_LIST_ENT* p_tle);
 
 #ifdef __cplusplus
 }

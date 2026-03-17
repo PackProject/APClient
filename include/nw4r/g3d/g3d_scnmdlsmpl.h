@@ -5,7 +5,6 @@
 #include <nw4r/g3d/g3d_calcview.h>
 #include <nw4r/g3d/g3d_scnobj.h>
 #include <nw4r/g3d/res/g3d_resmdl.h>
-
 #include <nw4r/math.h>
 
 namespace nw4r {

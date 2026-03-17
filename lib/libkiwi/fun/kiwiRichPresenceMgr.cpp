@@ -64,7 +64,7 @@ void RichPresenceMgr::AfterReset(RPSysScene* pScene) {
     K_ASSERT_PTR(mpClient);
 
     // Allow user to update activity
-#if defined(PACK_SPORTS) || defined(PACK_PLAY)
+#if defined(PACK_SPORTS) || defined(PACK_PARTY)
     s32 scene = pScene->getSceneID();
     mpProfile->SceneCallback(*mpClient, scene);
 #elif defined(PACK_RESORT)

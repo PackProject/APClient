@@ -1,6 +1,7 @@
 #ifndef LIBKIWI_UTIL_IOS_VECTOR_H
 #define LIBKIWI_UTIL_IOS_VECTOR_H
 #include <libkiwi/k_types.h>
+
 #include <revolution/IPC.h>
 #include <revolution/OS.h>
 

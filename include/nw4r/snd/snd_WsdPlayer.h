@@ -8,7 +8,6 @@
 #include <nw4r/snd/snd_Lfo.h>
 #include <nw4r/snd/snd_SoundThread.h>
 #include <nw4r/snd/snd_WsdFile.h>
-
 #include <nw4r/ut.h>
 
 namespace nw4r {

@@ -52,7 +52,7 @@ public:
         new (mBuffer) T(rValue);
     }
 
-#ifdef LIBKIWI_CPP1X
+#if defined(LIBKIWI_CPP1X)
     /**
      * @brief Constructor
      * @details Move constructor
@@ -94,7 +94,7 @@ public:
         return *this;
     }
 
-#ifdef LIBKIWI_CPP1X
+#if defined(LIBKIWI_CPP1X)
     /**
      * @brief Value assignment
      *

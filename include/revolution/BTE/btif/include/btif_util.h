@@ -19,26 +19,25 @@
 #ifndef BTIF_UTIL_H
 #define BTIF_UTIL_H
 
+#include "bt_types.h"
+#include "data_types.h"
 #include <hardware/bluetooth.h>
 #include <hardware/bt_hf.h>
 #include <utils/Log.h>
-
-#include "data_types.h"
-#include "bt_types.h"
 
 /*******************************************************************************
 **  Constants & Macros
 ********************************************************************************/
 
-#define CASE_RETURN_STR(const) case const: return #const;
-
+#define CASE_RETURN_STR(const)                                                 \
+    case const:                                                                \
+        return #const;
 
 /*******************************************************************************
 **  Type definitions for callback functions
 ********************************************************************************/
 
 typedef char bdstr_t[18];
-
 
 /*******************************************************************************
 **  Functions
@@ -59,15 +58,15 @@ const char* dump_thread_evt(bt_cb_thread_evt evt);
 const char* dump_av_conn_state(UINT16 event);
 const char* dump_av_audio_state(UINT16 event);
 
-int str2bd(char *str, bt_bdaddr_t *addr);
-char *bd2str(bt_bdaddr_t *addr, bdstr_t *bdstr);
+int str2bd(char* str, bt_bdaddr_t* addr);
+char* bd2str(bt_bdaddr_t* addr, bdstr_t* bdstr);
 
 UINT32 devclass2uint(DEV_CLASS dev_class);
 void uint2devclass(UINT32 dev, DEV_CLASS dev_class);
 void uuid16_to_uuid128(uint16_t uuid16, bt_uuid_t* uuid128);
 
-void uuid_to_string(bt_uuid_t *p_uuid, char *str);
-void string_to_uuid(char *str, bt_uuid_t *p_uuid);
-int ascii_2_hex (char *p_ascii, int len, UINT8 *p_hex);
+void uuid_to_string(bt_uuid_t* p_uuid, char* str);
+void string_to_uuid(char* str, bt_uuid_t* p_uuid);
+int ascii_2_hex(char* p_ascii, int len, UINT8* p_hex);
 
 #endif /* BTIF_UTIL_H */

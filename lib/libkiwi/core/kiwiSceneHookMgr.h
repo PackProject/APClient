@@ -1,11 +1,12 @@
 #ifndef LIBKIWI_CORE_SCENE_HOOK_MGR_H
 #define LIBKIWI_CORE_SCENE_HOOK_MGR_H
-#include <Pack/RPSystem.h>
 #include <libkiwi/core/kiwiSceneCreator.h>
 #include <libkiwi/k_types.h>
 #include <libkiwi/prim/kiwiArray.h>
 #include <libkiwi/prim/kiwiList.h>
 #include <libkiwi/util/kiwiStaticSingleton.h>
+
+#include <Pack/RPSystem.h>
 
 namespace kiwi {
 //! @addtogroup libkiwi_core

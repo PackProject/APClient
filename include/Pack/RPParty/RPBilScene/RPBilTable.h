@@ -1,6 +1,8 @@
 #ifndef RP_PARTY_BIL_TABLE_H
 #define RP_PARTY_BIL_TABLE_H
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSingleton.h>
 
 #include <egg/math.h>
 

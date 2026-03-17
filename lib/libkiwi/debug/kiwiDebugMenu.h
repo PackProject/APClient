@@ -1,9 +1,10 @@
 #ifndef LIBKIWI_DEBUG_DEBUG_MENU_H
 #define LIBKIWI_DEBUG_DEBUG_MENU_H
-#include <Pack/RPGraphics.h>
 #include <libkiwi/k_types.h>
 #include <libkiwi/prim/kiwiStack.h>
 #include <libkiwi/prim/kiwiVector.h>
+
+#include <Pack/RPGraphics.h>
 
 namespace kiwi {
 //! @addtogroup libkiwi_debug

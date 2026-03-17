@@ -8,8 +8,6 @@
 #include <libkiwi/prim/kiwiOptional.h>
 #include <libkiwi/util/kiwiNonCopyable.h>
 
-#include <algorithm>
-
 namespace kiwi {
 //! @addtogroup libkiwi_prim
 //! @{

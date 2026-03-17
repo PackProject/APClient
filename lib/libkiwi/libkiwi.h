@@ -89,9 +89,6 @@
 #include <libkiwi/prim/kiwiStack.h>
 #include <libkiwi/prim/kiwiString.h>
 #include <libkiwi/prim/kiwiVector.h>
-#include <libkiwi/resource/kiwiMultiArchive.h>
-#include <libkiwi/resource/kiwiResource.h>
-#include <libkiwi/resource/kiwiResourceMgr.h>
 #include <libkiwi/support/kiwiLibGX.h>
 #include <libkiwi/support/kiwiLibOS.h>
 #include <libkiwi/support/kiwiLibSO.h>
@@ -105,7 +102,6 @@
 #include <libkiwi/util/kiwiIosDevice.h>
 #include <libkiwi/util/kiwiIosObject.h>
 #include <libkiwi/util/kiwiIosVector.h>
-#include <libkiwi/util/kiwiModelUtil.h>
 #include <libkiwi/util/kiwiNonCopyable.h>
 #include <libkiwi/util/kiwiProductInfo.h>
 #include <libkiwi/util/kiwiPtrUtil.h>

@@ -1,12 +1,11 @@
 #ifndef RP_PARTY_TNK_GAME_OBJ_BASE_H
 #define RP_PARTY_TNK_GAME_OBJ_BASE_H
-#include <Pack/RPTypes.h>
-#include <Pack/RPUtility/RPUtlGameObjBase.h>
+#include <Pack/types_pack.h>
+
+#include <Pack/RPAudio.h>
+#include <Pack/RPUtility.h>
 
 #include <egg/math.h>
-
-// Forward declarations
-template <int N> class TRPSndObject;
 
 /**
  * @brief Basic tanks game actor
@@ -17,8 +16,11 @@ public:
      * @brief Block collision flags
      */
     enum EBlockColFlag {
-        BLOCKCOL_NO_FLAT = (1 << 0),   //!< Ignore blocks where height=1
-        BLOCKCOL_NO_UPTALL = (1 << 1), //!< Ignore blocks where up height=2
+        //! Ignore blocks with no height
+        COLLIDE_NO_FLAT = (1 << 0),
+
+        //! Ignore block faces obscured by neighboring blocks
+        COLLIDE_NO_OBSCURE = (1 << 1),
     };
 
 public:
@@ -103,7 +105,7 @@ private:
     s32 mLifeTime; // at 0xA0
     char _A4[0xAC - 0xA4];
 
-    TRPSndObject<4>* mpSndObject; // at 0xAC
+    RPSndObject* mpSndObject; // at 0xAC
 };
 
 DECOMP_SIZE_ASSERT(RPTnkGameObjBase, 0xB0);

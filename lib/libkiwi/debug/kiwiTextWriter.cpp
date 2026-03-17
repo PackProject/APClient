@@ -1,6 +1,6 @@
-#include <Pack/RPGraphics.h>
-
 #include <libkiwi.h>
+
+#include <Pack/RPGraphics.h>
 
 #include <nw4r/math.h>
 
@@ -13,7 +13,7 @@ namespace kiwi {
  */
 TextWriter::TextWriter() : mIsRendering(false), mOldDrawFlags(0) {
 
-#if defined(PACK_SPORTS) || defined(PACK_PLAY)
+#if defined(PACK_SPORTS) || defined(PACK_PARTY)
     bool success = SetResFont(EResFont_nRodEb_32_I4);
 #elif defined(PACK_RESORT)
     bool success = SetResFont(EResFont_nRodB_32_IA4);
@@ -121,7 +121,7 @@ void TextWriter::Print(f32 x, f32 y, const StringImpl<T>& rStr) {
     y *= RPGrpScreen::GetSizeYMax();
 
     // Correct for centered canvas mode
-    if (RPGrpRenderer::GetActiveScreen()->GetCanvasMode() ==
+    if (RPGrpRenderer::GetCurrentScreen()->GetCanvasMode() ==
         RPGrpScreen::CANVASMODE_CC) {
 
         // Convert to top-left origin
@@ -162,7 +162,7 @@ void TextWriter::SetupGX() {
     nw4r::math::MTX34Identity(&posMtx);
 
     // Correct for centered canvas mode
-    if (RPGrpRenderer::GetActiveScreen()->GetCanvasMode() ==
+    if (RPGrpRenderer::GetCurrentScreen()->GetCanvasMode() ==
         RPGrpScreen::CANVASMODE_CC) {
 
         posMtx._01 = -posMtx._01;

@@ -1,9 +1,10 @@
 #ifndef LIBKIWI_CORE_I_SCENE_H
 #define LIBKIWI_CORE_I_SCENE_H
-#include <Pack/RPSystem.h>
 #include <libkiwi/core/kiwiSceneCreator.h>
 #include <libkiwi/k_types.h>
 #include <libkiwi/prim/kiwiString.h>
+
+#include <Pack/RPSystem.h>
 
 /**
  * @brief Declare new scene to the creator

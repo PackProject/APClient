@@ -1,18 +1,34 @@
 #ifndef RP_GRAPHICS_MODEL_BOUNDING_INFO_H
 #define RP_GRAPHICS_MODEL_BOUNDING_INFO_H
-#include "RPTypes.h"
-#include <egg/gfx/eggModelBoundingInfo.h>
+#include <Pack/types_pack.h>
+
+#include <egg/gfxe.h>
+
+//! @addtogroup rp_graphics
+//! @{
+
+// Forward declarations
+class RPGrpModel;
 
 /**
- * @brief Wrapper for EGG's ModelBoundingInfo
- * @wfuname
+ * @brief AABB and spherical model bounds
  */
 class RPGrpModelBoundingInfo : public EGG::ModelBoundingInfo {
 public:
-    // @address 801b25f8
-    RPGrpModelBoundingInfo(u32, RPGrpModel*);
-    // @address 801b2638
-    virtual ~RPGrpModelBoundingInfo();
+    /**
+     * @brief Constructor
+     *
+     * @param flags Bound type flags
+     * @param pModel Owner model
+     */
+    RPGrpModelBoundingInfo(u32 flags, RPGrpModel* pModel);
+
+    /**
+     * @brief Destructor
+     */
+    virtual ~RPGrpModelBoundingInfo() {} // at 0x8
 };
+
+//! @}
 
 #endif

@@ -5,7 +5,6 @@
 #include <nw4r/lyt/lyt_common.h>
 #include <nw4r/lyt/lyt_resources.h>
 #include <nw4r/lyt/lyt_types.h>
-
 #include <nw4r/ut.h>
 
 namespace nw4r {
@@ -43,14 +42,31 @@ struct AnimationInfo {
     u8 num;                    // at 0x4
     u8 PADDING_0x5[0x8 - 0x5]; // at 0x5
 
-    static const u32 SIGNATURE_ANMPANESRT = 'RLPA';
-    static const u32 SIGNATURE_ANMPANEVIS = 'RLVI';
-    static const u32 SIGNATURE_ANMVTXCLR = 'RLVC';
+    static const u32 SIGNATURE_ANMPANESRT = FOURCC('R', 'L', 'P', 'A');
+    static const u32 SIGNATURE_ANMPANEVIS = FOURCC('R', 'L', 'V', 'I');
+    static const u32 SIGNATURE_ANMVTXCLR = FOURCC('R', 'L', 'V', 'C');
 
-    static const u32 SIGNATURE_ANMMATCLR = 'RLMC';
-    static const u32 SIGNATURE_ANMTEXSRT = 'RLTS';
-    static const u32 SIGNATURE_ANMTEXPAT = 'RLTP';
-    static const u32 SIGNATURE_ANMINDTEXSRT = 'RLIM';
+    static const u32 SIGNATURE_ANMMATCLR = FOURCC('R', 'L', 'M', 'C');
+    static const u32 SIGNATURE_ANMTEXSRT = FOURCC('R', 'L', 'T', 'S');
+    static const u32 SIGNATURE_ANMTEXPAT = FOURCC('R', 'L', 'T', 'P');
+    static const u32 SIGNATURE_ANMINDTEXSRT = FOURCC('R', 'L', 'I', 'M');
+};
+
+/******************************************************************************
+ *
+ * AnimationContent
+ *
+ ******************************************************************************/
+struct AnimationContent {
+    static const int NAME_LEN =
+        MAX(NW4R_LYT_RES_NAME_LEN, NW4R_LYT_MATERIAL_NAME_LEN);
+
+    enum AnimType { ANIMTYPE_PANE, ANIMTYPE_MATERIAL, ANIMTYPE_MAX };
+
+    char name[NAME_LEN];          // at 0x0
+    u8 num;                       // at 0x14
+    u8 type;                      // at 0x15
+    u8 PADDING_0x16[0x18 - 0x16]; // at 0x16
 };
 
 } // namespace res
@@ -83,6 +99,10 @@ public:
     }
     void SetFrame(f32 frame) {
         mFrame = frame;
+    }
+
+    const res::AnimationBlock* GetAnimResource() const {
+        return mpRes;
     }
 
     f32 GetFrameMax() const {

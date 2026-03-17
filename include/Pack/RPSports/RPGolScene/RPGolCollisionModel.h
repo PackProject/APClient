@@ -1,7 +1,8 @@
 #ifndef RP_SPORTS_GOL_COLLISION_MODEL_H
 #define RP_SPORTS_GOL_COLLISION_MODEL_H
-#include "RPSysUnknownBase.h"
-#include "RPTypes.h"
+#include <Pack/types_pack.h>
+
+#include <Pack/RPKernel.h>
 
 #include <nw4r/math.h>
 #include <nw4r/ut.h>
@@ -38,7 +39,7 @@ enum EGndAttr {
     EGndAttr_Max
 };
 
-class RPGolCollisionModel : RPSysUnknownBase {
+class RPGolCollisionModel : RP_DEBUG_STUB_1 {
     RP_SINGLETON_DECL(RPGolCollisionModel);
 
 public:

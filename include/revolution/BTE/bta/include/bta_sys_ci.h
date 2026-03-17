@@ -30,8 +30,7 @@
 **  Function Declarations
 *****************************************************************************/
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /*******************************************************************************
@@ -45,8 +44,7 @@ extern "C"
 ** Returns          void
 **
 *******************************************************************************/
-BTA_API  void bta_sys_hw_ci_enabled(tBTA_SYS_HW_MODULE module );
-
+BTA_API void bta_sys_hw_ci_enabled(tBTA_SYS_HW_MODULE module);
 
 /*******************************************************************************
 **
@@ -59,11 +57,10 @@ BTA_API  void bta_sys_hw_ci_enabled(tBTA_SYS_HW_MODULE module );
 ** Returns          void
 **
 *******************************************************************************/
-BTA_API void bta_sys_hw_ci_disabled( tBTA_SYS_HW_MODULE module  );
+BTA_API void bta_sys_hw_ci_disabled(tBTA_SYS_HW_MODULE module);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif
-

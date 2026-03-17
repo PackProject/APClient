@@ -8,7 +8,6 @@
 #include <nw4r/ef/ef_referencedobject.h>
 #include <nw4r/ef/ef_res_emitter.h>
 #include <nw4r/ef/ef_types.h>
-
 #include <nw4r/math.h>
 #include <nw4r/ut.h>
 
@@ -112,13 +111,6 @@ public:
                                         bool ignoreLifeStatus) {
         ForeachParticleManager(
             ParticleManager::ModifierTravFunc_SetSimpleLightAmbient,
-            reinterpret_cast<u32>(&rColor), ignoreLifeStatus);
-    }
-
-    void Modifier_SetSimpleLightDiffuse(const GXColor& rColor,
-                                        bool ignoreLifeStatus) {
-        ForeachParticleManager(
-            ParticleManager::ModifierTravFunc_SetSimpleLightDiffuse,
             reinterpret_cast<u32>(&rColor), ignoreLifeStatus);
     }
 

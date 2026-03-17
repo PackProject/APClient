@@ -34,7 +34,7 @@ template <typename T> u32 BitUtil<T>::CountZero(T bits) {
 template <typename T> u32 BitUtil<T>::CountLeftZero(T bits) {
     K_REGISTER u32 count = 0;
 
-#ifdef LIBKIWI_TARGET_RVL
+#if defined(LIBKIWI_TARGET_RVL)
     K_REGISTER u32 bits_ = static_cast<u32>(bits);
 
     K_ASM(

@@ -1,22 +1,23 @@
 #ifndef RP_SYSTEM_RESOURCE_MANAGER_H
 #define RP_SYSTEM_RESOURCE_MANAGER_H
-#include <Pack/RPTypes.h>
-#include <egg/core/eggHeap.h>
-#include <nw4r/ut/ut_list.h>
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSingleton.h>
+
+#include <egg/core.h>
+
+#include <nw4r/ut.h>
+
+//! @addtogroup rp_system
+//! @{
 
 // Forward declarations
 class RPSysFile;
 class RPSportsAppMiiManager;
 class RPPartyAppMiiManager;
 
-//! @addtogroup rp_system
-//! @{
-
 /**
- * @brief Resource manager
- * @wfuname
- *
- * @details Loads resources from the DVD and caches them for future access.
+ * @brief Resource cache manager
  */
 class RPSysResourceManager {
     RP_SINGLETON_DECL(RPSysResourceManager);
@@ -85,7 +86,7 @@ public:
      * @param[out] pSize Where the file's size will be written
      */
     static void* GetFileFromArchive(EGG::Archive* pArc, const char* pName,
-                                    u32* pSize);
+                                    u32* pSize = NULL);
 
     /**
      * @brief Gets a message file by name from the message archive
@@ -151,7 +152,7 @@ public:
      * @param bufSize Size of the buffer pointed to by @p pBuffer
      * @param id Scene ID
      */
-    void GetGameSoundCommonPath(char* pBuffer, u32 bufSize, s32 id);
+    void GetGameSoundCommonPath(char* pBuffer, u32 bufSize, s32 id = -1);
     /**
      * @brief Gets the local sound path of the specified scene
      * @bug This function ignores the @p bufSize parameter and instead uses
@@ -161,7 +162,15 @@ public:
      * @param bufSize Size of the buffer pointed to by @p pBuffer
      * @param id Scene ID
      */
-    void GetGameSoundLocalPath(char* pBuffer, u32 bufSize, s32 id);
+    void GetGameSoundLocalPath(char* pBuffer, u32 bufSize, s32 id = -1);
+
+    EGG::Archive* GetKokeshiArchive() const {
+        return mpKokeshiArchive;
+    }
+
+    void* GetMultiHandle() {
+        return &mpMultiHandle;
+    }
 
 private:
     //! Resource cache for compressed files
@@ -186,12 +195,9 @@ private:
     //! Static layout assets for this pack
     EGG::Archive* mpStaticLayoutArchive; // at 0x34
 
-#ifdef PACK_SPORTS
+#if defined(PACK_SPORTS)
     //! Sports Pack Mii manager
     RPSportsAppMiiManager* mpAppMiiManager; // at 0x38
-#elif PACK_PLAY
-    //! Party Pack Mii manager
-    RPPartyAppMiiManager* mpAppMiiManager; // at 0x38
 #endif
 
     //! @brief Handle for opening NAND sound archives

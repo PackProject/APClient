@@ -1,6 +1,6 @@
 #ifndef RP_KERNEL_EFFECT_MGR_H
 #define RP_KERNEL_EFFECT_MGR_H
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
 
 class RPSysEffectMgr {
     RP_SINGLETON_DECL_EX(RPSysEffectMgr);

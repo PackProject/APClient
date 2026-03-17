@@ -1,12 +1,18 @@
 #ifndef RP_GRAPHICS_RENDERER_H
 #define RP_GRAPHICS_RENDERER_H
-#include "RPTypes.h"
+#include <Pack/types_pack.h>
+
+//! @addtogroup rp_graphics
+//! @{
 
 // Forward declarations
 class RPGrpScreen;
 class RPGrpCamera;
 class RPGrpView;
 
+/**
+ * @brief Rendering engine
+ */
 class RPGrpRenderer {
 public:
     enum EDrawPass {
@@ -46,19 +52,26 @@ public:
         return sCurrentViewID;
     }
 
+    /**
+     * @brief Gets the currently active manager instance
+     */
     static RPGrpRenderer* GetCurrent() {
         return spCurrent;
-    }
-    static RPGrpScreen* GetActiveScreen() {
-        return sActiveScreen;
-    }
-
-    static bool IsLytDraw() {
-        return sDrawPass == EDrawPass_Draw2D;
     }
 
     RPGrpView* GetView(u32 no) const {
         return mDrawViews[no];
+    }
+
+    /**
+     * @brief Gets the screen currently being rendered to
+     */
+    static RPGrpScreen* GetCurrentScreen() {
+        return spCurrentScreen;
+    }
+
+    static bool IsLytDraw() {
+        return sDrawPass == EDrawPass_Draw2D;
     }
 
 private:
@@ -72,8 +85,14 @@ private:
 
     static EDrawPass sDrawPass;
     static u8 sCurrentViewID;
+
+    //! Allocator used for model-related allocations
     static RPGrpRenderer* spCurrent;
-    static RPGrpScreen* sActiveScreen;
+
+    //! Screen currently being rendered to
+    static RPGrpScreen* spCurrentScreen;
 };
+
+//! @}
 
 #endif

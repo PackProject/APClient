@@ -25,12 +25,10 @@
 **  Constants & Macros
 ********************************************************************************/
 
-enum
-{
+enum {
     BTIF_SV_AV_AA_SBC_INDEX = 0,
-    BTIF_SV_AV_AA_SEP_INDEX  /* Last index */
+    BTIF_SV_AV_AA_SEP_INDEX /* Last index */
 };
-
 
 /*******************************************************************************
 **  Functions
@@ -93,10 +91,11 @@ void bta_av_co_audio_codec_reset(void);
  ** Description      Check if all opened connections are compatible with a codec
  **                  configuration
  **
- ** Returns          TRUE if all opened devices support this codec, FALSE otherwise
+ ** Returns          TRUE if all opened devices support this codec, FALSE
+ *otherwise
  **
  *******************************************************************************/
-BOOLEAN bta_av_co_audio_codec_supported(tBTIF_STATUS *p_status);
+BOOLEAN bta_av_co_audio_codec_supported(tBTIF_STATUS* p_status);
 
 /*******************************************************************************
  **
@@ -109,7 +108,8 @@ BOOLEAN bta_av_co_audio_codec_supported(tBTIF_STATUS *p_status);
  ** Returns          TRUE if successful, FALSE otherwise
  **
  *******************************************************************************/
-BOOLEAN bta_av_co_audio_set_codec(const tBTIF_AV_MEDIA_FEEDINGS *p_feeding, tBTIF_STATUS *p_status);
+BOOLEAN bta_av_co_audio_set_codec(const tBTIF_AV_MEDIA_FEEDINGS* p_feeding,
+                                  tBTIF_STATUS* p_status);
 
 /*******************************************************************************
  **
@@ -121,7 +121,8 @@ BOOLEAN bta_av_co_audio_set_codec(const tBTIF_AV_MEDIA_FEEDINGS *p_feeding, tBTI
  ** Returns          TRUE if codec is SBC, FALSE otherwise
  **
  *******************************************************************************/
-BOOLEAN bta_av_co_audio_get_sbc_config(tA2D_SBC_CIE *p_sbc_config, UINT16 *p_minmtu);
+BOOLEAN bta_av_co_audio_get_sbc_config(tA2D_SBC_CIE* p_sbc_config,
+                                       UINT16* p_minmtu);
 
 /*******************************************************************************
  **
@@ -145,7 +146,6 @@ void bta_av_co_audio_discard_config(tBTA_AV_HNDL hndl);
  *******************************************************************************/
 void bta_av_co_init(void);
 
-
 /*******************************************************************************
  **
  ** Function         bta_av_co_peer_cp_supported
@@ -168,6 +168,6 @@ BOOLEAN bta_av_co_peer_cp_supported(tBTA_AV_HNDL hndl);
  ** Returns          TRUE if config set, FALSE otherwize
  **
  *******************************************************************************/
-BOOLEAN bta_av_co_get_remote_bitpool_pref(UINT8 *min, UINT8 *max);
+BOOLEAN bta_av_co_get_remote_bitpool_pref(UINT8* min, UINT8* max);
 
 #endif

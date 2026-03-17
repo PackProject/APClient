@@ -1,54 +1,52 @@
 #ifndef RP_KERNEL_TEXT_WRITER_H
 #define RP_KERNEL_TEXT_WRITER_H
-#include "RPSysFontManager.h"
-#include "RPTypes.h"
-#include <nw4r/ut/ut_RomFont.h>
-#include <nw4r/ut/ut_TextWriterBase.h>
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSingleton.h>
+
+#include <nw4r/ut.h>
+
+//! @addtogroup rp_kernel
+//! @{
 
 /**
- * @brief RP engine screen text writer
- * @details Provides base functionality from NW4R, but with some extra features
- * to make printing easier, such as the ability to print to an arbitrary
- * screenspace location, or begin/end rendering.
- * @wfuname
+ * @brief Screen text writer
  */
-class RPSysTextWriter : public nw4r::ut::TextWriterBase<char> {
+class RPSysTextWriter : public nw4r::ut::TextWriter {
     RP_SINGLETON_DECL(RPSysTextWriter);
 
 public:
     /**
-     * @brief Reset all settings
-     * @address 80190b9c
+     * @brief Resets all text settings
      */
     void Reset();
 
     /**
-     * @brief Print formatted text to screen coordinates (relative to the
-     * top-left)
-     * @address 80190af8
+     * @brief Prints formatted text to the screen at the specified coordinates
+     * @details Coordinates use a left-upper origin
      */
-    void Printf(f32 x, f32 y, const char* msg, ...);
-    /**
-     * @brief Print formatted text to screen coordinates (relative to the
-     * center)
-     * @address 80190960
-     */
-    void PrintfZeroCenter(f32 x, f32 y, const char* msg, ...);
+    void Printf(f32 x, f32 y, const char* pMsg, ...);
 
     /**
-     * @brief Setup GX for rendering
-     * @address 801908d8
+     * @brief Prints formatted text to the screen at the specified coordinates
+     * @details Coordinates use a center-canvas origin
+     */
+    void PrintfZeroCenter(f32 x, f32 y, const char* pMsg, ...);
+
+    /**
+     * @brief Sets up a GX context for rendering
      */
     void Begin();
     /**
-     * @brief End rendering
-     * @address 801908cc
+     * @brief Ends the rendering context
      */
     void End();
 
 private:
-    // @brief Render status (Begin/End)
-    BOOL mIsRendering; // at 0x68
+    //! Whether we are inside a rendering context
+    BOOL mIsInBegin; // at 0x68
 };
+
+//! @}
 
 #endif

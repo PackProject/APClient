@@ -1,11 +1,8 @@
 #ifndef RP_PARTY_DUC_CURSOR_MGR_H
 #define RP_PARTY_DUC_CURSOR_MGR_H
+#include <Pack/types_pack.h>
+
 #include <Pack/RPParty/RPDucScene/RPDucCursor.h>
-
-#include <RPTypes.h>
-
-// Forward declarations
-class RPDucCursor;
 
 class RPDucCursorMgr {
     RP_SINGLETON_DECL(RPDucCursorMgr);
@@ -32,9 +29,5 @@ private:
     u32 mCursorNum;                      // at 0x8
     RPDucCursor* mpCursors[MAX_CURSORS]; // at 0xC
 };
-
-#if defined(__KOKESHI__)
-DECL_WEAK inline RPDucCursorMgr::RPDucCursorMgr() {}
-#endif
 
 #endif

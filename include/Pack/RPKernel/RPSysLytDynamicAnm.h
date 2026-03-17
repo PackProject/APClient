@@ -1,106 +1,140 @@
 #ifndef RP_KERNEL_LYT_DYNAMIC_ANM_H
 #define RP_KERNEL_LYT_DYNAMIC_ANM_H
-#include "RPTypes.h"
-#include <egg/math/eggVector.h>
-#include <nw4r/lyt/lyt_pane.h>
-#include <nw4r/ut/ut_list.h>
+#include <Pack/types_pack.h>
+
+#include <egg/core.h>
+
+#include <nw4r/lyt.h>
+#include <nw4r/ut.h>
+
+//! @addtogroup rp_kernel
+//! @{
 
 /**
- * @brief Dynamic animation in/out of the screen, with configurable direction
- * and length. Reversible at any time.
- * @wfuname
+ * @brief Layout "dynamic" in/out animation
+ * @details Direction and length configurable by layout artists via user data
  */
 class RPSysLytDynamicAnm {
 public:
     /**
-     * @brief Animation state
-     */
-    enum EState {
-        STATE_FINISH_OUT,
-        STATE_START_IN,
-        STATE_FINISH_IN,
-        STATE_START_OUT,
-        STATE_NONE
-    };
-
-    /**
-     * @brief Animation direction
+     * @brief Direction in which the pane will animate out
      */
     enum EDirection {
-        DIRECTION_UP,
-        DIRECTION_DOWN,
-        DIRECTION_LEFT,
-        DIRECTION_RIGHT,
+        EDirection_Up,
+        EDirection_Down,
+        EDirection_Left,
+        EDirection_Right,
+        EDirection_None,
     };
 
 public:
     /**
      * @brief Constructor
-     * @param parent Parent pane
+     *
+     * @param pParent Parent pane
      * @param direction Animation direction
-     * @param length Animation length (in frames)
-     * @address 8019e9b0
+     * @param frameNum Number of frames to animate
      */
-    RPSysLytDynamicAnm(nw4r::lyt::Pane* parent, EDirection direction,
-                       s16 length);
+    RPSysLytDynamicAnm(nw4r::lyt::Pane* pParent, EDirection direction,
+                       s16 frameNum);
 
     /**
-     * @brief Run animation logic
-     * @address 8019e494
+     * @brief Resets the dynamic animation
      */
-    void calc();
+    void reset();
 
     /**
-     * @brief Start animating out
-     * @param frame Start frame
-     * @address 8019e7ec
-     */
-    void startAnmOut(s16 frame);
-
-    /**
-     * @brief Start animating in
-     * @param frame Start frame
-     * @address 8019e810
-     */
-    void startAnmIn(s16 frame);
-
-    /**
-     * @brief Flip animation horizontally
-     * @param reverse Whether to reverse horizontal direction
-     * @address 8019e834
+     * @brief Flips the horizontal direction of the animation
+     * @note If the animation has a vertical direction, this function will never
+     * reverse it.
+     *
+     * @param reverse Whether to reverse the horizontal direction
      */
     void reverseAnmHDirection(bool reverse);
 
     /**
-     * @brief Reset animation
-     * @address 8019e970
+     * @brief Starts playing the animation inwards
+     * @details The pane will move opposite the animation direction until it
+     * is back at its original position.
+     *
+     * @param frame Starting frame (-1 to play from the ending frame)
      */
-    void reset();
+    void startAnmIn(s16 frame);
+
+    /**
+     * @brief Starts playing the animation outwards
+     * @details The pane will move in the animation direction until it is no
+     * longer visible.
+     *
+     * @param frame Starting frame (-1 to play from the ending frame)
+     */
+    void startAnmOut(s16 frame);
+
+    /**
+     * @brief Updates the dynamic animation
+     */
+    void calc();
+
+    /**
+     * @brief Tests whether the pane has finished animating in
+     */
+    bool isFinishedAnmIn() const {
+        return mState == EState_FinishIn;
+    }
+
+    /**
+     * @brief Tests whether the pane has finished animating out
+     */
+    bool isFinishedAnmOut() const {
+        return mState == EState_FinishOut;
+    }
 
 private:
-    s16 SHORT_0x0;
+    /**
+     * @brief Animation state
+     */
+    enum EState {
+        EState_FinishOut, //!< The pane has finished animating out
+        EState_StartIn,   //!< The pane is preparing to animate in
+        EState_FinishIn,  //!< The pane has finished animating in
+        EState_StartOut,  //!< The pane is preparing to animate out
+        EState_None,      //!< The pane is not animating
+    };
 
-    // @brief Animation state
-    s16 mState; // at 0x2
+private:
+    //! Current animation state
+    s16 mState; // at 0x0
+    //! Requested animation state
+    s16 mNextState; // at 0x2
 
-    s16 SHORT_0x4;
-
-    // @brief Animation length
-    s16 mLength; // at 0x6
-    // @brief Current animation frame
-    s16 mFrame; // at 0x8
-    // @brief Animation direction
+    //! Current frame of the animation
+    s16 mFrame; // at 0x4
+    //! Last frame of the animation
+    s16 mEndFrame; // at 0x6
+    //! First frame of the animation
+    s16 mStartFrame; // at 0x8
+    //! Animation direction
     EDirection mDirection; // at 0xC
-    // @brief Parent pane
-    nw4r::lyt::Pane* mParent; // at 0x10
-    // @brief Transparency
+
+    //! Parent pane
+    nw4r::lyt::Pane* mpParent; // at 0x10
+    //! Transparency
     u8 mAlpha; // at 0x14
-    // @brief Animation start position
+
+    //! Initial pane position
     EGG::Vector3f mStartPos; // at 0x18
-    // @brief Animation end position
-    EGG::Vector3f mDestPos; // at 0x24
-    // @brief Node for linked list
-    nw4r::ut::Link mNode; // at 0x30
+    //! Current pane position
+    EGG::Vector3f mNowPos; // at 0x24
+
+public:
+    //! Linked-list node
+    NW4R_UT_LIST_LINK_DECL(); // at 0x30
+
+private:
+    static const f32* lbl_804BF588;
+    static const f32 lbl_804C1750[];
 };
+
+//! @}
 
 #endif

@@ -5,7 +5,6 @@
 #include <nw4r/lyt/lyt_common.h>
 #include <nw4r/lyt/lyt_texMap.h>
 #include <nw4r/lyt/lyt_types.h>
-
 #include <nw4r/ut.h>
 
 #include <revolution/GX.h>
@@ -82,14 +81,14 @@ public:
 
     void AddAnimationLink(AnimationLink* pAnimLink);
 
-    GXColorS10 GetTevColor(u32 idx) {
+    GXColorS10 GetTevColor(u32 idx) const {
         return mTevCols[idx];
     }
     void SetTevColor(u32 idx, const GXColorS10& rColor) {
         mTevCols[idx] = rColor;
     }
 
-    ut::Color GetTevKColor(u32 idx) {
+    ut::Color GetTevKColor(u32 idx) const {
         return mTevKCols[idx];
     }
     void SetTevKColor(u32 idx, ut::Color color) {

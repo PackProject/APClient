@@ -1,379 +1,451 @@
 #ifndef RP_KERNEL_LAYOUT_H
 #define RP_KERNEL_LAYOUT_H
-#include "RPSysLytDynamicAnm.h"
-#include "RPTypes.h"
-#include <egg/math/eggVector.h>
-#include <nw4r/ut/ut_Color.h>
-#include <nw4r/ut/ut_list.h>
+#include <Pack/types_pack.h>
+
+#include <Pack/RPGraphics.h>
+#include <Pack/RPKernel/RPSysLytDynamicAnm.h>
+
+#include <egg/core.h>
+#include <egg/math.h>
 
 #include <nw4r/lyt.h>
+#include <nw4r/ut.h>
+
+//! @addtogroup rp_kernel
+//! @{
 
 // Forward declarations
+class RPSysKokeshiIcon;
+class RPSysLytAnmObj;
 class RPSysLytBounding;
+class RPSysLytPicture;
+class RPSysLytResAccessor;
 class RPSysLytTextBox;
 class RPSysLytWindow;
-class RPSysLytPicture;
-class RPSysLytAnmObj;
-class RPSysLytResAccessor;
 class RPSysMessage;
-class RPGrpScreen;
 
 /**
- * @brief NW4R layout wrapper with added features, such as support for
- * Mii icons and dynamic animation.
- * @wfuname
+ * @brief NW4R layout wrapper
+ * @details Supports dynamic animation, Mii icons, and player slot TEV colors.
  */
 class RPSysLayout {
 public:
     /**
-     * @brief Layout flags
+     * @brief Initializes the layout system
+     * @details Initializes the NW4R layout library
      */
-    enum EFlags { FLAG_VISIBLE = (1 << 0) };
-
-public:
-    /**
-     * @brief Get CPU color
-     * @address 801957c0
-     */
-    static const GXColor& getCpuColor();
+    static void initialize();
 
     /**
-     * @brief Get player color
-     * @address 801957c8
+     * @brief Creates a layout from the specified binary file
+     *
+     * @param pHeap Heap to use for allocations
+     * @param pAccessor Layout resource accessor
+     * @param pName Binary layout file name
      */
-    static const GXColor& getPlayerColor(u32);
+    static RPSysLayout* create(EGG::Heap* pHeap, RPSysLytResAccessor* pAccessor,
+                               const char* pName);
 
     /**
-     * @brief Check if all dynamic animations have finished animating out
-     * @address 801957dc
+     * @brief Creates a animation object from the specified binary file
+     *
+     * @param pHeap Heap to use for allocations
+     * @param pAccessor Layout resource accessor
+     * @param pName Binary animation file name
      */
-    bool isFinishedDynAnmOut();
+    RPSysLytAnmObj* createAnmObj(EGG::Heap* pHeap,
+                                 RPSysLytResAccessor* pAccessor,
+                                 const char* pName);
 
     /**
-     * @brief Check if all dynamic animations have finished animating out
-     * @address 80195844
+     * @brief Binds a new animation object to this layout
+     *
+     * @param pAnmObj Animation object
      */
-    bool isFinishedDynAnmIn();
+    void bindAnmObj(RPSysLytAnmObj* pAnmObj);
 
     /**
-     * @brief Flip all dynamic animations horizontally
-     * @param reverse Whether to reverse horizontal direction
-     * @address 801958ac
+     * @brief Unbinds an animation object from this layout
+     *
+     * @param pAnmObj Animation object
      */
-    void reverseDynAnmHDirection(bool reverse);
+    void unbindAnmObj(RPSysLytAnmObj* pAnmObj);
 
     /**
-     * @brief Start animating out all dynamic animations
-     * @param frame Starting frame
-     * @address 80195914
-     */
-    void startDynAnmOut(s16 frame);
-
-    /**
-     * @brief Start animating in all dynamic animations
-     * @param frame Starting frame
-     * @address 8019597c
-     */
-    void startDynAnmIn(s16 frame);
-
-    /**
-     * @brief Draw Kokeshi (Mii) icon
-     * @param screen Screen to draw to
-     * @param pane Pane to draw on
-     * @param icon Mii icon
-     * @param color Material color
-     * @address 801959e4
-     */
-    static void drawKokeshiIcon(RPGrpScreen* screen, nw4r::lyt::Pane* pane,
-                                RPSysKokeshiIcon* icon, nw4r::ut::Color color);
-
-    /**
-     * @brief Draw Kokeshi (Mii) icon
-     * @details Uses default white material color
-     * @param screen Screen to draw to
-     * @param pane Pane to draw on
-     * @param icon Mii icon
-     * @address 80195ae4
-     */
-    static void drawKokeshiIcon(RPGrpScreen* screen, nw4r::lyt::Pane* pane,
-                                RPSysKokeshiIcon* icon);
-
-    /**
-     * @brief Make pane become its parent's youngest child
-     * @param child Child pane
-     * @address 80195b28
-     */
-    static void becomeYoungestChild(nw4r::lyt::Pane* child);
-
-    /**
-     * @brief Check if a specified position is within a bounding box
-     * @param bounding Layout bounding box
-     * @param pos Position
-     * @return true if pos inside bounding; always false if layout is hidden
-     * @address 80195b74
-     */
-    bool isInsideBounding(RPSysLytBounding* bounding,
-                          const nw4r::math::VEC2& pos);
-
-    /**
-     * @brief Copy font color from alternative textbox
-     * @details Searches for a textbox with the active textbox's name, applying
-     * the id as a suffix
-     * @see RPSysLytTextBox::copyFontColor
-     * @param textBox Layout text box
-     * @param id Pane id
-     * @return true if color was changed successfully
-     * @address 80195bb8
-     */
-    bool changeFontColor(RPSysLytTextBox* textBox, u32 id);
-
-    /**
-     * @brief Draw layout
-     * @address 80195dcc
-     */
-    void draw();
-
-    /**
-     * @brief Setup GX cull/clip mode for drawing
-     * @address 80195df8
-     */
-    static void drawInit();
-
-    /**
-     * @brief Update animations
-     * @note Marks layout as visible
-     * @address 80195e34
-     */
-    void calc();
-
-    /**
-     * @brief Reset animations
-     * @note Marks layout as hidden
-     * @address 80195f70
-     */
-    void reset();
-
-    /**
-     * @brief Append dynamic animation to layout
-     * @param anm Dynamic animation
-     * @address 8019605c
-     */
-    void appendDynamicAnm(RPSysLytDynamicAnm* anm);
-
-    /**
-     * @brief Search for layout group by name
-     * @param name Group name
-     * @address 80196064
-     */
-    nw4r::lyt::Group* findGroup(const char* name);
-
-    /**
-     * @brief Search for layout bounding by name
-     * @param name Bounding name
-     * @address 80196070
-     */
-    RPSysLytBounding* findBounding(const char* name);
-
-    /**
-     * @brief Search for layout window by name
-     * @param name Window name
-     * @address 80196120
-     */
-    RPSysLytWindow* findWindow(const char* name);
-
-    /**
-     * @brief Search for layout picture by name
-     * @param name Picture name
-     * @address 801961d0
-     */
-    RPSysLytPicture* findPicture(const char* name);
-
-    /**
-     * @brief Search for layout textbox by name
-     * @param name Textbox name
-     * @address 80196280
-     */
-    RPSysLytTextBox* findTextBox(const char* name);
-
-    /**
-     * @brief Search for layout pane by name
-     * @param name Pane name
-     * @address 80196330
-     */
-    nw4r::lyt::Pane* findPane(const char* name);
-
-    /**
-     * @brief Dynamic cast self to bounding
-     * @return NULL if dynamic cast fails, otherwise bounding
-     * @address 8019634c
-     */
-    RPSysLytBounding* castToBounding();
-
-    /**
-     * @brief Dynamic cast self to picture
-     * @return NULL if dynamic cast fails, otherwise picture
-     * @address 801963d8
-     */
-    RPSysLytPicture* castToPicture();
-
-    /**
-     * @brief Unbind an animation from a pane
-     * @param anm Animation object
-     * @param pane Pane
-     * @param recurse Whether to search recursively through children
-     * @address 80196464
-     */
-    static void unbindAnmObjToPane(RPSysLytAnmObj* anm, nw4r::lyt::Pane* pane,
-                                   bool recurse);
-
-    /**
-     * @brief Force an animation to be bound to a pane
-     * @details TODO
-     * @param anm Animation object
-     * @param pane Pane
-     * @param recurse TODO
-     * @address 80196480
-     */
-    static void forceBindAnmObjToPane(RPSysLytAnmObj* anm,
-                                      nw4r::lyt::Pane* pane, bool recurse);
-
-    /**
-     * @brief Bind an animation to a pane
-     * @param anm Animation object
-     * @param pane Pane
-     * @param recurse TODO
-     * @address 80196774
-     */
-    static void bindAnmObjToPane(RPSysLytAnmObj* anm, nw4r::lyt::Pane* pane,
-                                 bool recurse);
-
-    /**
-     * @brief Bind an animation to a pane
-     * @details Searches layout children for pane name
-     * @param anm Animation object
-     * @param paneName Pane name
-     * @param recurse TODO
-     * @address 80196790
-     */
-    void bindAnmObjToPane(RPSysLytAnmObj* anm, const char* paneName,
-                          bool recurse);
-
-    /**
-     * @brief Unbind all animations from the layout
-     * @address 80196804
+     * @brief Unbinds all animation objects from this layout
      */
     void unbindAllAnmObj();
 
     /**
-     * @brief Unbind an animation from the layout
-     * @param anm Animation object
-     * @address 80196818
+     * @brief Binds a new animation object to the specified pane
+     * @details This function searches the pane tree of this layout
+     *
+     * @param pAnmObj Animation object
+     * @param pName Pane name
+     * @param recursive Whether to recursively resolve the animation target
      */
-    void unbindAnmObj(RPSysLytAnmObj* anm);
+    void bindAnmObjToPane(RPSysLytAnmObj* pAnmObj, const char* pName,
+                          bool recursive);
 
     /**
-     * @brief Bind an animation to the layout
-     * @param anm Animation object
-     * @address 80196830
+     * @brief Binds a new animation object to the specified pane
+     *
+     * @param pAnmObj Animation object
+     * @param pPane Target pane
+     * @param recursive Whether to recursively resolve the animation target
      */
-    void bindAnmObj(RPSysLytAnmObj* anm);
+    static void bindAnmObjToPane(RPSysLytAnmObj* pAnmObj,
+                                 nw4r::lyt::Pane* pPane, bool recursive);
 
     /**
-     * @brief Create a animation object
-     * @param heap Heap
-     * @param accessor Resource accessor
-     * @param anmName Animation file name (BRLAN)
-     * @address 80196848
+     * @brief Forcibly binds a new animation object to the specified pane
+     * @details This function allows binding an animation object that shares a
+     * name prefix with the pane.
+     *
+     * As long as the names match up to the last two characters, this function
+     * will correctly find the pane.
+     *
+     * This function is used to bind animations targeting panes such as
+     * `P_MyPane_00` to any pane of the format `P_MyPane_XX`. NW4R requires an
+     * exact name match to bind, so this function reimplements
+     * `AnimTransformBasic::Bind`.
+     *
+     * @param pAnmObj Animation object
+     * @param pPane Target pane
+     * @param recursive Whether to recursively resolve the animation target
      */
-    RPSysLytAnmObj* createAnmObj(EGG::Heap* heap, RPSysLytResAccessor* accessor,
-                                 const char* anmName);
+    static void forceBindAnmObjToPane(RPSysLytAnmObj* pAnmObj,
+                                      nw4r::lyt::Pane* pPane, bool recursive);
 
     /**
-     * @brief Create a layout
-     * @param heap Heap
-     * @param accessor Resource accessor
-     * @param lytName Layout file name (BRLYT)
-     * @address 80196a38
+     * @brief Unbinds an animation object from the specified pane
+     *
+     * @param pAnmObj Animation object
+     * @param pPane Target pane
+     * @param recursive Whether to also unbind the animation from all children
      */
-    static RPSysLayout* create(EGG::Heap* heap, RPSysLytResAccessor* accessor,
-                               const char* lytName);
+    static void unbindAnmObjToPane(RPSysLytAnmObj* pAnmObj,
+                                   nw4r::lyt::Pane* pPane, bool recursive);
 
     /**
-     * @brief Allocate string buffer for all textboxes in pane
-     * @param pane Pane
-     * @address 80196c70
+     * @brief Attempts to dynamic-cast the specified pane to a textbox pane
+     *
+     * @param pPane Target pane
+     * @return Textbox if the cast is valid, otherwise NULL
      */
-    static void allocStringBuffer(nw4r::lyt::Pane* pane);
+    static RPSysLytTextBox* castToTextBox(nw4r::lyt::Pane* pPane);
 
     /**
-     * @brief Create dynamic animation objects for a pane
-     * @param heap Heap
-     * @param pane Pane containing dynamic animation info
-     * @address 80197340
+     * @brief Attempts to dynamic-cast the specified pane to a picture pane
+     *
+     * @param pPane Target pane
+     * @return Picture if the cast is valid, otherwise NULL
+     */
+    static RPSysLytPicture* castToPicture(nw4r::lyt::Pane* pPane);
+
+    /**
+     * @brief Attempts to dynamic-cast the specified pane to a window pane
+     *
+     * @param pPane Target pane
+     * @return Window if the cast is valid, otherwise NULL
+     */
+    static RPSysLytWindow* castToWindow(nw4r::lyt::Pane* pPane);
+
+    /**
+     * @brief Attempts to dynamic-cast the specified pane to a bounding pane
+     *
+     * @param pPane Target pane
+     * @return Picture if the cast is valid, otherwise NULL
+     */
+    static RPSysLytBounding* castToBounding(nw4r::lyt::Pane* pPane);
+
+    /**
+     * @brief Searches recursively for a pane in this layout matching the
+     * specified name
+     *
+     * @param pName Pane name
+     */
+    nw4r::lyt::Pane* findPane(const char* pName);
+
+    /**
+     * @brief Searches recursively for a textbox pane in this layout matching
+     * the specified name
+     *
+     * @param pName Textbox name
+     */
+    RPSysLytTextBox* findTextBox(const char* pName);
+
+    /**
+     * @brief Searches recursively for a picture pane in this layout matching
+     * the specified name
+     *
+     * @param pName Picture name
+     */
+    RPSysLytPicture* findPicture(const char* pName);
+
+    /**
+     * @brief Searches recursively for a window pane in this layout matching
+     * the specified name
+     *
+     * @param pName Window name
+     */
+    RPSysLytWindow* findWindow(const char* pName);
+
+    /**
+     * @brief Searches recursively for a bounding pane in this layout matching
+     * the specified name
+     *
+     * @param pName Bounding name
+     */
+    RPSysLytBounding* findBounding(const char* pName);
+
+    /**
+     * @brief Searches recursively for a group in this layout matching the
+     * specified name
+     *
+     * @param pName Group name
+     */
+    nw4r::lyt::Group* findGroup(const char* pName);
+
+    /**
+     * @brief Resets the state of this layout and any animations it owns
+     * @note This function makes the layout become invisible
+     */
+    void reset();
+
+    /**
+     * @brief Updates the state of this layout and any animations it owns
+     * @note The layout is invisible until this function is ran
+     */
+    void calc();
+
+    /**
+     * @brief Configures the GX render state for layout drawing
+     */
+    static void drawInit();
+
+    /**
+     * @brief Draws the contents of this layout
+     */
+    void draw();
+
+    /**
+     * @brief Attempts to change the font color of the specified textbox by
+     * fetching an alternate version matching the ID
+     * @details This function relies on the same `Name_XX` pattern as
+     * `forceBindAnmObjToPane`.
+     *
+     * @param pTextBox Textbox whose font color should be changed
+     * @param id ID suffix of the textbox to fetch
+     * @return Success
+     */
+    bool changeFontColor(RPSysLytTextBox* pTextBox, u32 id);
+
+    /**
+     * @brief Tests whether a point falls within the specified bounding pane
+     * @note Hit test is always ignored when the layout is invisible
+     *
+     * @param pBounding Bounding pane
+     * @param rPoint Point to test
+     */
+    bool isInsideBounding(RPSysLytBounding* pBounding,
+                          const EGG::Vector2f& rPoint);
+
+    /**
+     * @brief Moves the specified pane to the front of its parent's children
+     *
+     * @param pChild Child pane
+     */
+    static void becomeYoungestChild(nw4r::lyt::Pane* pChild);
+
+    /**
+     * @brief Draws a Mii icon to the specified pane
+     * @details This function defaults to a white material color.
+     *
+     * @param screen Screen to draw to
+     * @param pane Pane to draw on
+     * @param icon Mii icon
+     */
+    static void drawKokeshiIcon(RPGrpScreen* pScreen, nw4r::lyt::Pane* pPane,
+                                RPSysKokeshiIcon* pIcon);
+
+    /**
+     * @brief Draws a Mii icon to the specified pane
+     * @details Uses default white material color
+     *
+     * @param screen Screen to draw to
+     * @param pane Pane to draw on
+     * @param icon Mii icon
+     * @param matColor Material color
+     */
+    static void drawKokeshiIcon(RPGrpScreen* pScreen, nw4r::lyt::Pane* pPane,
+                                RPSysKokeshiIcon* pIcon, GXColor matColor)
+        DECOMP_DONT_INLINE;
+
+    /**
+     * @brief Starts playing all dynamic animations inwards
+     *
+     * @param frame Starting frame (-1 to play from the ending frame)
+     */
+    void startDynAnmIn(s16 frame);
+
+    /**
+     * @brief Starts playing all dynamic animations outwards
+     *
+     * @param frame Starting frame (-1 to play from the ending frame)
+     */
+    void startDynAnmOut(s16 frame);
+
+    /**
+     * @brief Flips the direction of all horizonal dynamic animations
+     *
+     * @param reverse Whether to reverse the horizontal direction
+     */
+    void reverseAnmHDirection(bool reverse);
+
+    /**
+     * @brief Tests whether all dynamic animations have finished animating
+     * inwards
+     */
+    bool isFinishedDynAnmIn();
+
+    /**
+     * @brief Tests whether all dynamic animations have finished animating
+     * outwards
+     */
+    bool isFinishedDynAnmOut();
+
+    /**
+     * @brief Gets the TEV color used to represent the specified player slot
+     *
+     * @param idx Player index
+     */
+    static const GXColor& getPlayerColor(u32 idx);
+
+    /**
+     * @brief Gets the TEV color used to represent CPU players
+     */
+    static const GXColor& getCpuColor();
+
+    /**
+     * @brief Accesses the draw info associated with this layout
+     */
+    nw4r::lyt::DrawInfo* getDrawInfo() {
+        return mpDrawInfo;
+    }
+
+    /**
+     * @brief Accesses the top-most pane in the tree
+     */
+    nw4r::lyt::Pane* getRootPane() {
+        return mpLayout->GetRootPane();
+    }
+
+private:
+    //! Maximum textbox string length to consider when creating the buffer
+    static const int MAX_STRING_LENGTH = 512;
+
+    /**
+     * @brief State flags
+     */
+    enum {
+        EFlag_Visible = 1 << 0,
+    };
+
+private:
+    /**
+     * @brief Constructor
+     */
+    RPSysLayout();
+
+    /**
+     * @brief Parses the length portion of a dynamic animation string
+     *
+     * @param pLenStr Length encoded in text form
+     */
+    static s16 parseDynamicAnmLength(const char* pLenStr) DECOMP_DONT_INLINE;
+
+    /**
+     * @brief Attempts to parse a dynamic animation string from a pane
+     * @details The string must be stored in the pane's userdata field
+     *
+     * @param pPane Pane to check
+     * @param[out] pDirection Dynamic animation direction
+     * @param[out] pLength Dynamic animation length
+     *
+     * @return Whether a dynamic animation was found
+     */
+    bool checkDynamicAnmPane(nw4r::lyt::Pane* pPane,
+                             RPSysLytDynamicAnm::EDirection* pDirection,
+                             s16* pLength);
+
+    /**
+     * @brief Create dynamic animation objects for the specified pane
+     * @note If the pane contains no dynamic animations, nothing will happen.
+     *
+     * @param pHeap Heap to use for allocations
+     * @param pPane Pane expected to contain a dynamic animation
      */
     void createDynamicAnm(EGG::Heap* heap, nw4r::lyt::Pane* pane);
 
     /**
-     * @brief Parse dynamic animation info from a pane
-     * @param pane Pane containing dynamic animation info
-     * @param[out] direction Animation direction
-     * @param[out] length Animation length
-     * @address 80197598
+     * @brief Appends a new dynamic animation to this layout
+     *
+     * @param pDynamicAnm Dynamic animation
      */
-    void parseDynamicAnmInfo(nw4r::lyt::Pane* pane,
-                             RPSysLytDynamicAnm::EDirection* direction,
-                             s16* length);
+    void appendDynamicAnm(RPSysLytDynamicAnm* pDynamicAnm);
 
     /**
-     * @brief Parse integer literal (anim length) from a string
-     * @param info Dynamic animation info
-     * @address 801976b8
+     * @brief Appends a new animation object to this layout
+     *
+     * @param pAnmObj Animation object
      */
-    static s16 parseDynamicAnmLength(const char* info);
+    void appendAnmObj(RPSysLytAnmObj* pAnmObj);
 
     /**
-     * @brief Initialize layout system
-     * @details Initializes nw4r::lyt
-     * @address 8019778c
+     * @brief Removes an animation object from this layout
+     *
+     * @param pAnmObj Animation object
      */
-    static void initialize();
+    void removeAnmObj(RPSysLytAnmObj* pAnmObj);
 
-    nw4r::lyt::Pane* getRootPane() {
-        return findPane("RootPane");
-    }
-
-    nw4r::lyt::DrawInfo* getDrawInfo() {
-        return mDrawInfo;
-    }
+    /**
+     * @brief Allocates a large textbox buffer for the pane and its children
+     *
+     * @param pPane Root pane
+     */
+    static void allocStringBuffer(nw4r::lyt::Pane* pPane);
 
 private:
+    //! Player slot TEV colors
+    static const GXColor PLAYER_COLORS[RP_MAX_CONTROLLERS];
+    //! CPU TEV color
+    static const GXColor CPU_COLOR;
+
+    //! State flags
     u16 mFlags; // at 0x0
-    f32 FLOAT_0x4;
-    f32 FLOAT_0x8;
-    f32 FLOAT_0xC;
-    f32 FLOAT_0x10;
-    f32 FLOAT_0x14;
-    f32 FLOAT_0x18;
-    // @brief Layout draw info
-    nw4r::lyt::DrawInfo* mDrawInfo; // at 0x1C
-    // @brief Parent NW4R layout
-    nw4r::lyt::Layout* mLayout; // at 0x20
-    // @brief List of basic animations
-    nw4r::ut::List mAnmObjs; // at 0x24
-    // @brief List of dynamic animations
-    nw4r::ut::List mDynamicAnms; // at 0x30
 
-    /**
-     * @brief CPU color for layouts
-     * @address 804c15f0
-     */
-    static const GXColor scCpuColor;
+    //! Horizontal scale applied to the root pane
+    f32 mScaleX; // at 0x4
+    f32 unk8;
+    f32 unkC;
 
-    /**
-     * @brief Player colors for layouts
-     * @address 80382d60
-     */
-    static const GXColor scPlayerColors[4];
+    //! Horizontal scale applied to panes with location adjust
+    f32 mAdjScaleX; // at 0x10
+    f32 unk14;
+    f32 unk18;
+
+    //! Layout draw info
+    nw4r::lyt::DrawInfo* mpDrawInfo; // at 0x1C
+    //! Parent layout
+    nw4r::lyt::Layout* mpLayout; // at 0x20
+
+    //! List of basic animations
+    nw4r::ut::List mAnmObjList; // at 0x24
+    //! List of dynamic animations
+    nw4r::ut::List mDynamicAnmList; // at 0x30
 };
+
+//! @}
 
 #endif

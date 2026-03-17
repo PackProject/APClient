@@ -33,8 +33,7 @@
 
 /* Generic Enter/Exit state machine events */
 #define BTIF_SM_ENTER_EVT 0xFFFF
-#define BTIF_SM_EXIT_EVT  0xFFFE
-
+#define BTIF_SM_EXIT_EVT 0xFFFE
 
 /*****************************************************************************
 **  Type definitions and return values
@@ -42,8 +41,7 @@
 typedef UINT32 btif_sm_state_t;
 typedef UINT32 btif_sm_event_t;
 typedef void* btif_sm_handle_t;
-typedef BOOLEAN(*btif_sm_handler_t)(btif_sm_event_t event, void *data);
-
+typedef BOOLEAN (*btif_sm_handler_t)(btif_sm_event_t event, void* data);
 
 /*****************************************************************************
 **  Functions
@@ -64,8 +62,8 @@ typedef BOOLEAN(*btif_sm_handler_t)(btif_sm_event_t event, void *data);
 ** Returns      Returns a pointer to the initialized state machine handle.
 **
 ******************************************************************************/
-btif_sm_handle_t btif_sm_init(const btif_sm_handler_t *p_handlers,
-                               btif_sm_state_t initial_state);
+btif_sm_handle_t btif_sm_init(const btif_sm_handler_t* p_handlers,
+                              btif_sm_state_t initial_state);
 
 /*****************************************************************************
 **
@@ -93,13 +91,14 @@ btif_sm_state_t btif_sm_get_state(btif_sm_handle_t handle);
 **
 ** Function     btif_sm_dispatch
 **
-** Description  Dispatches the 'event' along with 'data' to the current state handler
+** Description  Dispatches the 'event' along with 'data' to the current state
+*handler
 **
 ** Returns      Returns BT_STATUS_OK on success, BT_STATUS_FAIL otherwise
 **
 ******************************************************************************/
 bt_status_t btif_sm_dispatch(btif_sm_handle_t handle, btif_sm_event_t event,
-                                void *data);
+                             void* data);
 
 /*****************************************************************************
 **
@@ -107,12 +106,14 @@ bt_status_t btif_sm_dispatch(btif_sm_handle_t handle, btif_sm_event_t event,
 **
 ** Description  Make a transition to the new 'state'. The 'BTIF_SM_EXIT_EVT'
 **              shall be invoked before exiting the current state. The
-**              'BTIF_SM_ENTER_EVT' shall be invoked before entering the new state
+**              'BTIF_SM_ENTER_EVT' shall be invoked before entering the new
+*state
 **
 **
 ** Returns      Returns BT_STATUS_OK on success, BT_STATUS_FAIL otherwise
 **
 ******************************************************************************/
-bt_status_t btif_sm_change_state(btif_sm_handle_t handle, btif_sm_state_t state);
+bt_status_t btif_sm_change_state(btif_sm_handle_t handle,
+                                 btif_sm_state_t state);
 
 #endif /* BTIF_SM_H */

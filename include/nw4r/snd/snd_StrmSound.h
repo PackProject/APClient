@@ -4,7 +4,6 @@
 
 #include <nw4r/snd/snd_BasicSound.h>
 #include <nw4r/snd/snd_StrmPlayer.h>
-
 #include <nw4r/ut.h>
 
 namespace nw4r {
@@ -21,7 +20,7 @@ class StrmBufferPool;
 namespace detail {
 
 class StrmSound : public BasicSound {
-    friend class StrmSoundHandle;
+    friend class nw4r::snd::StrmSoundHandle;
 
 public:
     NW4R_UT_RTTI_DECL(StrmSound);

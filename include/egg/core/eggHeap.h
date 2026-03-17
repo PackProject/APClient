@@ -45,13 +45,8 @@ public:
     virtual void destroy() = 0;                       // at 0x1C
 
     virtual u32 resizeForMBlock(void* pBlock, u32 size) = 0; // at 0x20
-
-#if defined(PACK_RESORT)
-    virtual u32 getTotalFreeSize() = 0;
-#endif
-
-    virtual u32 getAllocatableSize(s32 align = 4) = 0; // at 0x24
-    virtual u32 adjust() = 0;                          // at 0x28
+    virtual u32 getAllocatableSize(s32 align = 4) = 0;       // at 0x24
+    virtual u32 adjust() = 0;                                // at 0x28
 
     static Heap* findHeap(MEMiHeapHead* pHeapHandle);
     Heap* findParentHeap();

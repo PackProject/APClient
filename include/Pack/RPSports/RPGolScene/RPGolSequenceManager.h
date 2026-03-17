@@ -1,6 +1,8 @@
 #ifndef RP_SPORTS_GOL_SEQUENCE_MANAGER_H
 #define RP_SPORTS_GOL_SEQUENCE_MANAGER_H
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSingleton.h>
 
 // Forward declarations
 class RPGolPhase;

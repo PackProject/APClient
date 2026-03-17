@@ -1,6 +1,8 @@
 #ifndef RP_PARTY_DUC_SEQUENCE_H
 #define RP_PARTY_DUC_SEQUENCE_H
-#include "RPTypes.h"
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSingleton.h>
 
 class RPDucSequence {
     RP_SINGLETON_DECL(RPDucSequence);

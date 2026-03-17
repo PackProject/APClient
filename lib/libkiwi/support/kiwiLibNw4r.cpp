@@ -1,6 +1,6 @@
-#include <nw4r/g3d.h>
-
 #include <libkiwi.h>
+
+#include <nw4r/g3d.h>
 
 namespace nw4r {
 namespace g3d {

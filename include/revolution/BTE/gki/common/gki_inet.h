@@ -20,11 +20,11 @@
 
 #include "data_types.h"
 
-#define htons	ntohs
-#define htonl	ntohl
+#define htons ntohs
+#define htonl ntohl
 
-#define htonets	nettohs
-#define htonetl	nettohl
+#define htonets nettohs
+#define htonetl nettohl
 
 #if BIG_ENDIAN == TRUE
 #define ntohs(n) (n)
@@ -36,12 +36,12 @@
 #else
 extern UINT16 ntohs(UINT16 n);
 extern UINT32 ntohl(UINT32 n);
-extern UINT8 *ntoh6(UINT8 *p);
+extern UINT8* ntoh6(UINT8* p);
 
 #define nettohs(n) ((UINT16)((((n) << 8) & 0xff00) | (((n) >> 8) & 0x00ff)))
-#define nettohl(n) ((((n) & 0x000000ff) << 24) | (((n) << 8) & 0x00ff0000) | \
-                   (((n) >> 8) & 0x0000ff00) | (((n) >> 24) & 0x000000ff))
+#define nettohl(n)                                                             \
+    ((((n) & 0x000000ff) << 24) | (((n) << 8) & 0x00ff0000) |                  \
+     (((n) >> 8) & 0x0000ff00) | (((n) >> 24) & 0x000000ff))
 #endif
 
 #endif /* GKI_INET_H */
-

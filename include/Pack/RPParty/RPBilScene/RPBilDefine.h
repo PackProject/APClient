@@ -1,6 +1,6 @@
 #ifndef RP_PARTY_BIL_DEFINE_H
 #define RP_PARTY_BIL_DEFINE_H
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
 
 namespace RPBilDefine {
 

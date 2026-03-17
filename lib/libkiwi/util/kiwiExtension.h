@@ -78,7 +78,7 @@ private:                                                                       \
         return TBASE::spInstance =                                             \
                    kiwi::DynamicSingleton<TDERIVED>::CreateInstance();         \
     }                                                                          \
-    KM_BRANCH(TBASE::CreateInstance, TDERIVED::Ex_CreateInstance);             \
+    KM_BRANCH(TBASE::CreateInstance, TDERIVED::Ex_CreateInstance);              \
                                                                                \
     void TDERIVED::Ex_DestroyInstance() {                                      \
         kiwi::DynamicSingleton<TDERIVED>::DestroyInstance();                   \

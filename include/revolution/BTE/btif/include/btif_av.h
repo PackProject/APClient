@@ -28,10 +28,9 @@
 #ifndef BTIF_AV_H
 #define BTIF_AV_H
 
+#include "bta_av_api.h"
 #include "btif_common.h"
 #include "btif_sm.h"
-#include "bta_av_api.h"
-
 
 /*******************************************************************************
 **  Type definitions for callback functions
@@ -46,7 +45,6 @@ typedef enum {
     BTIF_AV_SUSPEND_STREAM_REQ_EVT,
     BTIF_AV_RECONFIGURE_REQ_EVT,
 } btif_av_sm_event_t;
-
 
 /*******************************************************************************
 **  BTIF AV API
@@ -99,7 +97,7 @@ BOOLEAN btif_av_stream_started_ready(void);
 *******************************************************************************/
 
 /* used to pass events to AV statemachine from other tasks */
-void btif_dispatch_sm_event(btif_av_sm_event_t event, void *p_data, int len);
+void btif_dispatch_sm_event(btif_av_sm_event_t event, void* p_data, int len);
 
 /*******************************************************************************
 **

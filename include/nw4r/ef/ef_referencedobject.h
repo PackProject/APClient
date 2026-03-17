@@ -3,7 +3,6 @@
 #include <nw4r/types_nw4r.h>
 
 #include <nw4r/ef/ef_linkedobject.h>
-
 #include <nw4r/math.h>
 #include <nw4r/ut.h>
 

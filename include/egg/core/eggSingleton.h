@@ -3,7 +3,6 @@
 #include <egg/types_egg.h>
 
 #include <egg/core/eggDisposer.h>
-
 #include <egg/prim.h>
 
 /**
@@ -26,7 +25,7 @@ public:                                                                        \
         return sInstance;                                                      \
     }                                                                          \
                                                                                \
-protected:                                                                     \
+private:                                                                       \
     static T* sInstance;
 
 /**
@@ -53,5 +52,12 @@ protected:                                                                     \
     }                                                                          \
                                                                                \
     T* T::sInstance = NULL;
+
+/**
+ * @brief Accesses a singleton instance by typename
+ */
+#ifndef EGG_GET_INSTANCE
+#define EGG_GET_INSTANCE(T) T::instance()
+#endif
 
 #endif

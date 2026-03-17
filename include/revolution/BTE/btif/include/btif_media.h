@@ -27,33 +27,34 @@
 #ifndef BTIF_MEDIA_H
 #define BTIF_MEDIA_H
 
-#include "bta_api.h"
-#include "bd.h"
-#include "gki.h"
-#include "btif_av_api.h"
 #include "audio_a2dp_hw.h"
+#include "bd.h"
+#include "bta_api.h"
+#include "btif_av_api.h"
+#include "gki.h"
 
 /*******************************************************************************
  **  Constants
  *******************************************************************************/
 
 /* Generic part */
-#define BTIF_SUCCESS                         0
+#define BTIF_SUCCESS 0
 
 /**
  * AV (Audio Video source) Errors
  */
-#define BTIF_ERROR_SRV_AV_NOT_ENABLED        700     /* AV is not enabled */
-#define BTIF_ERROR_SRV_AV_FEEDING_NOT_SUPPORTED 701  /* Requested Feeding not supported */
-#define BTIF_ERROR_SRV_AV_BUSY               702     /* Another operation ongoing */
-#define BTIF_ERROR_SRV_AV_NOT_OPENED         703     /* No AV link opened */
-#define BTIF_ERROR_SRV_AV_NOT_STARTED        704     /* AV is not started */
-#define BTIF_ERROR_SRV_AV_CP_NOT_SUPPORTED   705     /* Content protection is not supported by all headsets */
+#define BTIF_ERROR_SRV_AV_NOT_ENABLED 700 /* AV is not enabled */
+#define BTIF_ERROR_SRV_AV_FEEDING_NOT_SUPPORTED                                \
+    701                                   /* Requested Feeding not supported */
+#define BTIF_ERROR_SRV_AV_BUSY 702        /* Another operation ongoing */
+#define BTIF_ERROR_SRV_AV_NOT_OPENED 703  /* No AV link opened */
+#define BTIF_ERROR_SRV_AV_NOT_STARTED 704 /* AV is not started */
+#define BTIF_ERROR_SRV_AV_CP_NOT_SUPPORTED                                     \
+    705 /* Content protection is not supported by all headsets */
 
 /* Transcoding definition for TxTranscoding and RxTranscoding */
-#define BTIF_MEDIA_TRSCD_OFF             0
-#define BTIF_MEDIA_TRSCD_PCM_2_SBC       1  /* Tx */
-
+#define BTIF_MEDIA_TRSCD_OFF 0
+#define BTIF_MEDIA_TRSCD_PCM_2_SBC 1 /* Tx */
 
 /*******************************************************************************
  **  Data types
@@ -62,36 +63,32 @@
 typedef int tBTIF_STATUS;
 
 /* tBTIF_MEDIA_INIT_AUDIO msg structure */
-typedef struct
-{
-        BT_HDR hdr;
-        UINT16 SamplingFreq; /* 16k, 32k, 44.1k or 48k*/
-        UINT8 ChannelMode; /* mono, dual, stereo or joint stereo*/
-        UINT8 NumOfSubBands; /* 4 or 8 */
-        UINT8 NumOfBlocks; /* 4, 8, 12 or 16*/
-        UINT8 AllocationMethod; /* loudness or SNR*/
-        UINT16 MtuSize; /* peer mtu size */
+typedef struct {
+    BT_HDR hdr;
+    UINT16 SamplingFreq;    /* 16k, 32k, 44.1k or 48k*/
+    UINT8 ChannelMode;      /* mono, dual, stereo or joint stereo*/
+    UINT8 NumOfSubBands;    /* 4 or 8 */
+    UINT8 NumOfBlocks;      /* 4, 8, 12 or 16*/
+    UINT8 AllocationMethod; /* loudness or SNR*/
+    UINT16 MtuSize;         /* peer mtu size */
 } tBTIF_MEDIA_INIT_AUDIO;
 
 #if (BTA_AV_INCLUDED == TRUE)
 /* tBTIF_MEDIA_UPDATE_AUDIO msg structure */
-typedef struct
-{
-        BT_HDR hdr;
-        UINT16 MinMtuSize; /* Minimum peer mtu size */
-        UINT8 MaxBitPool; /* Maximum peer bitpool */
-        UINT8 MinBitPool; /* Minimum peer bitpool */
+typedef struct {
+    BT_HDR hdr;
+    UINT16 MinMtuSize; /* Minimum peer mtu size */
+    UINT8 MaxBitPool;  /* Maximum peer bitpool */
+    UINT8 MinBitPool;  /* Minimum peer bitpool */
 } tBTIF_MEDIA_UPDATE_AUDIO;
 
 /* tBTIF_MEDIA_INIT_AUDIO_FEEDING msg structure */
-typedef struct
-{
-        BT_HDR hdr;
-        tBTIF_AV_FEEDING_MODE feeding_mode;
-        tBTIF_AV_MEDIA_FEEDINGS feeding;
+typedef struct {
+    BT_HDR hdr;
+    tBTIF_AV_FEEDING_MODE feeding_mode;
+    tBTIF_AV_MEDIA_FEEDINGS feeding;
 } tBTIF_MEDIA_INIT_AUDIO_FEEDING;
 #endif
-
 
 /*******************************************************************************
  **  Public functions
@@ -106,7 +103,7 @@ typedef struct
  ** Returns          void
  **
  *******************************************************************************/
-extern int btif_media_task(void *p);
+extern int btif_media_task(void* p);
 
 /*******************************************************************************
  **
@@ -117,7 +114,7 @@ extern int btif_media_task(void *p);
  ** Returns          TRUE is success
  **
  *******************************************************************************/
-extern BOOLEAN btif_media_task_enc_init_req(tBTIF_MEDIA_INIT_AUDIO * p_msg);
+extern BOOLEAN btif_media_task_enc_init_req(tBTIF_MEDIA_INIT_AUDIO* p_msg);
 
 /*******************************************************************************
  **
@@ -129,7 +126,7 @@ extern BOOLEAN btif_media_task_enc_init_req(tBTIF_MEDIA_INIT_AUDIO * p_msg);
  **
  *******************************************************************************/
 #if (BTA_AV_INCLUDED == TRUE)
-extern BOOLEAN btif_media_task_enc_update_req(tBTIF_MEDIA_UPDATE_AUDIO * p_msg);
+extern BOOLEAN btif_media_task_enc_update_req(tBTIF_MEDIA_UPDATE_AUDIO* p_msg);
 #endif
 
 /*******************************************************************************
@@ -154,7 +151,6 @@ extern BOOLEAN btif_media_task_start_aa_req(void);
  *******************************************************************************/
 extern BOOLEAN btif_media_task_stop_aa_req(void);
 
-
 /*******************************************************************************
  **
  ** Function         btif_media_task_aa_tx_flush_req
@@ -175,30 +171,33 @@ extern BOOLEAN btif_media_task_aa_tx_flush_req(void);
  ** Returns          pointer on a GKI aa buffer ready to send
  **
  *******************************************************************************/
-extern BT_HDR *btif_media_aa_readbuf(void);
+extern BT_HDR* btif_media_aa_readbuf(void);
 
 /*******************************************************************************
  **
  ** Function         btif_media_aa_writebuf
  **
- ** Description      Enqueue a Advance Audio media GKI buffer to be processed by btif media task.
+ ** Description      Enqueue a Advance Audio media GKI buffer to be processed by
+ *btif media task.
  **
  ** Returns          TRUE is success
  **
  *******************************************************************************/
-extern void btif_media_aa_writebuf(BT_HDR *pBuf, UINT32 timestamp, UINT16 seq_num);
+extern void btif_media_aa_writebuf(BT_HDR* pBuf, UINT32 timestamp,
+                                   UINT16 seq_num);
 
 /*******************************************************************************
  **
  ** Function         btif_media_av_writebuf
  **
- ** Description      Enqueue a video media GKI buffer to be processed by btif media task.
+ ** Description      Enqueue a video media GKI buffer to be processed by btif
+ *media task.
  **
  ** Returns          TRUE is success
  **
  *******************************************************************************/
-extern BOOLEAN btif_media_av_writebuf(UINT8 *p_media, UINT32 media_len,
-                                     UINT32 timestamp, UINT16 seq_num);
+extern BOOLEAN btif_media_av_writebuf(UINT8* p_media, UINT32 media_len,
+                                      UINT32 timestamp, UINT16 seq_num);
 
 #if (BTA_AV_INCLUDED == TRUE)
 /*******************************************************************************
@@ -211,7 +210,8 @@ extern BOOLEAN btif_media_av_writebuf(UINT8 *p_media, UINT32 media_len,
  **
  *******************************************************************************/
 
-extern BOOLEAN btif_media_task_audio_feeding_init_req(tBTIF_MEDIA_INIT_AUDIO_FEEDING *p_msg);
+extern BOOLEAN
+btif_media_task_audio_feeding_init_req(tBTIF_MEDIA_INIT_AUDIO_FEEDING* p_msg);
 #endif
 
 /*******************************************************************************
@@ -223,7 +223,7 @@ extern BOOLEAN btif_media_task_audio_feeding_init_req(tBTIF_MEDIA_INIT_AUDIO_FEE
  ** Returns          void
  **
  *******************************************************************************/
-extern void dump_codec_info(unsigned char *p_codec);
+extern void dump_codec_info(unsigned char* p_codec);
 
 /**
  * Local adaptation helper functions between btif and media task
@@ -236,13 +236,13 @@ void btif_a2dp_on_init(void);
 void btif_a2dp_setup_codec(void);
 void btif_a2dp_on_idle(void);
 void btif_a2dp_on_open(void);
-void btif_a2dp_on_started(tBTA_AV_START *p_av);
+void btif_a2dp_on_started(tBTA_AV_START* p_av);
 void btif_a2dp_on_stop_req(void);
-void btif_a2dp_on_stopped(tBTA_AV_SUSPEND *p_av);
+void btif_a2dp_on_stopped(tBTA_AV_SUSPEND* p_av);
 void btif_a2dp_on_suspend(void);
-void btif_a2dp_on_suspended(tBTA_AV_SUSPEND *p_av);
+void btif_a2dp_on_suspended(tBTA_AV_SUSPEND* p_av);
 void btif_a2dp_set_tx_flush(BOOLEAN enable);
 
-void btif_media_check_iop_exceptions(UINT8 *peer_bda);
+void btif_media_check_iop_exceptions(UINT8* peer_bda);
 
 #endif

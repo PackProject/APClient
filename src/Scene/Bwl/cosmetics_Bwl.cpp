@@ -1,9 +1,11 @@
 #include "trampoline.h"
-#include <Pack/RPGraphics.h>
 #include <Sports2/Sp2Cmn.h>
-#include <nw4r/g3d.h>
 
 #include <libkiwi.h>
+
+#include <Pack/RPGraphics.h>
+
+#include <nw4r/g3d.h>
 
 namespace AP {
 namespace Bwl {
@@ -29,7 +31,7 @@ void PatchBwlBallColor(RPGrpModelG3D* pModel, bool mirror, kiwi::Color color) {
     /**
      * Get access to the model material
      */
-    nw4r::g3d::ScnMdl* pScnMdl = pModel->GetModelEx()->getScnMdl();
+    nw4r::g3d::ScnMdl* pScnMdl = pModel->GetScnMdl();
     ASSERT_PTR(pScnMdl);
 
     nw4r::g3d::ResMdl resMdl = pScnMdl->GetResMdl();
@@ -48,9 +50,10 @@ void PatchBwlBallColor(RPGrpModelG3D* pModel, bool mirror, kiwi::Color color) {
      * Write the required TEV colors
      */
     // TEVREG0 holds the ball accent color
-    pMaterial->SetTevColor(GX_TEVREG0, color.ToS10());
+    pMaterial->SetTevColor(RPGrpModelMaterial::ETevColor_Reg0, color.ToS10());
     // TEVKREG2 is used for greyscale conversion constants
-    pMaterial->SetTevKColor(GX_KCOLOR2, kiwi::Color(85, 150, 29, 0));
+    pMaterial->SetTevKColor(RPGrpModelMaterial::ETevKColor_Reg2,
+                            kiwi::Color(85, 150, 29, 0));
 
     /**
      * Prepare the material for the new shader

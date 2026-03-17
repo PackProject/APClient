@@ -45,8 +45,8 @@ public:
     };
 
 public:
-    virtual void initialize(Arg* pArg) {} // at 0x8
-    virtual void calc() = 0;              // at 0xC
+    virtual void initialize(Arg* /* pArg */) {} // at 0x8
+    virtual void calc() = 0;                    // at 0xC
 
 protected:
     bool mIsInitialized; // at 0x4
@@ -66,7 +66,7 @@ public:
      * SimpleAudioMgrArg
      **************************************************************************/
     struct SimpleAudioMgrArg : IAudioMgr::Arg {
-        // TODO: How is this calculated?
+        // TODO(kiwi) How is this calculated?
         static const u32 DEFAULT_SOUND_HEAP_SIZE = 0x8CA000;
 
         u32 streamBlocks;  // at 0x18

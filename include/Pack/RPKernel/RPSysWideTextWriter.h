@@ -1,29 +1,34 @@
 #ifndef RP_KERNEL_WIDE_TEXT_WRITER_H
 #define RP_KERNEL_WIDE_TEXT_WRITER_H
-#include "RPTypes.h"
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSingleton.h>
+
+#include <nw4r/ut.h>
+
+//! @addtogroup rp_kernel
+//! @{
 
 /**
- * @brief RP engine screen wide text (wchar_t) writer
- * @details This likely follows RPSysTextWriter in its inheritance
- * from NW4R structures, but this is not known for sure.
- * Only one function is in Wii Sports, and very few are in Wii Fit U.
- * @wfuname
+ * @brief Wide-char screen text writer
  */
-class RPSysWideTextWriter {
+class RPSysWideTextWriter : public nw4r::ut::WideTextWriter {
+    RP_SINGLETON_DECL(RPSysWideTextWriter);
+
 public:
     /**
-     * @brief Initialize format buffer
-     * @address 80198968
+     * @brief Creates the text buffer
      */
     static void Initialize();
 
 private:
-    /**
-     * @brief Static format buffer
-     * @details Name from NW4R's text writer, because they share sizes
-     * @address 804bf558
-     */
-    static wchar_t* mFormatBuffer;
+    //! Size of the text work buffer
+    static const int TEXT_BUFFER_SIZE = 256;
+
+    //! Work buffer for string formatting
+    static wchar_t* spTextBuffer;
 };
+
+//! @}
 
 #endif

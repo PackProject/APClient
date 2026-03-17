@@ -4,7 +4,6 @@
 
 #include <nw4r/lyt/lyt_common.h>
 #include <nw4r/lyt/lyt_pane.h>
-
 #include <nw4r/ut.h>
 
 namespace nw4r {
@@ -57,7 +56,7 @@ struct WindowFrame {
  *
  ******************************************************************************/
 struct Window : public Pane {
-    static const u32 SIGNATURE = 'wnd1';
+    static const u32 SIGNATURE = FOURCC('w', 'n', 'd', '1');
 
     InflationLRTB inflation;    // at 0x4C
     u8 frameNum;                // at 0x5C
@@ -115,7 +114,7 @@ public:
     virtual ~Window(); // at 0x8
 
     virtual void DrawSelf(const DrawInfo& rInfo); // at 0x18
-    virtual void AnimateSelf(u32 option);         // at 0x20
+    virtual void AnimateSelf(u32 option = 0);     // at 0x20
 
     virtual ut::Color GetVtxColor(u32 idx) const;       // at 0x24
     virtual void SetVtxColor(u32 idx, ut::Color color); // at 0x28

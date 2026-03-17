@@ -1,17 +1,14 @@
 #ifndef RP_PARTY_UTL_MODEL_H
 #define RP_PARTY_UTL_MODEL_H
-#include <types.h>
+#include <Pack/types_pack.h>
 
-#include <Pack/RPGraphics/IRPGrpDrawObject.h>
-#include <Pack/RPKernel/IRPSysHostIOSocket.h>
-#include <Pack/RPSystem/RP_DEBUG_STUB_1.h>
+#include <Pack/RPGraphics.h>
+#include <Pack/RPKernel.h>
+#include <Pack/RPSystem.h>
 
 #include <egg/math.h>
 
 #include <nw4r/math.h>
-
-// Forward declarations
-class RPGrpModel;
 
 /**
  * @brief Party Pack model utility

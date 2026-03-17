@@ -1,6 +1,8 @@
 #ifndef RP_PARTY_TNK_MAP_RES_MGR_H
 #define RP_PARTY_TNK_MAP_RES_MGR_H
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSingleton.h>
 
 struct RPTnkMapData {
     u32 width;     // at 0x0

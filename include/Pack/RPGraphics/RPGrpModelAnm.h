@@ -1,8 +1,18 @@
 #ifndef RP_GRAPHICS_MODEL_ANM_H
 #define RP_GRAPHICS_MODEL_ANM_H
-#include <Pack/RPTypes.h>
-#include <egg/gfx/eggModelEx.h>
+#include <Pack/types_pack.h>
 
+#include <nw4r/g3d.h>
+
+//! @addtogroup rp_graphics
+//! @{
+
+// Forward declarations
+class RPGrpModel;
+
+/**
+ * @brief Base class for model animation implementations
+ */
 class RPGrpModelAnm {
 public:
     enum Anm {
@@ -25,7 +35,7 @@ protected:
     char _00[0x68];
 
 public:
-    virtual void VF_0x8(UNKTYPE) = 0;
+    virtual void Configure() = 0; // at 0x8
     virtual void Construct(Anm anm, u16 idx, u16 rd) = 0;
 
     virtual void Regist(Anm anm, u16 idx, u16 rd, char const* pName,
@@ -62,17 +72,24 @@ public:
     virtual void SetEnableQuaternionBlend(bool enable) = 0; // at 0x64
 
     virtual void VF_0x68(UNKTYPE) = 0; // at 0x68
-    virtual void VF_0x6C(UNKTYPE) = 0; // at 0x6C
+    virtual void UpdateFrame() = 0;    // at 0x6C
     virtual void VF_0x70(UNKTYPE) = 0; // at 0x70
     virtual void VF_0x74(UNKTYPE) = 0; // at 0x74
 
     virtual nw4r::g3d::AnmObj* GetAnmObj(Anm anm, u16 idx) const = 0; // at 0x78
-    virtual ~RPGrpModelAnm();                                         // at 0x7C
+
+    void CreateBuffer(Anm anm, u16 num);
+
+    void Calc();
+
+protected:
+    RPGrpModelAnm(RPGrpModel* pModel);
+    virtual ~RPGrpModelAnm(); // at 0x7C
 
     virtual void SetAnmObj(Anm anm, nw4r::g3d::AnmObj* pAnmObj) = 0; // at 0x80
     virtual void InternalCalc() = 0;                                 // at 0x84
-
-    void CreateBuffer(Anm anm, u16 num);
 };
+
+//! @}
 
 #endif

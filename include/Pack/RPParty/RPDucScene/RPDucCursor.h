@@ -1,8 +1,11 @@
 #ifndef RP_PARTY_DUC_CURSOR_H
 #define RP_PARTY_DUC_CURSOR_H
-#include <nw4r/math.h>
+#include <Pack/types_pack.h>
 
-#include <RPTypes.h>
+#include <Pack/RPAudio.h>
+#include <Pack/RPKernel.h>
+
+#include <nw4r/math.h>
 
 // Forward declarations
 class RPSysEffect;

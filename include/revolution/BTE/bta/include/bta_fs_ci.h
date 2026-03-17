@@ -31,66 +31,58 @@
 *****************************************************************************/
 
 /* Open Complete Event */
-typedef struct
-{
-    BT_HDR            hdr;
+typedef struct {
+    BT_HDR hdr;
     tBTA_FS_CO_STATUS status;
-    UINT32            file_size;
-    int               fd;
-    const char        *p_file;
+    UINT32 file_size;
+    int fd;
+    const char* p_file;
 } tBTA_FS_CI_OPEN_EVT;
 
 /* Read Ready Event */
-typedef struct
-{
-    BT_HDR            hdr;
+typedef struct {
+    BT_HDR hdr;
     tBTA_FS_CO_STATUS status;
-    int               fd;
-    UINT16            num_read;
+    int fd;
+    UINT16 num_read;
 } tBTA_FS_CI_READ_EVT;
 
 /* Write Ready Event */
-typedef struct
-{
-    BT_HDR            hdr;
+typedef struct {
+    BT_HDR hdr;
     tBTA_FS_CO_STATUS status;
-    int               fd;
+    int fd;
 } tBTA_FS_CI_WRITE_EVT;
 
 /* Get Directory Entry Event */
-typedef struct
-{
-    BT_HDR            hdr;
+typedef struct {
+    BT_HDR hdr;
     tBTA_FS_CO_STATUS status;
 } tBTA_FS_CI_GETDIR_EVT;
 
 /* Resume Information Event */
-typedef struct
-{
-    BT_HDR            hdr;
+typedef struct {
+    BT_HDR hdr;
     tBTA_FS_CO_STATUS status;
-    BD_ADDR_PTR       p_addr;
-    UINT8             *p_sess_info;
-    UINT32            timeout;
-    UINT32            offset;
-    UINT8             ssn;
-    UINT8             info;
+    BD_ADDR_PTR p_addr;
+    UINT8* p_sess_info;
+    UINT32 timeout;
+    UINT32 offset;
+    UINT8 ssn;
+    UINT8 info;
 } tBTA_FS_CI_RESUME_EVT;
 
 /* Action Complete Event */
-typedef struct
-{
-    BT_HDR            hdr;
+typedef struct {
+    BT_HDR hdr;
     tBTA_FS_CO_STATUS status;
 } tBTA_FS_CI_ACTION_EVT;
-
 
 /*****************************************************************************
 **  Function Declarations
 *****************************************************************************/
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /*******************************************************************************
@@ -113,7 +105,8 @@ extern "C"
 ** Returns          void
 **
 *******************************************************************************/
-BTA_API extern void bta_fs_ci_write(int fd, tBTA_FS_CO_STATUS status, UINT16 evt);
+BTA_API extern void bta_fs_ci_write(int fd, tBTA_FS_CO_STATUS status,
+                                    UINT16 evt);
 
 /*******************************************************************************
 **
@@ -121,8 +114,10 @@ BTA_API extern void bta_fs_ci_write(int fd, tBTA_FS_CO_STATUS status, UINT16 evt
 **
 ** Description      This function sends an event to BTA indicating the phone has
 **                  read in the requested amount of data specified in the
-**                  bta_fs_co_read() call-out function.  It should only be called
-**                  when the requested number of bytes has been read in, or aioer
+**                  bta_fs_co_read() call-out function.  It should only be
+*called
+**                  when the requested number of bytes has been read in, or
+*aioer
 **                  the end of the file has been detected.
 **
 ** Parameters       fd - file descriptor passed to the stack in the
@@ -173,7 +168,8 @@ BTA_API extern void bta_fs_ci_open(int fd, tBTA_FS_CO_STATUS status,
 **                  bta_fs_co_getdirentry call-out function.
 **
 ** Parameters       status - BTA_FS_CO_OK if p_entry points to a valid entry.
-**                           BTA_FS_CO_EODIR if no more entries (p_entry is ignored).
+**                           BTA_FS_CO_EODIR if no more entries (p_entry is
+*ignored).
 **                           BTA_FS_CO_FAIL if any errors have occurred.
 **                  evt - Used Internally by BTA -> MUST be same value passed
 **                       in call-out function.
@@ -192,7 +188,8 @@ BTA_API extern void bta_fs_ci_direntry(tBTA_FS_CO_STATUS status, UINT16 evt);
 **
 ** Parameters       p_sess_info - the stored session ID and related information.
 **                  ssn     - the stored session sequence number.
-**                  info    - the stored BTA specific information (like last active operation).
+**                  info    - the stored BTA specific information (like last
+*active operation).
 **                  status  - BTA_FS_CO_OK if p_entry points to a valid entry.
 **                            BTA_FS_CO_FAIL if any errors have occurred.
 **                  evt - Used Internally by BTA -> MUST be same value passed
@@ -201,9 +198,10 @@ BTA_API extern void bta_fs_ci_direntry(tBTA_FS_CO_STATUS status, UINT16 evt);
 ** Returns          void
 **
 *******************************************************************************/
-BTA_API extern void bta_fs_ci_resume (BD_ADDR_PTR p_addr, UINT8 *p_sess_info,
-                                      UINT32 timeout, UINT32 offset, UINT8 ssn, UINT8 info,
-                                      tBTA_FS_CO_STATUS status, UINT16 evt);
+BTA_API extern void bta_fs_ci_resume(BD_ADDR_PTR p_addr, UINT8* p_sess_info,
+                                     UINT32 timeout, UINT32 offset, UINT8 ssn,
+                                     UINT8 info, tBTA_FS_CO_STATUS status,
+                                     UINT16 evt);
 
 /*******************************************************************************
 **
@@ -245,12 +243,12 @@ BTA_API extern void bta_fs_ci_action(tBTA_FS_CO_STATUS status, UINT16 evt);
 ** Returns          void
 **
 *******************************************************************************/
-BTA_API extern void bta_fs_ci_resume_op(int fd, tBTA_FS_CO_STATUS status, const char *p_file,
-                                        UINT32 file_size, UINT16 evt);
+BTA_API extern void bta_fs_ci_resume_op(int fd, tBTA_FS_CO_STATUS status,
+                                        const char* p_file, UINT32 file_size,
+                                        UINT16 evt);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* BTA_FS_CI_H */
-

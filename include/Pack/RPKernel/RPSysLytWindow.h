@@ -1,7 +1,11 @@
 #ifndef RP_KERNEL_LYT_WINDOW_H
 #define RP_KERNEL_LYT_WINDOW_H
-#include "RPTypes.h"
-#include <nw4r/lyt/lyt_window.h>
+#include <Pack/types_pack.h>
+
+#include <nw4r/lyt.h>
+
+//! @addtogroup rp_kernel
+//! @{
 
 /**
  * @brief NW4R layout window extension
@@ -9,18 +13,23 @@
 class RPSysLytWindow : public nw4r::lyt::Window {
 public:
     /**
-     * @brief Set the picture TEV color to the CPU color
-     * @address 801a59ec
+     * @brief Applies the specified player material color to the window frame
+     * @details The color is applied to TEV color register 1
+     *
+     * @param idx Player index
+     * @param content Whether to also apply the color to the content
      */
-    void applyCpuColor();
+    void applyPlayerColor(u32 idx, bool content);
 
     /**
-     * @brief Set the picture TEV color to the specified player color
-     * @param player Player ID
-     * @param setContent Set content material color
-     * @address 801a5a98
+     * @brief Applies the CPU player material color to the window frame
+     * @details The color is applied to TEV color register 1
+     *
+     * @param content Whether to also apply the color to the content
      */
-    void applyPlayerColor(u32 player, bool setContent);
+    void applyCpuColor(bool content);
 };
+
+//! @}
 
 #endif

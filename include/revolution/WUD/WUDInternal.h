@@ -3,11 +3,10 @@
 #include <types.h>
 
 // Public API
-#include <revolution/WUD/WUD.h>
-
 #include <revolution/BTE.h>
 #include <revolution/OS.h>
 #include <revolution/SC.h>
+#include <revolution/WUD/WUD.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -26,9 +25,8 @@ extern "C" {
     WUD_DEV_NAME_IS(NAME, "Nintendo RVL-CNT-01")
 // clang-format on
 
-typedef enum { WUD_STATE_START = 0, WUD_STATE_ERROR = 255 } WUDState;
-
 typedef enum {
+    WUD_STATE_SYNC_START = 0,
     WUD_STATE_SYNC_PREPARE_SEARCH = 1,
     WUD_STATE_SYNC_START_SEARCH = 2,
     WUD_STATE_SYNC_WAIT_FOR_SEARCH_RESULT = 3,
@@ -55,15 +53,11 @@ typedef enum {
     WUD_STATE_SYNC_SC_FLUSH = 25,
     WUD_STATE_SYNC_CANCEL_SEARCH = 26,
     WUD_STATE_SYNC_WAIT_FOR_START_SEARCH = 29,
+    WUD_STATE_SYNC_ERROR = 255,
 } WUDSyncState;
 
 typedef enum {
-    WUD_RESULT_SYNC_BUSY = -1,
-    WUD_RESULT_SYNC_WAITING,
-    WUD_RESULT_SYNC_DONE,
-} WUDSyncResult;
-
-typedef enum {
+    WUD_STATE_DELETE_START = 0,
     WUD_STATE_DELETE_DISALLOW_INCOMING = 1,
     WUD_STATE_DELETE_DISCONNECT_ALL = 2,
     WUD_STATE_DELETE_CLEANUP_DATABASE = 3,
@@ -80,29 +74,37 @@ typedef enum {
 } WUDDeleteResult;
 
 typedef enum {
+    WUD_STATE_LINK_KEY_START = 0,
     WUD_STATE_LINK_KEY_READING = 1,
     WUD_STATE_LINK_KEY_WRITING = 2,
     WUD_STATE_LINK_KEY_DELETING = 3,
+    WUD_STATE_LINK_KEY_ERROR = 255,
 } WUDLinkKeyState;
 
 typedef enum {
+    WUD_STATE_STACK_START = 0,
     WUD_STATE_STACK_GET_STORED_LINK_KEY = 1,
     WUD_STATE_STACK_CHECK_DEVICE_INFO = 2,
     WUD_STATE_STACK_DONE = 3,
-    WUD_STATE_STACK_INITIALIZED = 4
+    WUD_STATE_STACK_INITIALIZED = 4,
+    WUD_STATE_STACK_ERROR = 255,
 } WUDStackState;
 
 typedef enum {
+    WUD_STATE_INIT_START = 0,
     WUD_STATE_INIT_WAIT_FOR_INITIALIZATION = 1,
     WUD_STATE_INIT_GET_DEV_INFO = 2,
     WUD_STATE_INIT_DONE = 3,
-    WUD_STATE_INIT_INITIALIZED = 4
+    WUD_STATE_INIT_INITIALIZED = 4,
+    WUD_STATE_INIT_ERROR = 255,
 } WUDInitState;
 
 typedef enum {
+    WUD_STATE_SHUTDOWN_START = 0,
     WUD_STATE_SHUTDOWN_STORE_SETTINGS = 1,
     WUD_STATE_SHUTDOWN_FLUSH_SETTINGS = 2,
-    WUD_STATE_SHUTDOWN_DONE = 3
+    WUD_STATE_SHUTDOWN_DONE = 3,
+    WUD_STATE_SHUTDOWN_ERROR = 255,
 } WUDShutdownState;
 
 typedef enum {

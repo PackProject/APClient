@@ -5,7 +5,6 @@
 #include <nw4r/lyt/lyt_common.h>
 #include <nw4r/lyt/lyt_pane.h>
 #include <nw4r/lyt/lyt_types.h>
-
 #include <nw4r/ut.h>
 
 namespace nw4r {
@@ -34,7 +33,7 @@ namespace res {
  *
  ******************************************************************************/
 struct TextBox : Pane {
-    static const u32 SIGNATURE = 'txt1';
+    static const u32 SIGNATURE = FOURCC('t', 'x', 't', '1');
 
     u16 textBufBytes;             // at 0x4C
     u16 textStrBytes;             // at 0x4E
@@ -77,7 +76,7 @@ public:
     virtual void FreeStringBuffer();         // at 0x68
     u16 GetStringBufferLength() const;
 
-    virtual u16 SetString(const wchar_t* pStr, u16 pos);          // at 0x6C
+    virtual u16 SetString(const wchar_t* pStr, u16 pos = 0);      // at 0x6C
     virtual u16 SetString(const wchar_t* pStr, u16 pos, u16 len); // at 0x70
 
     ut::Rect GetTextDrawRect(const DrawInfo& rInfo) const;

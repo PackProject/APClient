@@ -1,8 +1,9 @@
 #ifndef LIBKIWI_UTIL_SCENE_UTIL_H
 #define LIBKIWI_UTIL_SCENE_UTIL_H
-#include <Pack/RPSystem.h>
 #include <libkiwi/core/kiwiIScene.h>
 #include <libkiwi/k_types.h>
+
+#include <Pack/RPSystem.h>
 
 #include <egg/core.h>
 

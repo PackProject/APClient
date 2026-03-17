@@ -6,6 +6,7 @@
 #include <libkiwi/prim/kiwiString.h>
 #include <libkiwi/prim/kiwiVector.h>
 #include <libkiwi/util/kiwiIosObject.h>
+
 #include <revolution/IPC.h>
 #include <revolution/OS.h>
 

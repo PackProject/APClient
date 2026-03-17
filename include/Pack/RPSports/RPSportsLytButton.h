@@ -1,13 +1,10 @@
 #ifndef RP_SPORTS_LYT_BUTTON_H
 #define RP_SPORTS_LYT_BUTTON_H
-#include <egg/types_egg.h>
-#include <nw4r/types_nw4r.h>
+#include <Pack/types_pack.h>
 
-#include "RPTypes.h"
+#include <Pack/RPKernel.h>
 
-class RPSysLayout;
-class RPSysLytBounding;
-class RPSysLytResAccessor;
+#include <nw4r/lyt.h>
 
 class RPSportsLytButton {
 public:

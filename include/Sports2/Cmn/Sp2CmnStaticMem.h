@@ -1,7 +1,8 @@
 #ifndef SPORTS2_CMN_STATIC_MEM_H
 #define SPORTS2_CMN_STATIC_MEM_H
-#include <Pack/RPSystem.h>
 #include <Sports2/Sp2Types.h>
+
+#include <Pack/RPSystem.h>
 
 #include <egg/core.h>
 

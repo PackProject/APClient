@@ -3,7 +3,6 @@
 #include <types.h>
 
 #include <revolution/GX/GXTypes.h>
-
 #include <revolution/MTX.h>
 #ifdef __cplusplus
 extern "C" {

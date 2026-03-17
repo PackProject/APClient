@@ -4,7 +4,6 @@
 
 #include <nw4r/snd/snd_SoundArchive.h>
 #include <nw4r/snd/snd_SoundArchiveFile.h>
-
 #include <nw4r/ut.h>
 
 #include <revolution/NAND.h>

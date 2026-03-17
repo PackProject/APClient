@@ -1,13 +1,14 @@
 #ifndef RP_SPORTS_GOL_CONFIG_H
 #define RP_SPORTS_GOL_CONFIG_H
-#include "RPSysUnknownBase.h"
-#include "RPTypes.h"
+#include <Pack/types_pack.h>
+
+#include <Pack/RPKernel.h>
 
 /**
  * @brief Global settings used by the golf scene
  * @wscname
  */
-class RPGolConfig : RPSysUnknownBase {
+class RPGolConfig : RP_DEBUG_STUB_1 {
     RP_SINGLETON_DECL(RPGolConfig);
 
 public:

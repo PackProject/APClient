@@ -32,13 +32,12 @@
 *****************************************************************************/
 
 /* Configuration structure */
-typedef struct
-{
-    UINT16  max_file_len;           /* Maximum size file name */
-    UINT16  max_path_len;           /* Maximum path length (includes appended file name) */
-    char    path_separator;         /* 0x2f ('/'), or 0x5c ('\') */
+typedef struct {
+    UINT16 max_file_len; /* Maximum size file name */
+    UINT16 max_path_len; /* Maximum path length (includes appended file name) */
+    char path_separator; /* 0x2f ('/'), or 0x5c ('\') */
 } tBTA_FS_CFG;
 
-extern tBTA_FS_CFG * p_bta_fs_cfg;
+extern tBTA_FS_CFG* p_bta_fs_cfg;
 
 #endif /* BTA_FS_API_H */

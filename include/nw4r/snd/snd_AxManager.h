@@ -5,7 +5,6 @@
 #include <nw4r/snd/snd_FxBase.h>
 #include <nw4r/snd/snd_MoveValue.h>
 #include <nw4r/snd/snd_Types.h>
-
 #include <nw4r/ut.h>
 
 #include <revolution/AI.h>

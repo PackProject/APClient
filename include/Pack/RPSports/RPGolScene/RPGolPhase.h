@@ -1,6 +1,6 @@
 #ifndef RP_SPORTS_GOL_PHASE_H
 #define RP_SPORTS_GOL_PHASE_H
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
 
 class RPGolPhase {
 public:

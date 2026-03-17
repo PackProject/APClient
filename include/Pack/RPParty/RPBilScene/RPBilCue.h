@@ -1,12 +1,12 @@
 #ifndef RP_PARTY_BIL_CUE_H
 #define RP_PARTY_BIL_CUE_H
-#include <types.h>
+#include <Pack/types_pack.h>
 
 #include <Pack/RPParty/RPPartyUtlModel.h>
-#include <Pack/RPUtility/RPUtlBaseFsm.h>
+#include <Pack/RPUtility.h>
 
 #include <egg/core.h>
-#include <egg/gfx.h>
+#include <egg/gfxe.h>
 
 /**
  * @brief Billiards cue

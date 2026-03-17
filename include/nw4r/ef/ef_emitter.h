@@ -4,11 +4,10 @@
 
 #include <nw4r/ef/ef_activitylist.h>
 #include <nw4r/ef/ef_animcurve.h>
-#include <nw4r/ef/ef_emitter.h>
 #include <nw4r/ef/ef_random.h>
 #include <nw4r/ef/ef_referencedobject.h>
+#include <nw4r/ef/ef_res_emitter.h>
 #include <nw4r/ef/ef_types.h>
-
 #include <nw4r/math.h>
 #include <nw4r/ut.h>
 
@@ -16,12 +15,12 @@ namespace nw4r {
 namespace ef {
 
 // Forward declarations
+class Effect;
+class Emitter;
+class EmitterForm;
+class Particle;
 class ParticleManager;
 struct EmitterResource;
-class Effect;
-class EmitterForm;
-class Emitter;
-class Particle;
 
 struct EmitterInheritSetting {
     enum Flag {

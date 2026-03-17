@@ -6,16 +6,16 @@
 #ifndef DECOMP_H
 #define DECOMP_H
 
-#define __CONCAT(x, y) x##y
-#define CONCAT(x, y) __CONCAT(x, y)
+#include <macros.h>
 
 // Compile without matching hacks.
-#ifdef __DECOMP_NON_MATCHING
+#if defined(NONMATCHING) || defined(COMPAT_ANY)
 #define DECOMP_FORCEACTIVE(module, ...)
-#define DECOMP_FORCELITERAL(module, x)
+#define DECOMP_FORCELITERAL(module, ...)
 #define DECOMP_FORCEACTIVE_DTOR(module, cls)
 #define DECOMP_INLINE
 #define DECOMP_DONT_INLINE
+#define DECOMP_SIZE_ASSERT(cls, size)
 // Compile with matching hacks.
 // (This version of CW does not support pragmas inside macros.)
 #else
@@ -36,10 +36,12 @@
 
 // Force reference destructor
 #define DECOMP_FORCEACTIVE_DTOR(module, cls)                                   \
+    void CONCAT(FORCEDTOR##module##cls, __LINE__)(void);                       \
     void CONCAT(FORCEDTOR##module##cls, __LINE__)(void) {                      \
         cls dummy;                                                             \
         dummy.~cls();                                                          \
     }
+
 #define DECOMP_INLINE inline
 #define DECOMP_DONT_INLINE __attribute__((never_inline))
 #endif

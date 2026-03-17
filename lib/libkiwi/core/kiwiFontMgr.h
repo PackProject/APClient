@@ -13,7 +13,7 @@ namespace kiwi {
  * @brief Resource font ID
  */
 enum EResFont {
-#if defined(PACK_SPORTS) || defined(PACK_PLAY)
+#if defined(PACK_SPORTS) || defined(PACK_PARTY)
     //! New Rodin (Demibold, 32pt, I4 tex format)
     EResFont_nRodDb_32_I4,
     //! New Rodin (Demibold, 32pt, IA4 tex format)

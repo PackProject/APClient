@@ -1,12 +1,14 @@
 #ifndef NW4R_SND_WSD_FILE_H
 #define NW4R_SND_WSD_FILE_H
 #include <nw4r/snd/snd_Util.h>
-
 #include <nw4r/ut.h>
 
 namespace nw4r {
 namespace snd {
 namespace detail {
+
+// Forward declarations
+struct WaveData;
 
 /******************************************************************************
  *
@@ -117,7 +119,7 @@ struct WaveSoundNoteInfo {
 
 class WsdFileReader {
 public:
-    static const u32 SIGNATURE = 'RWSD';
+    static const u32 SIGNATURE = FOURCC('R', 'W', 'S', 'D');
     static const int VERSION = NW4R_VERSION(1, 2);
 
 public:

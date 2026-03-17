@@ -4,7 +4,6 @@
 
 #include <nw4r/snd/snd_Util.h>
 #include <nw4r/snd/snd_WaveFile.h>
-
 #include <nw4r/ut.h>
 
 namespace nw4r {
@@ -89,7 +88,7 @@ struct InstInfo {
 
 class BankFileReader {
 public:
-    static const u32 SIGNATURE = 'RBNK';
+    static const u32 SIGNATURE = FOURCC('R', 'B', 'N', 'K');
     static const int VERSION = NW4R_VERSION(1, 1);
 
 public:

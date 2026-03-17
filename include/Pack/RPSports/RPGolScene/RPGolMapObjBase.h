@@ -1,17 +1,18 @@
 #ifndef RP_SPORTS_GOL_MAP_OBJ_BASE_H
 #define RP_SPORTS_GOL_MAP_OBJ_BASE_H
-#include "RPSysUnknownBase.h"
-#include "RPTypes.h"
-#include <nw4r/math/math_types.h>
+#include <Pack/types_pack.h>
 
-class RPGrpModelG3D;
-class RPUtlMapObject;
+#include <Pack/RPGraphics.h>
+#include <Pack/RPKernel.h>
+#include <Pack/RPUtility.h>
+
+#include <nw4r/math.h>
 
 /**
  * @brief Base class for Pack Map objects in the golf scene
  * @todo Document all of the functions
  */
-class RPGolMapObjBase : RPSysUnknownBase {
+class RPGolMapObjBase : RP_DEBUG_STUB_1 {
 public:
     // @address 80290a48
     RPGolMapObjBase();

@@ -30,8 +30,7 @@
 **  Function Declarations
 *****************************************************************************/
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /*******************************************************************************
@@ -39,7 +38,8 @@ extern "C"
 ** Function         bta_pan_ci_tx_ready
 **
 ** Description      This function sends an event to PAN indicating the phone is
-**                  ready for more data and PAN should call bta_pan_co_tx_path().
+**                  ready for more data and PAN should call
+*bta_pan_co_tx_path().
 **                  This function is used when the TX data path is configured
 **                  to use a pull interface.
 **
@@ -96,7 +96,9 @@ BTA_API extern void bta_pan_ci_tx_flow(UINT16 handle, BOOLEAN enable);
 ** Returns          TRUE if flow enabled
 **
 *******************************************************************************/
-BTA_API extern void bta_pan_ci_rx_writebuf(UINT16 handle, BD_ADDR src, BD_ADDR dst, UINT16 protocol, BT_HDR *p_buf, BOOLEAN ext);
+BTA_API extern void bta_pan_ci_rx_writebuf(UINT16 handle, BD_ADDR src,
+                                           BD_ADDR dst, UINT16 protocol,
+                                           BT_HDR* p_buf, BOOLEAN ext);
 
 /*******************************************************************************
 **
@@ -104,15 +106,17 @@ BTA_API extern void bta_pan_ci_rx_writebuf(UINT16 handle, BD_ADDR src, BD_ADDR d
 **
 ** Description      This function is called by the phone to read data from PAN
 **                  when the TX path is configured to use a pull interface.
-**                  The phone must free the buffer using function GKI_freebuf() when
+**                  The phone must free the buffer using function GKI_freebuf()
+*when
 **                  it is through processing the buffer.
 **
 **
 ** Returns          void
 **
 *******************************************************************************/
-BTA_API extern BT_HDR * bta_pan_ci_readbuf(UINT16 handle, BD_ADDR src, BD_ADDR dst, UINT16 *p_protocol,
-                                 BOOLEAN* p_ext, BOOLEAN* p_forward);
+BTA_API extern BT_HDR* bta_pan_ci_readbuf(UINT16 handle, BD_ADDR src,
+                                          BD_ADDR dst, UINT16* p_protocol,
+                                          BOOLEAN* p_ext, BOOLEAN* p_forward);
 
 /*******************************************************************************
 **
@@ -124,8 +128,9 @@ BTA_API extern BT_HDR * bta_pan_ci_readbuf(UINT16 handle, BD_ADDR src, BD_ADDR d
 ** Returns          void
 **
 *******************************************************************************/
-BTA_API extern void bta_pan_ci_set_pfilters(UINT16 handle, UINT16 num_filters, UINT16 *p_start_array, UINT16 *p_end_array);
-
+BTA_API extern void bta_pan_ci_set_pfilters(UINT16 handle, UINT16 num_filters,
+                                            UINT16* p_start_array,
+                                            UINT16* p_end_array);
 
 /*******************************************************************************
 **
@@ -137,15 +142,13 @@ BTA_API extern void bta_pan_ci_set_pfilters(UINT16 handle, UINT16 num_filters, U
 ** Returns          void
 **
 *******************************************************************************/
-BTA_API extern void bta_pan_ci_set_mfilters(UINT16 handle, UINT16 num_mcast_filters, UINT8 *p_start_array,
-                                                    UINT8 *p_end_array);
-
-
-
+BTA_API extern void bta_pan_ci_set_mfilters(UINT16 handle,
+                                            UINT16 num_mcast_filters,
+                                            UINT8* p_start_array,
+                                            UINT8* p_end_array);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* BTA_PAN_CI_H */
-

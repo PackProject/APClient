@@ -1,7 +1,9 @@
 #ifndef RP_SYSTEM_SCENE_H
 #define RP_SYSTEM_SCENE_H
+#include <Pack/types_pack.h>
+
 #include <Pack/RPGraphics.h>
-#include <Pack/RPTypes.h>
+#include <Pack/RPKernel.h>
 
 #include <egg/core.h>
 #include <egg/math.h>
@@ -10,16 +12,12 @@
 
 // Forward declarations
 class RPSysCommonObject;
-class RPSysEffectCreator;
 
 //! @addtogroup rp_system
 //! @{
 
 /**
- * @brief Pack Project base scene
- * @wfuname
- *
- * @details Common between all Pack Project games.
+ * @brief Pack Project scene
  */
 class RPSysScene : public EGG::Scene, public IRPGrpDrawObject {
 public:
@@ -28,7 +26,7 @@ public:
      * @brief Scene type
      * @ws2
      */
-    enum EKind {
+    enum EKind{
         EKind_System = 'SYS_',   //!< RPSysScene
         EKind_Base = 'BASE',     //!< RPSportsBaseScene
         EKind_Game = 'GAME',     //!< RPSportsGameScene
@@ -39,7 +37,7 @@ public:
      * @brief Island time
      * @ws2
      */
-    enum ETime {
+    enum ETime{
         ETime_Day,     //!< Force daytime
         ETime_Evening, //!< Force evening
         ETime_Night,   //!< Force night

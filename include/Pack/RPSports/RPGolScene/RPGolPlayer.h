@@ -1,6 +1,6 @@
 #ifndef RP_SPORTS_GOL_PLAYER_H
 #define RP_SPORTS_GOL_PLAYER_H
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
 
 class RPGolPlayer {
 public:

@@ -4,7 +4,6 @@
 
 #include <nw4r/snd/snd_BasicSound.h>
 #include <nw4r/snd/snd_WsdPlayer.h>
-
 #include <nw4r/ut.h>
 
 namespace nw4r {
@@ -20,7 +19,7 @@ template <typename T> class SoundInstanceManager;
 namespace detail {
 
 class WaveSound : public BasicSound {
-    friend class WaveSoundHandle;
+    friend class nw4r::snd::WaveSoundHandle;
 
 public:
     NW4R_UT_RTTI_DECL(WaveSound);

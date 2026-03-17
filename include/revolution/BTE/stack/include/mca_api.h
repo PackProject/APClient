@@ -29,190 +29,204 @@
 #include "l2c_api.h"
 
 /* move the following to bt_target.h or other place later */
-#define MCA_NUM_TC_TBL  ((MCA_NUM_REGS)*(MCA_NUM_LINKS)*(MCA_NUM_MDLS+1))
-#define MCA_NUM_CCBS	((MCA_NUM_REGS)*(MCA_NUM_LINKS))    /* Number of control channel control blocks	*/
-#define MCA_NUM_DCBS	((MCA_NUM_REGS)*(MCA_NUM_LINKS)*(MCA_NUM_MDLS)) /* Number of data channel control blocks */
-
+#define MCA_NUM_TC_TBL ((MCA_NUM_REGS) * (MCA_NUM_LINKS) * (MCA_NUM_MDLS + 1))
+#define MCA_NUM_CCBS                                                           \
+    ((MCA_NUM_REGS) *                                                          \
+     (MCA_NUM_LINKS)) /* Number of control channel control blocks	*/
+#define MCA_NUM_DCBS                                                           \
+    ((MCA_NUM_REGS) * (MCA_NUM_LINKS) *                                        \
+     (MCA_NUM_MDLS)) /* Number of data channel control blocks */
 
 /*****************************************************************************
 ** constants
 *****************************************************************************/
 /* API function return value result codes. */
-#define MCA_SUCCESS                0       /* Function successful */
-#define MCA_BAD_PARAMS             1       /* Invalid parameters */
-#define MCA_NO_RESOURCES           2       /* Not enough resources */
-#define MCA_BAD_HANDLE             3       /* Bad handle */
-#define MCA_BUSY                   4       /* A procedure is already in progress */
-#define MCA_WRITE_FAIL             5       /* Write failed */
-#define MCA_BAD_MDL_ID             6       /* MDL ID is not valid for the current API */
+#define MCA_SUCCESS 0      /* Function successful */
+#define MCA_BAD_PARAMS 1   /* Invalid parameters */
+#define MCA_NO_RESOURCES 2 /* Not enough resources */
+#define MCA_BAD_HANDLE 3   /* Bad handle */
+#define MCA_BUSY 4         /* A procedure is already in progress */
+#define MCA_WRITE_FAIL 5   /* Write failed */
+#define MCA_BAD_MDL_ID 6   /* MDL ID is not valid for the current API */
 typedef UINT8 tMCA_RESULT;
 
 /* MDEP data type.  */
-#define MCA_TDEP_ECHO              0       /* MDEP for echo test  */
-#define MCA_TDEP_DATA              1       /* MDEP for normal data */
+#define MCA_TDEP_ECHO 0 /* MDEP for echo test  */
+#define MCA_TDEP_DATA 1 /* MDEP for normal data */
 
 /* Control callback events. */
-#define MCA_ERROR_RSP_EVT           0       /* error response */
-#define MCA_CREATE_IND_EVT          1       /* create mdl indication */
-#define MCA_CREATE_CFM_EVT          2       /* create mdl confirm */
-#define MCA_RECONNECT_IND_EVT       3       /* reconnect mdl indication */
-#define MCA_RECONNECT_CFM_EVT       4       /* reconnect mdl confirm */
-#define MCA_ABORT_IND_EVT           5       /* abort mdl indication */
-#define MCA_ABORT_CFM_EVT           6       /* abort mdl confirm */
-#define MCA_DELETE_IND_EVT          7       /* delete mdl indication */
-#define MCA_DELETE_CFM_EVT          8       /* delete mdl confirm */
+#define MCA_ERROR_RSP_EVT 0     /* error response */
+#define MCA_CREATE_IND_EVT 1    /* create mdl indication */
+#define MCA_CREATE_CFM_EVT 2    /* create mdl confirm */
+#define MCA_RECONNECT_IND_EVT 3 /* reconnect mdl indication */
+#define MCA_RECONNECT_CFM_EVT 4 /* reconnect mdl confirm */
+#define MCA_ABORT_IND_EVT 5     /* abort mdl indication */
+#define MCA_ABORT_CFM_EVT 6     /* abort mdl confirm */
+#define MCA_DELETE_IND_EVT 7    /* delete mdl indication */
+#define MCA_DELETE_CFM_EVT 8    /* delete mdl confirm */
 
-#define MCA_SYNC_CAP_IND_EVT        0x11   /* request sync capabilities & requirements */
-#define MCA_SYNC_CAP_CFM_EVT        0x12   /* indicate completion */
-#define MCA_SYNC_SET_IND_EVT        0x13   /* request to set the time-stamp clock */
-#define MCA_SYNC_SET_CFM_EVT        0x14   /* indicate completion */
-#define MCA_SYNC_INFO_IND_EVT       0x15   /* update of the actual time-stamp clock instant from the sync slave */
+#define MCA_SYNC_CAP_IND_EVT                                                   \
+    0x11                          /* request sync capabilities & requirements  \
+                                   */
+#define MCA_SYNC_CAP_CFM_EVT 0x12 /* indicate completion */
+#define MCA_SYNC_SET_IND_EVT 0x13 /* request to set the time-stamp clock */
+#define MCA_SYNC_SET_CFM_EVT 0x14 /* indicate completion */
+#define MCA_SYNC_INFO_IND_EVT                                                  \
+    0x15 /* update of the actual time-stamp clock instant from the sync slave  \
+          */
 
-#define MCA_CONNECT_IND_EVT         0x20    /* Control channel connected */
-#define MCA_DISCONNECT_IND_EVT      0x21    /* Control channel disconnected */
-#define MCA_OPEN_IND_EVT            0x22    /* Data channel open indication */
-#define MCA_OPEN_CFM_EVT            0x23    /* Data channel open confirm */
-#define MCA_CLOSE_IND_EVT           0x24    /* Data channel close indication */
-#define MCA_CLOSE_CFM_EVT           0x25    /* Data channel close confirm */
-#define MCA_CONG_CHG_EVT            0x26    /* congestion change event */
-#define MCA_RSP_TOUT_IND_EVT        0x27    /* Control channel message response timeout */
+#define MCA_CONNECT_IND_EVT 0x20    /* Control channel connected */
+#define MCA_DISCONNECT_IND_EVT 0x21 /* Control channel disconnected */
+#define MCA_OPEN_IND_EVT 0x22       /* Data channel open indication */
+#define MCA_OPEN_CFM_EVT 0x23       /* Data channel open confirm */
+#define MCA_CLOSE_IND_EVT 0x24      /* Data channel close indication */
+#define MCA_CLOSE_CFM_EVT 0x25      /* Data channel close confirm */
+#define MCA_CONG_CHG_EVT 0x26       /* congestion change event */
+#define MCA_RSP_TOUT_IND_EVT                                                   \
+    0x27 /* Control channel message response timeout                           \
+          */
 /*****************************************************************************
 **  Type Definitions
 *****************************************************************************/
-typedef UINT8  tMCA_HANDLE; /* the handle for registration. 1 based index to rcb */
-typedef UINT8  tMCA_CL;     /* the handle for a control channel; reported at MCA_CONNECT_IND_EVT */
-typedef UINT8  tMCA_DEP;    /* the handle for MCA_CreateDep. This is also the local mdep_id */
-typedef UINT16 tMCA_DL;     /* the handle for the data channel. This is reported at MCA_OPEN_CFM_EVT or MCA_OPEN_IND_EVT */
+typedef UINT8
+    tMCA_HANDLE;       /* the handle for registration. 1 based index to rcb */
+typedef UINT8 tMCA_CL; /* the handle for a control channel; reported at
+                          MCA_CONNECT_IND_EVT */
+typedef UINT8
+    tMCA_DEP; /* the handle for MCA_CreateDep. This is also the local mdep_id */
+typedef UINT16 tMCA_DL; /* the handle for the data channel. This is reported at
+                           MCA_OPEN_CFM_EVT or MCA_OPEN_IND_EVT */
 
 /* This is the data callback function.  It is executed when MCAP has a data
 ** packet ready for the application.
 */
-typedef void (tMCA_DATA_CBACK)(tMCA_DL mdl, BT_HDR *p_pkt);
-
+typedef void(tMCA_DATA_CBACK)(tMCA_DL mdl, BT_HDR* p_pkt);
 
 /* This structure contains parameters which are set at registration. */
 typedef struct {
-    UINT32      rsp_tout;   /* MCAP signaling response timeout */
-    UINT16      ctrl_psm;   /* L2CAP PSM for the MCAP control channel */
-    UINT16      data_psm;   /* L2CAP PSM for the MCAP data channel */
-    UINT16      sec_mask;   /* Security mask for BTM_SetSecurityLevel() */
+    UINT32 rsp_tout; /* MCAP signaling response timeout */
+    UINT16 ctrl_psm; /* L2CAP PSM for the MCAP control channel */
+    UINT16 data_psm; /* L2CAP PSM for the MCAP data channel */
+    UINT16 sec_mask; /* Security mask for BTM_SetSecurityLevel() */
 } tMCA_REG;
 
 /* This structure contains parameters to create a MDEP. */
 typedef struct {
-    UINT8           type;       /* MCA_TDEP_DATA, or MCA_TDEP_ECHO. a regiatration may have only one MCA_TDEP_ECHO MDEP */
-    UINT8           max_mdl;    /* The maximum number of MDLs for this MDEP (max is MCA_NUM_MDLS) */
-    tMCA_DATA_CBACK *p_data_cback;  /* Data callback function */
+    UINT8 type; /* MCA_TDEP_DATA, or MCA_TDEP_ECHO. a regiatration may have only
+                   one MCA_TDEP_ECHO MDEP */
+    UINT8 max_mdl; /* The maximum number of MDLs for this MDEP (max is
+                      MCA_NUM_MDLS) */
+    tMCA_DATA_CBACK* p_data_cback; /* Data callback function */
 } tMCA_CS;
 
-#define MCA_FCS_NONE        0       /* fcs_present=FALSE */
-#define MCA_FCS_BYPASS      0x10    /* fcs_present=TRUE, fcs=L2CAP_CFG_FCS_BYPASS */
-#define MCA_FCS_USE         0x11    /* fcs_present=TRUE, fcs=L2CAP_CFG_FCS_USE */
-#define MCA_FCS_PRESNT_MASK 0x10    /* fcs_present=TRUE */
-#define MCA_FCS_USE_MASK    0x01    /* mask for fcs */
+#define MCA_FCS_NONE 0      /* fcs_present=FALSE */
+#define MCA_FCS_BYPASS 0x10 /* fcs_present=TRUE, fcs=L2CAP_CFG_FCS_BYPASS */
+#define MCA_FCS_USE 0x11    /* fcs_present=TRUE, fcs=L2CAP_CFG_FCS_USE */
+#define MCA_FCS_PRESNT_MASK 0x10 /* fcs_present=TRUE */
+#define MCA_FCS_USE_MASK 0x01    /* mask for fcs */
 typedef UINT8 tMCA_FCS_OPT;
 
 /* This structure contains L2CAP configuration parameters for the channel. */
 typedef struct {
     tL2CAP_FCR_OPTS fcr_opt;
-    UINT8           user_rx_pool_id;
-    UINT8           user_tx_pool_id;
-    UINT8           fcr_rx_pool_id;
-    UINT8           fcr_tx_pool_id;
-    tMCA_FCS_OPT    fcs;
-    UINT16          data_mtu;   /* L2CAP MTU of the MCAP data channel */
+    UINT8 user_rx_pool_id;
+    UINT8 user_tx_pool_id;
+    UINT8 fcr_rx_pool_id;
+    UINT8 fcr_tx_pool_id;
+    tMCA_FCS_OPT fcs;
+    UINT16 data_mtu; /* L2CAP MTU of the MCAP data channel */
 } tMCA_CHNL_CFG;
-
 
 /* Header structure for callback event parameters. */
 typedef struct {
-    UINT16          mdl_id;     /* The associated MDL ID */
-    UINT8           op_code;    /* The op (request/response) code */
+    UINT16 mdl_id; /* The associated MDL ID */
+    UINT8 op_code; /* The op (request/response) code */
 } tMCA_EVT_HDR;
 
 /* Response Header structure for callback event parameters. */
 typedef struct {
-    UINT16          mdl_id;     /* The associated MDL ID */
-    UINT8           op_code;    /* The op (request/response) code */
-    UINT8           rsp_code;   /* The response code */
+    UINT16 mdl_id;  /* The associated MDL ID */
+    UINT8 op_code;  /* The op (request/response) code */
+    UINT8 rsp_code; /* The response code */
 } tMCA_RSP_EVT;
 
 /* This data structure is associated with the MCA_CREATE_IND_EVT. */
 typedef struct {
-    UINT16          mdl_id;     /* The associated MDL ID */
-    UINT8           op_code;    /* The op (request/response) code */
-    UINT8           dep_id;     /* MDEP ID */
-    UINT8           cfg;        /* The configuration to negotiate */
+    UINT16 mdl_id; /* The associated MDL ID */
+    UINT8 op_code; /* The op (request/response) code */
+    UINT8 dep_id;  /* MDEP ID */
+    UINT8 cfg;     /* The configuration to negotiate */
 } tMCA_CREATE_IND;
 
 /* This data structure is associated with the MCA_CREATE_CFM_EVT. */
 typedef struct {
-    UINT16          mdl_id;     /* The associated MDL ID */
-    UINT8           op_code;    /* The op (request/response) code */
-    UINT8           rsp_code;   /* The response code. */
-    UINT8           cfg;        /* The configuration to negotiate */
+    UINT16 mdl_id;  /* The associated MDL ID */
+    UINT8 op_code;  /* The op (request/response) code */
+    UINT8 rsp_code; /* The response code. */
+    UINT8 cfg;      /* The configuration to negotiate */
 } tMCA_CREATE_CFM;
 
 /* This data structure is associated with MCA_CONNECT_IND_EVT. */
 typedef struct {
-    BD_ADDR         bd_addr;    /* The peer address */
-    UINT16          mtu;        /* peer mtu */
+    BD_ADDR bd_addr; /* The peer address */
+    UINT16 mtu;      /* peer mtu */
 } tMCA_CONNECT_IND;
 
 /* This data structure is associated with MCA_DISCONNECT_IND_EVT. */
 typedef struct {
-    BD_ADDR         bd_addr;    /* The peer address */
-    UINT16          reason;     /* disconnect reason given by L2CAP */
+    BD_ADDR bd_addr; /* The peer address */
+    UINT16 reason;   /* disconnect reason given by L2CAP */
 } tMCA_DISCONNECT_IND;
 
-/* This data structure is associated with MCA_OPEN_IND_EVT, and MCA_OPEN_CFM_EVT. */
+/* This data structure is associated with MCA_OPEN_IND_EVT, and
+ * MCA_OPEN_CFM_EVT. */
 typedef struct {
-    UINT16          mdl_id;     /* The associated MDL ID */
-    tMCA_DL         mdl;        /* The handle for the data channel */
-    UINT16          mtu;        /* peer mtu */
+    UINT16 mdl_id; /* The associated MDL ID */
+    tMCA_DL mdl;   /* The handle for the data channel */
+    UINT16 mtu;    /* peer mtu */
 } tMCA_DL_OPEN;
 
-/* This data structure is associated with MCA_CLOSE_IND_EVT and MCA_CLOSE_CFM_EVT. */
+/* This data structure is associated with MCA_CLOSE_IND_EVT and
+ * MCA_CLOSE_CFM_EVT. */
 typedef struct {
-    UINT16          mdl_id;     /* The associated MDL ID */
-    tMCA_DL         mdl;        /* The handle for the data channel */
-    UINT16          reason;     /* disconnect reason given by L2CAP */
+    UINT16 mdl_id; /* The associated MDL ID */
+    tMCA_DL mdl;   /* The handle for the data channel */
+    UINT16 reason; /* disconnect reason given by L2CAP */
 } tMCA_DL_CLOSE;
 
 /* This data structure is associated with MCA_CONG_CHG_EVT. */
 typedef struct {
-    UINT16          mdl_id;     /* N/A - This is a place holder */
-    tMCA_DL	        mdl;        /* The handle for the data channel */
-    BOOLEAN         cong;       /* TRUE, if the channel is congested */
+    UINT16 mdl_id; /* N/A - This is a place holder */
+    tMCA_DL mdl;   /* The handle for the data channel */
+    BOOLEAN cong;  /* TRUE, if the channel is congested */
 } tMCA_CONG_CHG;
 
 /* Union of all control callback event data structures */
 typedef union {
-    tMCA_EVT_HDR        hdr;
-    tMCA_RSP_EVT        rsp;
-    tMCA_CREATE_IND     create_ind;
-    tMCA_CREATE_CFM     create_cfm;
-    tMCA_EVT_HDR        reconnect_ind;
-    tMCA_RSP_EVT        reconnect_cfm;
-    tMCA_EVT_HDR        abort_ind;
-    tMCA_RSP_EVT        abort_cfm;
-    tMCA_EVT_HDR        delete_ind;
-    tMCA_RSP_EVT        delete_cfm;
-    tMCA_CONNECT_IND    connect_ind;
+    tMCA_EVT_HDR hdr;
+    tMCA_RSP_EVT rsp;
+    tMCA_CREATE_IND create_ind;
+    tMCA_CREATE_CFM create_cfm;
+    tMCA_EVT_HDR reconnect_ind;
+    tMCA_RSP_EVT reconnect_cfm;
+    tMCA_EVT_HDR abort_ind;
+    tMCA_RSP_EVT abort_cfm;
+    tMCA_EVT_HDR delete_ind;
+    tMCA_RSP_EVT delete_cfm;
+    tMCA_CONNECT_IND connect_ind;
     tMCA_DISCONNECT_IND disconnect_ind;
-    tMCA_DL_OPEN        open_ind;
-    tMCA_DL_OPEN        open_cfm;
-    tMCA_DL_CLOSE       close_ind;
-    tMCA_DL_CLOSE       close_cfm;
-    tMCA_CONG_CHG       cong_chg;
+    tMCA_DL_OPEN open_ind;
+    tMCA_DL_OPEN open_cfm;
+    tMCA_DL_CLOSE close_ind;
+    tMCA_DL_CLOSE close_cfm;
+    tMCA_CONG_CHG cong_chg;
 } tMCA_CTRL;
 
 /* This is the control callback function.  This function passes control events
 ** to the application.
 */
-typedef void (tMCA_CTRL_CBACK)(tMCA_HANDLE handle, tMCA_CL mcl, UINT8 event,
-                                tMCA_CTRL *p_data);
-
+typedef void(tMCA_CTRL_CBACK)(tMCA_HANDLE handle, tMCA_CL mcl, UINT8 event,
+                              tMCA_CTRL* p_data);
 
 /*******************************************************************************
 **
@@ -247,7 +261,7 @@ MCA_API extern void MCA_Init(void);
 **                  the input parameter is 0xff.
 **
 *******************************************************************************/
-MCA_API extern UINT8 MCA_SetTraceLevel (UINT8 level);
+MCA_API extern UINT8 MCA_SetTraceLevel(UINT8 level);
 
 /*******************************************************************************
 **
@@ -261,15 +275,18 @@ MCA_API extern UINT8 MCA_SetTraceLevel (UINT8 level);
 ** Returns          0, if failed. Otherwise, the MCA handle.
 **
 *******************************************************************************/
-MCA_API extern tMCA_HANDLE MCA_Register(tMCA_REG *p_reg, tMCA_CTRL_CBACK *p_cback);
+MCA_API extern tMCA_HANDLE MCA_Register(tMCA_REG* p_reg,
+                                        tMCA_CTRL_CBACK* p_cback);
 
 /*******************************************************************************
 **
 ** Function         MCA_Deregister
 **
-** Description      This function is called to deregister an MCAP implementation.
+** Description      This function is called to deregister an MCAP
+*implementation.
 **                  Before this function can be called, all control and data
-**                  channels must be removed with MCA_DisconnectReq and MCA_CloseReq.
+**                  channels must be removed with MCA_DisconnectReq and
+*MCA_CloseReq.
 **
 ** Returns          void
 **
@@ -280,15 +297,18 @@ MCA_API extern void MCA_Deregister(tMCA_HANDLE handle);
 **
 ** Function         MCA_CreateDep
 **
-** Description      Create a data endpoint.  If the MDEP is created successfully,
+** Description      Create a data endpoint.  If the MDEP is created
+*successfully,
 **                  the MDEP ID is returned in *p_dep. After a data endpoint is
-**                  created, an application can initiate a connection between this
+**                  created, an application can initiate a connection between
+*this
 **                  endpoint and an endpoint on a peer device.
 **
 ** Returns          MCA_SUCCESS if successful, otherwise error.
 **
 *******************************************************************************/
-MCA_API extern tMCA_RESULT MCA_CreateDep(tMCA_HANDLE handle, tMCA_DEP *p_dep, tMCA_CS *p_cs);
+MCA_API extern tMCA_RESULT MCA_CreateDep(tMCA_HANDLE handle, tMCA_DEP* p_dep,
+                                         tMCA_CS* p_cs);
 
 /*******************************************************************************
 **
@@ -314,7 +334,8 @@ MCA_API extern tMCA_RESULT MCA_DeleteDep(tMCA_HANDLE handle, tMCA_DEP dep);
 **                  MCA_CONNECT_IND_EVT is reported to the application via its
 **                  control callback function.
 **                  This control channel is identified by tMCA_CL.
-**                  If the connection attempt fails, an MCA_DISCONNECT_IND_EVT is
+**                  If the connection attempt fails, an MCA_DISCONNECT_IND_EVT
+*is
 **                  reported. The security mask parameter overrides the outgoing
 **                  security mask set in MCA_Register().
 **
@@ -322,8 +343,7 @@ MCA_API extern tMCA_RESULT MCA_DeleteDep(tMCA_HANDLE handle, tMCA_DEP dep);
 **
 *******************************************************************************/
 MCA_API extern tMCA_RESULT MCA_ConnectReq(tMCA_HANDLE handle, BD_ADDR bd_addr,
-                                          UINT16 ctrl_psm,
-                                          UINT16 sec_mask);
+                                          UINT16 ctrl_psm, UINT16 sec_mask);
 
 /*******************************************************************************
 **
@@ -333,7 +353,8 @@ MCA_API extern tMCA_RESULT MCA_ConnectReq(tMCA_HANDLE handle, BD_ADDR bd_addr,
 **                  to the peer device.
 **                  If associated data channel exists, they are disconnected.
 **                  When the MCL is disconnected an MCA_DISCONNECT_IND_EVT is
-**                  reported to the application via its control callback function.
+**                  reported to the application via its control callback
+*function.
 **
 ** Returns          MCA_SUCCESS if successful, otherwise error.
 **
@@ -345,19 +366,22 @@ MCA_API extern tMCA_RESULT MCA_DisconnectReq(tMCA_CL mcl);
 ** Function         MCA_CreateMdl
 **
 ** Description      This function sends a CREATE_MDL request to the peer device.
-**                  When the response is received, a MCA_CREATE_CFM_EVT is reported
+**                  When the response is received, a MCA_CREATE_CFM_EVT is
+*reported
 **                  with the given MDL ID.
 **                  If the response is successful, a data channel is open
 **                  with the given p_chnl_cfg
-**                  When the data channel is open successfully, a MCA_OPEN_CFM_EVT
+**                  When the data channel is open successfully, a
+*MCA_OPEN_CFM_EVT
 **                  is reported. This data channel is identified as tMCA_DL.
 **
 ** Returns          MCA_SUCCESS if successful, otherwise error.
 **
 *******************************************************************************/
-MCA_API extern tMCA_RESULT MCA_CreateMdl(tMCA_CL mcl, tMCA_DEP dep, UINT16 data_psm,
-                                         UINT16 mdl_id, UINT8 peer_dep_id,
-                                         UINT8 cfg, const tMCA_CHNL_CFG *p_chnl_cfg);
+MCA_API extern tMCA_RESULT MCA_CreateMdl(tMCA_CL mcl, tMCA_DEP dep,
+                                         UINT16 data_psm, UINT16 mdl_id,
+                                         UINT8 peer_dep_id, UINT8 cfg,
+                                         const tMCA_CHNL_CFG* p_chnl_cfg);
 
 /*******************************************************************************
 **
@@ -367,15 +391,17 @@ MCA_API extern tMCA_RESULT MCA_CreateMdl(tMCA_CL mcl, tMCA_DEP dep, UINT16 data_
 **                  in response to a received MCA_CREATE_IND_EVT.
 **                  If the rsp_code is successful, a data channel is open
 **                  with the given p_chnl_cfg
-**                  When the data channel is open successfully, a MCA_OPEN_IND_EVT
+**                  When the data channel is open successfully, a
+*MCA_OPEN_IND_EVT
 **                  is reported. This data channel is identified as tMCA_DL.
 **
 ** Returns          MCA_SUCCESS if successful, otherwise error.
 **
 *******************************************************************************/
 MCA_API extern tMCA_RESULT MCA_CreateMdlRsp(tMCA_CL mcl, tMCA_DEP dep,
-                                            UINT16 mdl_id, UINT8 cfg, UINT8 rsp_code,
-                                            const tMCA_CHNL_CFG *p_chnl_cfg);
+                                            UINT16 mdl_id, UINT8 cfg,
+                                            UINT8 rsp_code,
+                                            const tMCA_CHNL_CFG* p_chnl_cfg);
 
 /*******************************************************************************
 **
@@ -394,26 +420,32 @@ MCA_API extern tMCA_RESULT MCA_CloseReq(tMCA_DL mdl);
 **
 ** Function         MCA_ReconnectMdl
 **
-** Description      This function sends a RECONNECT_MDL request to the peer device.
-**                  When the response is received, a MCA_RECONNECT_CFM_EVT is reported.
+** Description      This function sends a RECONNECT_MDL request to the peer
+*device.
+**                  When the response is received, a MCA_RECONNECT_CFM_EVT is
+*reported.
 **                  If the response is successful, a data channel is open.
-**                  When the data channel is open successfully, a MCA_OPEN_CFM_EVT
+**                  When the data channel is open successfully, a
+*MCA_OPEN_CFM_EVT
 **                  is reported.
 **
 ** Returns          MCA_SUCCESS if successful, otherwise error.
 **
 *******************************************************************************/
-MCA_API extern tMCA_RESULT MCA_ReconnectMdl(tMCA_CL mcl, tMCA_DEP dep, UINT16 data_psm,
-                                            UINT16 mdl_id, const tMCA_CHNL_CFG *p_chnl_cfg);
+MCA_API extern tMCA_RESULT MCA_ReconnectMdl(tMCA_CL mcl, tMCA_DEP dep,
+                                            UINT16 data_psm, UINT16 mdl_id,
+                                            const tMCA_CHNL_CFG* p_chnl_cfg);
 
 /*******************************************************************************
 **
 ** Function         MCA_ReconnectMdlRsp
 **
-** Description      This function sends a RECONNECT_MDL response to the peer device
+** Description      This function sends a RECONNECT_MDL response to the peer
+*device
 **                  in response to a MCA_RECONNECT_IND_EVT event.
 **                  If the response is successful, a data channel is open.
-**                  When the data channel is open successfully, a MCA_OPEN_IND_EVT
+**                  When the data channel is open successfully, a
+*MCA_OPEN_IND_EVT
 **                  is reported.
 **
 ** Returns          MCA_SUCCESS if successful, otherwise error.
@@ -421,7 +453,7 @@ MCA_API extern tMCA_RESULT MCA_ReconnectMdl(tMCA_CL mcl, tMCA_DEP dep, UINT16 da
 *******************************************************************************/
 MCA_API extern tMCA_RESULT MCA_ReconnectMdlRsp(tMCA_CL mcl, tMCA_DEP dep,
                                                UINT16 mdl_id, UINT8 rsp_code,
-                                               const tMCA_CHNL_CFG *p_chnl_cfg);
+                                               const tMCA_CHNL_CFG* p_chnl_cfg);
 
 /*******************************************************************************
 **
@@ -429,20 +461,23 @@ MCA_API extern tMCA_RESULT MCA_ReconnectMdlRsp(tMCA_CL mcl, tMCA_DEP dep,
 **
 ** Description      This function initiates a data channel connection toward the
 **                  connected peer device.
-**                  When the data channel is open successfully, a MCA_OPEN_CFM_EVT
+**                  When the data channel is open successfully, a
+*MCA_OPEN_CFM_EVT
 **                  is reported. This data channel is identified as tMCA_DL.
 **
 ** Returns          MCA_SUCCESS if successful, otherwise error.
 **
 *******************************************************************************/
-MCA_API extern tMCA_RESULT MCA_DataChnlCfg(tMCA_CL mcl, const tMCA_CHNL_CFG *p_chnl_cfg);
+MCA_API extern tMCA_RESULT MCA_DataChnlCfg(tMCA_CL mcl,
+                                           const tMCA_CHNL_CFG* p_chnl_cfg);
 
 /*******************************************************************************
 **
 ** Function         MCA_Abort
 **
 ** Description      This function sends a ABORT_MDL request to the peer device.
-**                  When the response is received, a MCA_ABORT_CFM_EVT is reported.
+**                  When the response is received, a MCA_ABORT_CFM_EVT is
+*reported.
 **
 ** Returns          MCA_SUCCESS if successful, otherwise error.
 **
@@ -454,7 +489,8 @@ MCA_API extern tMCA_RESULT MCA_Abort(tMCA_CL mcl);
 ** Function         MCA_Delete
 **
 ** Description      This function sends a DELETE_MDL request to the peer device.
-**                  When the response is received, a MCA_DELETE_CFM_EVT is reported.
+**                  When the response is received, a MCA_DELETE_CFM_EVT is
+*reported.
 **
 ** Returns          MCA_SUCCESS if successful, otherwise error.
 **
@@ -467,8 +503,10 @@ MCA_API extern tMCA_RESULT MCA_Delete(tMCA_CL mcl, UINT16 mdl_id);
 **
 ** Description      Send a data packet to the peer device.
 **
-**                  The application passes the packet using the BT_HDR structure.
-**                  The offset field must be equal to or greater than L2CAP_MIN_OFFSET.
+**                  The application passes the packet using the BT_HDR
+*structure.
+**                  The offset field must be equal to or greater than
+*L2CAP_MIN_OFFSET.
 **                  This allows enough space in the buffer for the L2CAP header.
 **
 **                  The memory pointed to by p_pkt must be a GKI buffer
@@ -479,7 +517,7 @@ MCA_API extern tMCA_RESULT MCA_Delete(tMCA_CL mcl, UINT16 mdl_id);
 ** Returns          MCA_SUCCESS if successful, otherwise error.
 **
 *******************************************************************************/
-MCA_API extern tMCA_RESULT MCA_WriteReq(tMCA_DL mdl, BT_HDR *p_pkt);
+MCA_API extern tMCA_RESULT MCA_WriteReq(tMCA_DL mdl, BT_HDR* p_pkt);
 
 /*******************************************************************************
 **
@@ -490,6 +528,6 @@ MCA_API extern tMCA_RESULT MCA_WriteReq(tMCA_DL mdl, BT_HDR *p_pkt);
 ** Returns          L2CAP channel ID if successful, otherwise 0.
 **
 *******************************************************************************/
-MCA_API extern UINT16 MCA_GetL2CapChannel (tMCA_DL mdl);
+MCA_API extern UINT16 MCA_GetL2CapChannel(tMCA_DL mdl);
 
 #endif /* MCA_API_H */

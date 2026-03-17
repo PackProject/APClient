@@ -8,6 +8,16 @@ namespace EGG {
 
 class MsgRes {
 public:
+    enum EDataBlkKind {
+        DATABLK_MSGINFO,
+        DATABLK_MSGDATA,
+        DATABLK_STRATTR,
+        DATABLK_MSGID,
+        DATABLK_FLOWCHART,
+        DATABLK_FLOWLABEL,
+        DATABLK_MAX
+    };
+
     struct DataBlockHeader {
         u32 mSignature; // at 0x0
         u32 mType;      // at 0x4
@@ -22,7 +32,6 @@ public:
 
     struct MessageHeader : DataBlockHeader {
         enum EEncoding {
-            ENCODING_NONE,
             ENCODING_1BYTE,
             ENCODING_2BYTE,
             ENCODING_SJIS,
@@ -62,17 +71,6 @@ public:
     struct FlowChartInfoDataBlock : DataBlock {};
 
     struct FlowLabelInfoDataBlock : DataBlock {};
-
-protected:
-    enum EDataBlkKind {
-        DATABLK_MSGINFO,
-        DATABLK_MSGDATA,
-        DATABLK_STRATTR,
-        DATABLK_MSGID,
-        DATABLK_FLOWCHART,
-        DATABLK_FLOWLABEL,
-        DATABLK_MAX
-    };
 
     static const u16 cTagMark = '\x1A';
     static const u32 cDataBlkKindCodeSet[DATABLK_MAX];

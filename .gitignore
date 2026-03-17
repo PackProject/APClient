@@ -20,12 +20,15 @@ base/**.dol
 #=========================================================#
 # Tools
 #=========================================================#
-# Executables
+# Kamek
 tools/kamek/*
 !tools/kamek/.gitkeep
 # CodeWarrior
 tools/codewarrior/*
 !tools/codewarrior/.gitkeep
+# wibo
+tools/wibo/*
+!tools/wibo/.gitkeep
 # Compiled Python
 tools/**/*.pyc
 
@@ -40,3 +43,6 @@ build/**
 .ninja_deps
 .ninja_log
 build.ninja
+# clangd artifacts
+compile_commands.json
+.cache/clangd/

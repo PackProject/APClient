@@ -4,7 +4,6 @@
 
 #include <nw4r/ef/ef_res_emitter.h>
 #include <nw4r/ef/ef_res_texture.h>
-
 #include <nw4r/ut.h>
 
 namespace nw4r {

@@ -1,7 +1,9 @@
 #ifndef RP_PARTY_BIL_MAIN_H
 #define RP_PARTY_BIL_MAIN_H
-#include "RPTypes.h"
-#include <RPUtility/RPUtlBaseFsm.h>
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSingleton.h>
+#include <Pack/RPUtility.h>
 
 class RPBilMain {
     RP_SINGLETON_DECL(RPBilMain);

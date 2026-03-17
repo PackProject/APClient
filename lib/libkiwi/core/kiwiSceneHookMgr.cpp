@@ -1,8 +1,8 @@
 #define LIBKIWI_INTERNAL
 
-#include <Pack/RPSystem.h>
-
 #include <libkiwi.h>
+
+#include <Pack/RPSystem.h>
 
 namespace kiwi {
 namespace {

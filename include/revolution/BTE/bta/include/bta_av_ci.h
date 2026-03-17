@@ -30,8 +30,7 @@
 **  Function Declarations
 *****************************************************************************/
 #ifdef __cplusplus
-extern "C"
-{
+extern "C" {
 #endif
 
 /*******************************************************************************
@@ -62,13 +61,11 @@ BTA_API extern void bta_av_ci_src_data_ready(tBTA_AV_CHNL chnl);
 **
 *******************************************************************************/
 BTA_API extern void bta_av_ci_setconfig(tBTA_AV_HNDL hndl, UINT8 err_code,
-                                        UINT8 category, UINT8 num_seid, UINT8 *p_seid,
-                                        BOOLEAN recfg_needed);
-
+                                        UINT8 category, UINT8 num_seid,
+                                        UINT8* p_seid, BOOLEAN recfg_needed);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* BTA_AV_CI_H */
-

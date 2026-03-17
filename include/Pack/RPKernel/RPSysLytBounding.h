@@ -1,7 +1,13 @@
 #ifndef RP_KERNEL_LYT_BOUNDING_H
 #define RP_KERNEL_LYT_BOUNDING_H
-#include "RPTypes.h"
-#include <nw4r/lyt/lyt_bounding.h>
+#include <Pack/types_pack.h>
+
+#include <egg/math.h>
+
+#include <nw4r/lyt.h>
+
+//! @addtogroup rp_kernel
+//! @{
 
 /**
  * @brief NW4R layout bounding extension
@@ -9,13 +15,15 @@
 class RPSysLytBounding : public nw4r::lyt::Bounding {
 public:
     /**
-     * @brief Check if a specified position is inside the bounding
-     * @param drawInfo Parent draw info
-     * @param pos Position to check
-     * @address 801993f4
+     * @brief Tests whether a point falls within this bounding pane
+     *
+     * @param rInfo Pane draw info
+     * @param rPoint Point to test
      */
-    bool isInsideBounding(nw4r::lyt::DrawInfo* drawInfo,
-                          const nw4r::math::VEC2& pos);
+    bool isInsideBounding(const nw4r::lyt::DrawInfo& rInfo,
+                          const EGG::Vector2f& rPoint);
 };
+
+//! @}
 
 #endif

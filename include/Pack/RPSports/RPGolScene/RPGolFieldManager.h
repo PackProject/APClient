@@ -1,31 +1,35 @@
 #ifndef RP_SPORTS_GOL_FIELD_MANAGER_H
 #define RP_SPORTS_GOL_FIELD_MANAGER_H
-#include "RPSysUnknownBase.h"
-#include "RPTypes.h"
-#include <RPGolScene/RPGolMapObjPin.h>
-#include <nw4r/math/math_types.h>
+#include <Pack/types_pack.h>
+
+#include <Pack/RPGraphics.h>
+#include <Pack/RPKernel.h>
+#include <Pack/RPSports/RPGolScene/RPGolMapObjPin.h>
+#include <Pack/RPUtility.h>
+
+#include <nw4r/math.h>
 
 // Forward declarations
-class RPUtlMapData;
-class RPGrpShadowTexture;
 class RPGolMapObjTree;
 class RPGolMapObjTreeWater;
 class RPGolMapObjTeeMarker;
 class RPGolMapObjSky;
 class RPGolMapObjPlayer;
-class RPUtlDohGraphSun;
 class RPGolMapObjWind;
 class RPGolMapObjTarget;
 class RPGolMapObjTargetHit;
 class RPGolMapObjCup;
-class RPSysEffect;
+
+// TODO: remove
+class RPUtlDohGraphSun;
+class RPGrpShadowTexture;
 
 /**
  * @brief Golf course object, effect, and shadow manager
  * @wscname
  * @todo Document all of the functions
  */
-class RPGolFieldManager : RPSysUnknownBase {
+class RPGolFieldManager : RP_DEBUG_STUB_1 {
     RP_SINGLETON_DECL(RPGolFieldManager);
 
 public:

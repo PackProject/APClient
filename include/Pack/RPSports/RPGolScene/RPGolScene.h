@@ -1,7 +1,8 @@
 #ifndef RP_SPORTS_GOL_SCENE_H
 #define RP_SPORTS_GOL_SCENE_H
-#include "RPSportsBaseScene.h"
-#include "RPTypes.h"
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSports/RPSportsBaseScene.h>
 
 class RPGolMain;
 

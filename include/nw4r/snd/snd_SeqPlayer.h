@@ -5,7 +5,6 @@
 #include <nw4r/snd/snd_BasicPlayer.h>
 #include <nw4r/snd/snd_DisposeCallback.h>
 #include <nw4r/snd/snd_SoundThread.h>
-
 #include <nw4r/ut.h>
 
 namespace nw4r {

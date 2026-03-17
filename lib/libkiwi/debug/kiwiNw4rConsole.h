@@ -1,6 +1,7 @@
 #ifndef LIBKIWI_DEBUG_NW4R_CONSOLE_H
 #define LIBKIWI_DEBUG_NW4R_CONSOLE_H
 #include <libkiwi/k_types.h>
+#include <libkiwi/util/kiwiDynamicSingleton.h>
 
 namespace kiwi {
 //! @addtogroup libkiwi_debug
@@ -21,12 +22,6 @@ public:
      */
     virtual ~Nw4rConsole();
 
-    /**
-     * @brief Tests whether the console is visible
-     */
-    bool IsVisible() const {
-        return mIsVisible;
-    }
     /**
      * @brief Toggles console visibilty
      */
@@ -79,19 +74,7 @@ public:
     /**
      * @brief Draws console using DirectPrint
      */
-    virtual void DrawDirect();
-
-    /**
-     * @brief Scrolls the console to show the latest text line
-     */
-    void ShowLatestLine();
-
-    /**
-     * @brief Enters the console main loop
-     *
-     * @param canExit Whether the console can be closed with the B button
-     */
-    void Enter(bool canExit);
+    void DrawDirect() const;
 
 private:
     /**

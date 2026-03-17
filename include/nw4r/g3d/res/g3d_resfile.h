@@ -13,7 +13,6 @@
 #include <nw4r/g3d/res/g3d_resmdl.h>
 #include <nw4r/g3d/res/g3d_respltt.h>
 #include <nw4r/g3d/res/g3d_restex.h>
-
 #include <nw4r/ut.h>
 
 namespace nw4r {

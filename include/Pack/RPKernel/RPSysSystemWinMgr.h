@@ -1,41 +1,85 @@
 #ifndef RP_KERNEL_SYSTEM_WINDOW_MGR_H
 #define RP_KERNEL_SYSTEM_WINDOW_MGR_H
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
 
-// Thanks Nintendo!
+#include <Pack/RPSingleton.h>
+
+//! @addtogroup rp_kernel
+//! @{
+
+// Forward declarations
+class RPSysMessage;
+
 #if defined(PACK_RESORT)
 #define RPSysSysWinMgr RPSysSystemWinMgr
 #endif
 
+/**
+ * @brief System window manager
+ */
 class RPSysSystemWinMgr {
-    RP_SINGLETON_DECL(RPSysSystemWinMgr);
+    RP_SINGLETON_DECL_EX(RPSysSystemWinMgr);
 
 public:
-    enum E_WINDOW_TYPE {
-        WINDOW_TYPE_MSG,
-        WINDOW_TYPE_ERR,
+    enum E_ALIGN {};
+
+    enum E_BUTTON {
+        E_BUTTON_YES,
+        E_BUTTON_NO,
     };
 
-    enum E_RESULT { RESULT_NONE, RESULT_WAIT, RESULT_YES, RESULT_NO };
+    enum E_WINDOW_TYPE {
+        E_WINDOW_TYPE_TEXT,
+        E_WINDOW_TYPE_ERROR,
+    };
+
+    enum E_RESULT {
+        RESULT_NONE,
+        RESULT_WAIT,
+        RESULT_YES,
+        RESULT_NO,
+        RESULT_4,
+        RESULT_5,
+        RESULT_CONTINUE,
+    };
+
+    enum ESound {};
 
 public:
     void createSystemWindow();
 
-    void setSystemWindow(E_WINDOW_TYPE type, u32 group, RPSysMessage* msg,
+    void setSystemWindow(E_WINDOW_TYPE type, u32 group, RPSysMessage* pMessage,
                          int argc, ...);
 
-    E_RESULT getResult() {
-        return (E_RESULT)mResult;
+    void setCursors();
+
+    void updatePauseClosed();
+
+    void setDefaultCursor(E_BUTTON button) {
+        unkAF = 0;
+        unkB0 = button;
+        unkAB = 0;
+        unkAC = 0;
+        unkAD = 0;
+        unkAE = 0;
     }
 
-#if defined(PACK_RESORT)
-    void updatePauseClosed();
-#endif
+    E_RESULT getResult() {
+        return mResult;
+    }
 
 private:
-    char UNK_0x4[0x90 - 0x4];
-    s32 mResult;
-    char UNK_0x94[0xE0 - 0x94];
+    char unk8[0x90 - 0x8];
+    E_RESULT mResult; // at 0x90
+    char unk94[0xAB - 0x94];
+    u8 unkAB;
+    u8 unkAC;
+    u8 unkAD;
+    u8 unkAE;
+    u8 unkAF;
+    u8 unkB0;
 };
+
+//! @}
 
 #endif

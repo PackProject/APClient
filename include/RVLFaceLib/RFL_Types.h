@@ -23,8 +23,9 @@ extern "C" {
 #define RFL_CREATOR_LEN 10
 #define RFL_CREATEID_LEN 8
 
-#define RFL_CTRL_CHAR_MAX 10
 #define RFL_DB_CHAR_MAX 100
+#define RFL_CTRL_CHAR_MAX 10
+#define RFL_DEFAULT_CHAR_MAX 6
 
 /**
  * Common enums
@@ -79,6 +80,16 @@ typedef enum {
 
     RFLExp_Max
 } RFLExpression;
+
+typedef enum {
+    RFLExpFlag_Normal = 1 << RFLExp_Normal,
+    RFLExpFlag_Smile = 1 << RFLExp_Smile,
+    RFLExpFlag_Anger = 1 << RFLExp_Anger,
+    RFLExpFlag_Sorrow = 1 << RFLExp_Sorrow,
+    RFLExpFlag_Surprise = 1 << RFLExp_Surprise,
+    RFLExpFlag_Blink = 1 << RFLExp_Blink,
+    RFLExpFlag_OpenMouth = 1 << RFLExp_OpenMouth,
+} RFLExpressionFlag;
 
 typedef enum {
     RFLFavoriteColor_Red,

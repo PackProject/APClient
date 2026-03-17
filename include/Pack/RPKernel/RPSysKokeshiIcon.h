@@ -1,15 +1,25 @@
 #ifndef RP_KERNEL_KOKESHI_ICON_H
 #define RP_KERNEL_KOKESHI_ICON_H
-#include <Pack/RPKernel/RPSysAvatar.h>
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
 
+#include <Pack/RPKernel/RPSysAvatar.h>
+
+#include <egg/core.h>
+#include <egg/gfx.h>
+
+#include <nw4r/ut.h>
+
+//! @addtogroup rp_kernel
+//! @{
+
+/**
+ * @brief Mii icon texture
+ */
 class RPSysKokeshiIcon : public RPSysAvatar {
 public:
-    RPSysKokeshiIcon(const RPSysKokeshiGenInfo*);
-    virtual ~RPSysKokeshiIcon(); // at 0x8
-
-    virtual void LoadResource(const RPSysKokeshiOverloadInfo* = NULL);
-    virtual void ApplyLightTexture(u8);
+    EGG::ResTIMG* GetResTIMG();
 };
+
+//! @}
 
 #endif

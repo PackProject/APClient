@@ -1,17 +1,15 @@
 #ifndef RP_PARTY_BIL_LYT_BALL_NUMBER_H
 #define RP_PARTY_BIL_LYT_BALL_NUMBER_H
+#include <Pack/types_pack.h>
+
 #include <Pack/RPGraphics.h>
-#include <Pack/RPTypes.h>
-#include <Pack/RPUtility/RPUtlBaseFsm.h>
-#include <Pack/RPUtility/RPUtlLytBase.h>
+#include <Pack/RPKernel.h>
+#include <Pack/RPSingleton.h>
+#include <Pack/RPUtility.h>
 
 #include <egg/core.h>
 
 #include <nw4r/lyt.h>
-
-// Forward declarations
-class RPSysLayout;
-class RPSysLytAnmObj;
 
 class RPBilLytBallNumber : public RPUtlLytBase, public IRPGrpDrawObject {
     RP_SINGLETON_DECL(RPBilLytBallNumber);
@@ -73,29 +71,5 @@ private:
     RPSysLytAnmObj* mpAnmObjs[EAnmObj_Max]; // at 0x24
     nw4r::lyt::Pane* N_number_00;           // at 0x50
 };
-
-#if defined(__KOKESHI__)
-DECL_WEAK inline RPBilLytBallNumber::RPBilLytBallNumber() {
-    mStateMachine = new RPUtlBaseFsm<RPBilLytBallNumber>(this, EState_Max);
-
-    mStateMachine->RegistState(&RPBilLytBallNumber::State_HIDE_enter,
-                               &RPBilLytBallNumber::State_HIDE_calc,
-                               EState_Hide);
-
-    mStateMachine->RegistState(&RPBilLytBallNumber::State_ANIMIN_enter,
-                               &RPBilLytBallNumber::State_ANIMIN_calc,
-                               EState_AnimIn);
-
-    mStateMachine->RegistState(&RPBilLytBallNumber::State_WAIT_enter,
-                               &RPBilLytBallNumber::State_WAIT_calc,
-                               EState_Wait);
-
-    mStateMachine->RegistState(&RPBilLytBallNumber::State_ANIMOUT_enter,
-                               &RPBilLytBallNumber::State_ANIMOUT_calc,
-                               EState_AnimOut);
-
-    RPGrpRenderer::GetCurrent()->AppendDrawObject(this);
-}
-#endif
 
 #endif

@@ -1,7 +1,8 @@
 #ifndef RP_SPORTS_PHYSICAL_PREVIEW_SCENE_H
 #define RP_SPORTS_PHYSICAL_PREVIEW_SCENE_H
-#include "RPSysScene.h"
-#include "RPTypes.h"
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSystem.h>
 
 /**
  * @brief Wii Fitness game preview scene

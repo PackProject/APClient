@@ -7,7 +7,6 @@
 #include <nw4r/ef/ef_memorymanager.h>
 #include <nw4r/ef/ef_particle.h>
 #include <nw4r/ef/ef_particlemanager.h>
-
 #include <nw4r/ut.h>
 
 namespace nw4r {
@@ -58,7 +57,7 @@ private:
     MemInfo* mAllChain;    // at 0x38
 
 public:
-    // TODO: Crazy big implementation...
+    // TODO(kiwi) Crazy big implementation...
 
     MemoryManager() {}
     virtual ~MemoryManager() {} // at 0x8

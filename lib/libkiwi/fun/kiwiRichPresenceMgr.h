@@ -24,7 +24,7 @@ public:
      */
     virtual String GetAppID() const = 0;
 
-#if defined(PACK_SPORTS) || defined(PACK_PLAY)
+#if defined(PACK_SPORTS) || defined(PACK_PARTY)
     /**
      * @brief Handles scene change event
      *

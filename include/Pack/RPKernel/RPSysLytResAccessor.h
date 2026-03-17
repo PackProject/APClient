@@ -1,68 +1,84 @@
 #ifndef RP_KERNEL_LYT_RES_ACCESSOR_H
 #define RP_KERNEL_LYT_RES_ACCESSOR_H
-#include <egg/types_egg.h>
+#include <Pack/types_pack.h>
 
-#include "RPTypes.h"
-#include <nw4r/lyt/lyt_arcResourceAccessor.h>
+#include <egg/core.h>
+
+#include <nw4r/lyt.h>
+
+//! @addtogroup rp_kernel
+//! @{
 
 /**
- * @brief ArcResourceAccessor wrapper used for layouts,
- * with added support for resfont data
- * @wfuname
+ * @brief ArcResourceAccessor wrapper
+ * @details Allows linking fonts from the font manager
  */
 class RPSysLytResAccessor {
-public:
-    class InternalAccessor : public nw4r::lyt::ArcResourceAccessor {
-    public:
-        InternalAccessor();
-
-        // @address 80198c78
-        virtual ~InternalAccessor(); // at 0x8
-
-        /**
-         * @brief Get resource from the open archive
-         * @details Font queries are redirected to the font manager
-         * @param type Resource type (char literal)
-         * @param name Resource name
-         * @param[out] length Resource length
-         * @address 80198c54
-         */
-        virtual void* GetResource(u32 type, const char* name,
-                                  u32* length); // at 0xC
-    };
+    friend class RPSysLayout;
 
 public:
-    RPSysLytResAccessor();
-
     /**
-     * @brief Create a resource accessor from the specified heap
-     * @param heap Parent heap
-     * @address 80198bb8
+     * @brief Creates a resource accessor from the specified heap
+     *
+     * @param pHeap Heap to use for allocations
      */
-    static RPSysLytResAccessor* create(EGG::Heap* heap);
+    static RPSysLytResAccessor* create(EGG::Heap* pHeap = NULL);
 
     /**
-     * @brief Mount an archive
-     * @param archive Archive binary
-     * @param dir Directory to open
+     * @brief Attempts to mount an archive
+     *
+     * @param pBinary Archive binary data
+     * @param pRootDir Root directory to open (optional)
      * @return Success
-     * @address 80198b6c
      */
-    bool mountArchive(void* archive, const char* dir = nullptr);
+    bool mountArchive(void* pBinary, const char* pRootDir = NULL);
 
     /**
-     * @brief Get resource from the open archive
+     * @brief Gets the specified resource from the currently open archive
      * @details Font queries are redirected to the font manager
-     * @param type Resource type (char literal)
-     * @param name Resource name
-     * @param[out] length Resource length
+     *
+     * @param type Resource type
+     * @param pName Resource name
+     * @param[out] pSize Resource data size
      */
-    void* getResource(u32 type, const char* name, u32* length) {
-        return mInternalAccessor->GetResource(type, name, length);
+    void* getResource(u32 type, const char* pName, u32* pSize = NULL) {
+        return mpImpl->GetResource(type, pName, pSize);
     }
 
 private:
-    InternalAccessor* mInternalAccessor; // at 0x0
+    /**
+     * @brief Internal implementation
+     */
+    class InternalAccessor : public nw4r::lyt::ArcResourceAccessor {
+    public:
+        /**
+         * @brief Constructor
+         */
+        InternalAccessor();
+
+        /**
+         * @brief Gets the specified resource from the currently open archive
+         * @details Font queries are redirected to the font manager
+         *
+         * @param type Resource type
+         * @param pName Resource name
+         * @param[out] pSize Resource data size
+         */
+        virtual void* GetResource(u32 type, const char* pName,
+                                  u32* pSize) override; // at 0xC
+    };
+
+private:
+    /**
+     * @brief Constructor
+     */
+    RPSysLytResAccessor();
+
+private:
+    //! Internal accessor implementation
+    InternalAccessor* mpImpl; // at 0x0
 };
+
+//! @}
 
 #endif

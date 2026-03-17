@@ -1,16 +1,15 @@
 #ifndef RP_SYSTEM_GAME_CONFIG_H
 #define RP_SYSTEM_GAME_CONFIG_H
-#include <Pack/RPSystem/RPSysTagParms.h>
-#include <Pack/RPTypes.h>
+#include <Pack/types_pack.h>
 
-#include <egg/core.h>
+#include <Pack/RPSingleton.h>
+#include <Pack/RPSystem/RPSysTagParms.h>
 
 //! @addtogroup rp_system
 //! @{
 
 /**
  * @brief Pack Project Game Config File (`gameConfig.ini`)
- * @wfuname
  */
 class RPSysGameConfig : public RPSysTagParameters {
     RP_SINGLETON_DECL_EX(RPSysGameConfig);
@@ -20,8 +19,7 @@ private:
     RPSysStringTagParm mRootScene; // at 0x10
     //! TV mode (aspect ratio)
     RPSysStringTagParm mTVMode; // at 0x20
-    //! @brief Language
-    //! @history Maybe predates language support in RPSysProjectLocal
+    //! Game language
     RPSysStringTagParm mLanguage; // at 0x30
 
     //! Common print setting
@@ -37,7 +35,7 @@ private:
     //! User print setting
     RPSysPrimTagParm<int> mRPUserPrint; // at 0x90
 
-    //! Mr. Sumaki(?) print setting
+    //! Mr. Sumaki print setting
     RPSysPrimTagParm<int> mRPSmkPrint; // at 0xA0
     //! Mr. Okamura(?) print setting
     RPSysPrimTagParm<int> mRPOkaPrint; // at 0xB0

@@ -37,7 +37,7 @@ template <typename T> K_INLINE const T& Max(const T& rA, const T& rB) {
  * @param rX Initial value
  */
 template <typename T> K_INLINE T Abs(const T& rX) {
-#ifdef LIBKIWI_TARGET_RVL
+#if defined(LIBKIWI_TARGET_RVL)
     return __abs(rX);
 #else
     return rX < 0 ? -rX : rX;

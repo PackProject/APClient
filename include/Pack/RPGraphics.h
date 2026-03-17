@@ -1,20 +1,28 @@
-#ifndef RP_GRAPHICS_H
-#define RP_GRAPHICS_H
+#ifndef RP_PUBLIC_GRAPHICS_H
+#define RP_PUBLIC_GRAPHICS_H
 
-#include <RPGraphics/IRPGrpDrawObject.h>
-#include <RPGraphics/RPGrpCamera.h>
-#include <RPGraphics/RPGrpFogManager.h>
-#include <RPGraphics/RPGrpModel.h>
-#include <RPGraphics/RPGrpModelAnm.h>
-#include <RPGraphics/RPGrpModelBoundingInfo.h>
-#include <RPGraphics/RPGrpModelG3D.h>
-#include <RPGraphics/RPGrpModelManager.h>
-#include <RPGraphics/RPGrpModelMaterial.h>
-#include <RPGraphics/RPGrpModelResManager.h>
-#include <RPGraphics/RPGrpRenderer.h>
-#include <RPGraphics/RPGrpScreen.h>
-#include <RPGraphics/RPGrpView.h>
-#include <RPGraphics/RPGrpViewRender2D.h>
-#include <RPGraphics/RPGrpViewRender3D.h>
+#include <Pack/RPGraphics/IRPGrpDrawObject.h>
+#include <Pack/RPGraphics/IRPGrpModelCallback.h>
+#include <Pack/RPGraphics/RPGrpCamera.h>
+#include <Pack/RPGraphics/RPGrpDrawPath.h>
+#include <Pack/RPGraphics/RPGrpDrawPathLightMap.h>
+#include <Pack/RPGraphics/RPGrpDrawPathManager.h>
+#include <Pack/RPGraphics/RPGrpFogManager.h>
+#include <Pack/RPGraphics/RPGrpModel.h>
+#include <Pack/RPGraphics/RPGrpModelAnm.h>
+#include <Pack/RPGraphics/RPGrpModelAnmImplement.h>
+#include <Pack/RPGraphics/RPGrpModelBoundingInfo.h>
+#include <Pack/RPGraphics/RPGrpModelG3D.h>
+#include <Pack/RPGraphics/RPGrpModelManager.h>
+#include <Pack/RPGraphics/RPGrpModelMaterial.h>
+#include <Pack/RPGraphics/RPGrpModelRecord.h>
+#include <Pack/RPGraphics/RPGrpModelResManager.h>
+#include <Pack/RPGraphics/RPGrpModelRfl.h>
+#include <Pack/RPGraphics/RPGrpRenderer.h>
+#include <Pack/RPGraphics/RPGrpScreen.h>
+#include <Pack/RPGraphics/RPGrpTexture.h>
+#include <Pack/RPGraphics/RPGrpView.h>
+#include <Pack/RPGraphics/RPGrpViewRender2D.h>
+#include <Pack/RPGraphics/RPGrpViewRender3D.h>
 
 #endif

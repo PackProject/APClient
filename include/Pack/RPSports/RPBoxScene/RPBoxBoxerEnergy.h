@@ -1,6 +1,6 @@
 #ifndef RP_SPORTS_BOX_BOXER_STATUS_H
 #define RP_SPORTS_BOX_BOXER_STATUS_H
-#include "RPTypes.h"
+#include <Pack/types_pack.h>
 
 /**
  * @brief State of a boxer's energy

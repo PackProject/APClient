@@ -1,7 +1,9 @@
 #ifndef RP_SYSTEM_PROJECT_LOCAL_H
 #define RP_SYSTEM_PROJECT_LOCAL_H
+#include <Pack/types_pack.h>
+
+#include <Pack/RPSingleton.h>
 #include <Pack/RPSystem/RPSysSceneCreator.h>
-#include <Pack/RPTypes.h>
 
 #include <egg/core.h>
 
@@ -10,7 +12,6 @@
 
 /**
  * @brief Runtime project localization
- * @wfuname
  */
 class RPSysProjectLocal {
     RP_SINGLETON_DECL_EX(RPSysProjectLocal);
@@ -43,11 +44,18 @@ public:
     /**
      * @brief Storage device
      */
-    enum EStorage { EStorage_Memory, EStorage_NAND, EStorage_DVD };
+    enum EStorage {
+        //! Sound archives are read from the DVD as needed
+        EStorage_DVDStream,
+        //! Sound archives are read from the NAND ahead of time
+        EStorage_NANDBuffer,
+        //! Sound archives are read from the DVD ahead of time
+        EStorage_DVDBuffer
+    };
 
 public:
     /**
-     * @brief Appends locale directory to the given path
+     * @brief Appends the locale directory to the given path
      *
      * @param pPath Path to append to
      * @param pSuffix Optional suffix to append after the locale
@@ -55,11 +63,12 @@ public:
     void appendLocalDirectory(char* pPath, const char* pSuffix = "");
 
     /**
-     * @brief Sets the current dialect
+     * @brief Sets the current locale
      *
-     * @param dialect Dialect area
+     * @param locale Locale area
      */
-    void setDialect(EArea dialect);
+    void setLocale(EArea locale);
+
     /**
      * @brief Sets the current language
      *
@@ -68,19 +77,54 @@ public:
     void setLanguage(EArea lang);
 
     /**
+     * @brief Gets the current game region
+     */
+    ERegion getRegion() const {
+        return mRegion;
+    }
+
+    /**
      * @brief Gets the current Pack Project game ID
      */
     RPSysSceneCreator::EPackID getPack() const {
         return mPack;
     }
 
+    /**
+     * @brief Gets the current game locale
+     */
+    EArea getLocale() const {
+        return mLocale;
+    }
+
+    /**
+     * @brief Gets the current game language
+     */
+    EArea getLanguage() const {
+        return mLanguage;
+    }
+
+    /**
+     * @brief Tests whether the game is expected to run at 50Hz
+     */
+    bool isPal50() const {
+        return mIsPal50;
+    }
+
+    /**
+     * @brief Gets the storage device where sound data is located
+     */
+    EStorage getSoundStorage() const {
+        return mSoundStorage;
+    }
+
 private:
     //! Game region
     ERegion mRegion; // at 0x8
-    //! Game pack
+    //! Pack Project title
     RPSysSceneCreator::EPackID mPack; // at 0xC
-    //! Game dialect
-    EArea mDialect; // at 0x10
+    //! Game locale
+    EArea mLocale; // at 0x10
     //! Game language
     EArea mLanguage; // at 0x14
     //! Whether the display is 50Hz

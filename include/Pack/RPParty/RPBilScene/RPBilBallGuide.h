@@ -1,8 +1,9 @@
 #ifndef RP_PARTY_BIL_BALL_GUIDE_H
 #define RP_PARTY_BIL_BALL_GUIDE_H
+#include <Pack/types_pack.h>
+
 #include <Pack/RPParty/RPPartyUtlModel.h>
-#include <Pack/RPTypes.h>
-#include <Pack/RPUtility/RPUtlBaseFsm.h>
+#include <Pack/RPUtility.h>
 
 class RPBilBallGuide : public RPPartyUtlModel {
 public:

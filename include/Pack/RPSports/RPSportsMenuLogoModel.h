@@ -1,7 +1,8 @@
 #ifndef RP_SPORTS_MENU_LOGO_MODEL_H
 #define RP_SPORTS_MENU_LOGO_MODEL_H
-#include "RPTypes.h"
-#include <egg/math/eggVector.h>
+#include <Pack/types_pack.h>
+
+#include <egg/math.h>
 
 class RPSportsMenuLogoModel {
 public:

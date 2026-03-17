@@ -1,7 +1,7 @@
+#include <libkiwi.h>
+
 #include <Pack/RPGraphics.h>
 #include <Pack/RPKernel.h>
-
-#include <libkiwi.h>
 
 namespace kiwi {
 

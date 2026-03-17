@@ -1,9 +1,11 @@
-#ifndef RP_UTILITY_H
-#define RP_UTILITY_H
+#ifndef RP_PUBLIC_UTILITY_H
+#define RP_PUBLIC_UTILITY_H
 
-#include <RPUtility/RPUtlBaseFsm.h>
-#include <RPUtility/RPUtlLytBase.h>
-#include <RPUtility/RPUtlMapData.h>
-#include <RPUtility/RPUtlRandom.h>
+#include <Pack/RPUtility/RPUtlActorBase.h>
+#include <Pack/RPUtility/RPUtlBaseFsm.h>
+#include <Pack/RPUtility/RPUtlGameObjBase.h>
+#include <Pack/RPUtility/RPUtlLytBase.h>
+#include <Pack/RPUtility/RPUtlMapData.h>
+#include <Pack/RPUtility/RPUtlRandom.h>
 
 #endif
